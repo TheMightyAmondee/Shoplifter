@@ -38,7 +38,12 @@ namespace Shoplifter
 			return false;
 		}
 
-		// Generates a random list of available stock for the given shop
+		/// <summary>
+		/// Generates a random list of available stock for the given shop
+		/// </summary>
+		/// <param name="maxstock">The maximum number of different items to generate</param>
+		/// <param name="which">The shop to generate stock for</param>
+		/// <returns>The generated stock list</returns>
 		public static Dictionary<ISalable, int[]> generateRandomStock(int maxstock, string which)
 		{
 			GameLocation location = Game1.currentLocation;
@@ -46,19 +51,21 @@ namespace Shoplifter
 			HashSet<int> stockIndices = new HashSet<int>();
 			Random random = new Random();		
 			int stocklimit = random.Next(1, maxstock + 1);
+			int index = 0;
 
+			// Pierre's shop
 			if (which == "SeedShop")
             {
 				foreach (var shopstock in (location as SeedShop).shopStock())
 				{
-					int index = 0;
-
-					// Stops wallpaper and furniture being added, will result in an error item
+					
+					// Stops wallpaper and furniture being added, will result in an error item otherwise (add compatability in future)
 					if ((shopstock.Key as Wallpaper) != null || (shopstock.Key as Furniture) != null)
 					{
 						continue;
 					}
 
+					// Add object id to array
 					if ((shopstock.Key as StardewValley.Object) != null && (shopstock.Key as StardewValley.Object).bigCraftable == false)
 					{
 						index = (shopstock.Key as StardewValley.Object).parentSheetIndex;
@@ -68,11 +75,11 @@ namespace Shoplifter
 				}
 			}
 
+			// Willy's shop
 			else if (which == "FishShop")
             {
 				foreach (var shopstock in Utility.getFishShopStock(Game1.player))
 				{
-					int index = 0;
 
 					// Stops wallpaper and furniture being added, will result in an error item
 					if ((shopstock.Key as Wallpaper) != null || (shopstock.Key as Furniture) != null)
@@ -80,6 +87,7 @@ namespace Shoplifter
 						continue;
 					}
 
+					// Add object id to array
 					if ((shopstock.Key as StardewValley.Object) != null && (shopstock.Key as StardewValley.Object).bigCraftable == false)
 					{
 						index = (shopstock.Key as StardewValley.Object).parentSheetIndex;
@@ -89,38 +97,48 @@ namespace Shoplifter
 				}
 			}
 
+			// Robin's shop
 			else if (which == "Carpenters")
 			{
 				foreach (var shopstock in Utility.getCarpenterStock())
 				{
-					int index = 0;
 
-					// Stops wallpaper and furniture being added, will result in an error item
+					// Stops wallpaper and furniture being added, will result in an error item otherwise
 					if ((shopstock.Key as Wallpaper) != null || (shopstock.Key as Furniture) != null)
 					{
 						continue;
 					}
 
+					// Add object id to array
 					if ((shopstock.Key as StardewValley.Object) != null && (shopstock.Key as StardewValley.Object).bigCraftable == false)
 					{
 						index = (shopstock.Key as StardewValley.Object).parentSheetIndex;
 
 						CurrentStock.Add(index);
 					}
+					// If it is a big craftable add 10000 to id so it can be marked as such for later use
+					else if ((shopstock.Key as StardewValley.Object) != null && (shopstock.Key as StardewValley.Object).bigCraftable == true)
+					{
+						index = (shopstock.Key as StardewValley.Object).parentSheetIndex + 10000;
+
+						CurrentStock.Add(index);
+					}
 				}
 			}
+
+			// Marnie's shop
 			else if (which == "AnimalShop")
 			{
 				foreach (var shopstock in Utility.getAnimalShopStock())
 				{
-					int index = 0;
 
-					// Stops wallpaper and furniture being added, will result in an error item
+					// Stops wallpaper and furniture being added, will result in an error item otherwise
 					if ((shopstock.Key as Wallpaper) != null || (shopstock.Key as Furniture) != null)
 					{
 						continue;
 					}
 
+					// Add object id to array
 					if ((shopstock.Key as StardewValley.Object) != null && (shopstock.Key as StardewValley.Object).bigCraftable == false)
 					{
 						index = (shopstock.Key as StardewValley.Object).parentSheetIndex;
@@ -129,18 +147,20 @@ namespace Shoplifter
 					}
 				}
 			}
+
+			// Clint's shop
 			else if (which == "Blacksmith")
 			{
 				foreach (var shopstock in Utility.getBlacksmithStock())
 				{
-					int index = 0;
 
-					// Stops wallpaper and furniture being added, will result in an error item
+					// Stops wallpaper and furniture being added, will result in an error item otherwise
 					if ((shopstock.Key as Wallpaper) != null || (shopstock.Key as Furniture) != null)
 					{
 						continue;
 					}
 
+					// Add object id to array
 					if ((shopstock.Key as StardewValley.Object) != null && (shopstock.Key as StardewValley.Object).bigCraftable == false)
 					{
 						index = (shopstock.Key as StardewValley.Object).parentSheetIndex;
@@ -150,12 +170,15 @@ namespace Shoplifter
 				}
 			}
 
+			// Harvey's clinic
 			else if (which == "HospitalShop")
             {
+				// Add object id to array
 				CurrentStock.Add(349);
 				CurrentStock.Add(351);
             }			
 
+			// Add generated stock to store from array
 			for (int i = 0; i < stocklimit; i++)
 			{
 				int quantity = random.Next(1, 6);
@@ -172,16 +195,18 @@ namespace Shoplifter
 				}
 
 				// Big Craftable objects
-                else
-                {
+				else
+				{
 					ShopStock.addToStock(stock, stockIndices, new StardewValley.Object(Vector2.Zero, (int)CurrentStock[item] - 10000), new int[2]
 					{
 						0,
 						1
 					});
-				}				
+				}
+
 			}
 
+			// Clear stock array
 			CurrentStock.Clear();
 
 			return stock;
