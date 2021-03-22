@@ -1,0 +1,10 @@
+﻿{
+  "Name": "Shoplifter",
+  "Author": "TheMightyAmondee",
+  "Version": "1.0.0",
+  "Description": "Experimental free shop menus",
+  "UniqueID": "TheMightyAmondee.Shoplifter",
+  "EntryDll": "Shoplifter.dll",
+  "MinimumApiVersion": "3.9.0",
+  "UpdateKeys": []
+}
