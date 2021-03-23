@@ -42,13 +42,20 @@ namespace Shoplifter
 
         }
 
-        public static bool shouldbeCaught(string which, Farmer who)
+        /// <summary>
+        /// Determines whether the player is caught when shoplifting
+        /// </summary>
+        /// <param name="which">Which NPC can catch the player</param>
+        /// <param name="who">The player</param>
+        /// <param name="whichportrait">The portrait of the NPC to use in dialogue, angry portraits differ for each NPC</param>
+        /// <returns>Whether the player was caught or not</returns>
+        public static bool shouldbeCaught(string which, Farmer who, int whichportrait)
         {
             NPC npc = Game1.getCharacterFromName(which);
 
-            if (npc != null && npc.currentLocation == who.currentLocation && Utility.tileWithinRadiusOfPlayer(npc.getTileX(), npc.getTileY(), 14, who))
-            {pkk
-                npc.setNewDialogue("What do you think you're doing!?$3", add: true);
+            if (npc != null && npc.currentLocation == who.currentLocation && Utility.tileWithinRadiusOfPlayer(npc.getTileX(), npc.getTileY(), 7, who))
+            {
+                npc.setNewDialogue($"What do you think you're doing!? Get out!!!${whichportrait}", add: true);
                 Game1.drawDialogue(npc); 
                 Game1.player.changeFriendship(-Math.Min(1500, Game1.player.getFriendshipLevelForNPC(which)), Game1.getCharacterFromName(which, true));
                 return true;
@@ -72,9 +79,18 @@ namespace Shoplifter
                         else
                         {
                             ModEntry.StolenToday = true;
+                            if (shouldbeCaught("Willy", Game1.player, 2) == true)
+                            {
+                                Game1.afterDialogues = delegate
+                                {
+                                    Game1.warpFarmer(__instance.warps[0].TargetName, __instance.warps[0].TargetX, __instance.warps[0].TargetY, false);
+                                };
+                                return;
+                            }
                             Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(3, "FishShop"), 3, null);
                         }
-                    }                   
+                    }
+                    
                 }
 
                 if (__instance is SeedShop)
@@ -96,8 +112,12 @@ namespace Shoplifter
                                     if (answer == "Yes")
                                     {
                                         ModEntry.StolenToday = true;
-                                        if (shouldbeCaught("Pierre", Game1.player) == true)
+                                        if (shouldbeCaught("Pierre", Game1.player,3) == true || shouldbeCaught("Caroline", Game1.player,3) == true || shouldbeCaught("Abigail", Game1.player,5) == true)
                                         {
+                                            Game1.afterDialogues = delegate
+                                            {
+                                                Game1.warpFarmer(__instance.warps[0].TargetName, __instance.warps[0].TargetX, __instance.warps[0].TargetY, false);
+                                            };
                                             return;
                                         }
                                         Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(5, "SeedShop"), 3, null);
@@ -117,8 +137,12 @@ namespace Shoplifter
                                 if (answer == "Yes")
                                 {
                                     ModEntry.StolenToday = true;
-                                    if (shouldbeCaught("Pierre", Game1.player) == true)
+                                    if (shouldbeCaught("Pierre", Game1.player, 3) == true || shouldbeCaught("Caroline", Game1.player, 3) == true || shouldbeCaught("Abigail", Game1.player, 5) == true)
                                     {
+                                        Game1.afterDialogues = delegate
+                                        {
+                                            Game1.warpFarmer(__instance.warps[0].TargetName, __instance.warps[0].TargetX, __instance.warps[0].TargetY, false);
+                                        };
                                         return;
                                     }
                                     Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(5, "SeedShop"), 3, null);
@@ -153,7 +177,15 @@ namespace Shoplifter
                                     {
                                         if (answer == "Yes")
                                         {                                            
-                                            ModEntry.StolenToday = true;                                            
+                                            //ModEntry.StolenToday = true;
+                                            if (shouldbeCaught("Harvey", Game1.player, 5) == true || shouldbeCaught("Maru", Game1.player, 5) == true)
+                                            {
+                                                Game1.afterDialogues = delegate
+                                                {
+                                                    Game1.warpFarmer(__instance.warps[0].TargetName, __instance.warps[0].TargetX, __instance.warps[0].TargetY, false);
+                                                };                                           
+                                                return;
+                                            }
                                             Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(1, "HospitalShop"), 3, null);
                                         }
                                     });
@@ -172,7 +204,6 @@ namespace Shoplifter
                                 {
                                     if (__instance.getCharacterFromName("Robin") == null && Game1.IsVisitingIslandToday("Robin"))
                                     {
-                                        //ModEntry.StolenToday = true;
                                         Game1.dialogueUp = false;
                                         Game1.drawObjectDialogue(Game1.content.LoadString("Strings\\Locations:ScienceHouse_MoneyBox"));
                                         Game1.afterDialogues = delegate
@@ -181,7 +212,15 @@ namespace Shoplifter
                                             {
                                                 if (answer == "Yes")
                                                 {                                                   
-                                                    ModEntry.StolenToday = true;
+                                                    //ModEntry.StolenToday = true;
+                                                    if (shouldbeCaught("Robin", Game1.player, 3) == true || shouldbeCaught("Demetrius", Game1.player, 4) == true || shouldbeCaught("Maru", Game1.player, 5) == true || shouldbeCaught("Sebastian", Game1.player, 5) == true)
+                                                    {
+                                                        Game1.afterDialogues = delegate
+                                                        {
+                                                            Game1.warpFarmer(__instance.warps[0].TargetName, __instance.warps[0].TargetX, __instance.warps[0].TargetY, false);
+                                                        };
+                                                        return;
+                                                    }
                                                     Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(6, "Carpenters"), 3, null);
                                                 }
                                                 else
@@ -203,7 +242,15 @@ namespace Shoplifter
                                             {
                                                 if (answer == "Yes")
                                                 {
-                                                    ModEntry.StolenToday = true;
+                                                    //ModEntry.StolenToday = true;
+                                                    if (shouldbeCaught("Robin", Game1.player, 3) == true || shouldbeCaught("Demetrius", Game1.player, 4) == true || shouldbeCaught("Maru", Game1.player, 5) == true || shouldbeCaught("Sebastian", Game1.player, 5) == true)
+                                                    {
+                                                        Game1.afterDialogues = delegate
+                                                        {
+                                                            Game1.warpFarmer(__instance.warps[0].TargetName, __instance.warps[0].TargetX, __instance.warps[0].TargetY, false);
+                                                        };
+                                                        return;
+                                                    }
                                                     Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(6, "Carpenters"), 3, null);
                                                 }
                                             });
@@ -217,7 +264,15 @@ namespace Shoplifter
                                         {
                                             if (answer == "Yes")
                                             {
-                                                ModEntry.StolenToday = true;
+                                                //ModEntry.StolenToday = true;
+                                                if (shouldbeCaught("Robin", Game1.player, 3) == true || shouldbeCaught("Demetrius", Game1.player, 4) == true || shouldbeCaught("Maru", Game1.player, 5) == true || shouldbeCaught("Sebastian", Game1.player, 5) == true)
+                                                {
+                                                    Game1.afterDialogues = delegate
+                                                    {
+                                                        Game1.warpFarmer(__instance.warps[0].TargetName, __instance.warps[0].TargetX, __instance.warps[0].TargetY, false);
+                                                    };
+                                                    return;
+                                                }
                                                 Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(6, "Carpenters"), 3, null);
                                             }
                                         });
@@ -247,7 +302,15 @@ namespace Shoplifter
                                             {
                                                 if (answer == "Yes")
                                                 {
-                                                    ModEntry.StolenToday = true;
+                                                    if (shouldbeCaught("Marnie", Game1.player, 4) == true || shouldbeCaught("Shane", Game1.player, 5) == true)
+                                                    {
+                                                        Game1.afterDialogues = delegate
+                                                        {
+                                                            Game1.warpFarmer(__instance.warps[0].TargetName, __instance.warps[0].TargetX, __instance.warps[0].TargetY, false);
+                                                        };
+                                                        return;
+                                                    }
+                                                    //ModEntry.StolenToday = true;
                                                     Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(1, "AnimalShop"), 3, null);
                                                 }
                                                 else
@@ -270,7 +333,15 @@ namespace Shoplifter
                                             {
                                                 if (answer == "Yes")
                                                 {
-                                                    ModEntry.StolenToday = true;
+                                                    //ModEntry.StolenToday = true;
+                                                    if (shouldbeCaught("Marnie", Game1.player, 4) == true || shouldbeCaught("Shane", Game1.player, 5) == true)
+                                                    {
+                                                        Game1.afterDialogues = delegate
+                                                        {
+                                                            Game1.warpFarmer(__instance.warps[0].TargetName, __instance.warps[0].TargetX, __instance.warps[0].TargetY, false);
+                                                        };
+                                                        return;
+                                                    }                                                    
                                                     Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(1, "AnimalShop"), 3, null);
                                                 }
                                             });
@@ -279,12 +350,20 @@ namespace Shoplifter
 
                                     else if (__instance.isCharacterAtTile(who.getTileLocation() + new Vector2(0f, -2f)) == null || __instance.isCharacterAtTile(who.getTileLocation() + new Vector2(-1f, -2f)) == null)
                                     {
-                                        ModEntry.StolenToday = true;
+                                        //ModEntry.StolenToday = true;
                                         __instance.createQuestionDialogue("Shoplift?", __instance.createYesNoResponses(), delegate (Farmer _, string answer)
                                         {
                                             if (answer == "Yes")
                                             {
-                                                ModEntry.StolenToday = true;
+                                                if (shouldbeCaught("Marnie", Game1.player, 4) == true || shouldbeCaught("Shane", Game1.player, 5) == true)
+                                                {
+                                                    Game1.afterDialogues = delegate
+                                                    {
+                                                        Game1.warpFarmer(__instance.warps[0].TargetName, __instance.warps[0].TargetX, __instance.warps[0].TargetY, false);
+                                                    };
+                                                    return;
+                                                }
+                                                //ModEntry.StolenToday = true;
                                                 Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(1, "AnimalShop"), 3, null);
                                             }
                                         });
@@ -323,6 +402,7 @@ namespace Shoplifter
                     }
                 }
             }
+
             catch (Exception e)
             {
                 monitor.Log($"Failed to patch performAction... Details\n{e}", LogLevel.Error);
