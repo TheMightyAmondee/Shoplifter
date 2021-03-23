@@ -26,6 +26,7 @@ namespace Shoplifter
 
         private void DayStarted(object sender, DayStartedEventArgs e)
         {
+            // Reset stolentoday boolean so player can shoplift again when the new day starts
             StolenToday = false;
         }
     }
