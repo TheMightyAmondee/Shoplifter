@@ -15,7 +15,6 @@ using xTile.Dimensions;
 namespace Shoplifter
 {
     public class ShopMenuPatcher
-		: GameLocation
     {
         private static IMonitor monitor;
         private static IModHelper helper;
@@ -43,17 +42,30 @@ namespace Shoplifter
 
         }
 
+        public static bool shouldbeCaught(string which, Farmer who)
+        {
+            NPC npc = Game1.getCharacterFromName(which);
+
+            if (npc != null && npc.currentLocation == who.currentLocation && Utility.tileWithinRadiusOfPlayer(npc.getTileX(), npc.getTileY(), 14, who))
+            {pkk
+                npc.setNewDialogue("What do you think you're doing!?$3", add: true);
+                Game1.drawDialogue(npc); 
+                Game1.player.changeFriendship(-Math.Min(1500, Game1.player.getFriendshipLevelForNPC(which)), Game1.getCharacterFromName(which, true));
+                return true;
+            }
+            return false;
+        }
+
         public static void openShopMenu_Postfix(GameLocation __instance, string which) 
         {
             try
             {
-                GameLocation location = Game1.currentLocation;
 
                 if (which.Equals("Fish"))
                 {
                     if (ModEntry.StolenToday == false)
                     {
-                        if (location.getCharacterFromName("Willy") != null && location.getCharacterFromName("Willy").getTileLocation().Y < (float)Game1.player.getTileY())
+                        if (__instance.getCharacterFromName("Willy") != null && __instance.getCharacterFromName("Willy").getTileLocation().Y < (float)Game1.player.getTileY())
                         {
                             return;
                         }
@@ -65,29 +77,53 @@ namespace Shoplifter
                     }                   
                 }
 
-                if (location is SeedShop)
+                if (__instance is SeedShop)
                 {
                     if (ModEntry.StolenToday == false)
                     {
-                        if (location.getCharacterFromName("Pierre") != null && location.getCharacterFromName("Pierre").getTileLocation().Equals(new Vector2(4f, 17f)) && Game1.player.getTileY() > location.getCharacterFromName("Pierre").getTileY())
+                        if (__instance.getCharacterFromName("Pierre") != null && __instance.getCharacterFromName("Pierre").getTileLocation().Equals(new Vector2(4f, 17f)) && Game1.player.getTileY() > __instance.getCharacterFromName("Pierre").getTileY())
                         {
                             return;
                         }
-                        else if (location.getCharacterFromName("Pierre") == null && Game1.IsVisitingIslandToday("Pierre"))
+                        else if (__instance.getCharacterFromName("Pierre") == null && Game1.IsVisitingIslandToday("Pierre"))
                         {
                             Game1.dialogueUp = false;
                             Game1.drawObjectDialogue(Game1.content.LoadString("Strings\\Locations:SeedShop_MoneyBox"));
                             Game1.afterDialogues = delegate
                             {
-                                ModEntry.StolenToday = true;
-                                Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(5, "SeedShop",1), 3, null);                               
+                                __instance.createQuestionDialogue("Shoplift?", __instance.createYesNoResponses(), delegate (Farmer _, string answer)
+                                {
+                                    if (answer == "Yes")
+                                    {
+                                        ModEntry.StolenToday = true;
+                                        if (shouldbeCaught("Pierre", Game1.player) == true)
+                                        {
+                                            return;
+                                        }
+                                        Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(5, "SeedShop"), 3, null);
+                                    }
+                                    else
+                                    {
+                                        Game1.activeClickableMenu = new ShopMenu((__instance as SeedShop).shopStock());
+                                    }
+                                });                                                              
                             };
                         }
                         else
                         {
                             Game1.dialogueUp = false;
-                            ModEntry.StolenToday = true;
-                            Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(5, "SeedShop",1), 3, null);                            
+                            __instance.createQuestionDialogue("Shoplift?", __instance.createYesNoResponses(), delegate (Farmer _, string answer)
+                            {
+                                if (answer == "Yes")
+                                {
+                                    ModEntry.StolenToday = true;
+                                    if (shouldbeCaught("Pierre", Game1.player) == true)
+                                    {
+                                        return;
+                                    }
+                                    Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(5, "SeedShop"), 3, null);
+                                }
+                            });
                         }
                     }
                 }
@@ -109,88 +145,179 @@ namespace Shoplifter
                     switch (actionParams[0])
                     {
                         case "HospitalShop":
-                            if (__instance.isCharacterAtTile(who.getTileLocation() + new Vector2(0f, -2f)) == null || __instance.isCharacterAtTile(who.getTileLocation() + new Vector2(-1f, -2f)) == null && ModEntry.StolenToday == false)
+                            if (__instance.isCharacterAtTile(who.getTileLocation() + new Vector2(0f, -2f)) == null || __instance.isCharacterAtTile(who.getTileLocation() + new Vector2(-1f, -2f)) == null)
                             {
-                                ModEntry.StolenToday = true;
-                                Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(1, "HospitalShop"), 3, null);                                
+                                if(ModEntry.StolenToday == false)
+                                {
+                                    __instance.createQuestionDialogue("Shoplift?", __instance.createYesNoResponses(), delegate (Farmer _, string answer)
+                                    {
+                                        if (answer == "Yes")
+                                        {                                            
+                                            ModEntry.StolenToday = true;                                            
+                                            Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(1, "HospitalShop"), 3, null);
+                                        }
+                                    });
+                                }
+                                else
+                                {
+                                    Game1.drawObjectDialogue("You've already shoplifted today. That's enough...");
+                                }                                
                             }
                             break;
 
                         case "Carpenter":
-                            if ((who.getTileY() > tileLocation.Y) && ModEntry.StolenToday == false)
+                            if (who.getTileY() > tileLocation.Y)
                             {
-                                if (__instance.getCharacterFromName("Robin") == null && Game1.IsVisitingIslandToday("Robin"))
+                                if(ModEntry.StolenToday == false)
                                 {
-                                    ModEntry.StolenToday = true;
-                                    Game1.dialogueUp = false;
-                                    Game1.drawObjectDialogue(Game1.content.LoadString("Strings\\Locations:ScienceHouse_MoneyBox"));
-                                    Game1.afterDialogues = delegate
+                                    if (__instance.getCharacterFromName("Robin") == null && Game1.IsVisitingIslandToday("Robin"))
                                     {
-                                        Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(6, "Carpenters",5), 3, null);
-                                    };
-                                }
+                                        //ModEntry.StolenToday = true;
+                                        Game1.dialogueUp = false;
+                                        Game1.drawObjectDialogue(Game1.content.LoadString("Strings\\Locations:ScienceHouse_MoneyBox"));
+                                        Game1.afterDialogues = delegate
+                                        {
+                                            __instance.createQuestionDialogue("Shoplift?", __instance.createYesNoResponses(), delegate (Farmer _, string answer)
+                                            {
+                                                if (answer == "Yes")
+                                                {                                                   
+                                                    ModEntry.StolenToday = true;
+                                                    Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(6, "Carpenters"), 3, null);
+                                                }
+                                                else
+                                                {
+                                                    Game1.activeClickableMenu = new ShopMenu(Utility.getCarpenterStock());
+                                                }
+                                            });
+                                        };
+                                    }
 
-                                else if (Game1.shortDayNameFromDayOfSeason(Game1.dayOfMonth).Equals("Tue") && __instance.carpenters(tileLocation) == true)
-                                {
-                                    ModEntry.StolenToday = true;
-                                    Game1.dialogueUp = false;
-                                    Game1.drawObjectDialogue(Game1.content.LoadString("Strings\\Locations:ScienceHouse_RobinAbsent").Replace('\n', '^'));
-                                    Game1.afterDialogues = delegate
+                                    else if (Game1.shortDayNameFromDayOfSeason(Game1.dayOfMonth).Equals("Tue") && __instance.carpenters(tileLocation) == true)
                                     {
-                                        Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(6, "Carpenters",5), 3, null);
-                                    };
+                                        //ModEntry.StolenToday = true;
+                                        Game1.dialogueUp = false;
+                                        Game1.drawObjectDialogue(Game1.content.LoadString("Strings\\Locations:ScienceHouse_RobinAbsent").Replace('\n', '^'));
+                                        Game1.afterDialogues = delegate
+                                        {
+                                            __instance.createQuestionDialogue("Shoplift?", __instance.createYesNoResponses(), delegate (Farmer _, string answer)
+                                            {
+                                                if (answer == "Yes")
+                                                {
+                                                    ModEntry.StolenToday = true;
+                                                    Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(6, "Carpenters"), 3, null);
+                                                }
+                                            });
+                                        };
 
+                                    }
+
+                                    else if ((__instance.isCharacterAtTile(who.getTileLocation() + new Vector2(0f, -2f)) == null || __instance.isCharacterAtTile(who.getTileLocation() + new Vector2(-1f, -2f)) == null))
+                                    {
+                                        __instance.createQuestionDialogue("Shoplift?", __instance.createYesNoResponses(), delegate (Farmer _, string answer)
+                                        {
+                                            if (answer == "Yes")
+                                            {
+                                                ModEntry.StolenToday = true;
+                                                Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(6, "Carpenters"), 3, null);
+                                            }
+                                        });
+                                    }
                                 }
 
-                                else if ((__instance.isCharacterAtTile(who.getTileLocation() + new Vector2(0f, -2f)) == null || __instance.isCharacterAtTile(who.getTileLocation() + new Vector2(-1f, -2f)) == null))
+                                else
                                 {
-                                    ModEntry.StolenToday = true;
-                                    Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(6, "Carpenters",5), 3, null);
+                                    Game1.drawObjectDialogue("You've already shoplifted today. That's enough...");
                                 }
-
                             }
                             break;
 
                         case "AnimalShop":
-                            if ((who.getTileY() > tileLocation.Y) && ModEntry.StolenToday == false)
+                            if (who.getTileY() > tileLocation.Y)
                             {
-                                
-                                if (__instance.getCharacterFromName("Marnie") == null && Game1.IsVisitingIslandToday("Marnie"))
+                                if(ModEntry.StolenToday == false)
                                 {
-                                    Game1.dialogueUp = false;
-                                    ModEntry.StolenToday = true;
-                                    Game1.drawObjectDialogue(Game1.content.LoadString("Strings\\Locations:AnimalShop_MoneyBox"));
-                                    Game1.afterDialogues = delegate
+                                    if (__instance.getCharacterFromName("Marnie") == null && Game1.IsVisitingIslandToday("Marnie"))
                                     {
-                                        Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(1, "AnimalShop",1), 3, null);
-                                        
-                                    };
+                                        Game1.dialogueUp = false;
+                                        //ModEntry.StolenToday = true;
+                                        Game1.drawObjectDialogue(Game1.content.LoadString("Strings\\Locations:AnimalShop_MoneyBox"));
+                                        Game1.afterDialogues = delegate
+                                        {
+                                            __instance.createQuestionDialogue("Shoplift?", __instance.createYesNoResponses(), delegate (Farmer _, string answer)
+                                            {
+                                                if (answer == "Yes")
+                                                {
+                                                    ModEntry.StolenToday = true;
+                                                    Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(1, "AnimalShop"), 3, null);
+                                                }
+                                                else
+                                                {
+                                                    Game1.activeClickableMenu = new ShopMenu(Utility.getAnimalShopStock());
+                                                }
+                                            });
+
+                                        };
+                                    }
+
+                                    else if (Game1.shortDayNameFromDayOfSeason(Game1.dayOfMonth).Equals("Tue") && __instance.animalShop(tileLocation) == true)
+                                    {
+                                        Game1.dialogueUp = false;
+                                        ModEntry.StolenToday = true;
+                                        Game1.drawObjectDialogue(Game1.content.LoadString("Strings\\Locations:AnimalShop_Marnie_Absent").Replace('\n', '^'));
+                                        Game1.afterDialogues = delegate
+                                        {
+                                            __instance.createQuestionDialogue("Shoplift?", __instance.createYesNoResponses(), delegate (Farmer _, string answer)
+                                            {
+                                                if (answer == "Yes")
+                                                {
+                                                    ModEntry.StolenToday = true;
+                                                    Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(1, "AnimalShop"), 3, null);
+                                                }
+                                            });
+                                        };
+                                    }
+
+                                    else if (__instance.isCharacterAtTile(who.getTileLocation() + new Vector2(0f, -2f)) == null || __instance.isCharacterAtTile(who.getTileLocation() + new Vector2(-1f, -2f)) == null)
+                                    {
+                                        ModEntry.StolenToday = true;
+                                        __instance.createQuestionDialogue("Shoplift?", __instance.createYesNoResponses(), delegate (Farmer _, string answer)
+                                        {
+                                            if (answer == "Yes")
+                                            {
+                                                ModEntry.StolenToday = true;
+                                                Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(1, "AnimalShop"), 3, null);
+                                            }
+                                        });
+                                    }
                                 }
 
-                                else if (Game1.shortDayNameFromDayOfSeason(Game1.dayOfMonth).Equals("Tue") && __instance.animalShop(tileLocation) == true)
+                                else
                                 {
-                                    Game1.dialogueUp = false;
-                                    ModEntry.StolenToday = true;
-                                    Game1.drawObjectDialogue(Game1.content.LoadString("Strings\\Locations:AnimalShop_Marnie_Absent").Replace('\n', '^'));
-                                    Game1.afterDialogues = delegate
-                                    {
-                                        Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(1 ,"AnimalShop",1), 3, null);
-                                    };
-                                }
-
-                                else if (__instance.isCharacterAtTile(who.getTileLocation() + new Vector2(0f, -2f)) == null || __instance.isCharacterAtTile(who.getTileLocation() + new Vector2(-1f, -2f)) == null)
-                                {
-                                    ModEntry.StolenToday = true;
-                                    Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(1, "AnimalShop",1), 3, null);
+                                    Game1.drawObjectDialogue("You've already shoplifted today. That's enough...");
                                 }
                             }
                             break;
 
                         case "Blacksmith":
-                            if (__instance.blacksmith(tileLocation) == false && ModEntry.StolenToday == false)
+                            if (__instance.blacksmith(tileLocation) == false)
                             {
-                                ModEntry.StolenToday = true;
-                                Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(4, "Blacksmith"), 3, null);
+                                if(ModEntry.StolenToday == false)
+                                {
+                                    __instance.createQuestionDialogue("Shoplift?", __instance.createYesNoResponses(), delegate (Farmer _, string answer)
+                                    {
+                                        if (answer == "Yes")
+                                        {
+                                            ModEntry.StolenToday = true;
+                                            Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(1, "Blacksmith"), 3, null);
+                                        }
+                                    });
+                                }
+
+                                else
+                                {
+                                    Game1.drawObjectDialogue("You've already shoplifted today. That's enough...");
+                                }
+
                             }
                             break;
                     }
