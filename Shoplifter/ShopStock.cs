@@ -177,6 +177,28 @@ namespace Shoplifter
 				}
 			}
 
+			// Gus' shop
+			else if (which == "Saloon")
+            {
+				foreach (var shopstock in Utility.getSaloonStock())
+				{
+
+					// Stops wallpaper and furniture being added, will result in an error item otherwise
+					if ((shopstock.Key as Wallpaper) != null || (shopstock.Key as Furniture) != null)
+					{
+						continue;
+					}
+
+					// Add object id to array
+					if ((shopstock.Key as StardewValley.Object) != null && (shopstock.Key as StardewValley.Object).bigCraftable == false)
+					{
+						index = (shopstock.Key as StardewValley.Object).parentSheetIndex;
+
+						CurrentStock.Add(index);
+					}
+				}
+			}
+
 			// Harvey's clinic
 			else if (which == "HospitalShop")
             {
@@ -188,7 +210,7 @@ namespace Shoplifter
 			// Add generated stock to store from array
 			for (int i = 0; i < stocklimit; i++)
 			{
-				int quantity = random.Next(1, 6);
+				int quantity = random.Next(1, 4);
 				int item = random.Next(0, CurrentStock.Count);
 
                 // Normal objects                

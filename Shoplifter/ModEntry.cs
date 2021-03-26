@@ -16,8 +16,6 @@ namespace Shoplifter
     {
         public static bool StolenToday = false;
 
-        public static bool CaughtToday = false;
-
         public static ArrayList ShopsBannedFrom = new ArrayList();
         public override void Entry(IModHelper helper)
         {
@@ -33,7 +31,7 @@ namespace Shoplifter
         {
             // Reset stolentoday boolean so player can shoplift again when the new day starts
             StolenToday = false;
-            CaughtToday = false;
+            // Clear shopsbannedfrom arraylist so player can enter shops again
             ShopsBannedFrom.Clear();
         }
     }
