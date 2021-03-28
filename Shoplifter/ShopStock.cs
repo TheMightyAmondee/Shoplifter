@@ -16,15 +16,6 @@ namespace Shoplifter
 	{
 		public static ArrayList CurrentStock = new ArrayList();
 
-		private static IMonitor monitor;
-		private static IModHelper helper;
-
-		public static void gethelpers(IMonitor monitor, IModHelper helper)
-		{
-			ShopStock.monitor = monitor;
-			ShopStock.helper = helper;
-		}
-
 		// Method from Utilities so stock can be added to a shop (why is it private?)
 		private static bool addToStock(Dictionary<ISalable, int[]> stock, HashSet<int> stockIndices, StardewValley.Object objectToAdd, int[] listing)
 		{
@@ -38,7 +29,7 @@ namespace Shoplifter
 			return false;
 		}
 
-		public static Dictionary<ISalable, int[]> generateRandomStock(int maxstock, string which)
+		public static Dictionary<ISalable, int[]> generateRandomStock(int maxstock, int maxquantity, string which)
 		{
 			GameLocation location = Game1.currentLocation;
 			Dictionary<ISalable, int[]> stock = new Dictionary<ISalable, int[]>();
@@ -203,7 +194,7 @@ namespace Shoplifter
 			// Add generated stock to store from array
 			for (int i = 0; i < stocklimit; i++)
 			{
-				int quantity = random.Next(1, 4);
+				int quantity = random.Next(1, maxquantity + 1);
 				int item = random.Next(0, CurrentStock.Count);
 
                 // Normal objects                

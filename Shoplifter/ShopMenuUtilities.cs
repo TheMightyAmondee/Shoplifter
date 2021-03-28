@@ -33,16 +33,34 @@ namespace Shoplifter
             if (npc != null && npc.currentLocation == who.currentLocation && Utility.tileWithinRadiusOfPlayer(npc.getTileX(), npc.getTileY(), 7, who))
             {
                 npc.doEmote(12, false, false);
-                if(which == "Pierre" || which == "Willy" || which == "Robin" || which == "Marnie" || which == "Gus" || which == "Harvey")
+                if(!ModEntry.shopliftingstrings.ContainsKey("Placeholder"))
                 {
-                    npc.setNewDialogue(ModEntry.shopliftingstrings[$"TheMightyAmondee.Shoplifter/Caught{which}"], add: true);
+                    if (which == "Pierre" || which == "Willy" || which == "Robin" || which == "Marnie" || which == "Gus" || which == "Harvey")
+                    {
+                        npc.setNewDialogue(ModEntry.shopliftingstrings[$"TheMightyAmondee.Shoplifter/Caught{which}"], add: true);
+                    }
+                    else
+                    {
+                        npc.setNewDialogue(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/CaughtGeneric"], add: true);
+                    }
                 }
                 else
                 {
-                    npc.setNewDialogue(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/CaughtGeneric"], add: true);
-                }                
+                    npc.setNewDialogue(ModEntry.shopliftingstrings["Placeholder"], add: true);
+                }
+                                
                 Game1.drawDialogue(npc);
-                Game1.player.changeFriendship(-Math.Min(1500, Game1.player.getFriendshipLevelForNPC(which)), Game1.getCharacterFromName(which, true));
+
+                if (Game1.player.friendshipData.ContainsKey(which) == true)
+                {
+                    int frienshiploss = -Math.Min(1000, Game1.player.getFriendshipLevelForNPC(which));
+                    Game1.player.changeFriendship(frienshiploss, Game1.getCharacterFromName(which, true));
+                    monitor.Log($"{which} caught you shoplifting... {-frienshiploss} friendship points lost");
+                }
+                else
+                {
+                    monitor.Log($"{which} caught you shoplifting... You've never talked to {which}, no friendship to lose");
+                }
                 return true;
             }
             return false;
@@ -62,11 +80,12 @@ namespace Shoplifter
                     {
                         Game1.warpFarmer(__instance.warps[0].TargetName, __instance.warps[0].TargetX, __instance.warps[0].TargetY, false);
                         ModEntry.ShopsBannedFrom.Add("FishShop");
+                        monitor.Log("Fishshop added to banned shop list", LogLevel.Debug);
                     };
                     return;
                 }
                 ModEntry.StolenToday = true;
-                Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(3, "FishShop"), 3, null);
+                Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(3, 3, "FishShop"), 3, null);
             }
         }
 
@@ -92,11 +111,12 @@ namespace Shoplifter
                                 {
                                     Game1.warpFarmer(__instance.warps[0].TargetName, __instance.warps[0].TargetX, __instance.warps[0].TargetY, false);
                                     ModEntry.ShopsBannedFrom.Add("SeedShop");
+                                    monitor.Log("Seedshop added to banned shop list", LogLevel.Debug);
                                 };
                                 return;
                             }
                             ModEntry.StolenToday = true;
-                            Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(5, "SeedShop"), 3, null);
+                            Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(5, 5, "SeedShop"), 3, null);
                         }
                         else
                         {
@@ -118,11 +138,12 @@ namespace Shoplifter
                             {
                                 Game1.warpFarmer(__instance.warps[0].TargetName, __instance.warps[0].TargetX, __instance.warps[0].TargetY, false);
                                 ModEntry.ShopsBannedFrom.Add("SeedShop");
+                                monitor.Log("Seedshop added to banned shop list", LogLevel.Debug);
                             };
                             return;
                         }
                         ModEntry.StolenToday = true;
-                        Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(5, "SeedShop"), 3, null);
+                        Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(5, 5, "SeedShop"), 3, null);
                     }
                 });
             }
@@ -150,11 +171,12 @@ namespace Shoplifter
                                         {
                                             Game1.warpFarmer(__instance.warps[0].TargetName, __instance.warps[0].TargetX, __instance.warps[0].TargetY, false);
                                             ModEntry.ShopsBannedFrom.Add("ScienceHouse");
+                                            monitor.Log("ScienceHouse added to banned shop list", LogLevel.Debug);
                                         };
                                         return;
                                     }
                                     ModEntry.StolenToday = true;
-                                    Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(6, "Carpenters"), 3, null);
+                                    Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(6, 5, "Carpenters"), 3, null);
                                 }
                                 else
                                 {
@@ -180,11 +202,12 @@ namespace Shoplifter
                                         {
                                             Game1.warpFarmer(__instance.warps[0].TargetName, __instance.warps[0].TargetX, __instance.warps[0].TargetY, false);
                                             ModEntry.ShopsBannedFrom.Add("ScienceHouse");
+                                            monitor.Log("ScienceHouse added to banned shop list", LogLevel.Debug);
                                         };
                                         return;
                                     }
                                     ModEntry.StolenToday = true;
-                                    Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(6, "Carpenters"), 3, null);
+                                    Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(6, 5, "Carpenters"), 3, null);
                                 }
                             });
                         };
@@ -203,11 +226,12 @@ namespace Shoplifter
                                     {
                                         Game1.warpFarmer(__instance.warps[0].TargetName, __instance.warps[0].TargetX, __instance.warps[0].TargetY, false);
                                         ModEntry.ShopsBannedFrom.Add("ScienceHouse");
+                                        monitor.Log("ScienceHouse added to banned shop list", LogLevel.Debug);
                                     };
                                     return;
                                 }
                                 ModEntry.StolenToday = true;
-                                Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(6, "Carpenters"), 3, null);
+                                Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(6, 5, "Carpenters"), 3, null);
                             }
                         });
                     }
@@ -215,7 +239,14 @@ namespace Shoplifter
 
                 else
                 {
-                    Game1.drawObjectDialogue(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"]);
+                    if (!ModEntry.shopliftingstrings.ContainsKey("Placeholder"))
+                    {
+                        Game1.drawObjectDialogue(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"]);
+                    }
+                    else
+                    {
+                        Game1.drawObjectDialogue(ModEntry.shopliftingstrings["Placeholder"]);
+                    }                   
                 }
             }
         }
@@ -242,11 +273,12 @@ namespace Shoplifter
                                         {
                                             Game1.warpFarmer(__instance.warps[0].TargetName, __instance.warps[0].TargetX, __instance.warps[0].TargetY, false);
                                             ModEntry.ShopsBannedFrom.Add("AnimalShop");
+                                            monitor.Log("AnimalShop added to banned shop list", LogLevel.Debug);
                                         };
                                         return;
                                     }
                                     ModEntry.StolenToday = true;
-                                    Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(1, "AnimalShop"), 3, null);
+                                    Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(1, 10, "AnimalShop"), 3, null);
                                 }
                                 else
                                 {
@@ -273,11 +305,12 @@ namespace Shoplifter
                                         {
                                             Game1.warpFarmer(__instance.warps[0].TargetName, __instance.warps[0].TargetX, __instance.warps[0].TargetY, false);
                                             ModEntry.ShopsBannedFrom.Add("AnimalShop");
+                                            monitor.Log("AnimalShop added to banned shop list", LogLevel.Debug);
                                         };
                                         return;
                                     }
                                     ModEntry.StolenToday = true;
-                                    Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(1, "AnimalShop"), 3, null);
+                                    Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(1, 10, "AnimalShop"), 3, null);
                                 }
                             });
                         };
@@ -295,11 +328,12 @@ namespace Shoplifter
                                     {
                                         Game1.warpFarmer(__instance.warps[0].TargetName, __instance.warps[0].TargetX, __instance.warps[0].TargetY, false);
                                         ModEntry.ShopsBannedFrom.Add("AnimalShop");
+                                        monitor.Log("AnimalShop added to banned shop list", LogLevel.Debug);
                                     };
                                     return;
                                 }
                                 ModEntry.StolenToday = true;
-                                Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(1, "AnimalShop"), 3, null);
+                                Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(1, 10, "AnimalShop"), 3, null);
                             }
                         });
                     }
@@ -307,7 +341,14 @@ namespace Shoplifter
 
                 else
                 {
-                    Game1.drawObjectDialogue(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"]);
+                    if (!ModEntry.shopliftingstrings.ContainsKey("Placeholder"))
+                    {
+                        Game1.drawObjectDialogue(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"]);
+                    }
+                    else
+                    {
+                        Game1.drawObjectDialogue(ModEntry.shopliftingstrings["Placeholder"]);
+                    }
                 }
             }
         }
@@ -328,18 +369,26 @@ namespace Shoplifter
                                 {
                                     Game1.warpFarmer(__instance.warps[0].TargetName, __instance.warps[0].TargetX, __instance.warps[0].TargetY, false);
                                     ModEntry.ShopsBannedFrom.Add("Hospital");
+                                    monitor.Log("Hospital added to banned shop list", LogLevel.Debug);
                                 };
                                 return;
                             }
                             ModEntry.StolenToday = true;
-                            Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(1, "HospitalShop"), 3, null);
+                            Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(1, 4, "HospitalShop"), 3, null);
                         }
                     });
                 }
 
                 else
                 {
-                    Game1.drawObjectDialogue(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"]);
+                    if (!ModEntry.shopliftingstrings.ContainsKey("Placeholder"))
+                    {
+                        Game1.drawObjectDialogue(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"]);
+                    }
+                    else
+                    {
+                        Game1.drawObjectDialogue(ModEntry.shopliftingstrings["Placeholder"]);
+                    }
                 }
             }
         }
@@ -355,14 +404,21 @@ namespace Shoplifter
                         if (answer == "Yes")
                         {
                             ModEntry.StolenToday = true;
-                            Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(1, "Blacksmith"), 3, null);
+                            Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(1, 5, "Blacksmith"), 3, null);
                         }
                     });
                 }
 
                 else
                 {
-                    Game1.drawObjectDialogue(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"]);
+                    if (!ModEntry.shopliftingstrings.ContainsKey("Placeholder"))
+                    {
+                        Game1.drawObjectDialogue(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"]);
+                    }
+                    else
+                    {
+                        Game1.drawObjectDialogue(ModEntry.shopliftingstrings["Placeholder"]);
+                    }
                 }
 
             }
@@ -388,11 +444,12 @@ namespace Shoplifter
                                     {
                                         Game1.warpFarmer(__instance.warps[0].TargetName, __instance.warps[0].TargetX, __instance.warps[0].TargetY, false);
                                         ModEntry.ShopsBannedFrom.Add("Saloon");
+                                        monitor.Log("Saloon added to banned shop list", LogLevel.Debug);
                                     };
                                     return;
                                 }
                                 ModEntry.StolenToday = true;
-                                Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(2, "Saloon"), 3, null);
+                                Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(2, 1, "Saloon"), 3, null);
                             }
 
                             else
@@ -409,7 +466,14 @@ namespace Shoplifter
 
                 else
                 {
-                    Game1.drawObjectDialogue(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"]);
+                    if (!ModEntry.shopliftingstrings.ContainsKey("Placeholder"))
+                    {
+                        Game1.drawObjectDialogue(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"]);
+                    }
+                    else
+                    {
+                        Game1.drawObjectDialogue(ModEntry.shopliftingstrings["Placeholder"]);
+                    }
                 }              
                 return;
             }
@@ -432,18 +496,26 @@ namespace Shoplifter
                                         {
                                             Game1.warpFarmer(__instance.warps[0].TargetName, __instance.warps[0].TargetX, __instance.warps[0].TargetY, false);
                                             ModEntry.ShopsBannedFrom.Add("Saloon");
+                                            monitor.Log("Saloon added to banned shop list", LogLevel.Debug);
                                         };
                                         return;
                                     }
                                     ModEntry.StolenToday = true;
-                                    Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(2, "Saloon"), 3, null);
+                                    Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(2, 1, "Saloon"), 3, null);
                                 }
                             });
                         }
 
                         else
                         {
-                            Game1.drawObjectDialogue(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"]);
+                            if (!ModEntry.shopliftingstrings.ContainsKey("Placeholder"))
+                            {
+                                Game1.drawObjectDialogue(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"]);
+                            }
+                            else
+                            {
+                                Game1.drawObjectDialogue(ModEntry.shopliftingstrings["Placeholder"]);
+                            }
                         }
                     }
 

@@ -23,7 +23,7 @@ namespace Shoplifter
         public override void Entry(IModHelper helper)
         {
             ShopMenuPatcher.gethelpers(this.Monitor, this.Helper);
-            ShopStock.gethelpers(this.Monitor, this.Helper);
+            ShopMenuUtilities.gethelpers(this.Monitor, this.Helper);
             helper.Events.GameLoop.DayStarted += this.DayStarted;
             helper.Events.GameLoop.GameLaunched += this.Launched;
 
@@ -35,22 +35,37 @@ namespace Shoplifter
         {
             // Reset stolentoday boolean so player can shoplift again when the new day starts
             StolenToday = false;
-            // Clear shopsbannedfrom arraylist so player can enter shops again
-            ShopsBannedFrom.Clear();
-            
+            if(ShopsBannedFrom.Count > 0)
+            {
+                // Clear shopsbannedfrom arraylist so player can enter shops again
+                ShopsBannedFrom.Clear();
+                this.Monitor.Log("Cleared list of banned shops, steal away!", LogLevel.Info);
+            }                      
         }
 
         private void Launched(object sender, GameLaunchedEventArgs e)
         {
-           Dictionary<string, string> strings = this.Helper.Content.Load<Dictionary<string, string>>("assets\\Strings.json", ContentSource.ModFolder);
-
-            if (strings != null)
+            try
             {
-                foreach (string key in new List<string>(strings.Keys))
+                // Get strings from assets folder and add them to a new dictionary
+                Dictionary<string, string> strings = this.Helper.Content.Load<Dictionary<string, string>>("assets\\Strings.json", ContentSource.ModFolder);
+
+                if (strings != null)
                 {
-                    shopliftingstrings.Add(key, strings[key]);
+                    foreach (string key in new List<string>(strings.Keys))
+                    {
+                        shopliftingstrings.Add(key, strings[key]);
+                    }
                 }
+                this.Monitor.Log("Strings loaded from assets, ready to go!");
             }
+            catch
+            {
+                shopliftingstrings.Add("Placeholder", "Missing string... If you see this check you have the Strings.json file in the assets folder.");
+                this.Monitor.Log("Could not load strings... This will likely result in problems, (Are you missing the Strings.json file?)", LogLevel.Error);
+                this.Monitor.Log("Adding a placeholder string to stop crashes...", LogLevel.Info);
+            }
+           
         }
     }
 }

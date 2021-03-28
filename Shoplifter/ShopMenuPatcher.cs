@@ -28,6 +28,8 @@ namespace Shoplifter
         {
             ShopMenuPatcher.monitor = monitor;
 
+            monitor.Log("Initialising harmony patches...");
+
             harmony.Patch(
                 original: AccessTools.Method(typeof(GameLocation), nameof(GameLocation.openShopMenu)),
                 postfix: new HarmonyMethod(typeof(ShopMenuPatcher), nameof(ShopMenuPatcher.openShopMenu_Postfix))
@@ -41,7 +43,7 @@ namespace Shoplifter
             harmony.Patch(
                original: AccessTools.Method(typeof(GameLocation), nameof(GameLocation.performAction)),
                prefix: new HarmonyMethod(typeof(ShopMenuPatcher), nameof(ShopMenuPatcher.performAction_Prefix))
-           );
+           );           
         }
 
         public static void openShopMenu_Postfix(GameLocation __instance, string which) 
@@ -103,7 +105,7 @@ namespace Shoplifter
             }            
         }
 
-        public static bool performAction_Prefix(GameLocation __instance, string action, Farmer who, Location tileLocation)
+        public static bool performAction_Prefix(string action, Farmer who)
         {
             try
             {
@@ -115,7 +117,15 @@ namespace Shoplifter
                         case "LockedDoorWarp":
                             if(ModEntry.ShopsBannedFrom.Contains(actionParams[3]))
                             {
-                                Game1.drawObjectDialogue(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/Banned"]);
+                                if (!ModEntry.shopliftingstrings.ContainsKey("Placeholder"))
+                                {
+                                    Game1.drawObjectDialogue(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/Banned"]);
+                                }
+                                else
+                                {
+                                    Game1.drawObjectDialogue(ModEntry.shopliftingstrings["Placeholder"]);
+                                }
+                                
                                 return false;
                             }
                             return true;                           
