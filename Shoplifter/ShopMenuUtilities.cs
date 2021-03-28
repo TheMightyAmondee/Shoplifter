@@ -35,7 +35,7 @@ namespace Shoplifter
                 npc.doEmote(12, false, false);
                 if(!ModEntry.shopliftingstrings.ContainsKey("Placeholder"))
                 {
-                    if (which == "Pierre" || which == "Willy" || which == "Robin" || which == "Marnie" || which == "Gus" || which == "Harvey")
+                    if (which == "Pierre" || which == "Willy" || which == "Robin" || which == "Marnie" || which == "Gus" || which == "Harvey" || which == "Clint")
                     {
                         npc.setNewDialogue(ModEntry.shopliftingstrings[$"TheMightyAmondee.Shoplifter/Caught{which}"], add: true);
                     }
@@ -403,6 +403,16 @@ namespace Shoplifter
                     {
                         if (answer == "Yes")
                         {
+                            if (shouldbeCaught("Clint", Game1.player) == true)
+                            {
+                                Game1.afterDialogues = delegate
+                                {
+                                    Game1.warpFarmer(__instance.warps[0].TargetName, __instance.warps[0].TargetX, __instance.warps[0].TargetY, false);
+                                    ModEntry.PerScreenShopsBannedFrom.Value.Add("Blacksmith");
+                                    monitor.Log("BlackSmith added to banned shop list", LogLevel.Debug);
+                                };
+                                return;
+                            }
                             ModEntry.StolenToday = true;
                             Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(1, 5, "Blacksmith"), 3, null);
                         }

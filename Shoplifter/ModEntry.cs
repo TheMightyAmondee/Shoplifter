@@ -64,6 +64,7 @@ namespace Shoplifter
             }
             catch
             {
+                // Add placeholder if strings can't be loaded to prevent crashes
                 shopliftingstrings.Add("Placeholder", "Missing string... If you see this check you have the Strings.json file in the assets folder.");
                 this.Monitor.Log("Could not load strings... This will likely result in problems, (Are you missing the Strings.json file?)", LogLevel.Error);
                 this.Monitor.Log("Adding a placeholder string to stop crashes...", LogLevel.Info);

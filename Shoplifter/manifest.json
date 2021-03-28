@@ -2,7 +2,7 @@
   "Name": "Shoplifter",
   "Author": "TheMightyAmondee",
   "Version": "1.0.0",
-  "Description": "Experimental free shop menus",
+  "Description": "Adds the ability to shoplift, just don't get caught!",
   "UniqueID": "TheMightyAmondee.Shoplifter",
   "EntryDll": "Shoplifter.dll",
   "MinimumApiVersion": "3.9.0",
