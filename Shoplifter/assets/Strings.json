@@ -1,6 +1,11 @@
 ﻿{
   "TheMightyAmondee.Shoplifter/Banned": "You've been banned for shoplifting. Don't push your luck...",
   "TheMightyAmondee.Shoplifter/AlreadyShoplifted": "You've already shoplifted today. That's enough...",
-  "TheMightyAmondee.Shoplifter/CaughtGeneric": "You're seriously shoplifting {0}?$2#$b#*sigh* Please get out... Don't come back today!$2",
-  "TheMightyAmondee.Shoplifter/CaughtPierre": "You're shoplifting??!!$4#$b#Get out, and don't even think about coming back today!$3"
+  "TheMightyAmondee.Shoplifter/CaughtGeneric": "You're seriously shoplifting @?$2#$b#*sigh* Please leave... Don't come back today!$2",
+  "TheMightyAmondee.Shoplifter/CaughtPierre": "You're shoplifting??!!$4#$b#Get out, and don't even think about coming back today!$3",
+  "TheMightyAmondee.Shoplifter/CaughtWilly": "I can tell when you're shoplifting @... The smell follows you...$2#$b#Please return that stuff and leave. I don't want to see you for the rest of the day.$2",
+  "TheMightyAmondee.Shoplifter/CaughtRobin": "Really @? Did you think you could get a free TV... I don't keep my big items there...$3#$b#I think you'd better leave now...$2",
+  "TheMightyAmondee.Shoplifter/CaughtMarnie": "Stealing my hay are we @? Just cause I'm never at my shop that doesn't mean you can steal from me.$4#$b#Get off my premises before I call Lewis.$3",
+  "TheMightyAmondee.Shoplifter/CaughtGus": "I know today's special looks good @, but you still need to pay for it.$3#$b#*sigh* If you leave now I'll forget you were shoplifting ok?$2",
+  "TheMightyAmondee.Shoplifter/CaughtHarvey": "What do you think you're doing @? That stuff is dangerous without doctor's advice...$8#$b#Put it back and don't come back today unless it's an emergency.$5"
 }

@@ -19,23 +19,28 @@ namespace Shoplifter
     {
         private static IMonitor monitor;
         private static IModHelper helper;
-        
+      
         public static void gethelpers(IMonitor monitor, IModHelper helper)
         {
             ShopMenuUtilities.monitor = monitor;
             ShopMenuUtilities.helper = helper;
         }
        
-        public static bool shouldbeCaught(string which, Farmer who, int whichportrait1, int whichportrait2)
+        public static bool shouldbeCaught(string which, Farmer who)
         {
             NPC npc = Game1.getCharacterFromName(which);
-
-            IDictionary<string, string> strings = helper.Content.Load<Dictionary<string, string>>("Strings.json", ContentSource.ModFolder);
-
+            
             if (npc != null && npc.currentLocation == who.currentLocation && Utility.tileWithinRadiusOfPlayer(npc.getTileX(), npc.getTileY(), 7, who))
             {
                 npc.doEmote(12, false, false);
-                npc.setNewDialogue(strings["TheMightyAmondee.Shoplifter/CaughtGeneric"],Game1.player.Name, add: true);
+                if(which == "Pierre" || which == "Willy" || which == "Robin" || which == "Marnie" || which == "Gus" || which == "Harvey")
+                {
+                    npc.setNewDialogue(ModEntry.shopliftingstrings[$"TheMightyAmondee.Shoplifter/Caught{which}"], add: true);
+                }
+                else
+                {
+                    npc.setNewDialogue(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/CaughtGeneric"], add: true);
+                }                
                 Game1.drawDialogue(npc);
                 Game1.player.changeFriendship(-Math.Min(1500, Game1.player.getFriendshipLevelForNPC(which)), Game1.getCharacterFromName(which, true));
                 return true;
@@ -51,7 +56,7 @@ namespace Shoplifter
             }
             else
             {
-                if (shouldbeCaught("Willy", Game1.player, 2, 2) == true)
+                if (shouldbeCaught("Willy", Game1.player) == true)
                 {
                     Game1.afterDialogues = delegate
                     {
@@ -81,7 +86,7 @@ namespace Shoplifter
                     {
                         if (answer == "Yes")
                         {
-                            if (shouldbeCaught("Pierre", Game1.player, 4, 3) == true || shouldbeCaught("Caroline", Game1.player, 2, 3) == true || shouldbeCaught("Abigail", Game1.player, 7, 5) == true)
+                            if (shouldbeCaught("Pierre", Game1.player) == true || shouldbeCaught("Caroline", Game1.player) == true || shouldbeCaught("Abigail", Game1.player) == true)
                             {
                                 Game1.afterDialogues = delegate
                                 {
@@ -107,7 +112,7 @@ namespace Shoplifter
                 {
                     if (answer == "Yes")
                     {
-                        if (shouldbeCaught("Pierre", Game1.player, 4, 3) == true || shouldbeCaught("Caroline", Game1.player, 2, 3) == true || shouldbeCaught("Abigail", Game1.player, 7, 5) == true)
+                        if (shouldbeCaught("Pierre", Game1.player) == true || shouldbeCaught("Caroline", Game1.player) == true || shouldbeCaught("Abigail", Game1.player) == true)
                         {
                             Game1.afterDialogues = delegate
                             {
@@ -139,7 +144,7 @@ namespace Shoplifter
                             {
                                 if (answer == "Yes")
                                 {
-                                    if (shouldbeCaught("Robin", Game1.player, 2, 3) == true || shouldbeCaught("Demetrius", Game1.player, 6, 4) == true || shouldbeCaught("Maru", Game1.player, 9, 5) == true || shouldbeCaught("Sebastian", Game1.player, 2, 5) == true)
+                                    if (shouldbeCaught("Robin", Game1.player) == true || shouldbeCaught("Demetrius", Game1.player) == true || shouldbeCaught("Maru", Game1.player) == true || shouldbeCaught("Sebastian", Game1.player) == true)
                                     {
                                         Game1.afterDialogues = delegate
                                         {
@@ -169,7 +174,7 @@ namespace Shoplifter
                             {
                                 if (answer == "Yes")
                                 {
-                                    if (shouldbeCaught("Robin", Game1.player, 2, 3) == true || shouldbeCaught("Demetrius", Game1.player, 6, 4) == true || shouldbeCaught("Maru", Game1.player, 9, 5) == true || shouldbeCaught("Sebastian", Game1.player, 2, 5) == true)
+                                    if (shouldbeCaught("Robin", Game1.player) == true || shouldbeCaught("Demetrius", Game1.player) == true || shouldbeCaught("Maru", Game1.player) == true || shouldbeCaught("Sebastian", Game1.player) == true)
                                     {
                                         Game1.afterDialogues = delegate
                                         {
@@ -192,7 +197,7 @@ namespace Shoplifter
                         {
                             if (answer == "Yes")
                             {
-                                if (shouldbeCaught("Robin", Game1.player, 2, 3) == true || shouldbeCaught("Demetrius", Game1.player, 6, 4) == true || shouldbeCaught("Maru", Game1.player, 9, 5) == true || shouldbeCaught("Sebastian", Game1.player, 2, 5) == true)
+                                if (shouldbeCaught("Robin", Game1.player) == true || shouldbeCaught("Demetrius", Game1.player) == true || shouldbeCaught("Maru", Game1.player) == true || shouldbeCaught("Sebastian", Game1.player) == true)
                                 {
                                     Game1.afterDialogues = delegate
                                     {
@@ -210,7 +215,7 @@ namespace Shoplifter
 
                 else
                 {
-                    Game1.drawObjectDialogue("You've already shoplifted today. That's enough...");
+                    Game1.drawObjectDialogue(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"]);
                 }
             }
         }
@@ -231,7 +236,7 @@ namespace Shoplifter
                             {
                                 if (answer == "Yes")
                                 {
-                                    if (shouldbeCaught("Marnie", Game1.player,4, 3) == true || shouldbeCaught("Shane", Game1.player, 10, 5) == true)
+                                    if (shouldbeCaught("Marnie", Game1.player) == true || shouldbeCaught("Shane", Game1.player) == true)
                                     {
                                         Game1.afterDialogues = delegate
                                         {
@@ -262,7 +267,7 @@ namespace Shoplifter
                             {
                                 if (answer == "Yes")
                                 {
-                                    if (shouldbeCaught("Marnie", Game1.player, 4, 3) == true || shouldbeCaught("Shane", Game1.player, 10, 5) == true)
+                                    if (shouldbeCaught("Marnie", Game1.player) == true || shouldbeCaught("Shane", Game1.player) == true)
                                     {
                                         Game1.afterDialogues = delegate
                                         {
@@ -284,7 +289,7 @@ namespace Shoplifter
                         {
                             if (answer == "Yes")
                             {
-                                if (shouldbeCaught("Marnie", Game1.player, 4, 3) == true || shouldbeCaught("Shane", Game1.player, 10, 5) == true)
+                                if (shouldbeCaught("Marnie", Game1.player) == true || shouldbeCaught("Shane", Game1.player) == true)
                                 {
                                     Game1.afterDialogues = delegate
                                     {
@@ -302,7 +307,7 @@ namespace Shoplifter
 
                 else
                 {
-                    Game1.drawObjectDialogue("You've already shoplifted today. That's enough...");
+                    Game1.drawObjectDialogue(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"]);
                 }
             }
         }
@@ -317,7 +322,7 @@ namespace Shoplifter
                     {
                         if (answer == "Yes")
                         {
-                            if (shouldbeCaught("Harvey", Game1.player, 8, 5) == true || shouldbeCaught("Maru", Game1.player, 4, 5) == true)
+                            if (shouldbeCaught("Harvey", Game1.player) == true || shouldbeCaught("Maru", Game1.player) == true)
                             {
                                 Game1.afterDialogues = delegate
                                 {
@@ -334,7 +339,7 @@ namespace Shoplifter
 
                 else
                 {
-                    Game1.drawObjectDialogue("You've already shoplifted today. That's enough...");
+                    Game1.drawObjectDialogue(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"]);
                 }
             }
         }
@@ -357,62 +362,27 @@ namespace Shoplifter
 
                 else
                 {
-                    Game1.drawObjectDialogue("You've already shoplifted today. That's enough...");
+                    Game1.drawObjectDialogue(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"]);
                 }
 
             }
         }
 
         public static void SaloonShopliftingMenu(GameLocation __instance)
-        {
+        {            
             if (__instance.getCharacterFromName("Gus") == null && Game1.IsVisitingIslandToday("Gus"))
             {
-                Game1.dialogueUp = false;
-                Game1.drawObjectDialogue(Game1.content.LoadString("Strings\\Locations:Saloon_MoneyBox"));
-                Game1.afterDialogues = delegate
+                if (ModEntry.StolenToday == false)
                 {
-                    __instance.createQuestionDialogue("Shoplift?", __instance.createYesNoResponses(), delegate (Farmer _, string answer)
-                    {
-                        if (answer == "Yes")
-                        {
-                            if (shouldbeCaught("Gus", Game1.player, 2, 3) == true || shouldbeCaught("Emily", Game1.player, 2, 5) == true)
-                            {
-                                Game1.afterDialogues = delegate
-                                {
-                                    Game1.warpFarmer(__instance.warps[0].TargetName, __instance.warps[0].TargetX, __instance.warps[0].TargetY, false);
-                                    ModEntry.ShopsBannedFrom.Add("Saloon");
-                                };
-                                return;
-                            }
-                            ModEntry.StolenToday = true;
-                            Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(2, "Saloon"), 3, null);
-                        }
-
-                        else
-                        {
-                            Game1.activeClickableMenu = new ShopMenu(Utility.getSaloonStock(), 0, null, delegate (ISalable item, Farmer farmer, int amount)
-                            {
-                                Game1.player.team.synchronizedShopStock.OnItemPurchased(SynchronizedShopStock.SynchedShop.Saloon, item, amount);
-                                return false;
-                            });
-                        }
-                    });
-                };
-
-                return;
-            }
-
-            foreach (NPC i in __instance.characters)
-            {
-                if (i.Name.Equals("Gus"))
-                {
-                    if (i.getTileY() != Game1.player.getTileY() - 1 && i.getTileY() != Game1.player.getTileY() - 2)
+                    Game1.dialogueUp = false;
+                    Game1.drawObjectDialogue(Game1.content.LoadString("Strings\\Locations:Saloon_MoneyBox"));
+                    Game1.afterDialogues = delegate
                     {
                         __instance.createQuestionDialogue("Shoplift?", __instance.createYesNoResponses(), delegate (Farmer _, string answer)
                         {
                             if (answer == "Yes")
                             {
-                                if (shouldbeCaught("Gus", Game1.player, 2, 3) == true || shouldbeCaught("Emily", Game1.player, 2, 5) == true)
+                                if (shouldbeCaught("Gus", Game1.player) == true || shouldbeCaught("Emily", Game1.player) == true)
                                 {
                                     Game1.afterDialogues = delegate
                                     {
@@ -424,7 +394,57 @@ namespace Shoplifter
                                 ModEntry.StolenToday = true;
                                 Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(2, "Saloon"), 3, null);
                             }
+
+                            else
+                            {
+                                Game1.activeClickableMenu = new ShopMenu(Utility.getSaloonStock(), 0, null, delegate (ISalable item, Farmer farmer, int amount)
+                                {
+                                    Game1.player.team.synchronizedShopStock.OnItemPurchased(SynchronizedShopStock.SynchedShop.Saloon, item, amount);
+                                    return false;
+                                });
+                            }
                         });
+                    };
+                }
+
+                else
+                {
+                    Game1.drawObjectDialogue(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"]);
+                }              
+                return;
+            }
+
+            foreach (NPC i in __instance.characters)
+            {
+                if (i.Name.Equals("Gus"))
+                {
+                    if (i.getTileY() != Game1.player.getTileY() - 1 && i.getTileY() != Game1.player.getTileY() - 2)
+                    {
+                        if (ModEntry.StolenToday == false)
+                        {
+                            __instance.createQuestionDialogue("Shoplift?", __instance.createYesNoResponses(), delegate (Farmer _, string answer)
+                            {
+                                if (answer == "Yes")
+                                {
+                                    if (shouldbeCaught("Gus", Game1.player) == true || shouldbeCaught("Emily", Game1.player) == true)
+                                    {
+                                        Game1.afterDialogues = delegate
+                                        {
+                                            Game1.warpFarmer(__instance.warps[0].TargetName, __instance.warps[0].TargetX, __instance.warps[0].TargetY, false);
+                                            ModEntry.ShopsBannedFrom.Add("Saloon");
+                                        };
+                                        return;
+                                    }
+                                    ModEntry.StolenToday = true;
+                                    Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(2, "Saloon"), 3, null);
+                                }
+                            });
+                        }
+
+                        else
+                        {
+                            Game1.drawObjectDialogue(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"]);
+                        }
                     }
 
                     return;
