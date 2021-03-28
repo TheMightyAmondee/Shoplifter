@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using StardewValley.Locations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using StardewValley;
 using StardewModdingAPI;
 using Harmony;
-using Microsoft.Xna.Framework;
 using xTile.Dimensions;
 
 namespace Shoplifter
@@ -117,7 +113,7 @@ namespace Shoplifter
                         case "LockedDoorWarp":
                             if(ModEntry.PerScreenShopsBannedFrom.Value.Contains(actionParams[3]))
                             {
-                                if (!ModEntry.shopliftingstrings.ContainsKey("Placeholder"))
+                                if (ModEntry.shopliftingstrings.ContainsKey("Placeholder") == false)
                                 {
                                     Game1.drawObjectDialogue(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/Banned"]);
                                 }

@@ -25,7 +25,13 @@ namespace Shoplifter
             ShopMenuUtilities.monitor = monitor;
             ShopMenuUtilities.helper = helper;
         }
-       
+
+        /// <summary>
+        /// Determines whether the player is caught, makes corrections to dialogue and friendship based on return value
+        /// </summary>
+        /// <param name="which">Who should catch the player</param>
+        /// <param name="who">The player to catch</param>
+        /// <returns>Whether the player was caught</returns>      
         public static bool shouldbeCaught(string which, Farmer who)
         {
             NPC npc = Game1.getCharacterFromName(which);
@@ -66,6 +72,10 @@ namespace Shoplifter
             return false;
         }
 
+        /// <summary>
+        /// Create the shoplifting menu with Fishshop stock if necessary
+        /// </summary>
+        /// <param name="__instance">The current location instance</param>
         public static void FishShopShopliftingMenu(GameLocation __instance)
         {
             if (__instance.getCharacterFromName("Willy") != null && __instance.getCharacterFromName("Willy").getTileLocation().Y < (float)Game1.player.getTileY())
@@ -89,6 +99,10 @@ namespace Shoplifter
             }
         }
 
+        /// <summary>
+        /// Create the shoplifting menu with Seedshop stock if necessary
+        /// </summary>
+        /// <param name="__instance">The current location instance</param>
         public static void SeedShopShopliftingMenu(GameLocation __instance)
         {
             if (__instance.getCharacterFromName("Pierre") != null && __instance.getCharacterFromName("Pierre").getTileLocation().Equals(new Vector2(4f, 17f)) && Game1.player.getTileY() > __instance.getCharacterFromName("Pierre").getTileY())
@@ -149,6 +163,12 @@ namespace Shoplifter
             }
         }
 
+        /// <summary>
+        /// Create the shoplifting menu with Carpenter stock if necessary
+        /// </summary>
+        /// <param name="__instance">The current location instance</param>
+        /// <param name="who">The player</param>
+        /// <param name="tileLocation">The clicked tilelocation</param>
         public static void CarpenterShopliftingMenu(GameLocation __instance, Farmer who, Location tileLocation)
         {
             if (who.getTileY() > tileLocation.Y)
@@ -251,6 +271,12 @@ namespace Shoplifter
             }
         }
 
+        /// <summary>
+        /// Create the shoplifting menu with AnimalShop stock if necessary
+        /// </summary>
+        /// <param name="__instance">The current location instance</param>
+        /// <param name="who">The player</param>
+        /// <param name="tileLocation">The clicked tilelocation</param>
         public static void AnimalShopShopliftingMenu(GameLocation __instance, Farmer who, Location tileLocation)
         {
             if (who.getTileY() > tileLocation.Y)
@@ -352,7 +378,12 @@ namespace Shoplifter
                 }
             }
         }
-       
+
+        /// <summary>
+        /// Create the shoplifting menu with Hospital stock if necessary
+        /// </summary>
+        /// <param name="__instance">The current location instance</param>
+        /// <param name="who">The player</param>
         public static void HospitalShopliftingMenu(GameLocation __instance, Farmer who)
         {
             if (__instance.isCharacterAtTile(who.getTileLocation() + new Vector2(0f, -2f)) == null || __instance.isCharacterAtTile(who.getTileLocation() + new Vector2(-1f, -2f)) == null)
@@ -393,6 +424,11 @@ namespace Shoplifter
             }
         }
 
+        /// <summary>
+        /// Create the shoplifting menu with Blacksmith stock if necessary
+        /// </summary>
+        /// <param name="__instance">The current location instance</param>
+        /// <param name="tileLocation">The clicked tilelocation</param>
         public static void BlacksmithShopliftingMenu(GameLocation __instance, Location tileLocation)
         {
             if (__instance.blacksmith(tileLocation) == false)
@@ -434,6 +470,10 @@ namespace Shoplifter
             }
         }
 
+        /// <summary>
+        /// Create the shoplifting menu with Saloon stock if necessary
+        /// </summary>
+        /// <param name="__instance">The current location instance</param>
         public static void SaloonShopliftingMenu(GameLocation __instance)
         {            
             if (__instance.getCharacterFromName("Gus") == null && Game1.IsVisitingIslandToday("Gus"))

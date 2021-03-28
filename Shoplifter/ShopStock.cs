@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Reflection;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using StardewValley.Objects;
 using System.Collections;
 using System.Collections.Generic;
 using StardewValley.Locations;
 using StardewValley;
-using Harmony;
-using StardewModdingAPI;
 
 namespace Shoplifter
 {	
@@ -29,6 +24,13 @@ namespace Shoplifter
 			return false;
 		}
 
+		/// <summary>
+		/// Generates a random list of stock for the given shop
+		/// </summary>
+		/// <param name="maxstock">The maximum number of different stock items to generate</param>
+		/// <param name="maxquantity">The maximum quantity of each stock</param>
+		/// <param name="which">The shop to generate stock for</param>
+		/// <returns>The generated stock list</returns>
 		public static Dictionary<ISalable, int[]> generateRandomStock(int maxstock, int maxquantity, string which)
 		{
 			GameLocation location = Game1.currentLocation;
