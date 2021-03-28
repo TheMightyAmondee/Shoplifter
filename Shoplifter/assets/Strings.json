@@ -1,0 +1,6 @@
+﻿{
+  "TheMightyAmondee.Shoplifter/Banned": "You've been banned for shoplifting. Don't push your luck...",
+  "TheMightyAmondee.Shoplifter/AlreadyShoplifted": "You've already shoplifted today. That's enough...",
+  "TheMightyAmondee.Shoplifter/CaughtGeneric": "You're seriously shoplifting {0}?$2#$b#*sigh* Please get out... Don't come back today!$2",
+  "TheMightyAmondee.Shoplifter/CaughtPierre": "You're shoplifting??!!$4#$b#Get out, and don't even think about coming back today!$3"
+}

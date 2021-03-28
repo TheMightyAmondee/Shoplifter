@@ -25,6 +25,7 @@ namespace Shoplifter
 
             var harmony = HarmonyInstance.Create(this.ModManifest.UniqueID);
             ShopMenuPatcher.Hook(harmony, this.Monitor);
+
         }
 
         private void DayStarted(object sender, DayStartedEventArgs e)
@@ -32,7 +33,7 @@ namespace Shoplifter
             // Reset stolentoday boolean so player can shoplift again when the new day starts
             StolenToday = false;
             // Clear shopsbannedfrom arraylist so player can enter shops again
-            ShopsBannedFrom.Clear();
+            ShopsBannedFrom.Clear();         
         }
     }
 }

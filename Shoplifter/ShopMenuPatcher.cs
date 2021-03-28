@@ -4,15 +4,11 @@ using StardewValley.Locations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using StardewValley.Objects;
-using StardewValley.Menus;
 using StardewValley;
 using StardewModdingAPI;
 using Harmony;
 using Microsoft.Xna.Framework;
 using xTile.Dimensions;
-using xTile.Layers;
-using xTile.Tiles;
 
 namespace Shoplifter
 {

@@ -38,13 +38,6 @@ namespace Shoplifter
 			return false;
 		}
 
-		/// <summary>
-		/// Generates a random list of available stock for the given shop
-		/// </summary>
-		/// <param name="maxstock">The maximum number of different items to generate</param>
-		/// <param name="which">The shop to generate stock for</param>
-		/// <param name="maxotheritemstock">The max number of non-basic items to add</param>
-		/// <returns>The generated stock list</returns>
 		public static Dictionary<ISalable, int[]> generateRandomStock(int maxstock, string which)
 		{
 			GameLocation location = Game1.currentLocation;

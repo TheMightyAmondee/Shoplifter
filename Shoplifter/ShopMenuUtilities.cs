@@ -4,16 +4,12 @@ using StardewValley.Locations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using StardewValley.Objects;
+using StardewModdingAPI;
 using StardewValley.Util;
 using StardewValley.Menus;
 using StardewValley;
-using StardewModdingAPI;
-using Harmony;
 using Microsoft.Xna.Framework;
 using xTile.Dimensions;
-using xTile.Layers;
-using xTile.Tiles;
 
 
 
@@ -21,14 +17,25 @@ namespace Shoplifter
 {
     public class ShopMenuUtilities
     {
+        private static IMonitor monitor;
+        private static IModHelper helper;
+        
+        public static void gethelpers(IMonitor monitor, IModHelper helper)
+        {
+            ShopMenuUtilities.monitor = monitor;
+            ShopMenuUtilities.helper = helper;
+        }
+       
         public static bool shouldbeCaught(string which, Farmer who, int whichportrait1, int whichportrait2)
         {
             NPC npc = Game1.getCharacterFromName(which);
 
+            IDictionary<string, string> strings = helper.Content.Load<Dictionary<string, string>>("Strings.json", ContentSource.ModFolder);
+
             if (npc != null && npc.currentLocation == who.currentLocation && Utility.tileWithinRadiusOfPlayer(npc.getTileX(), npc.getTileY(), 7, who))
             {
                 npc.doEmote(12, false, false);
-                npc.setNewDialogue($"What do you think you're doing @!? Shoplifting??!!${whichportrait1}#$b#Get out, and don't even think about coming back today!${whichportrait2}", add: true);
+                npc.setNewDialogue(strings["TheMightyAmondee.Shoplifter/CaughtGeneric"],Game1.player.Name, add: true);
                 Game1.drawDialogue(npc);
                 Game1.player.changeFriendship(-Math.Min(1500, Game1.player.getFriendshipLevelForNPC(which)), Game1.getCharacterFromName(which, true));
                 return true;
