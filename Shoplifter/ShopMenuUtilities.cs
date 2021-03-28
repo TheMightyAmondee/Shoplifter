@@ -33,7 +33,7 @@ namespace Shoplifter
             if (npc != null && npc.currentLocation == who.currentLocation && Utility.tileWithinRadiusOfPlayer(npc.getTileX(), npc.getTileY(), 7, who))
             {
                 npc.doEmote(12, false, false);
-                if(!ModEntry.shopliftingstrings.ContainsKey("Placeholder"))
+                if(ModEntry.shopliftingstrings.ContainsKey("Placeholder") == false)
                 {
                     if (which == "Pierre" || which == "Willy" || which == "Robin" || which == "Marnie" || which == "Gus" || which == "Harvey" || which == "Clint")
                     {
@@ -239,7 +239,7 @@ namespace Shoplifter
 
                 else
                 {
-                    if (!ModEntry.shopliftingstrings.ContainsKey("Placeholder"))
+                    if (ModEntry.shopliftingstrings.ContainsKey("Placeholder") == false)
                     {
                         Game1.drawObjectDialogue(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"]);
                     }
@@ -341,7 +341,7 @@ namespace Shoplifter
 
                 else
                 {
-                    if (!ModEntry.shopliftingstrings.ContainsKey("Placeholder"))
+                    if (ModEntry.shopliftingstrings.ContainsKey("Placeholder") == false)
                     {
                         Game1.drawObjectDialogue(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"]);
                     }
@@ -381,7 +381,7 @@ namespace Shoplifter
 
                 else
                 {
-                    if (!ModEntry.shopliftingstrings.ContainsKey("Placeholder"))
+                    if (ModEntry.shopliftingstrings.ContainsKey("Placeholder") == false)
                     {
                         Game1.drawObjectDialogue(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"]);
                     }
@@ -409,7 +409,7 @@ namespace Shoplifter
                                 {
                                     Game1.warpFarmer(__instance.warps[0].TargetName, __instance.warps[0].TargetX, __instance.warps[0].TargetY, false);
                                     ModEntry.PerScreenShopsBannedFrom.Value.Add("Blacksmith");
-                                    monitor.Log("BlackSmith added to banned shop list", LogLevel.Debug);
+                                    monitor.Log("Blacksmith added to banned shop list", LogLevel.Debug);
                                 };
                                 return;
                             }
@@ -421,7 +421,7 @@ namespace Shoplifter
 
                 else
                 {
-                    if (!ModEntry.shopliftingstrings.ContainsKey("Placeholder"))
+                    if (ModEntry.shopliftingstrings.ContainsKey("Placeholder") == false)
                     {
                         Game1.drawObjectDialogue(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"]);
                     }
@@ -476,7 +476,7 @@ namespace Shoplifter
 
                 else
                 {
-                    if (!ModEntry.shopliftingstrings.ContainsKey("Placeholder"))
+                    if (ModEntry.shopliftingstrings.ContainsKey("Placeholder") == false)
                     {
                         Game1.drawObjectDialogue(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"]);
                     }
@@ -518,7 +518,7 @@ namespace Shoplifter
 
                         else
                         {
-                            if (!ModEntry.shopliftingstrings.ContainsKey("Placeholder"))
+                            if (ModEntry.shopliftingstrings.ContainsKey("Placeholder") == false)
                             {
                                 Game1.drawObjectDialogue(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"]);
                             }
