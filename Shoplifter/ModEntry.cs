@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿
+using System.Collections.Generic;
 using System.Collections;
 using StardewModdingAPI;
 using StardewModdingAPI.Events;
@@ -12,6 +13,7 @@ namespace Shoplifter
     {
         public static bool StolenToday = false;
 
+        public static readonly PerScreen<bool> PerScreenStolenToday = new PerScreen<bool>(createNewState: () => StolenToday);
         public static ArrayList ShopsBannedFrom { get; private set; } = new ArrayList();
 
         public static Dictionary<string, string> shopliftingstrings = new Dictionary<string, string>();
@@ -31,8 +33,8 @@ namespace Shoplifter
         }
         private void DayStarted(object sender, DayStartedEventArgs e)
         {
-            // Reset stolentoday boolean so player can shoplift again when the new day starts
-            StolenToday = false;
+            // Reset perscreenstolentoday boolean so player can shoplift again when the new day starts
+            PerScreenStolenToday.Value = false;
             if(PerScreenShopsBannedFrom.Value.Count > 0)
             {
                 // Clear perscreenshopsbannedfrom arraylist so player can enter shops again

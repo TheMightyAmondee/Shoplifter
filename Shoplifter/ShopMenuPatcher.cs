@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using StardewValley.Locations;
 using StardewValley;
 using StardewModdingAPI;
@@ -46,13 +45,13 @@ namespace Shoplifter
         {
             try
             {
-                if (which.Equals("Fish") && ModEntry.StolenToday == false)
+                if (which.Equals("Fish") && ModEntry.PerScreenStolenToday.Value == false)
                 {
                     ShopMenuUtilities.FishShopShopliftingMenu(__instance);
                     
                 }
 
-                else if (__instance is SeedShop && ModEntry.StolenToday == false)
+                else if (__instance is SeedShop && ModEntry.PerScreenStolenToday.Value == false)
                 {
                     ShopMenuUtilities.SeedShopShopliftingMenu(__instance);
                 }

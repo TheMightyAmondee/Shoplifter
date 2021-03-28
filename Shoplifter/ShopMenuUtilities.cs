@@ -94,7 +94,7 @@ namespace Shoplifter
                     };
                     return;
                 }
-                ModEntry.StolenToday = true;
+                ModEntry.PerScreenStolenToday.Value = true;
                 Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(3, 3, "FishShop"), 3, null);
             }
         }
@@ -129,7 +129,7 @@ namespace Shoplifter
                                 };
                                 return;
                             }
-                            ModEntry.StolenToday = true;
+                            ModEntry.PerScreenStolenToday.Value = true;
                             Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(5, 5, "SeedShop"), 3, null);
                         }
                         else
@@ -156,7 +156,7 @@ namespace Shoplifter
                             };
                             return;
                         }
-                        ModEntry.StolenToday = true;
+                        ModEntry.PerScreenStolenToday.Value = true;
                         Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(5, 5, "SeedShop"), 3, null);
                     }
                 });
@@ -173,7 +173,7 @@ namespace Shoplifter
         {
             if (who.getTileY() > tileLocation.Y)
             {
-                if (ModEntry.StolenToday == false)
+                if (ModEntry.PerScreenStolenToday.Value == false)
                 {
                     if (__instance.getCharacterFromName("Robin") == null && Game1.IsVisitingIslandToday("Robin"))
                     {
@@ -195,7 +195,7 @@ namespace Shoplifter
                                         };
                                         return;
                                     }
-                                    ModEntry.StolenToday = true;
+                                    ModEntry.PerScreenStolenToday.Value = true;
                                     Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(6, 5, "Carpenters"), 3, null);
                                 }
                                 else
@@ -226,7 +226,7 @@ namespace Shoplifter
                                         };
                                         return;
                                     }
-                                    ModEntry.StolenToday = true;
+                                    ModEntry.PerScreenStolenToday.Value = true;
                                     Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(6, 5, "Carpenters"), 3, null);
                                 }
                             });
@@ -250,7 +250,7 @@ namespace Shoplifter
                                     };
                                     return;
                                 }
-                                ModEntry.StolenToday = true;
+                                ModEntry.PerScreenStolenToday.Value = true;
                                 Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(6, 5, "Carpenters"), 3, null);
                             }
                         });
@@ -281,7 +281,7 @@ namespace Shoplifter
         {
             if (who.getTileY() > tileLocation.Y)
             {
-                if (ModEntry.StolenToday == false)
+                if (ModEntry.PerScreenStolenToday.Value == false)
                 {
                     if (__instance.getCharacterFromName("Marnie") == null && Game1.IsVisitingIslandToday("Marnie"))
                     {
@@ -303,7 +303,7 @@ namespace Shoplifter
                                         };
                                         return;
                                     }
-                                    ModEntry.StolenToday = true;
+                                    ModEntry.PerScreenStolenToday.Value = true;
                                     Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(1, 10, "AnimalShop"), 3, null);
                                 }
                                 else
@@ -335,7 +335,7 @@ namespace Shoplifter
                                         };
                                         return;
                                     }
-                                    ModEntry.StolenToday = true;
+                                    ModEntry.PerScreenStolenToday.Value = true;
                                     Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(1, 10, "AnimalShop"), 3, null);
                                 }
                             });
@@ -358,7 +358,7 @@ namespace Shoplifter
                                     };
                                     return;
                                 }
-                                ModEntry.StolenToday = true;
+                                ModEntry.PerScreenStolenToday.Value = true;
                                 Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(1, 10, "AnimalShop"), 3, null);
                             }
                         });
@@ -388,7 +388,7 @@ namespace Shoplifter
         {
             if (__instance.isCharacterAtTile(who.getTileLocation() + new Vector2(0f, -2f)) == null || __instance.isCharacterAtTile(who.getTileLocation() + new Vector2(-1f, -2f)) == null)
             {
-                if (ModEntry.StolenToday == false)
+                if (ModEntry.PerScreenStolenToday.Value == false)
                 {
                     __instance.createQuestionDialogue("Shoplift?", __instance.createYesNoResponses(), delegate (Farmer _, string answer)
                     {
@@ -404,7 +404,7 @@ namespace Shoplifter
                                 };
                                 return;
                             }
-                            ModEntry.StolenToday = true;
+                            ModEntry.PerScreenStolenToday.Value = true;
                             Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(1, 4, "HospitalShop"), 3, null);
                         }
                     });
@@ -433,7 +433,7 @@ namespace Shoplifter
         {
             if (__instance.blacksmith(tileLocation) == false)
             {
-                if (ModEntry.StolenToday == false)
+                if (ModEntry.PerScreenStolenToday.Value == false)
                 {
                     __instance.createQuestionDialogue("Shoplift?", __instance.createYesNoResponses(), delegate (Farmer _, string answer)
                     {
@@ -449,7 +449,7 @@ namespace Shoplifter
                                 };
                                 return;
                             }
-                            ModEntry.StolenToday = true;
+                            ModEntry.PerScreenStolenToday.Value = true;
                             Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(1, 5, "Blacksmith"), 3, null);
                         }
                     });
@@ -478,7 +478,7 @@ namespace Shoplifter
         {            
             if (__instance.getCharacterFromName("Gus") == null && Game1.IsVisitingIslandToday("Gus"))
             {
-                if (ModEntry.StolenToday == false)
+                if (ModEntry.PerScreenStolenToday.Value == false)
                 {
                     Game1.dialogueUp = false;
                     Game1.drawObjectDialogue(Game1.content.LoadString("Strings\\Locations:Saloon_MoneyBox"));
@@ -498,7 +498,7 @@ namespace Shoplifter
                                     };
                                     return;
                                 }
-                                ModEntry.StolenToday = true;
+                                ModEntry.PerScreenStolenToday.Value = true;
                                 Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(2, 1, "Saloon"), 3, null);
                             }
 
@@ -534,7 +534,7 @@ namespace Shoplifter
                 {
                     if (i.getTileY() != Game1.player.getTileY() - 1 && i.getTileY() != Game1.player.getTileY() - 2)
                     {
-                        if (ModEntry.StolenToday == false)
+                        if (ModEntry.PerScreenStolenToday.Value == false)
                         {
                             __instance.createQuestionDialogue("Shoplift?", __instance.createYesNoResponses(), delegate (Farmer _, string answer)
                             {
@@ -550,7 +550,7 @@ namespace Shoplifter
                                         };
                                         return;
                                     }
-                                    ModEntry.StolenToday = true;
+                                    ModEntry.PerScreenStolenToday.Value = true;
                                     Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(2, 1, "Saloon"), 3, null);
                                 }
                             });
