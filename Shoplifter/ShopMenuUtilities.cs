@@ -79,7 +79,7 @@ namespace Shoplifter
                     Game1.afterDialogues = delegate
                     {
                         Game1.warpFarmer(__instance.warps[0].TargetName, __instance.warps[0].TargetX, __instance.warps[0].TargetY, false);
-                        ModEntry.ShopsBannedFrom.Add("FishShop");
+                        ModEntry.PerScreenShopsBannedFrom.Value.Add("FishShop");
                         monitor.Log("Fishshop added to banned shop list", LogLevel.Debug);
                     };
                     return;
@@ -110,7 +110,7 @@ namespace Shoplifter
                                 Game1.afterDialogues = delegate
                                 {
                                     Game1.warpFarmer(__instance.warps[0].TargetName, __instance.warps[0].TargetX, __instance.warps[0].TargetY, false);
-                                    ModEntry.ShopsBannedFrom.Add("SeedShop");
+                                    ModEntry.PerScreenShopsBannedFrom.Value.Add("SeedShop");
                                     monitor.Log("Seedshop added to banned shop list", LogLevel.Debug);
                                 };
                                 return;
@@ -137,7 +137,7 @@ namespace Shoplifter
                             Game1.afterDialogues = delegate
                             {
                                 Game1.warpFarmer(__instance.warps[0].TargetName, __instance.warps[0].TargetX, __instance.warps[0].TargetY, false);
-                                ModEntry.ShopsBannedFrom.Add("SeedShop");
+                                ModEntry.PerScreenShopsBannedFrom.Value.Add("SeedShop");
                                 monitor.Log("Seedshop added to banned shop list", LogLevel.Debug);
                             };
                             return;
@@ -170,7 +170,7 @@ namespace Shoplifter
                                         Game1.afterDialogues = delegate
                                         {
                                             Game1.warpFarmer(__instance.warps[0].TargetName, __instance.warps[0].TargetX, __instance.warps[0].TargetY, false);
-                                            ModEntry.ShopsBannedFrom.Add("ScienceHouse");
+                                            ModEntry.PerScreenShopsBannedFrom.Value.Add("ScienceHouse");
                                             monitor.Log("ScienceHouse added to banned shop list", LogLevel.Debug);
                                         };
                                         return;
@@ -201,7 +201,7 @@ namespace Shoplifter
                                         Game1.afterDialogues = delegate
                                         {
                                             Game1.warpFarmer(__instance.warps[0].TargetName, __instance.warps[0].TargetX, __instance.warps[0].TargetY, false);
-                                            ModEntry.ShopsBannedFrom.Add("ScienceHouse");
+                                            ModEntry.PerScreenShopsBannedFrom.Value.Add("ScienceHouse");
                                             monitor.Log("ScienceHouse added to banned shop list", LogLevel.Debug);
                                         };
                                         return;
@@ -225,7 +225,7 @@ namespace Shoplifter
                                     Game1.afterDialogues = delegate
                                     {
                                         Game1.warpFarmer(__instance.warps[0].TargetName, __instance.warps[0].TargetX, __instance.warps[0].TargetY, false);
-                                        ModEntry.ShopsBannedFrom.Add("ScienceHouse");
+                                        ModEntry.PerScreenShopsBannedFrom.Value.Add("ScienceHouse");
                                         monitor.Log("ScienceHouse added to banned shop list", LogLevel.Debug);
                                     };
                                     return;
@@ -272,7 +272,7 @@ namespace Shoplifter
                                         Game1.afterDialogues = delegate
                                         {
                                             Game1.warpFarmer(__instance.warps[0].TargetName, __instance.warps[0].TargetX, __instance.warps[0].TargetY, false);
-                                            ModEntry.ShopsBannedFrom.Add("AnimalShop");
+                                            ModEntry.PerScreenShopsBannedFrom.Value.Add("AnimalShop");
                                             monitor.Log("AnimalShop added to banned shop list", LogLevel.Debug);
                                         };
                                         return;
@@ -304,7 +304,7 @@ namespace Shoplifter
                                         Game1.afterDialogues = delegate
                                         {
                                             Game1.warpFarmer(__instance.warps[0].TargetName, __instance.warps[0].TargetX, __instance.warps[0].TargetY, false);
-                                            ModEntry.ShopsBannedFrom.Add("AnimalShop");
+                                            ModEntry.PerScreenShopsBannedFrom.Value.Add("AnimalShop");
                                             monitor.Log("AnimalShop added to banned shop list", LogLevel.Debug);
                                         };
                                         return;
@@ -327,7 +327,7 @@ namespace Shoplifter
                                     Game1.afterDialogues = delegate
                                     {
                                         Game1.warpFarmer(__instance.warps[0].TargetName, __instance.warps[0].TargetX, __instance.warps[0].TargetY, false);
-                                        ModEntry.ShopsBannedFrom.Add("AnimalShop");
+                                        ModEntry.PerScreenShopsBannedFrom.Value.Add("AnimalShop");
                                         monitor.Log("AnimalShop added to banned shop list", LogLevel.Debug);
                                     };
                                     return;
@@ -368,7 +368,7 @@ namespace Shoplifter
                                 Game1.afterDialogues = delegate
                                 {
                                     Game1.warpFarmer(__instance.warps[0].TargetName, __instance.warps[0].TargetX, __instance.warps[0].TargetY, false);
-                                    ModEntry.ShopsBannedFrom.Add("Hospital");
+                                    ModEntry.PerScreenShopsBannedFrom.Value.Add("Hospital");
                                     monitor.Log("Hospital added to banned shop list", LogLevel.Debug);
                                 };
                                 return;
@@ -443,7 +443,7 @@ namespace Shoplifter
                                     Game1.afterDialogues = delegate
                                     {
                                         Game1.warpFarmer(__instance.warps[0].TargetName, __instance.warps[0].TargetX, __instance.warps[0].TargetY, false);
-                                        ModEntry.ShopsBannedFrom.Add("Saloon");
+                                        ModEntry.PerScreenShopsBannedFrom.Value.Add("Saloon");
                                         monitor.Log("Saloon added to banned shop list", LogLevel.Debug);
                                     };
                                     return;
@@ -495,7 +495,7 @@ namespace Shoplifter
                                         Game1.afterDialogues = delegate
                                         {
                                             Game1.warpFarmer(__instance.warps[0].TargetName, __instance.warps[0].TargetX, __instance.warps[0].TargetY, false);
-                                            ModEntry.ShopsBannedFrom.Add("Saloon");
+                                            ModEntry.PerScreenShopsBannedFrom.Value.Add("Saloon");
                                             monitor.Log("Saloon added to banned shop list", LogLevel.Debug);
                                         };
                                         return;

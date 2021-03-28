@@ -115,7 +115,7 @@ namespace Shoplifter
                     switch (actionParams[0])
                     {
                         case "LockedDoorWarp":
-                            if(ModEntry.ShopsBannedFrom.Contains(actionParams[3]))
+                            if(ModEntry.PerScreenShopsBannedFrom.Value.Contains(actionParams[3]))
                             {
                                 if (!ModEntry.shopliftingstrings.ContainsKey("Placeholder"))
                                 {

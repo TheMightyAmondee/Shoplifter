@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using StardewModdingAPI;
 using StardewValley;
 using StardewModdingAPI.Events;
+using StardewModdingAPI.Utilities;
 using Harmony;
 
 namespace Shoplifter
@@ -16,9 +17,11 @@ namespace Shoplifter
     {
         public static bool StolenToday = false;
 
-        public static ArrayList ShopsBannedFrom = new ArrayList();
+        public static ArrayList ShopsBannedFrom { get; private set; } = new ArrayList();
 
         public static Dictionary<string, string> shopliftingstrings = new Dictionary<string, string>();
+
+        public static readonly PerScreen<ArrayList> PerScreenShopsBannedFrom = new PerScreen<ArrayList>(createNewState: () => ShopsBannedFrom);
 
         public override void Entry(IModHelper helper)
         {
@@ -35,10 +38,10 @@ namespace Shoplifter
         {
             // Reset stolentoday boolean so player can shoplift again when the new day starts
             StolenToday = false;
-            if(ShopsBannedFrom.Count > 0)
+            if(PerScreenShopsBannedFrom.Value.Count > 0)
             {
-                // Clear shopsbannedfrom arraylist so player can enter shops again
-                ShopsBannedFrom.Clear();
+                // Clear perscreenshopsbannedfrom arraylist so player can enter shops again
+                PerScreenShopsBannedFrom.Value.Clear();
                 this.Monitor.Log("Cleared list of banned shops, steal away!", LogLevel.Info);
             }                      
         }
