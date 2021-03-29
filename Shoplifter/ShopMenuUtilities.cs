@@ -82,20 +82,40 @@ namespace Shoplifter
             {
                 return;
             }
+
+            else if (ModEntry.PerScreenStolenToday.Value == false)
+            {
+                __instance.createQuestionDialogue("Shoplift?", __instance.createYesNoResponses(), delegate (Farmer _, string answer)
+                {
+                    if (answer == "Yes")
+                    {
+                        if (shouldbeCaught("Willy", Game1.player) == true)
+                        {
+                            Game1.afterDialogues = delegate
+                            {
+                                Game1.warpFarmer(__instance.warps[0].TargetName, __instance.warps[0].TargetX, __instance.warps[0].TargetY, false);
+                                ModEntry.PerScreenShopsBannedFrom.Value.Add("FishShop");
+                                monitor.Log("Fishshop added to banned shop list", LogLevel.Debug);
+                            };
+                            return;
+                        }
+
+                        ModEntry.PerScreenStolenToday.Value = true;
+                        Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(3, 3, "FishShop"), 3, null);
+                    }
+                });                               
+            }
+            
             else
             {
-                if (shouldbeCaught("Willy", Game1.player) == true)
+                if (ModEntry.shopliftingstrings.ContainsKey("Placeholder") == false)
                 {
-                    Game1.afterDialogues = delegate
-                    {
-                        Game1.warpFarmer(__instance.warps[0].TargetName, __instance.warps[0].TargetX, __instance.warps[0].TargetY, false);
-                        ModEntry.PerScreenShopsBannedFrom.Value.Add("FishShop");
-                        monitor.Log("Fishshop added to banned shop list", LogLevel.Debug);
-                    };
-                    return;
+                    Game1.drawObjectDialogue(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"]);
                 }
-                ModEntry.PerScreenStolenToday.Value = true;
-                Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(3, 3, "FishShop"), 3, null);
+                else
+                {
+                    Game1.drawObjectDialogue(ModEntry.shopliftingstrings["Placeholder"]);
+                }
             }
         }
 
@@ -257,7 +277,7 @@ namespace Shoplifter
                     }
                 }
 
-                else if (__instance.carpenters(tileLocation) == true)
+                else if (__instance.carpenters(tileLocation) == true && ModEntry.PerScreenStolenToday.Value == true)
                 {
                     return;
                 }
@@ -370,7 +390,7 @@ namespace Shoplifter
                     }
                 }
 
-                else if (__instance.animalShop(tileLocation) == true)
+                else if (__instance.animalShop(tileLocation) == true && ModEntry.PerScreenStolenToday.Value == true)
                 {
                     return;
                 }
@@ -460,14 +480,9 @@ namespace Shoplifter
                                 return;
                             }
                             ModEntry.PerScreenStolenToday.Value = true;
-                            Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(1, 5, "Blacksmith"), 3, null);
+                            Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(3, 5, "Blacksmith"), 3, null);
                         }
                     });
-                }
-
-                else if (__instance.blacksmith(tileLocation) == true)
-                {
-                    return;
                 }
 
                 else
@@ -527,6 +542,11 @@ namespace Shoplifter
                             }
                         });
                     };
+                }
+
+                else if (__instance.saloon(tilelocation) == true && ModEntry.PerScreenStolenToday.Value == true)
+                {
+                    return;
                 }
 
                 else

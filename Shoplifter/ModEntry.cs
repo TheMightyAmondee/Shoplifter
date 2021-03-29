@@ -42,29 +42,6 @@ namespace Shoplifter
                 PerScreenShopsBannedFrom.Value.Clear();
                 this.Monitor.Log("Cleared list of banned shops, steal away!", LogLevel.Info);
             }
-
-            /*
-            // Remove for release, testing only
-            if (Game1.netWorldState.Value.IslandVisitors.ContainsKey("Robin"))
-            {
-                Game1.netWorldState.Value.IslandVisitors["Robin"] = true;
-            }
-
-            if (Game1.netWorldState.Value.IslandVisitors.ContainsKey("Marnie"))
-            {
-                Game1.netWorldState.Value.IslandVisitors["Marnie"] = true;
-            }
-
-            if (Game1.netWorldState.Value.IslandVisitors.ContainsKey("Pierre"))
-            {
-                Game1.netWorldState.Value.IslandVisitors["Pierre"] = true;
-            }
-
-            if (Game1.netWorldState.Value.IslandVisitors.ContainsKey("Gus"))
-            {
-                Game1.netWorldState.Value.IslandVisitors["Gus"] = true;
-            }
-            */
         }
 
         private void Launched(object sender, GameLaunchedEventArgs e)
@@ -87,10 +64,10 @@ namespace Shoplifter
             {
                 // Add placeholder if strings can't be loaded to prevent crashes
                 shopliftingstrings.Add("Placeholder", "Missing string... If you see this check you have the Strings.json file in the assets folder.");
-                this.Monitor.Log("Could not load strings... This will likely result in problems, (Are you missing the Strings.json file?)", LogLevel.Error);
+                this.Monitor.Log("Could not load strings... This will result in problems, (Are you missing the Strings.json file?)", LogLevel.Error);
                 this.Monitor.Log("Adding a placeholder string to stop crashes...", LogLevel.Info);
             }
            
-        }
+        }       
     }
 }

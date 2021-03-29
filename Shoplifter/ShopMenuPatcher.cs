@@ -45,10 +45,9 @@ namespace Shoplifter
         {
             try
             {
-                if (which.Equals("Fish") && ModEntry.PerScreenStolenToday.Value == false)
+                if (which.Equals("Fish"))
                 {
-                    ShopMenuUtilities.FishShopShopliftingMenu(__instance);
-                    
+                    ShopMenuUtilities.FishShopShopliftingMenu(__instance);                    
                 }
 
                 else if (__instance is SeedShop && ModEntry.PerScreenStolenToday.Value == false)
