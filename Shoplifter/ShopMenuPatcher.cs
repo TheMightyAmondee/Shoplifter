@@ -55,7 +55,7 @@ namespace Shoplifter
                     ShopMenuUtilities.SeedShopShopliftingMenu(__instance);
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 monitor.Log($"Failed to patch openShopMenu... Details\n{e}", LogLevel.Error);
             }			

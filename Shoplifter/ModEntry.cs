@@ -4,7 +4,6 @@ using System.Collections;
 using StardewModdingAPI;
 using StardewModdingAPI.Events;
 using StardewModdingAPI.Utilities;
-using StardewValley;
 using Harmony;
 
 namespace Shoplifter
@@ -36,7 +35,8 @@ namespace Shoplifter
         {
             // Reset perscreenstolentoday boolean so player can shoplift again when the new day starts
             PerScreenStolenToday.Value = false;
-            if(PerScreenShopsBannedFrom.Value.Count > 0)
+
+            if (PerScreenShopsBannedFrom.Value.Count > 0)
             {
                 // Clear perscreenshopsbannedfrom arraylist so player can enter shops again
                 PerScreenShopsBannedFrom.Value.Clear();
@@ -58,6 +58,7 @@ namespace Shoplifter
                         shopliftingstrings.Add(key, strings[key]);
                     }
                 }
+
                 this.Monitor.Log("Strings loaded from assets, ready to go!");
             }
             catch

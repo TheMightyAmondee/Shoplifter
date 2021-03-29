@@ -15,12 +15,14 @@ namespace Shoplifter
 		private static bool addToStock(Dictionary<ISalable, int[]> stock, HashSet<int> stockIndices, StardewValley.Object objectToAdd, int[] listing)
 		{
 			int index = objectToAdd.ParentSheetIndex;
+
 			if (!stockIndices.Contains(index))
 			{
 				stock.Add(objectToAdd, listing);
 				stockIndices.Add(index);
 				return true;
 			}
+
 			return false;
 		}
 
@@ -38,7 +40,7 @@ namespace Shoplifter
 			HashSet<int> stockIndices = new HashSet<int>();
 			Random random = new Random();		
 			int stocklimit = random.Next(1, maxstock + 1);
-			int index = 0;
+			int index;
 
 			// Pierre's shop
 			if (which == "SeedShop")

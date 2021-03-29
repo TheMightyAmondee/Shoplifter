@@ -28,7 +28,7 @@ namespace Shoplifter
         /// <param name="which">Who should catch the player</param>
         /// <param name="who">The player to catch</param>
         /// <returns>Whether the player was caught</returns>      
-        public static bool shouldbeCaught(string which, Farmer who)
+        public static bool ShouldBeCaught(string which, Farmer who)
         {
             NPC npc = Game1.getCharacterFromName(which);
             
@@ -69,6 +69,7 @@ namespace Shoplifter
 
                 return true;
             }
+
             return false;
         }
 
@@ -89,7 +90,7 @@ namespace Shoplifter
                 {
                     if (answer == "Yes")
                     {
-                        if (shouldbeCaught("Willy", Game1.player) == true)
+                        if (ShouldBeCaught("Willy", Game1.player) == true)
                         {
                             Game1.afterDialogues = delegate
                             {
@@ -142,7 +143,7 @@ namespace Shoplifter
                     {
                         if (answer == "Yes")
                         {
-                            if (shouldbeCaught("Pierre", Game1.player) == true || shouldbeCaught("Caroline", Game1.player) == true || shouldbeCaught("Abigail", Game1.player) == true)
+                            if (ShouldBeCaught("Pierre", Game1.player) == true || ShouldBeCaught("Caroline", Game1.player) == true || ShouldBeCaught("Abigail", Game1.player) == true)
                             {
                                 Game1.afterDialogues = delegate
                                 {
@@ -173,7 +174,7 @@ namespace Shoplifter
                 {
                     if (answer == "Yes")
                     {
-                        if (shouldbeCaught("Pierre", Game1.player) == true || shouldbeCaught("Caroline", Game1.player) == true || shouldbeCaught("Abigail", Game1.player) == true)
+                        if (ShouldBeCaught("Pierre", Game1.player) == true || ShouldBeCaught("Caroline", Game1.player) == true || ShouldBeCaught("Abigail", Game1.player) == true)
                         {
                             Game1.afterDialogues = delegate
                             {
@@ -214,7 +215,7 @@ namespace Shoplifter
                             {
                                 if (answer == "Yes")
                                 {
-                                    if (shouldbeCaught("Robin", Game1.player) == true || shouldbeCaught("Demetrius", Game1.player) == true || shouldbeCaught("Maru", Game1.player) == true || shouldbeCaught("Sebastian", Game1.player) == true)
+                                    if (ShouldBeCaught("Robin", Game1.player) == true || ShouldBeCaught("Demetrius", Game1.player) == true || ShouldBeCaught("Maru", Game1.player) == true || ShouldBeCaught("Sebastian", Game1.player) == true)
                                     {
                                         Game1.afterDialogues = delegate
                                         {
@@ -248,7 +249,7 @@ namespace Shoplifter
                             {
                                 if (answer == "Yes")
                                 {
-                                    if (shouldbeCaught("Robin", Game1.player) == true || shouldbeCaught("Demetrius", Game1.player) == true || shouldbeCaught("Maru", Game1.player) == true || shouldbeCaught("Sebastian", Game1.player) == true)
+                                    if (ShouldBeCaught("Robin", Game1.player) == true || ShouldBeCaught("Demetrius", Game1.player) == true || ShouldBeCaught("Maru", Game1.player) == true || ShouldBeCaught("Sebastian", Game1.player) == true)
                                     {
                                         Game1.afterDialogues = delegate
                                         {
@@ -274,7 +275,7 @@ namespace Shoplifter
                         {
                             if (answer == "Yes")
                             {
-                                if (shouldbeCaught("Robin", Game1.player) == true || shouldbeCaught("Demetrius", Game1.player) == true || shouldbeCaught("Maru", Game1.player) == true || shouldbeCaught("Sebastian", Game1.player) == true)
+                                if (ShouldBeCaught("Robin", Game1.player) == true || ShouldBeCaught("Demetrius", Game1.player) == true || ShouldBeCaught("Maru", Game1.player) == true || ShouldBeCaught("Sebastian", Game1.player) == true)
                                 {
                                     Game1.afterDialogues = delegate
                                     {
@@ -335,7 +336,7 @@ namespace Shoplifter
                             {
                                 if (answer == "Yes")
                                 {
-                                    if (shouldbeCaught("Marnie", Game1.player) == true || shouldbeCaught("Shane", Game1.player) == true)
+                                    if (ShouldBeCaught("Marnie", Game1.player) == true || ShouldBeCaught("Shane", Game1.player) == true)
                                     {
                                         Game1.afterDialogues = delegate
                                         {
@@ -370,7 +371,7 @@ namespace Shoplifter
                             {
                                 if (answer == "Yes")
                                 {
-                                    if (shouldbeCaught("Marnie", Game1.player) == true || shouldbeCaught("Shane", Game1.player) == true)
+                                    if (ShouldBeCaught("Marnie", Game1.player) == true || ShouldBeCaught("Shane", Game1.player) == true)
                                     {
                                         Game1.afterDialogues = delegate
                                         {
@@ -395,7 +396,7 @@ namespace Shoplifter
                         {
                             if (answer == "Yes")
                             {
-                                if (shouldbeCaught("Marnie", Game1.player) == true || shouldbeCaught("Shane", Game1.player) == true)
+                                if (ShouldBeCaught("Marnie", Game1.player) == true || ShouldBeCaught("Shane", Game1.player) == true)
                                 {
                                     Game1.afterDialogues = delegate
                                     {
@@ -448,7 +449,7 @@ namespace Shoplifter
                     {
                         if (answer == "Yes")
                         {
-                            if (shouldbeCaught("Harvey", Game1.player) == true || shouldbeCaught("Maru", Game1.player) == true)
+                            if (ShouldBeCaught("Harvey", Game1.player) == true || ShouldBeCaught("Maru", Game1.player) == true)
                             {
                                 Game1.afterDialogues = delegate
                                 {
@@ -496,7 +497,7 @@ namespace Shoplifter
                     {
                         if (answer == "Yes")
                         {
-                            if (shouldbeCaught("Clint", Game1.player) == true)
+                            if (ShouldBeCaught("Clint", Game1.player) == true)
                             {
                                 Game1.afterDialogues = delegate
                                 {
@@ -548,7 +549,7 @@ namespace Shoplifter
                         {
                             if (answer == "Yes")
                             {
-                                if (shouldbeCaught("Gus", Game1.player) == true || shouldbeCaught("Emily", Game1.player) == true)
+                                if (ShouldBeCaught("Gus", Game1.player) == true || ShouldBeCaught("Emily", Game1.player) == true)
                                 {
                                     Game1.afterDialogues = delegate
                                     {
@@ -592,7 +593,8 @@ namespace Shoplifter
                     {
                         Game1.drawObjectDialogue(ModEntry.shopliftingstrings["Placeholder"]);
                     }
-                }              
+                }
+                
                 return;
             }
 
@@ -604,7 +606,7 @@ namespace Shoplifter
                     {
                         if (answer == "Yes")
                         {
-                            if (shouldbeCaught("Gus", Game1.player) == true || shouldbeCaught("Emily", Game1.player) == true)
+                            if (ShouldBeCaught("Gus", Game1.player) == true || ShouldBeCaught("Emily", Game1.player) == true)
                             {
                                 Game1.afterDialogues = delegate
                                 {
