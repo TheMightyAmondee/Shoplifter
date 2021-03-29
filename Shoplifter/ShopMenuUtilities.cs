@@ -579,20 +579,6 @@ namespace Shoplifter
                     }
                 }
             }
-            /*
-            foreach (NPC i in __instance.characters)
-            {
-                if (i.Name.Equals("Gus"))
-                {
-                    if (i.getTileY() != Game1.player.getTileY() - 1 && i.getTileY() != Game1.player.getTileY() - 2)
-                    {
-                        
-                    }
-
-                    return;
-                }
-            }
-            */
         }
     }
 }
