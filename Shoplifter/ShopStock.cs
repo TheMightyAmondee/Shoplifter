@@ -60,7 +60,7 @@ namespace Shoplifter
 					}
 
 					// Add big craftable objects with 10000 added to it's id so they can be marked as not being valid stock later
-					else if((shopstock.Key as StardewValley.Object) != null && (shopstock.Key as StardewValley.Object).bigCraftable == true)
+					else if ((shopstock.Key as StardewValley.Object) != null && (shopstock.Key as StardewValley.Object).bigCraftable == true)
                     {
 						index = (shopstock.Key as StardewValley.Object).parentSheetIndex;
 
@@ -200,7 +200,7 @@ namespace Shoplifter
 				int item = random.Next(0, CurrentStock.Count);
 
                 // Normal objects                
-				if((int)CurrentStock[item] < 10000)
+				if ((int)CurrentStock[item] < 10000)
                 {
 					ShopStock.addToStock(stock, stockIndices, new StardewValley.Object((int)CurrentStock[item], quantity), new int[2]
 					{

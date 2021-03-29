@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using StardewValley.Locations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using StardewModdingAPI;
 using StardewValley.Util;
 using StardewValley.Menus;
@@ -39,17 +35,19 @@ namespace Shoplifter
             if (npc != null && npc.currentLocation == who.currentLocation && Utility.tileWithinRadiusOfPlayer(npc.getTileX(), npc.getTileY(), 7, who))
             {
                 npc.doEmote(12, false, false);
-                if(ModEntry.shopliftingstrings.ContainsKey("Placeholder") == false)
+                if (ModEntry.shopliftingstrings.ContainsKey("Placeholder") == false)
                 {
                     if (which == "Pierre" || which == "Willy" || which == "Robin" || which == "Marnie" || which == "Gus" || which == "Harvey" || which == "Clint")
                     {
                         npc.setNewDialogue(ModEntry.shopliftingstrings[$"TheMightyAmondee.Shoplifter/Caught{which}"], add: true);
                     }
+
                     else
                     {
                         npc.setNewDialogue(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/CaughtGeneric"], add: true);
                     }
                 }
+
                 else
                 {
                     npc.setNewDialogue(ModEntry.shopliftingstrings["Placeholder"], add: true);
@@ -63,10 +61,12 @@ namespace Shoplifter
                     Game1.player.changeFriendship(frienshiploss, Game1.getCharacterFromName(which, true));
                     monitor.Log($"{which} caught you shoplifting... {-frienshiploss} friendship points lost");
                 }
+
                 else
                 {
                     monitor.Log($"{which} caught you shoplifting... You've never talked to {which}, no friendship to lose");
                 }
+
                 return true;
             }
             return false;
@@ -97,6 +97,7 @@ namespace Shoplifter
                                 ModEntry.PerScreenShopsBannedFrom.Value.Add("FishShop");
                                 monitor.Log("Fishshop added to banned shop list", LogLevel.Debug);
                             };
+
                             return;
                         }
 
@@ -112,6 +113,7 @@ namespace Shoplifter
                 {
                     Game1.drawObjectDialogue(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"]);
                 }
+
                 else
                 {
                     Game1.drawObjectDialogue(ModEntry.shopliftingstrings["Placeholder"]);
@@ -129,6 +131,7 @@ namespace Shoplifter
             {
                 return;
             }
+
             else if (__instance.getCharacterFromName("Pierre") == null && Game1.IsVisitingIslandToday("Pierre"))
             {
                 Game1.dialogueUp = false;
@@ -147,11 +150,14 @@ namespace Shoplifter
                                     ModEntry.PerScreenShopsBannedFrom.Value.Add("SeedShop");
                                     monitor.Log("Seedshop added to banned shop list", LogLevel.Debug);
                                 };
+
                                 return;
                             }
+
                             ModEntry.PerScreenStolenToday.Value = true;
                             Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(5, 5, "SeedShop"), 3, null);
                         }
+
                         else
                         {
                             Game1.activeClickableMenu = new ShopMenu((__instance as SeedShop).shopStock());
@@ -159,6 +165,7 @@ namespace Shoplifter
                     });
                 };
             }
+
             else
             {
                 Game1.dialogueUp = false;
@@ -174,8 +181,10 @@ namespace Shoplifter
                                 ModEntry.PerScreenShopsBannedFrom.Value.Add("SeedShop");
                                 monitor.Log("Seedshop added to banned shop list", LogLevel.Debug);
                             };
+
                             return;
                         }
+
                         ModEntry.PerScreenStolenToday.Value = true;
                         Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(5, 5, "SeedShop"), 3, null);
                     }
@@ -213,11 +222,14 @@ namespace Shoplifter
                                             ModEntry.PerScreenShopsBannedFrom.Value.Add("ScienceHouse");
                                             monitor.Log("ScienceHouse added to banned shop list", LogLevel.Debug);
                                         };
+
                                         return;
                                     }
+
                                     ModEntry.PerScreenStolenToday.Value = true;
                                     Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(6, 5, "Carpenters"), 3, null);
                                 }
+
                                 else
                                 {
                                     Game1.activeClickableMenu = new ShopMenu(Utility.getCarpenterStock());
@@ -244,8 +256,10 @@ namespace Shoplifter
                                             ModEntry.PerScreenShopsBannedFrom.Value.Add("ScienceHouse");
                                             monitor.Log("ScienceHouse added to banned shop list", LogLevel.Debug);
                                         };
+
                                         return;
                                     }
+
                                     ModEntry.PerScreenStolenToday.Value = true;
                                     Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(6, 5, "Carpenters"), 3, null);
                                 }
@@ -268,8 +282,10 @@ namespace Shoplifter
                                         ModEntry.PerScreenShopsBannedFrom.Value.Add("ScienceHouse");
                                         monitor.Log("ScienceHouse added to banned shop list", LogLevel.Debug);
                                     };
+
                                     return;
                                 }
+
                                 ModEntry.PerScreenStolenToday.Value = true;
                                 Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(6, 5, "Carpenters"), 3, null);
                             }
@@ -288,6 +304,7 @@ namespace Shoplifter
                     {
                         Game1.drawObjectDialogue(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"]);
                     }
+
                     else
                     {
                         Game1.drawObjectDialogue(ModEntry.shopliftingstrings["Placeholder"]);
@@ -326,11 +343,14 @@ namespace Shoplifter
                                             ModEntry.PerScreenShopsBannedFrom.Value.Add("AnimalShop");
                                             monitor.Log("AnimalShop added to banned shop list", LogLevel.Debug);
                                         };
+
                                         return;
                                     }
+
                                     ModEntry.PerScreenStolenToday.Value = true;
                                     Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(1, 10, "AnimalShop"), 3, null);
                                 }
+
                                 else
                                 {
                                     Game1.activeClickableMenu = new ShopMenu(Utility.getAnimalShopStock());
@@ -358,8 +378,10 @@ namespace Shoplifter
                                             ModEntry.PerScreenShopsBannedFrom.Value.Add("AnimalShop");
                                             monitor.Log("AnimalShop added to banned shop list", LogLevel.Debug);
                                         };
+
                                         return;
                                     }
+
                                     ModEntry.PerScreenStolenToday.Value = true;
                                     Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(1, 10, "AnimalShop"), 3, null);
                                 }
@@ -381,8 +403,10 @@ namespace Shoplifter
                                         ModEntry.PerScreenShopsBannedFrom.Value.Add("AnimalShop");
                                         monitor.Log("AnimalShop added to banned shop list", LogLevel.Debug);
                                     };
+
                                     return;
                                 }
+
                                 ModEntry.PerScreenStolenToday.Value = true;
                                 Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(1, 10, "AnimalShop"), 3, null);
                             }
@@ -432,8 +456,10 @@ namespace Shoplifter
                                     ModEntry.PerScreenShopsBannedFrom.Value.Add("Hospital");
                                     monitor.Log("Hospital added to banned shop list", LogLevel.Debug);
                                 };
+
                                 return;
                             }
+
                             ModEntry.PerScreenStolenToday.Value = true;
                             Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(1, 4, "HospitalShop"), 3, null);
                         }
@@ -446,6 +472,7 @@ namespace Shoplifter
                     {
                         Game1.drawObjectDialogue(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"]);
                     }
+
                     else
                     {
                         Game1.drawObjectDialogue(ModEntry.shopliftingstrings["Placeholder"]);
@@ -477,8 +504,10 @@ namespace Shoplifter
                                     ModEntry.PerScreenShopsBannedFrom.Value.Add("Blacksmith");
                                     monitor.Log("Blacksmith added to banned shop list", LogLevel.Debug);
                                 };
+
                                 return;
                             }
+
                             ModEntry.PerScreenStolenToday.Value = true;
                             Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(3, 5, "Blacksmith"), 3, null);
                         }
@@ -491,6 +520,7 @@ namespace Shoplifter
                     {
                         Game1.drawObjectDialogue(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"]);
                     }
+
                     else
                     {
                         Game1.drawObjectDialogue(ModEntry.shopliftingstrings["Placeholder"]);
@@ -526,8 +556,10 @@ namespace Shoplifter
                                         ModEntry.PerScreenShopsBannedFrom.Value.Add("Saloon");
                                         monitor.Log("Saloon added to banned shop list", LogLevel.Debug);
                                     };
+
                                     return;
                                 }
+
                                 ModEntry.PerScreenStolenToday.Value = true;
                                 Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(2, 1, "Saloon"), 3, null);
                             }
@@ -555,6 +587,7 @@ namespace Shoplifter
                     {
                         Game1.drawObjectDialogue(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"]);
                     }
+
                     else
                     {
                         Game1.drawObjectDialogue(ModEntry.shopliftingstrings["Placeholder"]);
@@ -563,7 +596,7 @@ namespace Shoplifter
                 return;
             }
 
-            else if(__instance.saloon(tilelocation) == false)
+            else if (__instance.saloon(tilelocation) == false)
             {
                 if (ModEntry.PerScreenStolenToday.Value == false)
                 {
@@ -579,8 +612,10 @@ namespace Shoplifter
                                     ModEntry.PerScreenShopsBannedFrom.Value.Add("Saloon");
                                     monitor.Log("Saloon added to banned shop list", LogLevel.Debug);
                                 };
+
                                 return;
                             }
+
                             ModEntry.PerScreenStolenToday.Value = true;
                             Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(2, 1, "Saloon"), 3, null);
                         }
@@ -593,6 +628,7 @@ namespace Shoplifter
                     {
                         Game1.drawObjectDialogue(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"]);
                     }
+
                     else
                     {
                         Game1.drawObjectDialogue(ModEntry.shopliftingstrings["Placeholder"]);

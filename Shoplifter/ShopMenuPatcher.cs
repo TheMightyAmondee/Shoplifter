@@ -68,6 +68,7 @@ namespace Shoplifter
                 if (action != null && who.IsLocalPlayer)
                 {
                     string[] actionParams = action.Split(' ');
+
                     switch (actionParams[0])
                     {
                         case "HospitalShop":
@@ -92,7 +93,6 @@ namespace Shoplifter
                     }
                 }
             }
-
             catch (Exception e)
             {
                 monitor.Log($"Failed to patch performActionpostfix... Details\n{e}", LogLevel.Error);
@@ -109,12 +109,13 @@ namespace Shoplifter
                     switch (actionParams[0])
                     {
                         case "LockedDoorWarp":
-                            if(ModEntry.PerScreenShopsBannedFrom.Value.Contains(actionParams[3]))
+                            if (ModEntry.PerScreenShopsBannedFrom.Value.Contains(actionParams[3]))
                             {
                                 if (ModEntry.shopliftingstrings.ContainsKey("Placeholder") == false)
                                 {
                                     Game1.drawObjectDialogue(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/Banned"]);
                                 }
+
                                 else
                                 {
                                     Game1.drawObjectDialogue(ModEntry.shopliftingstrings["Placeholder"]);
@@ -122,10 +123,12 @@ namespace Shoplifter
                                 
                                 return false;
                             }
+
                             return true;                           
                     }
                     
                 }
+
                 return true;
             }
             catch (Exception e)
