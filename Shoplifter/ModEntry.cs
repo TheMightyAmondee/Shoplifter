@@ -4,6 +4,7 @@ using System.Collections;
 using StardewModdingAPI;
 using StardewModdingAPI.Events;
 using StardewModdingAPI.Utilities;
+using StardewValley;
 using Harmony;
 
 namespace Shoplifter
@@ -11,7 +12,7 @@ namespace Shoplifter
     public class ModEntry
         : Mod
     {
-        public static bool StolenToday = false;
+        public static bool StolenToday;
 
         public static readonly PerScreen<bool> PerScreenStolenToday = new PerScreen<bool>(createNewState: () => StolenToday);
         public static ArrayList ShopsBannedFrom { get; private set; } = new ArrayList();
@@ -40,7 +41,30 @@ namespace Shoplifter
                 // Clear perscreenshopsbannedfrom arraylist so player can enter shops again
                 PerScreenShopsBannedFrom.Value.Clear();
                 this.Monitor.Log("Cleared list of banned shops, steal away!", LogLevel.Info);
-            }                      
+            }
+
+            /*
+            // Remove for release, testing only
+            if (Game1.netWorldState.Value.IslandVisitors.ContainsKey("Robin"))
+            {
+                Game1.netWorldState.Value.IslandVisitors["Robin"] = true;
+            }
+
+            if (Game1.netWorldState.Value.IslandVisitors.ContainsKey("Marnie"))
+            {
+                Game1.netWorldState.Value.IslandVisitors["Marnie"] = true;
+            }
+
+            if (Game1.netWorldState.Value.IslandVisitors.ContainsKey("Pierre"))
+            {
+                Game1.netWorldState.Value.IslandVisitors["Pierre"] = true;
+            }
+
+            if (Game1.netWorldState.Value.IslandVisitors.ContainsKey("Gus"))
+            {
+                Game1.netWorldState.Value.IslandVisitors["Gus"] = true;
+            }
+            */
         }
 
         private void Launched(object sender, GameLaunchedEventArgs e)

@@ -234,7 +234,7 @@ namespace Shoplifter
 
                     }
 
-                    else if ((__instance.isCharacterAtTile(who.getTileLocation() + new Vector2(0f, -2f)) == null || __instance.isCharacterAtTile(who.getTileLocation() + new Vector2(-1f, -2f)) == null))
+                    else if (__instance.carpenters(tileLocation) == false)
                     {
                         __instance.createQuestionDialogue("Shoplift?", __instance.createYesNoResponses(), delegate (Farmer _, string answer)
                         {
@@ -255,6 +255,11 @@ namespace Shoplifter
                             }
                         });
                     }
+                }
+
+                else if (__instance.carpenters(tileLocation) == true)
+                {
+                    return;
                 }
 
                 else
@@ -342,7 +347,7 @@ namespace Shoplifter
                         };
                     }
 
-                    else if (__instance.isCharacterAtTile(who.getTileLocation() + new Vector2(0f, -2f)) == null || __instance.isCharacterAtTile(who.getTileLocation() + new Vector2(-1f, -2f)) == null)
+                    else if (__instance.animalShop(tileLocation) == false)
                     {
                         __instance.createQuestionDialogue("Shoplift?", __instance.createYesNoResponses(), delegate (Farmer _, string answer)
                         {
@@ -363,6 +368,11 @@ namespace Shoplifter
                             }
                         });
                     }
+                }
+
+                else if (__instance.animalShop(tileLocation) == true)
+                {
+                    return;
                 }
 
                 else
@@ -386,7 +396,7 @@ namespace Shoplifter
         /// <param name="who">The player</param>
         public static void HospitalShopliftingMenu(GameLocation __instance, Farmer who)
         {
-            if (__instance.isCharacterAtTile(who.getTileLocation() + new Vector2(0f, -2f)) == null || __instance.isCharacterAtTile(who.getTileLocation() + new Vector2(-1f, -2f)) == null)
+            if (__instance.isCharacterAtTile(who.getTileLocation() + new Vector2(0f, -2f)) == null && __instance.isCharacterAtTile(who.getTileLocation() + new Vector2(-1f, -2f)) == null)
             {
                 if (ModEntry.PerScreenStolenToday.Value == false)
                 {
@@ -455,6 +465,11 @@ namespace Shoplifter
                     });
                 }
 
+                else if (__instance.blacksmith(tileLocation) == true)
+                {
+                    return;
+                }
+
                 else
                 {
                     if (ModEntry.shopliftingstrings.ContainsKey("Placeholder") == false)
@@ -474,7 +489,7 @@ namespace Shoplifter
         /// Create the shoplifting menu with Saloon stock if necessary
         /// </summary>
         /// <param name="__instance">The current location instance</param>
-        public static void SaloonShopliftingMenu(GameLocation __instance)
+        public static void SaloonShopliftingMenu(GameLocation __instance, Location tilelocation)
         {            
             if (__instance.getCharacterFromName("Gus") == null && Game1.IsVisitingIslandToday("Gus"))
             {
@@ -528,50 +543,56 @@ namespace Shoplifter
                 return;
             }
 
+            else if(__instance.saloon(tilelocation) == false)
+            {
+                if (ModEntry.PerScreenStolenToday.Value == false)
+                {
+                    __instance.createQuestionDialogue("Shoplift?", __instance.createYesNoResponses(), delegate (Farmer _, string answer)
+                    {
+                        if (answer == "Yes")
+                        {
+                            if (shouldbeCaught("Gus", Game1.player) == true || shouldbeCaught("Emily", Game1.player) == true)
+                            {
+                                Game1.afterDialogues = delegate
+                                {
+                                    Game1.warpFarmer(__instance.warps[0].TargetName, __instance.warps[0].TargetX, __instance.warps[0].TargetY, false);
+                                    ModEntry.PerScreenShopsBannedFrom.Value.Add("Saloon");
+                                    monitor.Log("Saloon added to banned shop list", LogLevel.Debug);
+                                };
+                                return;
+                            }
+                            ModEntry.PerScreenStolenToday.Value = true;
+                            Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(2, 1, "Saloon"), 3, null);
+                        }
+                    });
+                }
+
+                else
+                {
+                    if (ModEntry.shopliftingstrings.ContainsKey("Placeholder") == false)
+                    {
+                        Game1.drawObjectDialogue(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"]);
+                    }
+                    else
+                    {
+                        Game1.drawObjectDialogue(ModEntry.shopliftingstrings["Placeholder"]);
+                    }
+                }
+            }
+            /*
             foreach (NPC i in __instance.characters)
             {
                 if (i.Name.Equals("Gus"))
                 {
                     if (i.getTileY() != Game1.player.getTileY() - 1 && i.getTileY() != Game1.player.getTileY() - 2)
                     {
-                        if (ModEntry.PerScreenStolenToday.Value == false)
-                        {
-                            __instance.createQuestionDialogue("Shoplift?", __instance.createYesNoResponses(), delegate (Farmer _, string answer)
-                            {
-                                if (answer == "Yes")
-                                {
-                                    if (shouldbeCaught("Gus", Game1.player) == true || shouldbeCaught("Emily", Game1.player) == true)
-                                    {
-                                        Game1.afterDialogues = delegate
-                                        {
-                                            Game1.warpFarmer(__instance.warps[0].TargetName, __instance.warps[0].TargetX, __instance.warps[0].TargetY, false);
-                                            ModEntry.PerScreenShopsBannedFrom.Value.Add("Saloon");
-                                            monitor.Log("Saloon added to banned shop list", LogLevel.Debug);
-                                        };
-                                        return;
-                                    }
-                                    ModEntry.PerScreenStolenToday.Value = true;
-                                    Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(2, 1, "Saloon"), 3, null);
-                                }
-                            });
-                        }
-
-                        else
-                        {
-                            if (ModEntry.shopliftingstrings.ContainsKey("Placeholder") == false)
-                            {
-                                Game1.drawObjectDialogue(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"]);
-                            }
-                            else
-                            {
-                                Game1.drawObjectDialogue(ModEntry.shopliftingstrings["Placeholder"]);
-                            }
-                        }
+                        
                     }
 
                     return;
                 }
             }
+            */
         }
     }
 }

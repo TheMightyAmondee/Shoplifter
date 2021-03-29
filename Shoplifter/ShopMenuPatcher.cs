@@ -88,7 +88,7 @@ namespace Shoplifter
                             break;
 
                         case "Saloon":
-                            ShopMenuUtilities.SaloonShopliftingMenu(__instance);
+                            ShopMenuUtilities.SaloonShopliftingMenu(__instance, tileLocation);
                             break;
                     }
                 }
