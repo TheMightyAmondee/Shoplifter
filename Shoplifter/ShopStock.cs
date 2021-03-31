@@ -199,7 +199,7 @@ namespace Shoplifter
 			for (int i = 0; i < stocklimit; i++)
 			{
 				int quantity = random.Next(1, maxquantity + 1);
-				int item = random.Next(0, CurrentStock.Count + 1);
+				int item = random.Next(0, CurrentStock.Count);
 
                 // Normal objects                
 				if ((int)CurrentStock[item] < 10000)

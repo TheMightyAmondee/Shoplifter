@@ -22,6 +22,11 @@ namespace Shoplifter
             ShopMenuUtilities.helper = helper;
         }
 
+        public static void ToggleStolenToday()
+        {
+            ModEntry.PerScreenStolenToday.Value = true;
+        }
+
         /// <summary>
         /// Determines whether the player is caught, makes corrections to dialogue and friendship based on return value
         /// </summary>
@@ -100,8 +105,11 @@ namespace Shoplifter
                             return;
                         }
 
-                        ModEntry.PerScreenStolenToday.Value = true;
-                        Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(3, 3, "FishShop"), 3, null, null, null, "");
+                        Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(3, 3, "FishShop"), 3, null, delegate
+                        {
+                            ToggleStolenToday();
+                            return false;
+                        }, null, "");
                     }
                 });                               
             }
@@ -153,8 +161,11 @@ namespace Shoplifter
                                 return;
                             }
 
-                            ModEntry.PerScreenStolenToday.Value = true;
-                            Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(5, 5, "SeedShop"), 3, null, null, null, "");
+                            Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(5, 5, "SeedShop"), 3, null, delegate
+                            {
+                                ToggleStolenToday();
+                                return false;
+                            }, null, "");
                         }
 
                         else
@@ -184,8 +195,11 @@ namespace Shoplifter
                             return;
                         }
 
-                        ModEntry.PerScreenStolenToday.Value = true;
-                        Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(5, 5, "SeedShop"), 3, null, null, null, "");
+                        Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(5, 5, "SeedShop"), 3, null, delegate
+                        {
+                            ToggleStolenToday();
+                            return false;
+                        }, null, "");
                     }
                 });
             }
@@ -225,8 +239,11 @@ namespace Shoplifter
                                         return;
                                     }
 
-                                    ModEntry.PerScreenStolenToday.Value = true;
-                                    Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(6, 5, "Carpenters"), 3, null);
+                                    Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(6, 5, "Carpenters"), 3, null, delegate
+                                    {
+                                        ToggleStolenToday();
+                                        return false;
+                                    }, null, "");
                                 }
 
                                 else
@@ -259,8 +276,11 @@ namespace Shoplifter
                                         return;
                                     }
 
-                                    ModEntry.PerScreenStolenToday.Value = true;
-                                    Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(6, 5, "Carpenters"), 3, null, null, null, "");
+                                    Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(6, 5, "Carpenters"), 3, null, delegate
+                                    {
+                                        ToggleStolenToday();
+                                        return false;
+                                    }, null, "");
                                 }
                             });
                         };
@@ -285,8 +305,11 @@ namespace Shoplifter
                                     return;
                                 }
 
-                                ModEntry.PerScreenStolenToday.Value = true;
-                                Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(6, 5, "Carpenters"), 3, null, null, null, "");
+                                Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(6, 5, "Carpenters"), 3, null, delegate
+                                {
+                                    ToggleStolenToday();
+                                    return false;
+                                }, null, "");
                             }
                         });
                     }
@@ -346,8 +369,11 @@ namespace Shoplifter
                                         return;
                                     }
 
-                                    ModEntry.PerScreenStolenToday.Value = true;
-                                    Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(1, 10, "AnimalShop"), 3, null, null, null, "");
+                                    Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(1, 10, "AnimalShop"), 3, null, delegate
+                                    {
+                                        ToggleStolenToday();
+                                        return false;
+                                    }, null, "");
                                 }
 
                                 else
@@ -381,8 +407,11 @@ namespace Shoplifter
                                         return;
                                     }
 
-                                    ModEntry.PerScreenStolenToday.Value = true;
-                                    Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(1, 10, "AnimalShop"), 3, null, null, null, "");
+                                    Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(1, 10, "AnimalShop"), 3, null, delegate
+                                    {
+                                        ToggleStolenToday();
+                                        return false;
+                                    }, null, "");
                                 }
                             });
                         };
@@ -406,8 +435,11 @@ namespace Shoplifter
                                     return;
                                 }
 
-                                ModEntry.PerScreenStolenToday.Value = true;
-                                Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(1, 10, "AnimalShop"), 3, null, null, null, "");
+                                Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(1, 10, "AnimalShop"), 3, null, delegate
+                                {
+                                    ToggleStolenToday();
+                                    return false;
+                                }, null, "");
                             }
                         });
                     }
@@ -459,8 +491,11 @@ namespace Shoplifter
                                 return;
                             }
 
-                            ModEntry.PerScreenStolenToday.Value = true;
-                            Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(1, 4, "HospitalShop"), 3, null, null, null, "");
+                            Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(1, 4, "HospitalShop"), 3, null, delegate
+                            {
+                                ToggleStolenToday();
+                                return false;
+                            }, null, "");
                         }
                     });
                 }
@@ -507,8 +542,11 @@ namespace Shoplifter
                                 return;
                             }
 
-                            ModEntry.PerScreenStolenToday.Value = true;
-                            Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(3, 5, "Blacksmith"), 3, null, null, null, "");
+                            Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(3, 5, "Blacksmith"), 3, null, delegate
+                            {
+                                ToggleStolenToday();
+                                return false;
+                            }, null, "");
                         }
                     });
                 }
@@ -559,8 +597,11 @@ namespace Shoplifter
                                     return;
                                 }
 
-                                ModEntry.PerScreenStolenToday.Value = true;
-                                Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(2, 1, "Saloon"), 3, null, null, null, "");
+                                Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(2, 1, "Saloon"), 3, null, delegate
+                                {
+                                    ToggleStolenToday();
+                                    return false;
+                                }, null, "");
                             }
 
                             else
@@ -616,8 +657,11 @@ namespace Shoplifter
                                 return;
                             }
 
-                            ModEntry.PerScreenStolenToday.Value = true;
-                            Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(2, 1, "Saloon"), 3, null, null, null, "");
+                            Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(2, 1, "Saloon"), 3, null, delegate
+                            {
+                                ToggleStolenToday();
+                                return false;
+                            }, null, "");
                         }
                     });
                 }
