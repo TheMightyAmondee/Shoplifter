@@ -38,7 +38,7 @@ namespace Shoplifter
 			GameLocation location = Game1.currentLocation;
 			Dictionary<ISalable, int[]> stock = new Dictionary<ISalable, int[]>();
 			HashSet<int> stockIndices = new HashSet<int>();
-			Random random = new Random();		
+			Random random = new Random((int)Game1.uniqueIDForThisGame / 2 + (int)Game1.stats.DaysPlayed + Game1.timeOfDay);		
 			int stocklimit = random.Next(1, maxstock + 1);
 			int index;
 
