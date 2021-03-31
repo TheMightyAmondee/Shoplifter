@@ -111,7 +111,7 @@ namespace Shoplifter
                         case "LockedDoorWarp":
                             if (ModEntry.PerScreenShopsBannedFrom.Value.Contains(actionParams[3]))
                             {
-                                if (ModEntry.shopliftingstrings.ContainsKey("Placeholder") == false)
+                                if (ModEntry.shopliftingstrings.ContainsKey("TheMightyAmondee.Shoplifter/Banned") == true)
                                 {
                                     Game1.drawObjectDialogue(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/Banned"]);
                                 }

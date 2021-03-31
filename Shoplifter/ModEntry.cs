@@ -46,6 +46,8 @@ namespace Shoplifter
 
         private void Launched(object sender, GameLaunchedEventArgs e)
         {
+            shopliftingstrings.Add("Placeholder", "There's a string missing here...");
+
             try
             {
                 // Get strings from assets folder and add them to a new dictionary
@@ -60,13 +62,16 @@ namespace Shoplifter
                 }
 
                 this.Monitor.Log("Strings loaded from assets, ready to go!");
+
+                if(shopliftingstrings.Count < 11)
+                {
+                    this.Monitor.Log("The number of strings loaded seem a bit low, you may get some missing string problems...\nCheck that all strings are present in the Strings.json", LogLevel.Warn);
+                }
             }
             catch
             {
-                // Add placeholder if strings can't be loaded to prevent crashes
-                shopliftingstrings.Add("Placeholder", "Missing string... If you see this check you have the Strings.json file in the assets folder.");
-                this.Monitor.Log("Could not load strings... This will result in problems, (Are you missing the Strings.json file?)", LogLevel.Error);
-                this.Monitor.Log("Adding a placeholder string to stop crashes...", LogLevel.Info);
+                // Add placeholder if strings can't be loaded to prevent crashes               
+                this.Monitor.Log("Could not load strings... This will result in missing string problems, (Are you missing the Strings.json file?)", LogLevel.Error);
             }
            
         }       

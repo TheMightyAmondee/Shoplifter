@@ -35,17 +35,15 @@ namespace Shoplifter
             if (npc != null && npc.currentLocation == who.currentLocation && Utility.tileWithinRadiusOfPlayer(npc.getTileX(), npc.getTileY(), 7, who))
             {
                 npc.doEmote(12, false, false);
-                if (ModEntry.shopliftingstrings.ContainsKey("Placeholder") == false)
-                {
-                    if (which == "Pierre" || which == "Willy" || which == "Robin" || which == "Marnie" || which == "Gus" || which == "Harvey" || which == "Clint")
-                    {
-                        npc.setNewDialogue(ModEntry.shopliftingstrings[$"TheMightyAmondee.Shoplifter/Caught{which}"], add: true);
-                    }
 
-                    else
-                    {
-                        npc.setNewDialogue(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/CaughtGeneric"], add: true);
-                    }
+                if ((which == "Pierre" || which == "Willy" || which == "Robin" || which == "Marnie" || which == "Gus" || which == "Harvey" || which == "Clint") && ModEntry.shopliftingstrings.ContainsKey($"TheMightyAmondee.Shoplifter/Caught{which}") == true)
+                {
+                    npc.setNewDialogue(ModEntry.shopliftingstrings[$"TheMightyAmondee.Shoplifter/Caught{which}"], add: true);
+                }
+
+                else if (ModEntry.shopliftingstrings.ContainsKey($"TheMightyAmondee.Shoplifter/CaughtGeneric") == true)
+                {
+                    npc.setNewDialogue(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/CaughtGeneric"], add: true);
                 }
 
                 else
@@ -110,7 +108,7 @@ namespace Shoplifter
             
             else
             {
-                if (ModEntry.shopliftingstrings.ContainsKey("Placeholder") == false)
+                if (ModEntry.shopliftingstrings.ContainsKey("TheMightyAmondee.Shoplifter/AlreadyShoplifted") == true)
                 {
                     Game1.drawObjectDialogue(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"]);
                 }
@@ -301,7 +299,7 @@ namespace Shoplifter
 
                 else
                 {
-                    if (ModEntry.shopliftingstrings.ContainsKey("Placeholder") == false)
+                    if (ModEntry.shopliftingstrings.ContainsKey("TheMightyAmondee.Shoplifter/AlreadyShoplifted") == true)
                     {
                         Game1.drawObjectDialogue(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"]);
                     }
@@ -422,7 +420,7 @@ namespace Shoplifter
 
                 else
                 {
-                    if (ModEntry.shopliftingstrings.ContainsKey("Placeholder") == false)
+                    if (ModEntry.shopliftingstrings.ContainsKey("TheMightyAmondee.Shoplifter/AlreadyShoplifted") == true)
                     {
                         Game1.drawObjectDialogue(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"]);
                     }
@@ -469,7 +467,7 @@ namespace Shoplifter
 
                 else
                 {
-                    if (ModEntry.shopliftingstrings.ContainsKey("Placeholder") == false)
+                    if (ModEntry.shopliftingstrings.ContainsKey("TheMightyAmondee.Shoplifter/AlreadyShoplifted") == true)
                     {
                         Game1.drawObjectDialogue(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"]);
                     }
@@ -517,7 +515,7 @@ namespace Shoplifter
 
                 else
                 {
-                    if (ModEntry.shopliftingstrings.ContainsKey("Placeholder") == false)
+                    if (ModEntry.shopliftingstrings.ContainsKey("TheMightyAmondee.Shoplifter/AlreadyShoplifted") == true)
                     {
                         Game1.drawObjectDialogue(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"]);
                     }
@@ -584,7 +582,7 @@ namespace Shoplifter
 
                 else
                 {
-                    if (ModEntry.shopliftingstrings.ContainsKey("Placeholder") == false)
+                    if (ModEntry.shopliftingstrings.ContainsKey("TheMightyAmondee.Shoplifter/AlreadyShoplifted") == true)
                     {
                         Game1.drawObjectDialogue(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"]);
                     }
@@ -626,7 +624,7 @@ namespace Shoplifter
 
                 else
                 {
-                    if (ModEntry.shopliftingstrings.ContainsKey("Placeholder") == false)
+                    if (ModEntry.shopliftingstrings.ContainsKey("TheMightyAmondee.Shoplifter/AlreadyShoplifted") == true)
                     {
                         Game1.drawObjectDialogue(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"]);
                     }
