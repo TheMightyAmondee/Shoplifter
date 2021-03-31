@@ -1,5 +1,4 @@
-﻿
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections;
 using StardewModdingAPI;
 using StardewModdingAPI.Events;
@@ -11,21 +10,18 @@ namespace Shoplifter
     public class ModEntry
         : Mod
     {
-        public static bool StolenToday;
-
-        public static readonly PerScreen<bool> PerScreenStolenToday = new PerScreen<bool>(createNewState: () => StolenToday);
-        public static ArrayList ShopsBannedFrom { get; private set; } = new ArrayList();
+        public static readonly PerScreen<bool> PerScreenStolenToday = new PerScreen<bool>(createNewState: () => false);
 
         public static Dictionary<string, string> shopliftingstrings = new Dictionary<string, string>();
 
-        public static readonly PerScreen<ArrayList> PerScreenShopsBannedFrom = new PerScreen<ArrayList>(createNewState: () => ShopsBannedFrom);
+        public static readonly PerScreen<ArrayList> PerScreenShopsBannedFrom = new PerScreen<ArrayList>(createNewState: () => new ArrayList());
 
         public override void Entry(IModHelper helper)
         {
             ShopMenuPatcher.gethelpers(this.Monitor, this.Helper);
             ShopMenuUtilities.gethelpers(this.Monitor, this.Helper);
             helper.Events.GameLoop.DayStarted += this.DayStarted;
-            helper.Events.GameLoop.GameLaunched += this.Launched;
+            helper.Events.GameLoop.GameLaunched += this.Launched;           
 
             var harmony = HarmonyInstance.Create(this.ModManifest.UniqueID);
             ShopMenuPatcher.Hook(harmony, this.Monitor);
@@ -74,6 +70,6 @@ namespace Shoplifter
                 this.Monitor.Log("Could not load strings... This will result in missing string problems, (Are you missing the Strings.json file?)", LogLevel.Error);
             }
            
-        }       
+        }
     }
 }
