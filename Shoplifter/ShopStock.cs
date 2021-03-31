@@ -210,12 +210,14 @@ namespace Shoplifter
 						quantity
 					});
 				}
+
 				// Ignore iteration if an item that can't be added is selected
                 else
                 {
 					i--;
                 }
 			}
+
 			// Clear stock array
 			CurrentStock.Clear();
 
