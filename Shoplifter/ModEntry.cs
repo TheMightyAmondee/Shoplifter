@@ -36,7 +36,7 @@ namespace Shoplifter
             {
                 // Clear perscreenshopsbannedfrom arraylist so player can enter shops again
                 PerScreenShopsBannedFrom.Value.Clear();
-                this.Monitor.Log("Cleared list of banned shops, steal away!", LogLevel.Info);
+                this.Monitor.Log("Cleared list of banned shops, steal away!", LogLevel.Debug);
             }
         }
 
