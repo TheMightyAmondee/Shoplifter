@@ -65,8 +65,7 @@ namespace Shoplifter
                 }
             }
             catch
-            {
-                // Add placeholder if strings can't be loaded to prevent crashes               
+            {             
                 this.Monitor.Log("Could not load strings... This will result in missing string problems, (Are you missing the Strings.json file?)", LogLevel.Error);
             }
            

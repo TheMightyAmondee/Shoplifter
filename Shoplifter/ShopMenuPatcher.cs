@@ -55,9 +55,9 @@ namespace Shoplifter
                     ShopMenuUtilities.SeedShopShopliftingMenu(__instance);
                 }
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                monitor.Log($"Failed to patch openShopMenu... Details\n{e}", LogLevel.Error);
+                monitor.Log($"Failed in {nameof(openShopMenu_Postfix)}:\n{ex}", LogLevel.Error);
             }			
         }
 
@@ -93,9 +93,9 @@ namespace Shoplifter
                     }
                 }
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                monitor.Log($"Failed to patch performActionpostfix... Details\n{e}", LogLevel.Error);
+                monitor.Log($"Failed in {nameof(performAction_Postfix)}:\n{ex}", LogLevel.Error);
             }            
         }
 
@@ -131,9 +131,9 @@ namespace Shoplifter
 
                 return true;
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                monitor.Log($"Failed to patch performActionprefix... Details\n{e}", LogLevel.Error);
+                monitor.Log($"Failed in {nameof(performAction_Prefix)}:\n{ex}", LogLevel.Error);
                 return true;
             }
         }
