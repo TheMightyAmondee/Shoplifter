@@ -23,7 +23,35 @@ namespace Shoplifter
         }
 
         /// <summary>
-        /// Determines whether the player is caught, makes corrections to dialogue and friendship based on return value
+        /// Subtracts friendship from any npc that sees the player shoplifting
+        /// </summary>
+        /// <param name="__instance">The current location instance</param>
+        /// <param name="who">The player</param>
+        public static void SeenShoplifting(GameLocation __instance, Farmer who)
+        {
+            foreach(NPC i in __instance.characters)
+            {
+                if (i.currentLocation == who.currentLocation && Utility.tileWithinRadiusOfPlayer(i.getTileX(), i.getTileY(), 7, who))
+                {
+                    i.doEmote(12, false, false);
+
+                    if (Game1.player.friendshipData.ContainsKey(i.Name) == true)
+                    {
+                        int frienshiploss = -Math.Min(1000, Game1.player.getFriendshipLevelForNPC(i.Name));
+                        Game1.player.changeFriendship(frienshiploss, Game1.getCharacterFromName(i.Name, true));
+                        monitor.Log($"{i.Name} saw you shoplifting... {-frienshiploss} friendship points lost");
+                    }
+
+                    else
+                    {
+                        monitor.Log($"{i.Name} saw you shoplifting... You've never talked to {i.Name}, no friendship to lose");
+                    }
+                }               
+            }
+        }
+
+        /// <summary>
+        /// Determines whether the player is caught, makes corrections to dialogue based on return value
         /// </summary>
         /// <param name="which">Who should catch the player</param>
         /// <param name="who">The player to catch</param>
@@ -34,8 +62,7 @@ namespace Shoplifter
             
             if (npc != null && npc.currentLocation == who.currentLocation && Utility.tileWithinRadiusOfPlayer(npc.getTileX(), npc.getTileY(), 7, who))
             {
-                npc.doEmote(12, false, false);
-
+                
                 if ((which == "Pierre" || which == "Willy" || which == "Robin" || which == "Marnie" || which == "Gus" || which == "Harvey" || which == "Clint") && ModEntry.shopliftingstrings.ContainsKey($"TheMightyAmondee.Shoplifter/Caught{which}") == true)
                 {
                     npc.setNewDialogue(ModEntry.shopliftingstrings[$"TheMightyAmondee.Shoplifter/Caught{which}"], add: true);
@@ -52,18 +79,7 @@ namespace Shoplifter
                 }
                                 
                 Game1.drawDialogue(npc);
-
-                if (Game1.player.friendshipData.ContainsKey(which) == true)
-                {
-                    int frienshiploss = -Math.Min(1000, Game1.player.getFriendshipLevelForNPC(which));
-                    Game1.player.changeFriendship(frienshiploss, Game1.getCharacterFromName(which, true));
-                    monitor.Log($"{which} caught you shoplifting... {-frienshiploss} friendship points lost");
-                }
-
-                else
-                {
-                    monitor.Log($"{which} caught you shoplifting... You've never talked to {which}, no friendship to lose");
-                }
+                monitor.Log($"{which} caught you shoplifting... You're banned from their shop");
 
                 return true;
             }
@@ -88,6 +104,8 @@ namespace Shoplifter
                 {
                     if (answer == "Yes")
                     {
+                        SeenShoplifting(__instance, Game1.player);
+
                         if (ShouldBeCaught("Willy", Game1.player) == true)
                         {
                             Game1.afterDialogues = delegate
@@ -142,6 +160,8 @@ namespace Shoplifter
                 {
                     __instance.createQuestionDialogue("Shoplift?", __instance.createYesNoResponses(), delegate (Farmer _, string answer)
                     {
+                        SeenShoplifting(__instance, Game1.player);
+
                         if (answer == "Yes")
                         {
                             if (ShouldBeCaught("Pierre", Game1.player) == true || ShouldBeCaught("Caroline", Game1.player) == true || ShouldBeCaught("Abigail", Game1.player) == true)
@@ -176,6 +196,8 @@ namespace Shoplifter
                 Game1.dialogueUp = false;
                 __instance.createQuestionDialogue("Shoplift?", __instance.createYesNoResponses(), delegate (Farmer _, string answer)
                 {
+                    SeenShoplifting(__instance, Game1.player);
+
                     if (answer == "Yes")
                     {
                         if (ShouldBeCaught("Pierre", Game1.player) == true || ShouldBeCaught("Caroline", Game1.player) == true || ShouldBeCaught("Abigail", Game1.player) == true)
@@ -222,6 +244,8 @@ namespace Shoplifter
                             {
                                 if (answer == "Yes")
                                 {
+                                    SeenShoplifting(__instance, Game1.player);
+
                                     if (ShouldBeCaught("Robin", Game1.player) == true || ShouldBeCaught("Demetrius", Game1.player) == true || ShouldBeCaught("Maru", Game1.player) == true || ShouldBeCaught("Sebastian", Game1.player) == true)
                                     {
                                         Game1.afterDialogues = delegate
@@ -259,6 +283,8 @@ namespace Shoplifter
                             {
                                 if (answer == "Yes")
                                 {
+                                    SeenShoplifting(__instance, Game1.player);
+
                                     if (ShouldBeCaught("Robin", Game1.player) == true || ShouldBeCaught("Demetrius", Game1.player) == true || ShouldBeCaught("Maru", Game1.player) == true || ShouldBeCaught("Sebastian", Game1.player) == true)
                                     {
                                         Game1.afterDialogues = delegate
@@ -288,6 +314,8 @@ namespace Shoplifter
                         {
                             if (answer == "Yes")
                             {
+                                SeenShoplifting(__instance, Game1.player);
+
                                 if (ShouldBeCaught("Robin", Game1.player) == true || ShouldBeCaught("Demetrius", Game1.player) == true || ShouldBeCaught("Maru", Game1.player) == true || ShouldBeCaught("Sebastian", Game1.player) == true)
                                 {
                                     Game1.afterDialogues = delegate
@@ -352,6 +380,8 @@ namespace Shoplifter
                             {
                                 if (answer == "Yes")
                                 {
+                                    SeenShoplifting(__instance, Game1.player);
+
                                     if (ShouldBeCaught("Marnie", Game1.player) == true || ShouldBeCaught("Shane", Game1.player) == true)
                                     {
                                         Game1.afterDialogues = delegate
@@ -390,6 +420,8 @@ namespace Shoplifter
                             {
                                 if (answer == "Yes")
                                 {
+                                    SeenShoplifting(__instance, Game1.player);
+
                                     if (ShouldBeCaught("Marnie", Game1.player) == true || ShouldBeCaught("Shane", Game1.player) == true)
                                     {
                                         Game1.afterDialogues = delegate
@@ -418,6 +450,8 @@ namespace Shoplifter
                         {
                             if (answer == "Yes")
                             {
+                                SeenShoplifting(__instance, Game1.player);
+
                                 if (ShouldBeCaught("Marnie", Game1.player) == true || ShouldBeCaught("Shane", Game1.player) == true)
                                 {
                                     Game1.afterDialogues = delegate
@@ -472,6 +506,8 @@ namespace Shoplifter
                 {
                     __instance.createQuestionDialogue("Shoplift?", __instance.createYesNoResponses(), delegate (Farmer _, string answer)
                     {
+                        SeenShoplifting(__instance, Game1.player);
+
                         if (answer == "Yes")
                         {
                             if (ShouldBeCaught("Harvey", Game1.player) == true || ShouldBeCaught("Maru", Game1.player) == true)
@@ -525,6 +561,8 @@ namespace Shoplifter
                     {
                         if (answer == "Yes")
                         {
+                            SeenShoplifting(__instance, Game1.player);
+
                             if (ShouldBeCaught("Clint", Game1.player) == true)
                             {
                                 Game1.afterDialogues = delegate
@@ -578,6 +616,8 @@ namespace Shoplifter
                     {
                         __instance.createQuestionDialogue("Shoplift?", __instance.createYesNoResponses(), delegate (Farmer _, string answer)
                         {
+                            SeenShoplifting(__instance, Game1.player);
+
                             if (answer == "Yes")
                             {
                                 if (ShouldBeCaught("Gus", Game1.player) == true || ShouldBeCaught("Emily", Game1.player) == true)
@@ -638,6 +678,8 @@ namespace Shoplifter
                 {
                     __instance.createQuestionDialogue("Shoplift?", __instance.createYesNoResponses(), delegate (Farmer _, string answer)
                     {
+                        SeenShoplifting(__instance, Game1.player);
+
                         if (answer == "Yes")
                         {
                             if (ShouldBeCaught("Gus", Game1.player) == true || ShouldBeCaught("Emily", Game1.player) == true)
