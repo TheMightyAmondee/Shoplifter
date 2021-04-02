@@ -79,7 +79,7 @@ namespace Shoplifter
                 }
                                 
                 Game1.drawDialogue(npc);
-                monitor.Log($"{which} caught you shoplifting... You're banned from their shop");
+                monitor.Log($"{which} caught you shoplifting... You're banned from their shop for the day");
 
                 return true;
             }
@@ -112,7 +112,7 @@ namespace Shoplifter
                             {
                                 Game1.warpFarmer(__instance.warps[0].TargetName, __instance.warps[0].TargetX, __instance.warps[0].TargetY, false);
                                 ModEntry.PerScreenShopsBannedFrom.Value.Add("FishShop");
-                                monitor.Log("Fishshop added to banned shop list", LogLevel.Debug);
+                                monitor.Log("Fishshop added to banned shop list");
                             };
 
                             return;
@@ -170,7 +170,7 @@ namespace Shoplifter
                                 {
                                     Game1.warpFarmer(__instance.warps[0].TargetName, __instance.warps[0].TargetX, __instance.warps[0].TargetY, false);
                                     ModEntry.PerScreenShopsBannedFrom.Value.Add("SeedShop");
-                                    monitor.Log("Seedshop added to banned shop list", LogLevel.Debug);
+                                    monitor.Log("Seedshop added to banned shop list");
                                 };
 
                                 return;
@@ -206,7 +206,7 @@ namespace Shoplifter
                             {
                                 Game1.warpFarmer(__instance.warps[0].TargetName, __instance.warps[0].TargetX, __instance.warps[0].TargetY, false);
                                 ModEntry.PerScreenShopsBannedFrom.Value.Add("SeedShop");
-                                monitor.Log("Seedshop added to banned shop list", LogLevel.Debug);
+                                monitor.Log("Seedshop added to banned shop list");
                             };
 
                             return;
@@ -252,7 +252,7 @@ namespace Shoplifter
                                         {
                                             Game1.warpFarmer(__instance.warps[0].TargetName, __instance.warps[0].TargetX, __instance.warps[0].TargetY, false);
                                             ModEntry.PerScreenShopsBannedFrom.Value.Add("ScienceHouse");
-                                            monitor.Log("ScienceHouse added to banned shop list", LogLevel.Debug);
+                                            monitor.Log("ScienceHouse added to banned shop list");
                                         };
 
                                         return;
@@ -291,7 +291,7 @@ namespace Shoplifter
                                         {
                                             Game1.warpFarmer(__instance.warps[0].TargetName, __instance.warps[0].TargetX, __instance.warps[0].TargetY, false);
                                             ModEntry.PerScreenShopsBannedFrom.Value.Add("ScienceHouse");
-                                            monitor.Log("ScienceHouse added to banned shop list", LogLevel.Debug);
+                                            monitor.Log("ScienceHouse added to banned shop list");
                                         };
 
                                         return;
@@ -322,7 +322,7 @@ namespace Shoplifter
                                     {
                                         Game1.warpFarmer(__instance.warps[0].TargetName, __instance.warps[0].TargetX, __instance.warps[0].TargetY, false);
                                         ModEntry.PerScreenShopsBannedFrom.Value.Add("ScienceHouse");
-                                        monitor.Log("ScienceHouse added to banned shop list", LogLevel.Debug);
+                                        monitor.Log("ScienceHouse added to banned shop list");
                                     };
 
                                     return;
@@ -388,7 +388,7 @@ namespace Shoplifter
                                         {
                                             Game1.warpFarmer(__instance.warps[0].TargetName, __instance.warps[0].TargetX, __instance.warps[0].TargetY, false);
                                             ModEntry.PerScreenShopsBannedFrom.Value.Add("AnimalShop");
-                                            monitor.Log("AnimalShop added to banned shop list", LogLevel.Debug);
+                                            monitor.Log("AnimalShop added to banned shop list");
                                         };
 
                                         return;
@@ -428,7 +428,7 @@ namespace Shoplifter
                                         {
                                             Game1.warpFarmer(__instance.warps[0].TargetName, __instance.warps[0].TargetX, __instance.warps[0].TargetY, false);
                                             ModEntry.PerScreenShopsBannedFrom.Value.Add("AnimalShop");
-                                            monitor.Log("AnimalShop added to banned shop list", LogLevel.Debug);
+                                            monitor.Log("AnimalShop added to banned shop list");
                                         };
 
                                         return;
@@ -458,7 +458,7 @@ namespace Shoplifter
                                     {
                                         Game1.warpFarmer(__instance.warps[0].TargetName, __instance.warps[0].TargetX, __instance.warps[0].TargetY, false);
                                         ModEntry.PerScreenShopsBannedFrom.Value.Add("AnimalShop");
-                                        monitor.Log("AnimalShop added to banned shop list", LogLevel.Debug);
+                                        monitor.Log("AnimalShop added to banned shop list");
                                     };
 
                                     return;
@@ -516,7 +516,7 @@ namespace Shoplifter
                                 {
                                     Game1.warpFarmer(__instance.warps[0].TargetName, __instance.warps[0].TargetX, __instance.warps[0].TargetY, false);
                                     ModEntry.PerScreenShopsBannedFrom.Value.Add("Hospital");
-                                    monitor.Log("Hospital added to banned shop list", LogLevel.Debug);
+                                    monitor.Log("Hospital added to banned shop list");
                                 };
 
                                 return;
@@ -569,7 +569,7 @@ namespace Shoplifter
                                 {
                                     Game1.warpFarmer(__instance.warps[0].TargetName, __instance.warps[0].TargetX, __instance.warps[0].TargetY, false);
                                     ModEntry.PerScreenShopsBannedFrom.Value.Add("Blacksmith");
-                                    monitor.Log("Blacksmith added to banned shop list", LogLevel.Debug);
+                                    monitor.Log("Blacksmith added to banned shop list");
                                 };
 
                                 return;
@@ -626,7 +626,7 @@ namespace Shoplifter
                                     {
                                         Game1.warpFarmer(__instance.warps[0].TargetName, __instance.warps[0].TargetX, __instance.warps[0].TargetY, false);
                                         ModEntry.PerScreenShopsBannedFrom.Value.Add("Saloon");
-                                        monitor.Log("Saloon added to banned shop list", LogLevel.Debug);
+                                        monitor.Log("Saloon added to banned shop list");
                                     };
 
                                     return;
@@ -688,7 +688,7 @@ namespace Shoplifter
                                 {
                                     Game1.warpFarmer(__instance.warps[0].TargetName, __instance.warps[0].TargetX, __instance.warps[0].TargetY, false);
                                     ModEntry.PerScreenShopsBannedFrom.Value.Add("Saloon");
-                                    monitor.Log("Saloon added to banned shop list", LogLevel.Debug);
+                                    monitor.Log("Saloon added to banned shop list");
                                 };
 
                                 return;

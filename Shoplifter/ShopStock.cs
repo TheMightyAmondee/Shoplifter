@@ -105,14 +105,14 @@ namespace Shoplifter
 					}
 
 					// Add object id to array
-					if ((shopstock.Key as StardewValley.Object) != null && (shopstock.Key as StardewValley.Object).bigCraftable == false)
+					if ((shopstock.Key as StardewValley.Object) != null && (shopstock.Key as StardewValley.Object).bigCraftable == false && (shopstock.Key as StardewValley.Object).IsRecipe == false)
 					{
 						index = (shopstock.Key as StardewValley.Object).parentSheetIndex;
 
 						CurrentStock.Add(index);
 					}
 					// If it is a big craftable add 10000 to id so it can be marked as such for later use
-					else if ((shopstock.Key as StardewValley.Object) != null && (shopstock.Key as StardewValley.Object).bigCraftable == true && (shopstock.Key as StardewValley.Object).IsRecipe == false)
+					else if ((shopstock.Key as StardewValley.Object) != null && (shopstock.Key as StardewValley.Object).bigCraftable == true)
 					{
 						index = (shopstock.Key as StardewValley.Object).parentSheetIndex + 10000;
 
