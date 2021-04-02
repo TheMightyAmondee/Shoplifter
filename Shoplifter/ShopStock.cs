@@ -62,7 +62,7 @@ namespace Shoplifter
 					}
 
 					// Add big craftable objects with 10000 added to it's id so they can be marked as not being valid stock later
-					else if ((shopstock.Key as StardewValley.Object) != null && (shopstock.Key as StardewValley.Object).bigCraftable == true)
+					else if ((shopstock.Key as StardewValley.Object) != null && (shopstock.Key as StardewValley.Object).bigCraftable == true && (shopstock.Key as StardewValley.Object).IsRecipe == false)
                     {
 						index = (shopstock.Key as StardewValley.Object).parentSheetIndex;
 
@@ -84,7 +84,7 @@ namespace Shoplifter
 					}
 
 					// Add object id to array
-					if ((shopstock.Key as StardewValley.Object) != null && (shopstock.Key as StardewValley.Object).bigCraftable == false)
+					if ((shopstock.Key as StardewValley.Object) != null && (shopstock.Key as StardewValley.Object).bigCraftable == false && (shopstock.Key as StardewValley.Object).IsRecipe == false)
 					{
 						index = (shopstock.Key as StardewValley.Object).parentSheetIndex;
 
@@ -112,7 +112,7 @@ namespace Shoplifter
 						CurrentStock.Add(index);
 					}
 					// If it is a big craftable add 10000 to id so it can be marked as such for later use
-					else if ((shopstock.Key as StardewValley.Object) != null && (shopstock.Key as StardewValley.Object).bigCraftable == true)
+					else if ((shopstock.Key as StardewValley.Object) != null && (shopstock.Key as StardewValley.Object).bigCraftable == true && (shopstock.Key as StardewValley.Object).IsRecipe == false)
 					{
 						index = (shopstock.Key as StardewValley.Object).parentSheetIndex + 10000;
 
@@ -134,7 +134,7 @@ namespace Shoplifter
 					}
 
 					// Add object id to array
-					if ((shopstock.Key as StardewValley.Object) != null && (shopstock.Key as StardewValley.Object).bigCraftable == false)
+					if ((shopstock.Key as StardewValley.Object) != null && (shopstock.Key as StardewValley.Object).bigCraftable == false && (shopstock.Key as StardewValley.Object).IsRecipe == false)
 					{
 						index = (shopstock.Key as StardewValley.Object).parentSheetIndex;
 
@@ -156,7 +156,7 @@ namespace Shoplifter
 					}
 
 					// Add object id to array
-					if ((shopstock.Key as StardewValley.Object) != null && (shopstock.Key as StardewValley.Object).bigCraftable == false)
+					if ((shopstock.Key as StardewValley.Object) != null && (shopstock.Key as StardewValley.Object).bigCraftable == false && (shopstock.Key as StardewValley.Object).IsRecipe == false)
 					{
 						index = (shopstock.Key as StardewValley.Object).parentSheetIndex;
 
@@ -178,7 +178,7 @@ namespace Shoplifter
 					}
 
 					// Add object id to array
-					if ((shopstock.Key as StardewValley.Object) != null && (shopstock.Key as StardewValley.Object).bigCraftable == false)
+					if ((shopstock.Key as StardewValley.Object) != null && (shopstock.Key as StardewValley.Object).bigCraftable == false && (shopstock.Key as StardewValley.Object).IsRecipe == false)
 					{
 						index = (shopstock.Key as StardewValley.Object).parentSheetIndex;
 

@@ -37,7 +37,7 @@ namespace Shoplifter
 
                     if (Game1.player.friendshipData.ContainsKey(i.Name) == true)
                     {
-                        int frienshiploss = -Math.Min(1000, Game1.player.getFriendshipLevelForNPC(i.Name));
+                        int frienshiploss = -Math.Min(500, Game1.player.getFriendshipLevelForNPC(i.Name));
                         Game1.player.changeFriendship(frienshiploss, Game1.getCharacterFromName(i.Name, true));
                         monitor.Log($"{i.Name} saw you shoplifting... {-frienshiploss} friendship points lost");
                     }
@@ -258,7 +258,7 @@ namespace Shoplifter
                                         return;
                                     }
 
-                                    Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(6, 5, "Carpenters"), 3, null, delegate
+                                    Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(2, 10, "Carpenters"), 3, null, delegate
                                     {
                                         ModEntry.PerScreenStolenToday.Value = true;
                                         return false;
@@ -297,7 +297,7 @@ namespace Shoplifter
                                         return;
                                     }
 
-                                    Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(6, 5, "Carpenters"), 3, null, delegate
+                                    Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(2, 10, "Carpenters"), 3, null, delegate
                                     {
                                         ModEntry.PerScreenStolenToday.Value = true;
                                         return false;
@@ -328,7 +328,7 @@ namespace Shoplifter
                                     return;
                                 }
 
-                                Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(6, 5, "Carpenters"), 3, null, delegate
+                                Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(2, 10, "Carpenters"), 3, null, delegate
                                 {
                                     ModEntry.PerScreenStolenToday.Value = true;
                                     return false;
