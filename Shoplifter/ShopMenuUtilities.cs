@@ -170,7 +170,7 @@ namespace Shoplifter
                                 {
                                     Game1.warpFarmer(__instance.warps[0].TargetName, __instance.warps[0].TargetX, __instance.warps[0].TargetY, false);
                                     ModEntry.PerScreenShopsBannedFrom.Value.Add("SeedShop");
-                                    monitor.Log("Seedshop added to banned shop list");
+                                    monitor.Log("SeedShop added to banned shop list");
                                 };
 
                                 return;
@@ -206,7 +206,7 @@ namespace Shoplifter
                             {
                                 Game1.warpFarmer(__instance.warps[0].TargetName, __instance.warps[0].TargetX, __instance.warps[0].TargetY, false);
                                 ModEntry.PerScreenShopsBannedFrom.Value.Add("SeedShop");
-                                monitor.Log("Seedshop added to banned shop list");
+                                monitor.Log("SeedShop added to banned shop list");
                             };
 
                             return;
