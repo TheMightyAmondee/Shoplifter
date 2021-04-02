@@ -20,15 +20,15 @@ The mod uses Harmony to patch some game methods.
 
 Boring specifics are listed below:
 
-Shop | Who can ban you | Stock exclusions
------|-----------------|-----------------
-Willy's Shop | Willy | Any furniture, fish tanks, fishing rods
-Pierre's General Store | Pierre, Caroline, Abigail | Recipes, wallpaper, flooring
-Carpenter | Robin, Demetrius, Maru, Sebastian | Recipes, any furniture
-Marnie's Ranch | Marnie, Shane | Decorations, tools, heater
-Harvey's Clinic | Harvey, Maru | None
-Saloon | Gus, Emily | Recipes
-Blacksmith | Clint | None
+Shop | Who can ban you | Stock exclusions | Max number of diiferent items | Max quantity of each item
+-----|-----------------|------------------|-------------------------------|--------------------------
+Willy's Shop | Willy | Any furniture, fish tanks, fishing rods | 3 | 3
+Pierre's General Store | Pierre, Caroline, Abigail | Recipes, wallpaper, flooring | 5 | 5
+Carpenter | Robin, Demetrius, Maru, Sebastian | Recipes, any furniture | 2 | 10
+Marnie's Ranch | Marnie, Shane | Decorations, tools, heater | 1 | 10
+Harvey's Clinic | Harvey, Maru | None | 1 | 4
+Saloon | Gus, Emily | Recipes | 2 | 1
+Blacksmith | Clint | None | 3 | 5
 
 ## Versions ##
 1.0.0 - Initial release
