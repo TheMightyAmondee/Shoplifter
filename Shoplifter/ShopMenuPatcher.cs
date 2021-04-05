@@ -45,13 +45,17 @@ namespace Shoplifter
         {
             try
             {
+                // Is it Willy's shop?
                 if (which.Equals("Fish"))
                 {
+                    // Yes, do something
                     ShopMenuUtilities.FishShopShopliftingMenu(__instance);                    
                 }
 
+                // Is it Pierre's shop?
                 else if (__instance is SeedShop && ModEntry.PerScreenStolenToday.Value == false)
                 {
+                    // Yes, do something
                     ShopMenuUtilities.SeedShopShopliftingMenu(__instance);
                 }
             }
@@ -65,10 +69,12 @@ namespace Shoplifter
         {
             try
             {
+                // If tile has an action property, check action
                 if (action != null && who.IsLocalPlayer)
                 {
                     string[] actionParams = action.Split(' ');
 
+                    // Depending on action parameter, do something
                     switch (actionParams[0])
                     {
                         case "HospitalShop":
@@ -103,9 +109,11 @@ namespace Shoplifter
         {
             try
             {
+                // If tile has an action property, check action
                 if (action != null && who.IsLocalPlayer)
                 {
                     string[] actionParams = action.Split(' ');
+                    // Depending on action parameter, do something
                     switch (actionParams[0])
                     {
                         case "LockedDoorWarp":
@@ -121,14 +129,17 @@ namespace Shoplifter
                                     Game1.drawObjectDialogue(ModEntry.shopliftingstrings["Placeholder"]);
                                 }
                                 
+                                // Don't run original code, player is banned and shouldn't be allowed to enter
                                 return false;
                             }
 
+                            // Run original code, player isn't banned
                             return true;                           
                     }
                     
                 }
 
+                // Run original code, parameter is not present
                 return true;
             }
             catch (Exception ex)

@@ -1,8 +1,8 @@
 # Shoplifter
 
 Shoplifter is a mod for [Stardew Valley](https://www.stardewvalley.net/) that allows the player to shoplift when the shopkeeper is not at the counter. 
-Stock is randomly generated based on the save file and the current day for each shop. 
-Only basic items will be available that are currently available to your character, it's unlikely you could get away with stealing a TV from Robin's (as she does point out...)
+Stock is randomly generated based on the save file and the number of days played for each shop. This is to ensure stock is the same throughout the day.
+Only basic items that are currently available to your character can be shoplifted, it's unlikely you could get away with stealing a TV from Robin's (as she does point out...)
 
 Ready for a spree of petty crime? Just don't get caught...
 
@@ -20,11 +20,11 @@ The mod uses Harmony to patch some game methods.
 
 Boring specifics are listed below:
 
-Shop | Who can ban you | Stock exclusions | Max number of diiferent items | Max quantity of each item
+Shop | Who can ban you | Stock exclusions | Max number of different items | Max quantity of each item
 -----|-----------------|------------------|-------------------------------|--------------------------
 Willy's Shop | Willy | Any furniture, fish tanks, fishing rods | 3 | 3
 Pierre's General Store | Pierre, Caroline, Abigail | Recipes, wallpaper, flooring | 5 | 5
-Carpenter | Robin, Demetrius, Maru, Sebastian | Recipes, any furniture | 2 | 10
+Carpenter | Robin, Demetrius, Maru, Sebastian | Recipes, any furniture, workbench | 2 | 10
 Marnie's Ranch | Marnie, Shane | Decorations, tools, heater | 1 | 10
 Harvey's Clinic | Harvey, Maru | None | 1 | 4
 Saloon | Gus, Emily | Recipes | 2 | 1
