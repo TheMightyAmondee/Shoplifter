@@ -42,7 +42,10 @@ namespace Shoplifter
 
         private void Launched(object sender, GameLaunchedEventArgs e)
         {
+            // Add placeholder for missing strings
             shopliftingstrings.Add("Placeholder", "There's a string missing here...");
+
+            // Because missing strings will cause harmony patches to fail, placeholder is necessary to stop crashes
 
             try
             {
