@@ -291,7 +291,7 @@ namespace Shoplifter
                                     }
 
                                     // Not caught, show shoplifting menu
-                                    Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(2, 10, "Carpenters"), 3, null, delegate
+                                    Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(2, 20, "Carpenters"), 3, null, delegate
                                     {
                                         // On purchase, make sure player can not steal again
                                         ModEntry.PerScreenStolenToday.Value = true;
@@ -333,7 +333,7 @@ namespace Shoplifter
                                         return;
                                     }
 
-                                    Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(2, 10, "Carpenters"), 3, null, delegate
+                                    Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(2, 20, "Carpenters"), 3, null, delegate
                                     {
                                         ModEntry.PerScreenStolenToday.Value = true;
                                         return false;
@@ -365,7 +365,7 @@ namespace Shoplifter
                                     return;
                                 }
 
-                                Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(2, 10, "Carpenters"), 3, null, delegate
+                                Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(2, 20, "Carpenters"), 3, null, delegate
                                 {
                                     ModEntry.PerScreenStolenToday.Value = true;
                                     return false;
@@ -436,7 +436,7 @@ namespace Shoplifter
                                         return;
                                     }
 
-                                    Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(1, 10, "AnimalShop"), 3, null, delegate
+                                    Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(1, 15, "AnimalShop"), 3, null, delegate
                                     {
                                         ModEntry.PerScreenStolenToday.Value = true;
                                         return false;
@@ -477,7 +477,7 @@ namespace Shoplifter
                                         return;
                                     }
 
-                                    Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(1, 10, "AnimalShop"), 3, null, delegate
+                                    Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(1, 15, "AnimalShop"), 3, null, delegate
                                     {
                                         ModEntry.PerScreenStolenToday.Value = true;
                                         return false;
@@ -508,7 +508,7 @@ namespace Shoplifter
                                     return;
                                 }
 
-                                Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(1, 10, "AnimalShop"), 3, null, delegate
+                                Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(1, 15, "AnimalShop"), 3, null, delegate
                                 {
                                     ModEntry.PerScreenStolenToday.Value = true;
                                     return false;
@@ -568,7 +568,7 @@ namespace Shoplifter
                                 return;
                             }
 
-                            Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(1, 4, "HospitalShop"), 3, null, delegate
+                            Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(1, 3, "HospitalShop"), 3, null, delegate
                             {
                                 ModEntry.PerScreenStolenToday.Value = true;
                                 return false;
@@ -622,7 +622,7 @@ namespace Shoplifter
                                 return;
                             }
 
-                            Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(3, 5, "Blacksmith"), 3, null, delegate
+                            Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(3, 10, "Blacksmith"), 3, null, delegate
                             {
                                 ModEntry.PerScreenStolenToday.Value = true;
                                 return false;
