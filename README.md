@@ -24,11 +24,11 @@ Shop | Who can ban you | Stock exclusions | Max number of different items | Max 
 -----|-----------------|------------------|-------------------------------|--------------------------
 Willy's Shop | Willy | Any furniture, fish tanks, fishing rods | 3 | 3
 Pierre's General Store | Pierre, Caroline, Abigail | Recipes, wallpaper, flooring | 5 | 5
-Carpenter | Robin, Demetrius, Maru, Sebastian | Recipes, any furniture, workbench | 2 | 10
-Marnie's Ranch | Marnie, Shane | Decorations, tools, heater | 1 | 10
-Harvey's Clinic | Harvey, Maru | None | 1 | 4
+Carpenter | Robin, Demetrius, Maru, Sebastian | Recipes, any furniture, workbench | 2 | 20
+Marnie's Ranch | Marnie, Shane | Decorations, tools, heater | 1 | 15
+Harvey's Clinic | Harvey, Maru | None | 1 | 3
 Saloon | Gus, Emily | Recipes | 2 | 1
-Blacksmith | Clint | None | 3 | 5
+Blacksmith | Clint | None | 3 | 10
 
 ## Versions ##
 1.0.0 - Initial release
