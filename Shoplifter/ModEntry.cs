@@ -58,23 +58,23 @@ namespace Shoplifter
             {
                 this.Monitor.Log("Found mod data...");
 
-                var dic = Game1.player.modData;
+                var moddata = Game1.player.modData;
 
-                foreach (string shopliftingdata in new List<string>(dic.Keys))
+                foreach (string shopliftingdata in new List<string>(moddata.Keys))
                 {
                     // Player has finished three day ban, remove shop from list
-                    if (shopliftingdata.StartsWith($"{this.ModManifest.UniqueID}") && dic[shopliftingdata] == "-111")
+                    if (shopliftingdata.StartsWith($"{this.ModManifest.UniqueID}") && moddata[shopliftingdata] == "-111")
                     {
-                        dic[shopliftingdata] = "0";
+                        moddata[shopliftingdata] = "0";
                         string[] fields = shopliftingdata.Split('_');
                         PerScreenShopsBannedFrom.Value.Remove(fields[1]);
                         this.Monitor.Log($"You're no longer banned from {fields[1]}, steal away!", LogLevel.Info);
                     }
 
                     // Player is currently banned, add shop to list
-                    else if (shopliftingdata.StartsWith($"{this.ModManifest.UniqueID}") && int.Parse(dic[shopliftingdata]) < 0)
+                    else if (shopliftingdata.StartsWith($"{this.ModManifest.UniqueID}") && int.Parse(moddata[shopliftingdata]) < 0)
                     {
-                        dic[shopliftingdata] = int.Parse(dic[shopliftingdata]) + 1.ToString();
+                        moddata[shopliftingdata] = int.Parse(moddata[shopliftingdata]) + 1.ToString();
                         string[] fields = shopliftingdata.Split('_');
                         PerScreenShopsBannedFrom.Value.Add(fields[1]);
                     }
@@ -104,7 +104,7 @@ namespace Shoplifter
 
                 this.Monitor.Log("Strings loaded from assets, ready to go!");
 
-                if (shopliftingstrings.Count < 19)
+                if (shopliftingstrings.Count < 20)
                 {
                     this.Monitor.Log("The number of strings loaded seem a bit low, you may get some missing string problems...\nCheck that all strings are present in the Strings.json", LogLevel.Warn);
                 }
