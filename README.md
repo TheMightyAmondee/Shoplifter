@@ -6,8 +6,9 @@ Only basic items that are currently available to your character can be shoplifte
 
 Ready for a spree of petty crime? Just don't get caught...
 
-Any villager within 7 tiles of you when you shoplift will lose 2 hearts of friendship and if the shopkeeper or their family/employee catches you, 
-you'll also receive a ban from the shop for the rest of the day and a fine equal to your current funds up to 1000g.
+Any villager within 7 tiles of you when you shoplift will lose 2 hearts of friendship. If the villager also happens to be the shopowner or their family/employee they will also fine you your current funds up to 1000g.
+
+If you get caught by the shopowner or their family/employee three times, you'll receive a three day ban from entering the shop. This is saved between days so be very careful.
 
 You can only successfully shoplift once per day, you're not that bad are you?
 
