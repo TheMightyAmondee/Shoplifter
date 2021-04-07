@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections;
 using StardewModdingAPI;
+using StardewValley;
 using StardewModdingAPI.Events;
 using StardewModdingAPI.Utilities;
 using Harmony;
@@ -19,7 +20,7 @@ namespace Shoplifter
         public override void Entry(IModHelper helper)
         {
             ShopMenuPatcher.gethelpers(this.Monitor, this.Helper);
-            ShopMenuUtilities.gethelpers(this.Monitor, this.Helper);
+            ShopMenuUtilities.gethelpers(this.Monitor, this.Helper, this.ModManifest);
             helper.Events.GameLoop.DayStarted += this.DayStarted;
             helper.Events.GameLoop.GameLaunched += this.Launched;           
 
@@ -32,11 +33,52 @@ namespace Shoplifter
             // Reset perscreenstolentoday boolean so player can shoplift again when the new day starts
             PerScreenStolenToday.Value = false;
 
+            // Clear banned shops
             if (PerScreenShopsBannedFrom.Value.Count > 0)
             {
-                // Clear perscreenshopsbannedfrom arraylist so player can enter shops again
                 PerScreenShopsBannedFrom.Value.Clear();
-                this.Monitor.Log("Cleared list of banned shops, steal away!", LogLevel.Debug);
+            }
+
+            var data = Game1.player.modData;
+
+            // Add mod data if it isn't present
+            if (data.ContainsKey($"{this.ModManifest.UniqueID}_SeedShop") == false)
+            {
+                data.Add($"{this.ModManifest.UniqueID}_SeedShop", "0");
+                data.Add($"{this.ModManifest.UniqueID}_FishShop", "0");
+                data.Add($"{this.ModManifest.UniqueID}_AnimalShop", "0");
+                data.Add($"{this.ModManifest.UniqueID}_ScienceHouse", "0");
+                data.Add($"{this.ModManifest.UniqueID}_Hospital", "0");
+                data.Add($"{this.ModManifest.UniqueID}_Blacksmith", "0");
+                data.Add($"{this.ModManifest.UniqueID}_Saloon", "0");
+                this.Monitor.Log("Adding mod data...");
+            }
+
+            else
+            {
+                this.Monitor.Log("Found mod data...");
+
+                var dic = Game1.player.modData;
+
+                foreach (string shopliftingdata in new List<string>(dic.Keys))
+                {
+                    // Player has finished three day ban, remove shop from list
+                    if (shopliftingdata.StartsWith($"{this.ModManifest.UniqueID}") && dic[shopliftingdata] == "-111")
+                    {
+                        dic[shopliftingdata] = "0";
+                        string[] fields = shopliftingdata.Split('_');
+                        PerScreenShopsBannedFrom.Value.Remove(fields[1]);
+                        this.Monitor.Log($"You're no longer banned from {fields[1]}, steal away!", LogLevel.Info);
+                    }
+
+                    // Player is currently banned, add shop to list
+                    else if (shopliftingdata.StartsWith($"{this.ModManifest.UniqueID}") && int.Parse(dic[shopliftingdata]) < 0)
+                    {
+                        dic[shopliftingdata] = int.Parse(dic[shopliftingdata]) + 1.ToString();
+                        string[] fields = shopliftingdata.Split('_');
+                        PerScreenShopsBannedFrom.Value.Add(fields[1]);
+                    }
+                }
             }
         }
 

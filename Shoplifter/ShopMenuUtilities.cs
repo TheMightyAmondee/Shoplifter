@@ -15,13 +15,44 @@ namespace Shoplifter
     {
         private static IMonitor monitor;
         private static IModHelper helper;
+        private static IManifest manifest;
 
         private static int fineamount;
       
-        public static void gethelpers(IMonitor monitor, IModHelper helper)
+        public static void gethelpers(IMonitor monitor, IModHelper helper, IManifest manifest)
         {
             ShopMenuUtilities.monitor = monitor;
             ShopMenuUtilities.helper = helper;
+            ShopMenuUtilities.manifest = manifest;
+        }
+
+        /// <summary>
+        /// Applies shoplifting penalties, tracks whether to ban player
+        /// </summary>
+        /// <param name="__instance">The current location instance</param>
+        public static void ShopliftingPenalties(GameLocation __instance)
+        {
+            // Subtract monetary penalty if it applies
+            if (fineamount > 0)
+            {
+                Game1.player.Money -= fineamount;
+            }
+
+            string location = __instance.NameOrUniqueName;
+
+            var data = Game1.player.modData;
+            
+            // Add a one to the end of the value for number of bans, each 1 is one time being caught shoplifting
+            data[$"{manifest.UniqueID}_{location}"] = int.Parse(data[$"{manifest.UniqueID}_{location}"]) + 1.ToString();
+
+            // After being caught three times "111" ban player from shop for three days, excluding day of ban
+            if (data[$"{manifest.UniqueID}_{location}"] == "111")
+            {
+                data[$"{manifest.UniqueID}_{location}"] = "-1";
+                Game1.warpFarmer(__instance.warps[0].TargetName, __instance.warps[0].TargetX, __instance.warps[0].TargetY, false);
+                ModEntry.PerScreenShopsBannedFrom.Value.Add($"{location}");
+                monitor.Log($"{location} added to banned shop list");
+            }
         }
 
 
@@ -205,13 +236,7 @@ namespace Shoplifter
                             {
                                 Game1.afterDialogues = delegate
                                 {
-                                    if (fineamount > 0)
-                                    {
-                                        Game1.player.Money -= fineamount;
-                                    }
-                                    Game1.warpFarmer(__instance.warps[0].TargetName, __instance.warps[0].TargetX, __instance.warps[0].TargetY, false);
-                                    ModEntry.PerScreenShopsBannedFrom.Value.Add("SeedShop");
-                                    monitor.Log("SeedShop added to banned shop list");
+                                    ShopliftingPenalties(__instance);
                                 };
 
                                 return;
@@ -246,13 +271,7 @@ namespace Shoplifter
                         {
                             Game1.afterDialogues = delegate
                             {
-                                if(fineamount > 0)
-                                {
-                                    Game1.player.Money -= fineamount;
-                                }                                
-                                Game1.warpFarmer(__instance.warps[0].TargetName, __instance.warps[0].TargetX, __instance.warps[0].TargetY, false);
-                                ModEntry.PerScreenShopsBannedFrom.Value.Add("SeedShop");
-                                monitor.Log("SeedShop added to banned shop list");
+                                ShopliftingPenalties(__instance);
                             };
 
                             return;
