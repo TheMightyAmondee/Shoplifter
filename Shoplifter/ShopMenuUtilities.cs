@@ -15,12 +15,15 @@ namespace Shoplifter
     {
         private static IMonitor monitor;
         private static IModHelper helper;
+
+        private static int fineamount;
       
         public static void gethelpers(IMonitor monitor, IModHelper helper)
         {
             ShopMenuUtilities.monitor = monitor;
             ShopMenuUtilities.helper = helper;
         }
+
 
         /// <summary>
         /// Subtracts friendship from any npc that sees the player shoplifting
@@ -67,27 +70,49 @@ namespace Shoplifter
             // Is NPC in range?
             if (npc != null && npc.currentLocation == who.currentLocation && Utility.tileWithinRadiusOfPlayer(npc.getTileX(), npc.getTileY(), 7, who))
             {
-                // Is NPC primary shopowner, they have special dialogue
-                if ((which == "Pierre" || which == "Willy" || which == "Robin" || which == "Marnie" || which == "Gus" || which == "Harvey" || which == "Clint") && ModEntry.shopliftingstrings.ContainsKey($"TheMightyAmondee.Shoplifter/Caught{which}") == true)
-                {
-                    // Set dialogue for NPC
-                    npc.setNewDialogue(ModEntry.shopliftingstrings[$"TheMightyAmondee.Shoplifter/Caught{which}"], add: true);
-                }
+                string dialogue;
+                fineamount = Math.Min(Game1.player.Money, 1000);               
 
-                else if (ModEntry.shopliftingstrings.ContainsKey($"TheMightyAmondee.Shoplifter/CaughtGeneric") == true)
+                // Is NPC primary shopowner, they have special dialogue
+                if (which == "Pierre" || which == "Willy" || which == "Robin" || which == "Marnie" || which == "Gus" || which == "Harvey" || which == "Clint")
                 {
-                    // Set dialogue for NPC
-                    npc.setNewDialogue(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/CaughtGeneric"], add: true);
+                    if (fineamount > 0 && ModEntry.shopliftingstrings.ContainsKey($"TheMightyAmondee.Shoplifter/Caught{which}") == true)
+                    {
+                        dialogue = ModEntry.shopliftingstrings[$"TheMightyAmondee.Shoplifter/Caught{which}"].Replace("{0}", fineamount.ToString());
+                    }
+
+                    else if (ModEntry.shopliftingstrings.ContainsKey($"TheMightyAmondee.Shoplifter/Caught{which}_NoMoney") == true)
+                    {
+                        dialogue = ModEntry.shopliftingstrings[$"TheMightyAmondee.Shoplifter/Caught{which}_NoMoney"];
+                    }
+
+                    else
+                    {
+                        dialogue = ModEntry.shopliftingstrings["Placeholder"];
+                    }
                 }
 
                 else
                 {
-                    // Set dialogue as a placeholder if string is not found
-                    npc.setNewDialogue(ModEntry.shopliftingstrings["Placeholder"], add: true);
+                    if (fineamount > 0 && ModEntry.shopliftingstrings.ContainsKey($"TheMightyAmondee.Shoplifter/CaughtGeneric") == true)
+                    {
+                        dialogue = ModEntry.shopliftingstrings[$"TheMightyAmondee.Shoplifter/CaughtGeneric"].Replace("{0}", fineamount.ToString());
+                    }
+
+                    else if (ModEntry.shopliftingstrings.ContainsKey($"TheMightyAmondee.Shoplifter/CaughtGeneric_NoMoney") == true)
+                    {
+                        dialogue = ModEntry.shopliftingstrings[$"TheMightyAmondee.Shoplifter/CaughtGeneric_NoMoney"];
+                    }
+
+                    else
+                    {
+                        dialogue = ModEntry.shopliftingstrings["Placeholder"];
+                    }
                 }
-                 
+
+                npc.setNewDialogue(dialogue, add: true);
                 // Draw dialogue for NPC, dialogue box opens
-                Game1.drawDialogue(npc);
+                Game1.drawDialogue(npc);                
                 monitor.Log($"{which} caught you shoplifting... You're banned from their shop for the day");
 
                 return true;
@@ -125,6 +150,10 @@ namespace Shoplifter
                             // After dialogue, ban player from shop
                             Game1.afterDialogues = delegate
                             {
+                                if (fineamount > 0)
+                                {
+                                    Game1.player.Money -= fineamount;
+                                }
                                 Game1.warpFarmer(__instance.warps[0].TargetName, __instance.warps[0].TargetX, __instance.warps[0].TargetY, false);
                                 ModEntry.PerScreenShopsBannedFrom.Value.Add("FishShop");
                                 monitor.Log("Fishshop added to banned shop list");
@@ -187,6 +216,10 @@ namespace Shoplifter
                             {
                                 Game1.afterDialogues = delegate
                                 {
+                                    if (fineamount > 0)
+                                    {
+                                        Game1.player.Money -= fineamount;
+                                    }
                                     Game1.warpFarmer(__instance.warps[0].TargetName, __instance.warps[0].TargetX, __instance.warps[0].TargetY, false);
                                     ModEntry.PerScreenShopsBannedFrom.Value.Add("SeedShop");
                                     monitor.Log("SeedShop added to banned shop list");
@@ -224,6 +257,10 @@ namespace Shoplifter
                         {
                             Game1.afterDialogues = delegate
                             {
+                                if(fineamount > 0)
+                                {
+                                    Game1.player.Money -= fineamount;
+                                }                                
                                 Game1.warpFarmer(__instance.warps[0].TargetName, __instance.warps[0].TargetX, __instance.warps[0].TargetY, false);
                                 ModEntry.PerScreenShopsBannedFrom.Value.Add("SeedShop");
                                 monitor.Log("SeedShop added to banned shop list");
@@ -281,6 +318,10 @@ namespace Shoplifter
                                         // Yes, ban player from shop and show getting caught dialogue
                                         Game1.afterDialogues = delegate
                                         {
+                                            if (fineamount > 0)
+                                            {
+                                                Game1.player.Money -= fineamount;
+                                            }
                                             Game1.warpFarmer(__instance.warps[0].TargetName, __instance.warps[0].TargetX, __instance.warps[0].TargetY, false);
                                             ModEntry.PerScreenShopsBannedFrom.Value.Add("ScienceHouse");
                                             monitor.Log("ScienceHouse added to banned shop list");
@@ -325,6 +366,10 @@ namespace Shoplifter
                                     {
                                         Game1.afterDialogues = delegate
                                         {
+                                            if (fineamount > 0)
+                                            {
+                                                Game1.player.Money -= fineamount;
+                                            }
                                             Game1.warpFarmer(__instance.warps[0].TargetName, __instance.warps[0].TargetX, __instance.warps[0].TargetY, false);
                                             ModEntry.PerScreenShopsBannedFrom.Value.Add("ScienceHouse");
                                             monitor.Log("ScienceHouse added to banned shop list");
@@ -357,6 +402,10 @@ namespace Shoplifter
                                 {
                                     Game1.afterDialogues = delegate
                                     {
+                                        if (fineamount > 0)
+                                        {
+                                            Game1.player.Money -= fineamount;
+                                        }
                                         Game1.warpFarmer(__instance.warps[0].TargetName, __instance.warps[0].TargetX, __instance.warps[0].TargetY, false);
                                         ModEntry.PerScreenShopsBannedFrom.Value.Add("ScienceHouse");
                                         monitor.Log("ScienceHouse added to banned shop list");
@@ -428,6 +477,10 @@ namespace Shoplifter
                                     {
                                         Game1.afterDialogues = delegate
                                         {
+                                            if (fineamount > 0)
+                                            {
+                                                Game1.player.Money -= fineamount;
+                                            }
                                             Game1.warpFarmer(__instance.warps[0].TargetName, __instance.warps[0].TargetX, __instance.warps[0].TargetY, false);
                                             ModEntry.PerScreenShopsBannedFrom.Value.Add("AnimalShop");
                                             monitor.Log("AnimalShop added to banned shop list");
@@ -469,6 +522,10 @@ namespace Shoplifter
                                     {
                                         Game1.afterDialogues = delegate
                                         {
+                                            if (fineamount > 0)
+                                            {
+                                                Game1.player.Money -= fineamount;
+                                            }
                                             Game1.warpFarmer(__instance.warps[0].TargetName, __instance.warps[0].TargetX, __instance.warps[0].TargetY, false);
                                             ModEntry.PerScreenShopsBannedFrom.Value.Add("AnimalShop");
                                             monitor.Log("AnimalShop added to banned shop list");
@@ -500,6 +557,10 @@ namespace Shoplifter
                                 {
                                     Game1.afterDialogues = delegate
                                     {
+                                        if (fineamount > 0)
+                                        {
+                                            Game1.player.Money -= fineamount;
+                                        }
                                         Game1.warpFarmer(__instance.warps[0].TargetName, __instance.warps[0].TargetX, __instance.warps[0].TargetY, false);
                                         ModEntry.PerScreenShopsBannedFrom.Value.Add("AnimalShop");
                                         monitor.Log("AnimalShop added to banned shop list");
@@ -560,6 +621,10 @@ namespace Shoplifter
                             {
                                 Game1.afterDialogues = delegate
                                 {
+                                    if (fineamount > 0)
+                                    {
+                                        Game1.player.Money -= fineamount;
+                                    }
                                     Game1.warpFarmer(__instance.warps[0].TargetName, __instance.warps[0].TargetX, __instance.warps[0].TargetY, false);
                                     ModEntry.PerScreenShopsBannedFrom.Value.Add("Hospital");
                                     monitor.Log("Hospital added to banned shop list");
@@ -614,6 +679,10 @@ namespace Shoplifter
                             {
                                 Game1.afterDialogues = delegate
                                 {
+                                    if (fineamount > 0)
+                                    {
+                                        Game1.player.Money -= fineamount;
+                                    }
                                     Game1.warpFarmer(__instance.warps[0].TargetName, __instance.warps[0].TargetX, __instance.warps[0].TargetY, false);
                                     ModEntry.PerScreenShopsBannedFrom.Value.Add("Blacksmith");
                                     monitor.Log("Blacksmith added to banned shop list");
@@ -672,6 +741,10 @@ namespace Shoplifter
                                 {
                                     Game1.afterDialogues = delegate
                                     {
+                                        if (fineamount > 0)
+                                        {
+                                            Game1.player.Money -= fineamount;
+                                        }
                                         Game1.warpFarmer(__instance.warps[0].TargetName, __instance.warps[0].TargetX, __instance.warps[0].TargetY, false);
                                         ModEntry.PerScreenShopsBannedFrom.Value.Add("Saloon");
                                         monitor.Log("Saloon added to banned shop list");
@@ -736,6 +809,10 @@ namespace Shoplifter
                             {
                                 Game1.afterDialogues = delegate
                                 {
+                                    if (fineamount > 0)
+                                    {
+                                        Game1.player.Money -= fineamount;
+                                    }
                                     Game1.warpFarmer(__instance.warps[0].TargetName, __instance.warps[0].TargetX, __instance.warps[0].TargetY, false);
                                     ModEntry.PerScreenShopsBannedFrom.Value.Add("Saloon");
                                     monitor.Log("Saloon added to banned shop list");
