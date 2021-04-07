@@ -73,44 +73,35 @@ namespace Shoplifter
                 string dialogue;
                 fineamount = Math.Min(Game1.player.Money, 1000);               
 
-                // Is NPC primary shopowner, they have special dialogue
+                // Is NPC primary shopowner
                 if (which == "Pierre" || which == "Willy" || which == "Robin" || which == "Marnie" || which == "Gus" || which == "Harvey" || which == "Clint")
                 {
-                    if (fineamount > 0 && ModEntry.shopliftingstrings.ContainsKey($"TheMightyAmondee.Shoplifter/Caught{which}") == true)
-                    {
-                        dialogue = ModEntry.shopliftingstrings[$"TheMightyAmondee.Shoplifter/Caught{which}"].Replace("{0}", fineamount.ToString());
-                    }
+                    // Yes, they have special dialogue
 
-                    else if (ModEntry.shopliftingstrings.ContainsKey($"TheMightyAmondee.Shoplifter/Caught{which}_NoMoney") == true)
-                    {
-                        dialogue = ModEntry.shopliftingstrings[$"TheMightyAmondee.Shoplifter/Caught{which}_NoMoney"];
-                    }
-
-                    else
-                    {
-                        dialogue = ModEntry.shopliftingstrings["Placeholder"];
-                    }
+                    dialogue = (fineamount > 0) 
+                        ? ModEntry.shopliftingstrings[$"TheMightyAmondee.Shoplifter/Caught{which}"].Replace("{0}", fineamount.ToString()) 
+                        : ModEntry.shopliftingstrings[$"TheMightyAmondee.Shoplifter/Caught{which}_NoMoney"];
                 }
 
                 else
                 {
-                    if (fineamount > 0 && ModEntry.shopliftingstrings.ContainsKey($"TheMightyAmondee.Shoplifter/CaughtGeneric") == true)
-                    {
-                        dialogue = ModEntry.shopliftingstrings[$"TheMightyAmondee.Shoplifter/CaughtGeneric"].Replace("{0}", fineamount.ToString());
-                    }
-
-                    else if (ModEntry.shopliftingstrings.ContainsKey($"TheMightyAmondee.Shoplifter/CaughtGeneric_NoMoney") == true)
-                    {
-                        dialogue = ModEntry.shopliftingstrings[$"TheMightyAmondee.Shoplifter/CaughtGeneric_NoMoney"];
-                    }
-
-                    else
-                    {
-                        dialogue = ModEntry.shopliftingstrings["Placeholder"];
-                    }
+                    // No, use generic dialogue
+                    dialogue = (fineamount > 0)
+                        ? ModEntry.shopliftingstrings[$"TheMightyAmondee.Shoplifter/CaughtGeneric"].Replace("{0}", fineamount.ToString())
+                        : ModEntry.shopliftingstrings[$"TheMightyAmondee.Shoplifter/CaughtGeneric_NoMoney"];
                 }
 
-                npc.setNewDialogue(dialogue, add: true);
+                // Set dialogue, if key is not found, use a placeholder
+                if (dialogue != null)
+                {
+                    npc.setNewDialogue(dialogue, add: true);
+                }
+
+                else
+                {
+                    npc.setNewDialogue(ModEntry.shopliftingstrings["Placeholder"], add: true);
+                }
+               
                 // Draw dialogue for NPC, dialogue box opens
                 Game1.drawDialogue(npc);                
                 monitor.Log($"{which} caught you shoplifting... You're banned from their shop for the day");
