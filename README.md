@@ -7,9 +7,9 @@ Only basic items that are currently available to your character can be shoplifte
 Ready for a spree of petty crime? Just don't get caught...
 
 Any villager within 7 tiles of you when you shoplift will lose 2 hearts of friendship and if the shopkeeper or their family/employee catches you, 
-you'll also receive a ban from the shop for the rest of the day.
+you'll also receive a ban from the shop for the rest of the day and a fine equal to your current funds up to 1000g.
 
-You can only successfully shoplift once a day, you're not that bad are you?
+You can only successfully shoplift once per day, you're not that bad are you?
 
 Feel free to edit any of the strings included in the mod, I'm not the best at coming up with lines. Just make sure no entries are deleted.
 
