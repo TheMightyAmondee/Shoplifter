@@ -43,7 +43,7 @@ namespace Shoplifter
             var data = Game1.player.modData;
             
             // Add a one to the end of the value for number of bans, each 1 is one time being caught shoplifting
-            data[$"{manifest.UniqueID}_{location}"] = int.Parse(data[$"{manifest.UniqueID}_{location}"]) + 1.ToString();
+            data[$"{manifest.UniqueID}_{location}"] = data[$"{manifest.UniqueID}_{location}"] + 1.ToString();
 
             // After being caught three times "111" ban player from shop for three days, excluding day of ban
             if (data[$"{manifest.UniqueID}_{location}"] == "111")
