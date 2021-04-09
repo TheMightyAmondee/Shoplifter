@@ -43,17 +43,26 @@ namespace Shoplifter
             string location = __instance.NameOrUniqueName;
 
             var data = Game1.player.modData;
-            
-            // Add a one to the end of the value for number of bans, each 1 is one time being caught shoplifting
-            data[$"{manifest.UniqueID}_{location}"] = int.Parse(data[$"{manifest.UniqueID}_{location}"]) + 1.ToString();
 
-            // After being caught three times "111" ban player from shop for three days, excluding day of ban
-            if (data[$"{manifest.UniqueID}_{location}"] == "111")
+            string[] fields = data[$"{manifest.UniqueID}_{location}"].Split('/');
+
+            // Add a one to the end of the value for number of bans, each 1 is one time being caught shoplifting
+            fields[0] = (int.Parse(fields[0]) + 1).ToString();
+
+            if (fields[0] == "1")
             {
-                data[$"{manifest.UniqueID}_{location}"] = "-1";
+                fields[1] = Game1.dayOfMonth.ToString();
+            }
+
+            // After being caught three times ban player from shop for three days, excluding day of ban
+            if (fields[0] == "3")
+            {
+                fields[0] = "-1";
                 ModEntry.PerScreenShopsBannedFrom.Value.Add($"{location}");
                 monitor.Log($"{location} added to banned shop list");
             }
+
+            data[$"{manifest.UniqueID}_{location}"] = string.Join("/", fields);
         }
 
 
@@ -128,7 +137,7 @@ namespace Shoplifter
                             : ModEntry.shopliftingstrings[$"TheMightyAmondee.Shoplifter/CaughtGeneric_NoMoney"];
                     }
 
-                    dialogue = (Game1.player.modData[$"{manifest.UniqueID}_{__instance.NameOrUniqueName}"] == "11")
+                    dialogue = (Game1.player.modData[$"{manifest.UniqueID}_{__instance.NameOrUniqueName}"].StartsWith("2") == true)
                             ? dialogue + ModEntry.shopliftingstrings[$"TheMightyAmondee.Shoplifter/BanFromShop"]
                             : dialogue;
 

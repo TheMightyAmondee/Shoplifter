@@ -44,13 +44,13 @@ namespace Shoplifter
             // Add mod data if it isn't present
             if (data.ContainsKey($"{this.ModManifest.UniqueID}_SeedShop") == false)
             {
-                data.Add($"{this.ModManifest.UniqueID}_SeedShop", "0");
-                data.Add($"{this.ModManifest.UniqueID}_FishShop", "0");
-                data.Add($"{this.ModManifest.UniqueID}_AnimalShop", "0");
-                data.Add($"{this.ModManifest.UniqueID}_ScienceHouse", "0");
-                data.Add($"{this.ModManifest.UniqueID}_Hospital", "0");
-                data.Add($"{this.ModManifest.UniqueID}_Blacksmith", "0");
-                data.Add($"{this.ModManifest.UniqueID}_Saloon", "0");
+                data.Add($"{this.ModManifest.UniqueID}_SeedShop", "0/0");
+                data.Add($"{this.ModManifest.UniqueID}_FishShop", "0/0");
+                data.Add($"{this.ModManifest.UniqueID}_AnimalShop", "0/0");
+                data.Add($"{this.ModManifest.UniqueID}_ScienceHouse", "0/0");
+                data.Add($"{this.ModManifest.UniqueID}_Hospital", "0/0");
+                data.Add($"{this.ModManifest.UniqueID}_Blacksmith", "0/0");
+                data.Add($"{this.ModManifest.UniqueID}_Saloon", "0/0");
                 this.Monitor.Log("Adding mod data...");
             }
 
@@ -62,22 +62,38 @@ namespace Shoplifter
 
                 foreach (string shopliftingdata in new List<string>(moddata.Keys))
                 {
-                    // Player has finished three day ban, remove shop from list
-                    if (shopliftingdata.StartsWith($"{this.ModManifest.UniqueID}") && moddata[shopliftingdata] == "-111")
+                    if (!System.Diagnostics.Debugger.IsAttached)
                     {
-                        moddata[shopliftingdata] = "0";
-                        string[] fields = shopliftingdata.Split('_');
+                        //System.Diagnostics.Debugger.Launch();
+                    }
+
+                    string[] values = moddata[shopliftingdata].Split('/');
+                    string[] fields = shopliftingdata.Split('_');
+
+                    // Player has finished three day ban, remove shop from list
+                    if (shopliftingdata.StartsWith($"{this.ModManifest.UniqueID}") && values[0] == "-3")
+                    {
+                        values[0] = "0";
+                        values[1] = "0";
+                        
                         PerScreenShopsBannedFrom.Value.Remove(fields[1]);
                         this.Monitor.Log($"You're no longer banned from {fields[1]}, steal away!", LogLevel.Info);
                     }
 
                     // Player is currently banned, add shop to list
-                    else if (shopliftingdata.StartsWith($"{this.ModManifest.UniqueID}") && int.Parse(moddata[shopliftingdata]) < 0)
+                    else if (shopliftingdata.StartsWith($"{this.ModManifest.UniqueID}") && int.Parse(values[0]) < 0)
                     {
-                        moddata[shopliftingdata] = int.Parse(moddata[shopliftingdata]) + 1.ToString();
-                        string[] fields = shopliftingdata.Split('_');
+                        values[0] = (int.Parse(values[0]) - 1).ToString();
                         PerScreenShopsBannedFrom.Value.Add(fields[1]);
                     }
+
+                    if (shopliftingdata.StartsWith($"{this.ModManifest.UniqueID}") && int.Parse(values[0]) > 0 && values[1] == Game1.dayOfMonth.ToString())
+                    {
+                        values[0] = "0";
+                        values[1] = "0";
+                    }
+
+                    moddata[shopliftingdata] = string.Join("/", values);
                 }
             }
         }
