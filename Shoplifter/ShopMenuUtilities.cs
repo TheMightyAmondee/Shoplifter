@@ -38,18 +38,19 @@ namespace Shoplifter
                 Game1.player.Money -= fineamount;
             }
 
+            Game1.warpFarmer(__instance.warps[0].TargetName, __instance.warps[0].TargetX, __instance.warps[0].TargetY, false);
+
             string location = __instance.NameOrUniqueName;
 
             var data = Game1.player.modData;
             
             // Add a one to the end of the value for number of bans, each 1 is one time being caught shoplifting
-            data[$"{manifest.UniqueID}_{location}"] = data[$"{manifest.UniqueID}_{location}"] + 1.ToString();
+            data[$"{manifest.UniqueID}_{location}"] = int.Parse(data[$"{manifest.UniqueID}_{location}"]) + 1.ToString();
 
             // After being caught three times "111" ban player from shop for three days, excluding day of ban
             if (data[$"{manifest.UniqueID}_{location}"] == "111")
             {
                 data[$"{manifest.UniqueID}_{location}"] = "-1";
-                Game1.warpFarmer(__instance.warps[0].TargetName, __instance.warps[0].TargetX, __instance.warps[0].TargetY, false);
                 ModEntry.PerScreenShopsBannedFrom.Value.Add($"{location}");
                 monitor.Log($"{location} added to banned shop list");
             }

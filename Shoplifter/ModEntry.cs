@@ -74,7 +74,7 @@ namespace Shoplifter
                     // Player is currently banned, add shop to list
                     else if (shopliftingdata.StartsWith($"{this.ModManifest.UniqueID}") && int.Parse(moddata[shopliftingdata]) < 0)
                     {
-                        moddata[shopliftingdata] = moddata[shopliftingdata] + 1.ToString();
+                        moddata[shopliftingdata] = int.Parse(moddata[shopliftingdata]) + 1.ToString();
                         string[] fields = shopliftingdata.Split('_');
                         PerScreenShopsBannedFrom.Value.Add(fields[1]);
                     }
