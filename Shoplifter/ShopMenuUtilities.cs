@@ -14,15 +14,13 @@ namespace Shoplifter
     public class ShopMenuUtilities
     {
         private static IMonitor monitor;
-        private static IModHelper helper;
         private static IManifest manifest;
 
         private static int fineamount;
       
-        public static void gethelpers(IMonitor monitor, IModHelper helper, IManifest manifest)
+        public static void gethelpers(IMonitor monitor, IManifest manifest)
         {
             ShopMenuUtilities.monitor = monitor;
-            ShopMenuUtilities.helper = helper;
             ShopMenuUtilities.manifest = manifest;
         }
 
@@ -46,15 +44,16 @@ namespace Shoplifter
 
             string[] fields = data[$"{manifest.UniqueID}_{location}"].Split('/');
 
-            // Add a one to the end of the value for number of bans, each 1 is one time being caught shoplifting
+            // Add one to first part of data (shoplifting count)
             fields[0] = (int.Parse(fields[0]) + 1).ToString();
-
+            
+            // If this is the first shoplift, record day of month in second part of data (day of first steal)
             if (fields[0] == "1")
             {
                 fields[1] = Game1.dayOfMonth.ToString();
             }
 
-            // After being caught three times ban player from shop for three days, excluding day of ban
+            // After being caught three times (within 28 days) ban player from shop for three days
             if (fields[0] == "3")
             {
                 fields[0] = "-1";
@@ -62,6 +61,7 @@ namespace Shoplifter
                 monitor.Log($"{location} added to banned shop list");
             }
 
+            // Join manipulated data for recording in save file
             data[$"{manifest.UniqueID}_{location}"] = string.Join("/", fields);
         }
 
@@ -121,7 +121,6 @@ namespace Shoplifter
                     if (which == "Pierre" || which == "Willy" || which == "Robin" || which == "Marnie" || which == "Gus" || which == "Harvey" || which == "Clint")
                     {
                         // Yes, they have special dialogue
-
                         dialogue = (fineamount > 0)
                             ? ModEntry.shopliftingstrings[$"TheMightyAmondee.Shoplifter/Caught{which}"].Replace("{0}", fineamount.ToString())
                             : ModEntry.shopliftingstrings[$"TheMightyAmondee.Shoplifter/Caught{which}_NoMoney"];
@@ -137,20 +136,22 @@ namespace Shoplifter
                             : ModEntry.shopliftingstrings[$"TheMightyAmondee.Shoplifter/CaughtGeneric_NoMoney"];
                     }
 
+                    // Is the player now banned? (uses 2 as dialogue is loaded before count is adjusted) Append additional dialogue
                     dialogue = (Game1.player.modData[$"{manifest.UniqueID}_{__instance.NameOrUniqueName}"].StartsWith("2") == true)
-                            ? dialogue + ModEntry.shopliftingstrings[$"TheMightyAmondee.Shoplifter/BanFromShop"]
-                            : dialogue;
+                        ? dialogue + ModEntry.shopliftingstrings[$"TheMightyAmondee.Shoplifter/BanFromShop"]
+                        : dialogue;
 
                     npc.setNewDialogue(dialogue, add: true);
                 }
                 catch
                 {
+                    // If any string could not be found, use placeholder
                     npc.setNewDialogue(ModEntry.shopliftingstrings["Placeholder"], add: true);
                 }
 
                 // Draw dialogue for NPC, dialogue box opens
                 Game1.drawDialogue(npc);                
-                monitor.Log($"{which} caught you shoplifting... You're banned from their shop for the day");
+                monitor.Log($"{which} caught you shoplifting... You were fined {fineamount}g");
 
                 return true;
             }
@@ -184,16 +185,10 @@ namespace Shoplifter
                         // Player is caught
                         if (ShouldBeCaught("Willy", Game1.player, __instance) == true)
                         {
-                            // After dialogue, ban player from shop
+                            // After dialogue, apply penalties
                             Game1.afterDialogues = delegate
                             {
-                                if (fineamount > 0)
-                                {
-                                    Game1.player.Money -= fineamount;
-                                }
-                                Game1.warpFarmer(__instance.warps[0].TargetName, __instance.warps[0].TargetX, __instance.warps[0].TargetY, false);
-                                ModEntry.PerScreenShopsBannedFrom.Value.Add("FishShop");
-                                monitor.Log("Fishshop added to banned shop list");
+                                ShopliftingPenalties(__instance);
                             };
 
                             return;
@@ -340,7 +335,7 @@ namespace Shoplifter
                                     // Should player be caught by any shopowner?
                                     if (ShouldBeCaught("Robin", Game1.player, __instance) == true || ShouldBeCaught("Demetrius", Game1.player, __instance) == true || ShouldBeCaught("Maru", Game1.player, __instance) == true || ShouldBeCaught("Sebastian", Game1.player, __instance) == true)
                                     {
-                                        // Yes, ban player from shop and show getting caught dialogue
+                                        // Yes, apply penalties after dialogue
                                         Game1.afterDialogues = delegate
                                         {
                                             ShopliftingPenalties(__instance);

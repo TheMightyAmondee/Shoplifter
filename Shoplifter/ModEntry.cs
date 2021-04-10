@@ -20,9 +20,9 @@ namespace Shoplifter
         public override void Entry(IModHelper helper)
         {
             ShopMenuPatcher.gethelpers(this.Monitor, this.Helper);
-            ShopMenuUtilities.gethelpers(this.Monitor, this.Helper, this.ModManifest);
+            ShopMenuUtilities.gethelpers(this.Monitor, this.ModManifest);
             helper.Events.GameLoop.DayStarted += this.DayStarted;
-            helper.Events.GameLoop.GameLaunched += this.Launched;           
+            helper.Events.GameLoop.GameLaunched += this.Launched;
 
             var harmony = HarmonyInstance.Create(this.ModManifest.UniqueID);
             ShopMenuPatcher.Hook(harmony, this.Monitor);
@@ -54,23 +54,20 @@ namespace Shoplifter
                 this.Monitor.Log("Adding mod data...");
             }
 
+            // Moddata exists, interpret
             else
             {
-                this.Monitor.Log("Found mod data...");
+                this.Monitor.Log("Found mod data... Interpreting");
 
                 var moddata = Game1.player.modData;
 
                 foreach (string shopliftingdata in new List<string>(moddata.Keys))
                 {
-                    if (!System.Diagnostics.Debugger.IsAttached)
-                    {
-                        //System.Diagnostics.Debugger.Launch();
-                    }
 
                     string[] values = moddata[shopliftingdata].Split('/');
                     string[] fields = shopliftingdata.Split('_');
 
-                    // Player has finished three day ban, remove shop from list
+                    // Player has finished three day ban, remove shop from list, also reset first day caught
                     if (shopliftingdata.StartsWith($"{this.ModManifest.UniqueID}") && values[0] == "-3")
                     {
                         values[0] = "0";
@@ -85,14 +82,19 @@ namespace Shoplifter
                     {
                         values[0] = (int.Parse(values[0]) - 1).ToString();
                         PerScreenShopsBannedFrom.Value.Add(fields[1]);
+                        this.Monitor.Log($"You're currently banned from {fields[1]}", LogLevel.Info);
                     }
 
+                    // If 28 days have past and player was not caught 3 times, reset both fields
                     if (shopliftingdata.StartsWith($"{this.ModManifest.UniqueID}") && int.Parse(values[0]) > 0 && values[1] == Game1.dayOfMonth.ToString())
                     {
                         values[0] = "0";
                         values[1] = "0";
+
+                        this.Monitor.Log($"It's been 28 days since you first shoplifted {fields[1]}, they've forgotten about it now...", LogLevel.Info);
                     }
 
+                    // After manipulation, join fields back together with "/" seperator
                     moddata[shopliftingdata] = string.Join("/", values);
                 }
             }
