@@ -239,11 +239,11 @@ namespace Shoplifter
                 Game1.afterDialogues = delegate
                 {
                     __instance.createQuestionDialogue("Shoplift?", __instance.createYesNoResponses(), delegate (Farmer _, string answer)
-                    {
-                        SeenShoplifting(__instance, Game1.player);
-
+                    {                       
                         if (answer == "Yes")
                         {
+                            SeenShoplifting(__instance, Game1.player);
+
                             if (ShouldBeCaught("Pierre", Game1.player, __instance) == true || ShouldBeCaught("Caroline", Game1.player, __instance) == true || ShouldBeCaught("Abigail", Game1.player, __instance) == true)
                             {
                                 Game1.afterDialogues = delegate
@@ -274,11 +274,11 @@ namespace Shoplifter
             {
                 Game1.dialogueUp = false;
                 __instance.createQuestionDialogue("Shoplift?", __instance.createYesNoResponses(), delegate (Farmer _, string answer)
-                {
-                    SeenShoplifting(__instance, Game1.player);
-
+                {                   
                     if (answer == "Yes")
                     {
+                        SeenShoplifting(__instance, Game1.player);
+
                         if (ShouldBeCaught("Pierre", Game1.player, __instance) == true || ShouldBeCaught("Caroline", Game1.player, __instance) == true || ShouldBeCaught("Abigail", Game1.player, __instance) == true)
                         {
                             Game1.afterDialogues = delegate
@@ -596,11 +596,11 @@ namespace Shoplifter
                 if (ModEntry.PerScreenStolenToday.Value == false)
                 {
                     __instance.createQuestionDialogue("Shoplift?", __instance.createYesNoResponses(), delegate (Farmer _, string answer)
-                    {
-                        SeenShoplifting(__instance, Game1.player);
-
+                    {                       
                         if (answer == "Yes")
                         {
+                            SeenShoplifting(__instance, Game1.player);
+
                             if (ShouldBeCaught("Harvey", Game1.player, __instance) == true || ShouldBeCaught("Maru", Game1.player, __instance) == true)
                             {
                                 Game1.afterDialogues = delegate
@@ -704,11 +704,11 @@ namespace Shoplifter
                     Game1.afterDialogues = delegate
                     {
                         __instance.createQuestionDialogue("Shoplift?", __instance.createYesNoResponses(), delegate (Farmer _, string answer)
-                        {
-                            SeenShoplifting(__instance, Game1.player);
-
+                        {                            
                             if (answer == "Yes")
                             {
+                                SeenShoplifting(__instance, Game1.player);
+
                                 if (ShouldBeCaught("Gus", Game1.player, __instance) == true || ShouldBeCaught("Emily", Game1.player, __instance) == true)
                                 {
                                     Game1.afterDialogues = delegate
@@ -766,11 +766,11 @@ namespace Shoplifter
                 if (ModEntry.PerScreenStolenToday.Value == false)
                 {
                     __instance.createQuestionDialogue("Shoplift?", __instance.createYesNoResponses(), delegate (Farmer _, string answer)
-                    {
-                        SeenShoplifting(__instance, Game1.player);
-
+                    {                       
                         if (answer == "Yes")
                         {
+                            SeenShoplifting(__instance, Game1.player);
+
                             if (ShouldBeCaught("Gus", Game1.player, __instance) == true || ShouldBeCaught("Emily", Game1.player, __instance) == true)
                             {
                                 Game1.afterDialogues = delegate
