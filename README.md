@@ -12,7 +12,7 @@ If you get caught by the shopowner or their family/employee three times within a
 
 You can only successfully shoplift once per day, you're not that bad are you?
 
-Feel free to edit any of the strings included in the mod, I'm not the best at coming up with lines. Just make sure no entries are deleted. Also, note the {0} in the getting caught strings are replaced with the value of the fine amount, make sure they are included. The BanFromSHop string must also start with #$b#.
+Feel free to edit any of the strings included in the mod, I'm not the best at coming up with lines. Just make sure no entries are deleted. Also, note the {0} in the getting caught strings are replaced with the value of the fine amount, make sure they are included. The BanFromShop string must also start with #$b#.
 
 The shops you can shoplift from are: Willy's Shop, Pierre's General Store, Carpenter, Marnie's Ranch, Harvey's Clinic, Saloon, Blacksmith. 
 If you're wondering why all shops aren't included it's because the shopkeeper never leaves said store, you'll never get away with it.
