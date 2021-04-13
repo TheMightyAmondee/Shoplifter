@@ -6,18 +6,16 @@ Only basic items that are currently available to your character can be shoplifte
 
 Ready for a spree of petty crime? Just don't get caught...
 
-Any villager within 7 tiles of you when you shoplift will lose 2 hearts of friendship. If the villager also happens to be the shopowner or their family/employee they will also fine you your current funds up to 1000g.
+Any villager within 7 tiles of you when you shoplift will lose 2 hearts of friendship. If the villager also happens to be the shopowner or their family/employee they will also fine you the value of your current funds up to 1000g.
 
-If you get caught by the shopowner or their family/employee three times within a 28 day period, you'll receive a three day ban from entering the shop.
+If you get caught by the shopowner or their family/employee three times within a 28 day period, you'll receive a three day ban from entering the shop. You're given a clean slate 28 days after the first time shoplifting, a second shoplift won't carry over. Lucky you!
 
 You can only successfully shoplift once per day, you're not that bad are you?
-
-Feel free to edit any of the strings included in the mod, I'm not the best at coming up with lines. Just make sure no entries are deleted. Also, note the {0} in the getting caught strings are replaced with the value of the fine amount, make sure they are included. The BanFromShop string must also start with #$b#.
 
 The shops you can shoplift from are: Willy's Shop, Pierre's General Store, Carpenter, Marnie's Ranch, Harvey's Clinic, Saloon, Blacksmith. 
 If you're wondering why all shops aren't included it's because the shopkeeper never leaves said store, you'll never get away with it.
 
-The mod uses Harmony to patch some game methods.
+The mod uses Harmony to patch some game methods, just the standard warning.
 
 Boring specifics are listed below:
 
