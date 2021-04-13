@@ -48,7 +48,7 @@ namespace Shoplifter
 				foreach (var shopstock in (location as SeedShop).shopStock())
 				{
 					// Stops illegal stock being added, will result in an error item
-					if ((shopstock.Key as Wallpaper) != null || (shopstock.Key as Furniture) != null || (shopstock.Key as StardewValley.Object).bigCraftable == true || (shopstock.Key as StardewValley.Object).IsRecipe == true)
+					if ((shopstock.Key as StardewValley.Object) == null || (shopstock.Key as Wallpaper) != null || (shopstock.Key as Furniture) != null || (shopstock.Key as StardewValley.Object).bigCraftable == true || (shopstock.Key as StardewValley.Object).IsRecipe == true)
 					{
 						continue;
 					}
@@ -70,7 +70,7 @@ namespace Shoplifter
 				{
 
 					// Stops illegal stock being added, will result in an error item
-					if ((shopstock.Key as Wallpaper) != null || (shopstock.Key as Furniture) != null || (shopstock.Key as StardewValley.Object).bigCraftable == true || (shopstock.Key as StardewValley.Object).IsRecipe == true)
+					if ((shopstock.Key as StardewValley.Object) == null || (shopstock.Key as Wallpaper) != null || (shopstock.Key as Furniture) != null || (shopstock.Key as StardewValley.Object).bigCraftable == true || (shopstock.Key as StardewValley.Object).IsRecipe == true)
 					{
 						continue;
 					}
@@ -91,7 +91,7 @@ namespace Shoplifter
 				foreach (var shopstock in Utility.getCarpenterStock())
 				{
 					// Stops illegal stock being added, will result in an error item
-					if ((shopstock.Key as Wallpaper) != null || (shopstock.Key as Furniture) != null || (shopstock.Key as StardewValley.Object).bigCraftable == true || (shopstock.Key as StardewValley.Object).IsRecipe == true)
+					if ((shopstock.Key as StardewValley.Object) == null || (shopstock.Key as Wallpaper) != null || (shopstock.Key as Furniture) != null || (shopstock.Key as StardewValley.Object).bigCraftable == true || (shopstock.Key as StardewValley.Object).IsRecipe == true)
 					{
 						continue;
 					}
@@ -109,17 +109,16 @@ namespace Shoplifter
 			// Marnie's shop
 			else if (which == "AnimalShop")
 			{
-
 				foreach (var shopstock in Utility.getAnimalShopStock())
 				{
 					// Stops illegal stock being added, will result in an error item
-					if ((shopstock.Key as Wallpaper) != null || (shopstock.Key as Furniture) != null || (shopstock.Key as StardewValley.Object).bigCraftable == true || (shopstock.Key as StardewValley.Object).IsRecipe == true)
+					if ((shopstock.Key as StardewValley.Object) == null || (shopstock.Key as Wallpaper) != null || (shopstock.Key as Furniture) != null || (shopstock.Key as StardewValley.Object).bigCraftable == true || (shopstock.Key as StardewValley.Object).IsRecipe == true)
 					{
 						continue;
 					}
 
 					// Add object id to array
-					if ((shopstock.Key as StardewValley.Object) != null && (shopstock.Key as StardewValley.Object).bigCraftable == false)
+					if ((shopstock.Key as StardewValley.Object) != null && (shopstock.Key as StardewValley.Object).bigCraftable == false && CurrentStock.Contains((shopstock.Key as StardewValley.Object).parentSheetIndex) == false)
 					{
 						index = (shopstock.Key as StardewValley.Object).parentSheetIndex;
 
@@ -135,7 +134,7 @@ namespace Shoplifter
 				{
 
 					// Stops illegal stock being added, will result in an error item
-					if ((shopstock.Key as Wallpaper) != null || (shopstock.Key as Furniture) != null || (shopstock.Key as StardewValley.Object).bigCraftable == true || (shopstock.Key as StardewValley.Object).IsRecipe == true)
+					if ((shopstock.Key as StardewValley.Object) == null || (shopstock.Key as Wallpaper) != null || (shopstock.Key as Furniture) != null || (shopstock.Key as StardewValley.Object).bigCraftable == true || (shopstock.Key as StardewValley.Object).IsRecipe == true)
 					{
 						continue;
 					}
@@ -157,7 +156,7 @@ namespace Shoplifter
 				{
 
 					// Stops illegal stock being added, will result in an error item
-					if ((shopstock.Key as Wallpaper) != null || (shopstock.Key as Furniture) != null || (shopstock.Key as StardewValley.Object).bigCraftable == true || (shopstock.Key as StardewValley.Object).IsRecipe == true)
+					if ((shopstock.Key as StardewValley.Object) == null || (shopstock.Key as Wallpaper) != null || (shopstock.Key as Furniture) != null || (shopstock.Key as StardewValley.Object).bigCraftable == true || (shopstock.Key as StardewValley.Object).IsRecipe == true)
 					{
 						continue;
 					}
