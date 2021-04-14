@@ -140,6 +140,12 @@ namespace Shoplifter
                 var TileX = e.Cursor.GrabTile.X;
                 var TileY = e.Cursor.GrabTile.Y;
 
+                if (e.Button == SButton.ControllerA)
+                {
+                    TileX = Game1.player.getTileX();
+                    TileY = Game1.player.getTileY() - 1;
+                }
+
                 Location tilelocation = new Location((int)TileX, (int)TileY);
 
                 string[] split = location.doesTileHavePropertyNoNull((int)TileX, (int)TileY, "Action", "Buildings").Split(' ');
@@ -167,38 +173,31 @@ namespace Shoplifter
 
                         case "HospitalShop":
                             ShopMenuUtilities.HospitalShopliftingMenu(location, Game1.player);
-                            this.Monitor.Log("The hospital shop", LogLevel.Debug);
                             break;
 
                         case "Carpenter":
                             ShopMenuUtilities.CarpenterShopliftingMenu(location, Game1.player, tilelocation);
-                            this.Monitor.Log("The carpenter shop", LogLevel.Debug);
                             break;
 
                         case "AnimalShop":
                             ShopMenuUtilities.AnimalShopShopliftingMenu(location, Game1.player, tilelocation);
-                            this.Monitor.Log("The animal shop", LogLevel.Debug);
                             break;
 
                         case "Blacksmith":
                             ShopMenuUtilities.BlacksmithShopliftingMenu(location, tilelocation);
-                            this.Monitor.Log("The blacksmith shop", LogLevel.Debug);
                             break;
 
                         case "Saloon":
                             ShopMenuUtilities.SaloonShopliftingMenu(location, tilelocation);
-                            this.Monitor.Log("The saloon shop", LogLevel.Debug);
                             break;
                         case "Buy":
                             if (split[1] == "Fish")
                             {
                                 ShopMenuUtilities.FishShopShopliftingMenu(location);
-                                this.Monitor.Log("The fish shop", LogLevel.Debug);
                             }
                             else if (location is SeedShop)
                             {
                                 ShopMenuUtilities.SeedShopShopliftingMenu(location);
-                                this.Monitor.Log("The seed shop", LogLevel.Debug);
                             }
                             break;
                     }
