@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using System.Collections;
 using StardewModdingAPI;
 using StardewValley;
 using StardewModdingAPI.Events;
 using StardewModdingAPI.Utilities;
+using StardewValley.Locations;
 using Harmony;
 using xTile.Dimensions;
 using xTile.Tiles;
@@ -22,15 +24,10 @@ namespace Shoplifter
 
         public override void Entry(IModHelper helper)
         {
-            ShopMenuPatcher.gethelpers(this.Monitor, this.Helper);
-            ShopMenuUtilities.gethelpers(this.Monitor, this.ModManifest);
+            ShopMenuUtilities.gethelpers(this.Monitor, this.ModManifest, this.Helper.Input);
             helper.Events.GameLoop.DayStarted += this.DayStarted;
             helper.Events.GameLoop.GameLaunched += this.Launched;
             helper.Events.Input.ButtonPressed += this.Action;
-
-            //var harmony = HarmonyInstance.Create(this.ModManifest.UniqueID);
-            //ShopMenuPatcher.Hook(harmony, this.Monitor);
-
         }
         private void DayStarted(object sender, DayStartedEventArgs e)
         {
@@ -42,8 +39,6 @@ namespace Shoplifter
             {
                 PerScreenShopsBannedFrom.Value.Clear();
             }
-
-            PerScreenShopsBannedFrom.Value.Add("SeedShop");
 
             var data = Game1.player.modData;
 
@@ -149,21 +144,69 @@ namespace Shoplifter
                 var TileX = e.Cursor.GrabTile.X;
                 var TileY = e.Cursor.GrabTile.Y;
 
-                string[] split = location.doesTileHaveProperty((int)TileX, (int)TileY, "Action", "Buildings").Split(' ');
-                if (split[0] == "LockedDoorWarp" && PerScreenShopsBannedFrom.Value.Contains($"{split[3]}"))
+                Location tilelocation = new Location((int)TileX, (int)TileY);
+
+                string[] split = location.doesTileHavePropertyNoNull((int)TileX, (int)TileY, "Action", "Buildings").Split(' ');
+
+                if (split != null)
                 {
-                    Helper.Input.Suppress(e.Button);
-
-                    if (ModEntry.shopliftingstrings.ContainsKey("TheMightyAmondee.Shoplifter/Banned") == true)
+                    switch (split[0])
                     {
-                        Game1.drawObjectDialogue(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/Banned"]);
-                    }
+                        case "LockedDoorWarp":
+                            if (PerScreenShopsBannedFrom.Value.Contains($"{split[3]}"))
+                            {
+                                Helper.Input.Suppress(e.Button);
 
-                    else
-                    {
-                        Game1.drawObjectDialogue(ModEntry.shopliftingstrings["Placeholder"]);
+                                if (shopliftingstrings.ContainsKey("TheMightyAmondee.Shoplifter/Banned") == true)
+                                {
+                                    Game1.drawObjectDialogue(shopliftingstrings["TheMightyAmondee.Shoplifter/Banned"]);
+                                }
+
+                                else
+                                {
+                                    Game1.drawObjectDialogue(shopliftingstrings["Placeholder"]);
+                                }
+                            }
+                            break;
+
+                        case "HospitalShop":
+                            ShopMenuUtilities.HospitalShopliftingMenu(location, Game1.player);
+                            this.Monitor.Log("The hospital shop", LogLevel.Debug);
+                            break;
+
+                        case "Carpenter":
+                            ShopMenuUtilities.CarpenterShopliftingMenu(location, Game1.player, tilelocation);
+                            this.Monitor.Log("The carpenter shop", LogLevel.Debug);
+                            break;
+
+                        case "AnimalShop":
+                            ShopMenuUtilities.AnimalShopShopliftingMenu(location, Game1.player, tilelocation);
+                            this.Monitor.Log("The animal shop", LogLevel.Debug);
+                            break;
+
+                        case "Blacksmith":
+                            ShopMenuUtilities.BlacksmithShopliftingMenu(location, tilelocation);
+                            this.Monitor.Log("The blacksmith shop", LogLevel.Debug);
+                            break;
+
+                        case "Saloon":
+                            ShopMenuUtilities.SaloonShopliftingMenu(location, tilelocation);
+                            this.Monitor.Log("The saloon shop", LogLevel.Debug);
+                            break;
+                        case "Buy":
+                            if (split[1] == "Fish")
+                            {
+                                ShopMenuUtilities.FishShopShopliftingMenu(location);
+                                this.Monitor.Log("The fish shop", LogLevel.Debug);
+                            }
+                            else if (location is SeedShop)
+                            {
+                                ShopMenuUtilities.SeedShopShopliftingMenu(location);
+                                this.Monitor.Log("The seed shop", LogLevel.Debug);
+                            }
+                            break;
                     }
-                }
+                }               
             }
         }
     }
