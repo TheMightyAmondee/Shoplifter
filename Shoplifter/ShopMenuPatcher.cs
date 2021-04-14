@@ -33,12 +33,7 @@ namespace Shoplifter
             harmony.Patch(
                 original: AccessTools.Method(typeof(GameLocation), nameof(GameLocation.performAction)),
                 postfix: new HarmonyMethod(typeof(ShopMenuPatcher), nameof(ShopMenuPatcher.performAction_Postfix))
-            );
-
-            harmony.Patch(
-               original: AccessTools.Method(typeof(GameLocation), nameof(GameLocation.performAction)),
-               prefix: new HarmonyMethod(typeof(ShopMenuPatcher), nameof(ShopMenuPatcher.performAction_Prefix))
-           );           
+            );          
         }
 
         public static void openShopMenu_Postfix(GameLocation __instance, string which) 
@@ -103,50 +98,6 @@ namespace Shoplifter
             {
                 monitor.Log($"Failed in {nameof(performAction_Postfix)}:\n{ex}", LogLevel.Error);
             }            
-        }
-
-        public static bool performAction_Prefix(string action, Farmer who)
-        {
-            try
-            {
-                // If tile has an action property, check action
-                if (action != null && who.IsLocalPlayer)
-                {
-                    string[] actionParams = action.Split(' ');
-                    // Depending on action parameter, do something
-                    switch (actionParams[0])
-                    {
-                        case "LockedDoorWarp":
-                            if (ModEntry.PerScreenShopsBannedFrom.Value.Contains(actionParams[3]))
-                            {
-                                if (ModEntry.shopliftingstrings.ContainsKey("TheMightyAmondee.Shoplifter/Banned") == true)
-                                {
-                                    Game1.drawObjectDialogue(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/Banned"]);
-                                }
-
-                                else
-                                {
-                                    Game1.drawObjectDialogue(ModEntry.shopliftingstrings["Placeholder"]);
-                                }
-                                
-                                // Don't run original code, player is banned and shouldn't be allowed to enter
-                                return false;
-                            }
-
-                            // Run original code, player isn't banned
-                            return true;                           
-                    }
-                    
-                }
-
-                // Run original code, parameter is not present
-                return true;
-            }
-            catch (Exception ex)
-            {
-                monitor.Log($"Failed in {nameof(performAction_Prefix)}:\n{ex}", LogLevel.Error);
-                return true;
-            }
         }
     }
 }

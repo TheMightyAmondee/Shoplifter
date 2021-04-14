@@ -5,6 +5,9 @@ using StardewValley;
 using StardewModdingAPI.Events;
 using StardewModdingAPI.Utilities;
 using Harmony;
+using xTile.Dimensions;
+using xTile.Tiles;
+using xTile.Layers;
 
 namespace Shoplifter
 {
@@ -23,9 +26,10 @@ namespace Shoplifter
             ShopMenuUtilities.gethelpers(this.Monitor, this.ModManifest);
             helper.Events.GameLoop.DayStarted += this.DayStarted;
             helper.Events.GameLoop.GameLaunched += this.Launched;
+            helper.Events.Input.ButtonPressed += this.Action;
 
-            var harmony = HarmonyInstance.Create(this.ModManifest.UniqueID);
-            ShopMenuPatcher.Hook(harmony, this.Monitor);
+            //var harmony = HarmonyInstance.Create(this.ModManifest.UniqueID);
+            //ShopMenuPatcher.Hook(harmony, this.Monitor);
 
         }
         private void DayStarted(object sender, DayStartedEventArgs e)
@@ -38,6 +42,8 @@ namespace Shoplifter
             {
                 PerScreenShopsBannedFrom.Value.Clear();
             }
+
+            PerScreenShopsBannedFrom.Value.Add("SeedShop");
 
             var data = Game1.player.modData;
 
@@ -132,6 +138,33 @@ namespace Shoplifter
                 this.Monitor.Log("Could not load strings... This will result in missing string problems, (Are you missing the Strings.json file?)", LogLevel.Error);
             }
            
+        }
+
+        private void Action(object sender, ButtonPressedEventArgs e)
+        {
+            GameLocation location = Game1.currentLocation;
+
+            if (e.Button == SButton.MouseRight || e.Button == SButton.ControllerA && Game1.dialogueUp == false && Context.CanPlayerMove == true)
+            {
+                var TileX = e.Cursor.GrabTile.X;
+                var TileY = e.Cursor.GrabTile.Y;
+
+                string[] split = location.doesTileHaveProperty((int)TileX, (int)TileY, "Action", "Buildings").Split(' ');
+                if (split[0] == "LockedDoorWarp" && PerScreenShopsBannedFrom.Value.Contains($"{split[3]}"))
+                {
+                    Helper.Input.Suppress(e.Button);
+
+                    if (ModEntry.shopliftingstrings.ContainsKey("TheMightyAmondee.Shoplifter/Banned") == true)
+                    {
+                        Game1.drawObjectDialogue(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/Banned"]);
+                    }
+
+                    else
+                    {
+                        Game1.drawObjectDialogue(ModEntry.shopliftingstrings["Placeholder"]);
+                    }
+                }
+            }
         }
     }
 }
