@@ -133,12 +133,13 @@ namespace Shoplifter
         {
             GameLocation location = Game1.currentLocation;
 
-            if ((e.Button == SButton.MouseRight || e.Button == SButton.ControllerA && Game1.dialogueUp == false) && Context.CanPlayerMove == true && Context.IsWorldReady == true)
+            if ((e.Button.IsActionButton() == true || e.Button == SButton.ControllerA) && Game1.dialogueUp == false && Context.CanPlayerMove == true && Context.IsWorldReady == true)
             {
                 var TileX = e.Cursor.GrabTile.X;
                 var TileY = e.Cursor.GrabTile.Y;
 
-                if (e.Button == SButton.ControllerA)
+                // If using a controller, don't use cursor position if not facing wrong direction, check player is one tile under (Y - 1) tile with property
+                if (e.Button == SButton.ControllerA && Game1.player.FacingDirection != 2)
                 { 
                     TileX = Game1.player.getTileX();
                     TileY = Game1.player.getTileY() - 1;
@@ -146,17 +147,23 @@ namespace Shoplifter
 
                 Location tilelocation = new Location((int)TileX, (int)TileY);
 
+                // Get whether tile has action property and its' parameters
                 string[] split = location.doesTileHavePropertyNoNull((int)TileX, (int)TileY, "Action", "Buildings").Split(' ');
 
+                // Tile has desired property
                 if (split != null)
                 {
                     switch (split[0])
                     {
+                        // If the door is a locked warp, check player can enter
                         case "LockedDoorWarp":
+                            // Player is banned from location they would warp to otherwise
                             if (PerScreenShopsBannedFrom.Value.Contains($"{split[3]}"))
                             {
+                                // Supress button so game doesn't warp player (they're banned)
                                 Helper.Input.Suppress(e.Button);
 
+                                // Show string to say player is banned if it is available, else a placeholder
                                 if (shopliftingstrings.ContainsKey("TheMightyAmondee.Shoplifter/Banned") == true)
                                 {
                                     Game1.drawObjectDialogue(shopliftingstrings["TheMightyAmondee.Shoplifter/Banned"]);
@@ -168,7 +175,7 @@ namespace Shoplifter
                                 }
                             }
                             break;
-
+                        // For each action that would open a shop that can be shoplifted, check if it can be shoplifted and take appropriate action
                         case "HospitalShop":
                             ShopMenuUtilities.HospitalShopliftingMenu(location, Game1.player);
                             break;
