@@ -44,7 +44,7 @@ namespace Shoplifter
 
             var data = Game1.player.modData;
 
-            string[] fields = data[$"{manifest.UniqueID}_{location}"].Split('/');
+            string[] fields = data[$"{manifest.UniqueID}_{locationname}"].Split('/');
 
             // Add one to first part of data (shoplifting count)
             fields[0] = (int.Parse(fields[0]) + 1).ToString();

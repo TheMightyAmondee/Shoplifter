@@ -102,8 +102,6 @@ namespace Shoplifter
             // Add placeholder for missing strings
             shopliftingstrings.Add("Placeholder", "There's a string missing here...");
 
-            // Because missing strings will cause harmony patches to fail, placeholder is necessary to stop crashes
-
             try
             {
                 // Get strings from assets folder and add them to a new dictionary
