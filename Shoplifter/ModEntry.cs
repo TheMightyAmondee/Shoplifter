@@ -1,15 +1,11 @@
 ﻿using System.Collections.Generic;
-using Microsoft.Xna.Framework;
 using System.Collections;
 using StardewModdingAPI;
 using StardewValley;
 using StardewModdingAPI.Events;
 using StardewModdingAPI.Utilities;
 using StardewValley.Locations;
-using Harmony;
 using xTile.Dimensions;
-using xTile.Tiles;
-using xTile.Layers;
 
 namespace Shoplifter
 {
