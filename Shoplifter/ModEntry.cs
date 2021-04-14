@@ -133,13 +133,13 @@ namespace Shoplifter
         {
             GameLocation location = Game1.currentLocation;
 
-            if (e.Button == SButton.MouseRight || e.Button == SButton.ControllerA && Game1.dialogueUp == false && Context.CanPlayerMove == true)
+            if ((e.Button == SButton.MouseRight || e.Button == SButton.ControllerA && Game1.dialogueUp == false) && Context.CanPlayerMove == true && Context.IsWorldReady == true)
             {
                 var TileX = e.Cursor.GrabTile.X;
                 var TileY = e.Cursor.GrabTile.Y;
 
                 if (e.Button == SButton.ControllerA)
-                {
+                { 
                     TileX = Game1.player.getTileX();
                     TileY = Game1.player.getTileY() - 1;
                 }
@@ -188,6 +188,7 @@ namespace Shoplifter
                         case "Saloon":
                             ShopMenuUtilities.SaloonShopliftingMenu(location, tilelocation);
                             break;
+
                         case "Buy":
                             if (split[1] == "Fish")
                             {
