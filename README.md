@@ -13,9 +13,7 @@ If you get caught by the shopkeeper or their family/employee three times within 
 You can only successfully shoplift once per day, you're not that bad are you?
 
 The shops you can shoplift from are: Willy's Shop, Pierre's General Store, Carpenter, Marnie's Ranch, Harvey's Clinic, Saloon, Blacksmith. 
-If you're wondering why all shops aren't included it's because the shopkeeper never leaves said store, you'll never get away with it.
-
-Fully compatible with multiplayer, shoplifting data is seperate for each player. Should work fine with a controller, just make sure you're under the counter.
+If you're wondering why all shops aren't included it's because the shopkeeper never leaves said store, you'll never get away with it. Custom shops cannot be shoplifted from.
 
 Boring specifics are listed below:
 
@@ -28,6 +26,12 @@ Marnie's Ranch | Marnie, Shane | Decorations, tools, heater | 1 | 15
 Harvey's Clinic | Harvey, Maru | None | 1 | 3
 Saloon | Gus, Emily | Recipes | 2 | 1
 Blacksmith | Clint | None | 3 | 10
+
+## Compatibilty ##
+
+Fully compatible with multiplayer, shoplifting data is seperate for each player. Should work fine with a controller, just make sure you're under the counter.
+
+Compatibile with shop tile framework in that altered stock will be considered when stock is generated for each shop. However, new shops added by the mod can't be shoplifted since even added vanilla shops are regarded as custom shops.
 
 ## Versions ##
 1.0.0 - Initial release
