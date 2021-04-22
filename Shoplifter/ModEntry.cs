@@ -20,7 +20,7 @@ namespace Shoplifter
 
         public override void Entry(IModHelper helper)
         {
-            ShopMenuUtilities.gethelpers(this.Monitor, this.ModManifest, this.Helper.Input);
+            ShopMenuUtilities.gethelpers(this.Monitor, this.ModManifest);
             helper.Events.GameLoop.DayStarted += this.DayStarted;
             helper.Events.GameLoop.GameLaunched += this.Launched;
             helper.Events.Input.ButtonPressed += this.Action;

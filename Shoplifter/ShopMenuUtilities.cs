@@ -15,15 +15,13 @@ namespace Shoplifter
     {
         private static IMonitor monitor;
         private static IManifest manifest;
-        private static IInputHelper input;
 
         private static int fineamount;
       
-        public static void gethelpers(IMonitor monitor, IManifest manifest, IInputHelper input)
+        public static void gethelpers(IMonitor monitor, IManifest manifest)
         {
             ShopMenuUtilities.monitor = monitor;
             ShopMenuUtilities.manifest = manifest;
-            ShopMenuUtilities.input = input;
         }
 
         /// <summary>
@@ -176,9 +174,6 @@ namespace Shoplifter
             // Player can steal
             else if (ModEntry.PerScreenStolenToday.Value == false)
             {
-                // Supress key, stop game from performing an action
-                input.Suppress(SButton.MouseRight);
-                input.Suppress(SButton.ControllerA);
                 // Create option to steal
                 location.createQuestionDialogue("Shoplift?", location.createYesNoResponses(), delegate (Farmer _, string answer)
                 {
@@ -212,8 +207,6 @@ namespace Shoplifter
             // Player can't steal and Willy can't sell
             else
             {
-                input.Suppress(SButton.MouseRight);
-                input.Suppress(SButton.ControllerA);
                 if (ModEntry.shopliftingstrings.ContainsKey("TheMightyAmondee.Shoplifter/AlreadyShoplifted") == true)
                 {
                     Game1.drawObjectDialogue(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"]);
@@ -241,8 +234,6 @@ namespace Shoplifter
             // Pierre is not at shop and on island, player can purchase stock properly or steal
             else if (location.getCharacterFromName("Pierre") == null && Game1.IsVisitingIslandToday("Pierre"))
             {
-                input.Suppress(SButton.MouseRight);
-                input.Suppress(SButton.ControllerA);
                 Game1.dialogueUp = false;
                 Game1.drawObjectDialogue(Game1.content.LoadString("Strings\\Locations:SeedShop_MoneyBox"));
                 Game1.afterDialogues = delegate
@@ -281,8 +272,6 @@ namespace Shoplifter
             // Pierre not at counter, player can steal
             else
             {
-                input.Suppress(SButton.MouseRight);
-                input.Suppress(SButton.ControllerA);
                 Game1.dialogueUp = false;
                 location.createQuestionDialogue("Shoplift?", location.createYesNoResponses(), delegate (Farmer _, string answer)
                 {                   
@@ -327,8 +316,6 @@ namespace Shoplifter
                     // Robin is on island and not at sciencehouse, she can't sell but player can purchase properly if they want
                     if (location.getCharacterFromName("Robin") == null && Game1.IsVisitingIslandToday("Robin"))
                     {
-                        input.Suppress(SButton.MouseRight);
-                        input.Suppress(SButton.ControllerA);
                         // Close any current dialogue boxes
                         Game1.dialogueUp = false;
                         // Show normal dialogue
@@ -379,8 +366,6 @@ namespace Shoplifter
                     // Robin is absent and can't sell, player can steal
                     else if (Game1.shortDayNameFromDayOfSeason(Game1.dayOfMonth).Equals("Tue") && location.carpenters(tileLocation) == true && location.getCharacterFromName("Robin") == null)
                     {
-                        input.Suppress(SButton.MouseRight);
-                        input.Suppress(SButton.ControllerA);
                         Game1.dialogueUp = false;
                         Game1.drawObjectDialogue(Game1.content.LoadString("Strings\\Locations:ScienceHouse_RobinAbsent").Replace('\n', '^'));
                         Game1.afterDialogues = delegate
@@ -415,8 +400,6 @@ namespace Shoplifter
                     // Robin can't sell. Period
                     else if (location.carpenters(tileLocation) == false)
                     {
-                        input.Suppress(SButton.MouseRight);
-                        input.Suppress(SButton.ControllerA);
                         location.createQuestionDialogue("Shoplift?", location.createYesNoResponses(), delegate (Farmer _, string answer)
                         {
                             if (answer == "Yes")
@@ -452,8 +435,6 @@ namespace Shoplifter
                 // Robin can't sell and player can't steal
                 else
                 {
-                    input.Suppress(SButton.MouseRight);
-                    input.Suppress(SButton.ControllerA);
                     if (ModEntry.shopliftingstrings.ContainsKey("TheMightyAmondee.Shoplifter/AlreadyShoplifted") == true)
                     {
                         Game1.drawObjectDialogue(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"]);
@@ -484,8 +465,6 @@ namespace Shoplifter
                     // Marnie is not in the location, she is on the island
                     if (location.getCharacterFromName("Marnie") == null && Game1.IsVisitingIslandToday("Marnie"))
                     {
-                        input.Suppress(SButton.MouseRight);
-                        input.Suppress(SButton.ControllerA);
                         Game1.dialogueUp = false;
                         Game1.drawObjectDialogue(Game1.content.LoadString("Strings\\Locations:AnimalShop_MoneyBox"));
                         Game1.afterDialogues = delegate
@@ -525,8 +504,6 @@ namespace Shoplifter
                     // Marnie is not at the location and is absent for the day
                     else if (Game1.shortDayNameFromDayOfSeason(Game1.dayOfMonth).Equals("Tue") && location.animalShop(tileLocation) == true && location.getCharacterFromName("Marnie") == null)
                     {
-                        input.Suppress(SButton.MouseRight);
-                        input.Suppress(SButton.ControllerA);
                         Game1.dialogueUp = false;
                         Game1.drawObjectDialogue(Game1.content.LoadString("Strings\\Locations:AnimalShop_Marnie_Absent").Replace('\n', '^'));
                         Game1.afterDialogues = delegate
@@ -560,8 +537,6 @@ namespace Shoplifter
                     // Marnie can't sell. Period.
                     else if (location.animalShop(tileLocation) == false)
                     {
-                        input.Suppress(SButton.MouseRight);
-                        input.Suppress(SButton.ControllerA);
                         location.createQuestionDialogue("Shoplift?", location.createYesNoResponses(), delegate (Farmer _, string answer)
                         {
                             if (answer == "Yes")
@@ -596,8 +571,6 @@ namespace Shoplifter
 
                 else
                 {
-                    input.Suppress(SButton.MouseRight);
-                    input.Suppress(SButton.ControllerA);
                     if (ModEntry.shopliftingstrings.ContainsKey("TheMightyAmondee.Shoplifter/AlreadyShoplifted") == true)
                     {
                         Game1.drawObjectDialogue(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"]);
@@ -620,8 +593,6 @@ namespace Shoplifter
             // Character is not at the required tile, noone can sell
             if (location.isCharacterAtTile(who.getTileLocation() + new Vector2(0f, -2f)) == null && location.isCharacterAtTile(who.getTileLocation() + new Vector2(-1f, -2f)) == null)
             {
-                input.Suppress(SButton.MouseRight);
-                input.Suppress(SButton.ControllerA);
                 if (ModEntry.PerScreenStolenToday.Value == false)
                 {
                     location.createQuestionDialogue("Shoplift?", location.createYesNoResponses(), delegate (Farmer _, string answer)
@@ -651,8 +622,6 @@ namespace Shoplifter
 
                 else
                 {
-                    input.Suppress(SButton.MouseRight);
-                    input.Suppress(SButton.ControllerA);
                     if (ModEntry.shopliftingstrings.ContainsKey("TheMightyAmondee.Shoplifter/AlreadyShoplifted") == true)
                     {
                         Game1.drawObjectDialogue(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"]);
@@ -676,8 +645,6 @@ namespace Shoplifter
             // Clint can't sell. Period.
             if (location.blacksmith(tileLocation) == false)
             {
-                input.Suppress(SButton.MouseRight);
-                input.Suppress(SButton.ControllerA);
                 if (ModEntry.PerScreenStolenToday.Value == false)
                 {
                     location.createQuestionDialogue("Shoplift?", location.createYesNoResponses(), delegate (Farmer _, string answer)
@@ -707,8 +674,6 @@ namespace Shoplifter
 
                 else
                 {
-                    input.Suppress(SButton.MouseRight);
-                    input.Suppress(SButton.ControllerA);
                     if (ModEntry.shopliftingstrings.ContainsKey("TheMightyAmondee.Shoplifter/AlreadyShoplifted") == true)
                     {
                         Game1.drawObjectDialogue(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"]);
@@ -734,8 +699,6 @@ namespace Shoplifter
             {
                 if (ModEntry.PerScreenStolenToday.Value == false)
                 {
-                    input.Suppress(SButton.MouseRight);
-                    input.Suppress(SButton.ControllerA);
                     Game1.dialogueUp = false;
                     Game1.drawObjectDialogue(Game1.content.LoadString("Strings\\Locations:Saloon_MoneyBox"));
                     Game1.afterDialogues = delegate
@@ -783,8 +746,6 @@ namespace Shoplifter
 
                 else
                 {
-                    input.Suppress(SButton.MouseRight);
-                    input.Suppress(SButton.ControllerA);
                     if (ModEntry.shopliftingstrings.ContainsKey("TheMightyAmondee.Shoplifter/AlreadyShoplifted") == true)
                     {
                         Game1.drawObjectDialogue(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"]);
@@ -804,8 +765,6 @@ namespace Shoplifter
             {
                 if (ModEntry.PerScreenStolenToday.Value == false)
                 {
-                    input.Suppress(SButton.MouseRight);
-                    input.Suppress(SButton.ControllerA);
                     location.createQuestionDialogue("Shoplift?", location.createYesNoResponses(), delegate (Farmer _, string answer)
                     {                       
                         if (answer == "Yes")
@@ -834,8 +793,6 @@ namespace Shoplifter
                 // Gus can't sell, player can't steal
                 else
                 {
-                    input.Suppress(SButton.MouseRight);
-                    input.Suppress(SButton.ControllerA);
                     if (ModEntry.shopliftingstrings.ContainsKey("TheMightyAmondee.Shoplifter/AlreadyShoplifted") == true)
                     {
                         Game1.drawObjectDialogue(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"]);
