@@ -6,5 +6,5 @@
   "UniqueID": "TheMightyAmondee.Shoplifter",
   "EntryDll": "Shoplifter.dll",
   "MinimumApiVersion": "3.9.0",
-  "UpdateKeys": []
+  "UpdateKeys": ["Nexus:8569"]
 }
