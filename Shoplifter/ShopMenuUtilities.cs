@@ -7,8 +7,6 @@ using StardewValley;
 using Microsoft.Xna.Framework;
 using xTile.Dimensions;
 
-
-
 namespace Shoplifter
 {
     public class ShopMenuUtilities
@@ -23,48 +21,6 @@ namespace Shoplifter
             ShopMenuUtilities.monitor = monitor;
             ShopMenuUtilities.manifest = manifest;
         }
-
-        /// <summary>
-        /// Applies shoplifting penalties, tracks whether to ban player
-        /// </summary>
-        /// <param name="location">The current location instance</param>
-        public static void ShopliftingPenalties(GameLocation location)
-        {
-            // Subtract monetary penalty if it applies
-            if (fineamount > 0)
-            {
-                Game1.player.Money -= fineamount;
-            }
-
-            Game1.warpFarmer(location.warps[0].TargetName, location.warps[0].TargetX, location.warps[0].TargetY, false);
-
-            string locationname = location.NameOrUniqueName;
-
-            var data = Game1.player.modData;
-
-            string[] fields = data[$"{manifest.UniqueID}_{locationname}"].Split('/');
-
-            // Add one to first part of data (shoplifting count)
-            fields[0] = (int.Parse(fields[0]) + 1).ToString();
-            
-            // If this is the first shoplift, record day of month in second part of data (day of first steal)
-            if (fields[0] == "1")
-            {
-                fields[1] = Game1.dayOfMonth.ToString();
-            }
-
-            // After being caught three times (within 28 days) ban player from shop for three days
-            if (fields[0] == "3")
-            {
-                fields[0] = "-1";
-                ModEntry.PerScreenShopsBannedFrom.Value.Add($"{locationname}");
-                monitor.Log($"{locationname} added to banned shop list");
-            }
-
-            // Join manipulated data for recording in save file
-            data[$"{manifest.UniqueID}_{locationname}"] = string.Join("/", fields);
-        }
-
 
         /// <summary>
         /// Subtracts friendship from any npc that sees the player shoplifting
@@ -157,6 +113,47 @@ namespace Shoplifter
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// Applies shoplifting penalties, tracks whether to ban player
+        /// </summary>
+        /// <param name="location">The current location instance</param>
+        public static void ShopliftingPenalties(GameLocation location)
+        {
+            // Subtract monetary penalty if it applies
+            if (fineamount > 0)
+            {
+                Game1.player.Money -= fineamount;
+            }
+
+            Game1.warpFarmer(location.warps[0].TargetName, location.warps[0].TargetX, location.warps[0].TargetY, false);
+
+            string locationname = location.NameOrUniqueName;
+
+            var data = Game1.player.modData;
+
+            string[] fields = data[$"{manifest.UniqueID}_{locationname}"].Split('/');
+
+            // Add one to first part of data (shoplifting count)
+            fields[0] = (int.Parse(fields[0]) + 1).ToString();
+
+            // If this is the first shoplift, record day of month in second part of data (day of first steal)
+            if (fields[0] == "1")
+            {
+                fields[1] = Game1.dayOfMonth.ToString();
+            }
+
+            // After being caught three times (within 28 days) ban player from shop for three days
+            if (fields[0] == "3")
+            {
+                fields[0] = "-1";
+                ModEntry.PerScreenShopsBannedFrom.Value.Add($"{locationname}");
+                monitor.Log($"{locationname} added to banned shop list");
+            }
+
+            // Join manipulated data for recording in save file
+            data[$"{manifest.UniqueID}_{locationname}"] = string.Join("/", fields);
         }
 
         /// <summary>
