@@ -217,6 +217,62 @@ namespace Shoplifter
         }
 
         /// <summary>
+        /// Create the shoplifting menu with SandyShop stock if necessary
+        /// </summary>
+        /// <param name="location">The current location instance</param>
+        public static void SandyShopShopliftingMenu(GameLocation location)
+        {
+            NPC sandy = location.getCharacterFromName("Sandy");
+            if (sandy == null || sandy.currentLocation != location)
+            {
+                if (ModEntry.PerScreenStolenToday.Value == false)
+                {
+                    // Create option to steal
+                    location.createQuestionDialogue("Shoplift?", location.createYesNoResponses(), delegate (Farmer _, string answer)
+                    {
+                        // Player answered yes
+                        if (answer == "Yes")
+                        {
+                            SeenShoplifting(location, Game1.player);
+
+                            // Player is caught
+                            if (ShouldBeCaught("Sandy", Game1.player, location) == true)
+                            {
+                                // After dialogue, apply penalties
+                                Game1.afterDialogues = delegate
+                                {
+                                    ShopliftingPenalties(location);
+                                };
+
+                                return;
+                            }
+
+                            // Not caught, generate stock for shoplifting, on purchase make sure player can't steal again
+                            Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(3, 3, "SandyShop"), 3, null, delegate
+                            {
+                                ModEntry.PerScreenStolenToday.Value = true;
+                                return false;
+                            }, null, "");
+                        }
+                    });
+                }
+
+                else
+                {
+                    if (ModEntry.shopliftingstrings.ContainsKey("TheMightyAmondee.Shoplifter/AlreadyShoplifted") == true)
+                    {
+                        Game1.drawObjectDialogue(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"]);
+                    }
+
+                    else
+                    {
+                        Game1.drawObjectDialogue(ModEntry.shopliftingstrings["Placeholder"]);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
         /// Create the shoplifting menu with Seedshop stock if necessary
         /// </summary>
         /// <param name="location">The current location instance</param>

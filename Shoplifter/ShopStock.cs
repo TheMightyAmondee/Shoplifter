@@ -173,6 +173,40 @@ namespace Shoplifter
 					CurrentStock.Add(349);
 					CurrentStock.Add(351);
 					break;
+
+				// Sandy's shop
+				case "SandyShop":
+					// Add object id to array
+					CurrentStock.Add(802);
+					CurrentStock.Add(478);
+					CurrentStock.Add(486);
+					CurrentStock.Add(494);
+
+					switch (Game1.dayOfMonth % 7)
+					{
+						case 0:
+							CurrentStock.Add(233);
+							break;
+						case 1:
+							CurrentStock.Add(88);
+							break;
+						case 2:
+							CurrentStock.Add(90);
+							break;
+						case 3:
+							CurrentStock.Add(749);
+							break;
+						case 4:
+							CurrentStock.Add(466);
+							break;
+						case 5:
+							CurrentStock.Add(340);
+							break;
+						case 6:
+							CurrentStock.Add(371);
+							break;
+					}
+					break;
 			}
 
 			// Add generated stock to store from array

@@ -205,6 +205,10 @@ namespace Shoplifter
                             {
                                 ShopMenuUtilities.SeedShopShopliftingMenu(location);
                             }
+                            else if (location.name.Equals("SandyHouse"))
+                            {
+                                ShopMenuUtilities.SandyShopShopliftingMenu(location);
+                            }
                             break;
                     }
                 }               
