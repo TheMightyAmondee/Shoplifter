@@ -169,9 +169,23 @@ namespace Shoplifter
 
 				// Harvey's shop
 				case "HospitalShop":
-					// Add object id to array
-					CurrentStock.Add(349);
-					CurrentStock.Add(351);
+					foreach (var shopstock in Utility.getHospitalStock())
+					{
+
+						// Stops illegal stock being added, will result in an error item
+						if ((shopstock.Key as StardewValley.Object) == null || (shopstock.Key as Wallpaper) != null || (shopstock.Key as Furniture) != null || (shopstock.Key as StardewValley.Object).bigCraftable == true || (shopstock.Key as StardewValley.Object).IsRecipe == true)
+						{
+							continue;
+						}
+
+						// Add object id to array
+						if ((shopstock.Key as StardewValley.Object) != null && (shopstock.Key as StardewValley.Object).bigCraftable == false)
+						{
+							index = (shopstock.Key as StardewValley.Object).parentSheetIndex;
+
+							CurrentStock.Add(index);
+						}
+					}
 					break;
 
 				// Sandy's shop
