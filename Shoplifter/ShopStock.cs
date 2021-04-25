@@ -49,7 +49,7 @@ namespace Shoplifter
 					foreach (var shopstock in (location as SeedShop).shopStock())
 					{
 						// Stops illegal stock being added, will result in an error item
-						if ((shopstock.Key as StardewValley.Object) == null || (shopstock.Key as Wallpaper) != null || (shopstock.Key as Furniture) != null || (shopstock.Key as StardewValley.Object).bigCraftable == true || (shopstock.Key as StardewValley.Object).IsRecipe == true)
+						if ((shopstock.Key as StardewValley.Object) == null || (shopstock.Key as Wallpaper) != null || (shopstock.Key as Furniture) != null || (shopstock.Key as StardewValley.Object).bigCraftable == true || (shopstock.Key as StardewValley.Object).IsRecipe == true || (shopstock.Key as Clothing) != null || (shopstock.Key as Ring) != null || (shopstock.Key as Boots) != null || (shopstock.Key as Hat) != null)
 						{
 							continue;
 						}
@@ -70,7 +70,7 @@ namespace Shoplifter
 					{
 
 						// Stops illegal stock being added, will result in an error item
-						if ((shopstock.Key as StardewValley.Object) == null || (shopstock.Key as Wallpaper) != null || (shopstock.Key as Furniture) != null || (shopstock.Key as StardewValley.Object).bigCraftable == true || (shopstock.Key as StardewValley.Object).IsRecipe == true)
+						if ((shopstock.Key as StardewValley.Object) == null || (shopstock.Key as Wallpaper) != null || (shopstock.Key as Furniture) != null || (shopstock.Key as StardewValley.Object).bigCraftable == true || (shopstock.Key as StardewValley.Object).IsRecipe == true || (shopstock.Key as Clothing) != null || (shopstock.Key as Ring) != null || (shopstock.Key as Boots) != null || (shopstock.Key as Hat) != null)
 						{
 							continue;
 						}
@@ -90,7 +90,7 @@ namespace Shoplifter
 					foreach (var shopstock in Utility.getCarpenterStock())
 					{
 						// Stops illegal stock being added, will result in an error item
-						if ((shopstock.Key as StardewValley.Object) == null || (shopstock.Key as Wallpaper) != null || (shopstock.Key as Furniture) != null || (shopstock.Key as StardewValley.Object).bigCraftable == true || (shopstock.Key as StardewValley.Object).IsRecipe == true)
+						if ((shopstock.Key as StardewValley.Object) == null || (shopstock.Key as Wallpaper) != null || (shopstock.Key as Furniture) != null || (shopstock.Key as StardewValley.Object).bigCraftable == true || (shopstock.Key as StardewValley.Object).IsRecipe == true || (shopstock.Key as Clothing) != null || (shopstock.Key as Ring) != null || (shopstock.Key as Boots) != null || (shopstock.Key as Hat) != null)
 						{
 							continue;
 						}
@@ -110,7 +110,7 @@ namespace Shoplifter
 					foreach (var shopstock in Utility.getAnimalShopStock())
 					{
 						// Stops illegal stock being added, will result in an error item
-						if ((shopstock.Key as StardewValley.Object) == null || (shopstock.Key as Wallpaper) != null || (shopstock.Key as Furniture) != null || (shopstock.Key as StardewValley.Object).bigCraftable == true || (shopstock.Key as StardewValley.Object).IsRecipe == true)
+						if ((shopstock.Key as StardewValley.Object) == null || (shopstock.Key as Wallpaper) != null || (shopstock.Key as Furniture) != null || (shopstock.Key as StardewValley.Object).bigCraftable == true || (shopstock.Key as StardewValley.Object).IsRecipe == true || (shopstock.Key as Clothing) != null || (shopstock.Key as Ring) != null || (shopstock.Key as Boots) != null || (shopstock.Key as Hat) != null)
 						{
 							continue;
 						}
@@ -131,7 +131,7 @@ namespace Shoplifter
 					{
 
 						// Stops illegal stock being added, will result in an error item
-						if ((shopstock.Key as StardewValley.Object) == null || (shopstock.Key as Wallpaper) != null || (shopstock.Key as Furniture) != null || (shopstock.Key as StardewValley.Object).bigCraftable == true || (shopstock.Key as StardewValley.Object).IsRecipe == true)
+						if ((shopstock.Key as StardewValley.Object) == null || (shopstock.Key as Wallpaper) != null || (shopstock.Key as Furniture) != null || (shopstock.Key as StardewValley.Object).bigCraftable == true || (shopstock.Key as StardewValley.Object).IsRecipe == true || (shopstock.Key as Clothing) != null || (shopstock.Key as Ring) != null || (shopstock.Key as Boots) != null || (shopstock.Key as Hat) != null)
 						{
 							continue;
 						}
@@ -152,7 +152,7 @@ namespace Shoplifter
 					{
 
 						// Stops illegal stock being added, will result in an error item
-						if ((shopstock.Key as StardewValley.Object) == null || (shopstock.Key as Wallpaper) != null || (shopstock.Key as Furniture) != null || (shopstock.Key as StardewValley.Object).bigCraftable == true || (shopstock.Key as StardewValley.Object).IsRecipe == true)
+						if ((shopstock.Key as StardewValley.Object) == null || (shopstock.Key as Wallpaper) != null || (shopstock.Key as Furniture) != null || (shopstock.Key as StardewValley.Object).bigCraftable == true || (shopstock.Key as StardewValley.Object).IsRecipe == true || (shopstock.Key as Clothing) != null || (shopstock.Key as Ring) != null || (shopstock.Key as Boots) != null || (shopstock.Key as Hat) != null)
 						{
 							continue;
 						}
@@ -169,9 +169,57 @@ namespace Shoplifter
 
 				// Harvey's shop
 				case "HospitalShop":
+					foreach (var shopstock in Utility.getHospitalStock())
+					{
+
+						// Stops illegal stock being added, will result in an error item
+						if ((shopstock.Key as StardewValley.Object) == null || (shopstock.Key as Wallpaper) != null || (shopstock.Key as Furniture) != null || (shopstock.Key as StardewValley.Object).bigCraftable == true || (shopstock.Key as StardewValley.Object).IsRecipe == true || (shopstock.Key as Clothing) != null || (shopstock.Key as Ring) != null || (shopstock.Key as Boots) != null || (shopstock.Key as Hat) != null)
+						{
+							continue;
+						}
+
+						// Add object id to array
+						if ((shopstock.Key as StardewValley.Object) != null && (shopstock.Key as StardewValley.Object).bigCraftable == false)
+						{
+							index = (shopstock.Key as StardewValley.Object).parentSheetIndex;
+
+							CurrentStock.Add(index);
+						}
+					}
+					break;
+
+				// Sandy's shop
+				case "SandyShop":
 					// Add object id to array
-					CurrentStock.Add(349);
-					CurrentStock.Add(351);
+					CurrentStock.Add(802);
+					CurrentStock.Add(478);
+					CurrentStock.Add(486);
+					CurrentStock.Add(494);
+
+					switch (Game1.dayOfMonth % 7)
+					{
+						case 0:
+							CurrentStock.Add(233);
+							break;
+						case 1:
+							CurrentStock.Add(88);
+							break;
+						case 2:
+							CurrentStock.Add(90);
+							break;
+						case 3:
+							CurrentStock.Add(749);
+							break;
+						case 4:
+							CurrentStock.Add(466);
+							break;
+						case 5:
+							CurrentStock.Add(340);
+							break;
+						case 6:
+							CurrentStock.Add(371);
+							break;
+					}
 					break;
 			}
 
