@@ -26,7 +26,7 @@ Marnie's Ranch | Marnie, Shane | Decorations, tools, heater | 1 | 15
 Harvey's Clinic | Harvey, Maru | None | 1 | 3
 Saloon | Gus, Emily | Recipes | 2 | 1
 Blacksmith | Clint | None | 3 | 10
-Sandy's Oasis | Sandy | 3 | 3
+Sandy's Oasis | Sandy | Furniture, clothing | 3 | 3
 
 ## Compatibilty ##
 
