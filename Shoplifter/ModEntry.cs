@@ -26,7 +26,7 @@ namespace Shoplifter
             helper.Events.GameLoop.DayStarted += this.DayStarted;
             helper.Events.GameLoop.GameLaunched += this.Launched;
             helper.Events.Input.ButtonPressed += this.Action;
-            helper.ConsoleCommands.Add("shoplifter_resetsave", "Removes and readds save data added by the mod to fix broken save data", this.ResetSave);
+            helper.ConsoleCommands.Add("shoplifter_resetsave", "Removes and readds save data added by the mod to fix broken save data, only use if you're getting errors", this.ResetSave);
         }
         private void DayStarted(object sender, DayStartedEventArgs e)
         {
@@ -224,7 +224,7 @@ namespace Shoplifter
                     }
                 }
 
-                this.Monitor.Log("Reset shoplifting data... If this didn't fix anything please report it to the mod page");
+                this.Monitor.Log("Reset shoplifting data... If this didn't fix the error on a new day, please report the error to the mod page", LogLevel.Info);
             }
             catch
             {
