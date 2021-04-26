@@ -18,12 +18,15 @@ namespace Shoplifter
 
         public static readonly PerScreen<ArrayList> PerScreenShopsBannedFrom = new PerScreen<ArrayList>(createNewState: () => new ArrayList());
 
+        public static string[] shops = { "SeedShop", "FishShop", "AnimalShop", "ScienceHouse", "Hospital", "Blacksmith", "Saloon", "SandyHouse" };
+
         public override void Entry(IModHelper helper)
         {
             ShopMenuUtilities.gethelpers(this.Monitor, this.ModManifest);
             helper.Events.GameLoop.DayStarted += this.DayStarted;
             helper.Events.GameLoop.GameLaunched += this.Launched;
             helper.Events.Input.ButtonPressed += this.Action;
+            helper.ConsoleCommands.Add("shoplifter_resetsave", "Removes and readds save data added by the mod to fix broken save data", this.ResetSave);
         }
         private void DayStarted(object sender, DayStartedEventArgs e)
         {
@@ -39,62 +42,53 @@ namespace Shoplifter
             var data = Game1.player.modData;
 
             // Add mod data if it isn't present
-            if (data.ContainsKey($"{this.ModManifest.UniqueID}_SeedShop") == false)
+            foreach (string shop in shops)
             {
-                data.Add($"{this.ModManifest.UniqueID}_SeedShop", "0/0");
-                data.Add($"{this.ModManifest.UniqueID}_FishShop", "0/0");
-                data.Add($"{this.ModManifest.UniqueID}_AnimalShop", "0/0");
-                data.Add($"{this.ModManifest.UniqueID}_ScienceHouse", "0/0");
-                data.Add($"{this.ModManifest.UniqueID}_Hospital", "0/0");
-                data.Add($"{this.ModManifest.UniqueID}_Blacksmith", "0/0");
-                data.Add($"{this.ModManifest.UniqueID}_Saloon", "0/0");
-                this.Monitor.Log("Adding mod data...");
-            }
-
-            // Moddata exists, interpret
-            else
-            {
-                this.Monitor.Log("Found mod data... Interpreting");
-
-                var moddata = Game1.player.modData;
-
-                foreach (string shopliftingdata in new List<string>(moddata.Keys))
+                if (data.ContainsKey($"{this.ModManifest.UniqueID}_{shop}") == false)
                 {
-
-                    string[] values = moddata[shopliftingdata].Split('/');
-                    string[] fields = shopliftingdata.Split('_');
-
-                    // Player has finished three day ban, remove shop from list, also reset first day caught
-                    if (shopliftingdata.StartsWith($"{this.ModManifest.UniqueID}") && values[0] == "-3")
-                    {
-                        values[0] = "0";
-                        values[1] = "0";
-                        
-                        PerScreenShopsBannedFrom.Value.Remove(fields[1]);
-                        this.Monitor.Log($"You're no longer banned from {fields[1]}, steal away!", LogLevel.Info);
-                    }
-
-                    // Player is currently banned, add shop to list
-                    else if (shopliftingdata.StartsWith($"{this.ModManifest.UniqueID}") && int.Parse(values[0]) < 0)
-                    {
-                        values[0] = (int.Parse(values[0]) - 1).ToString();
-                        PerScreenShopsBannedFrom.Value.Add(fields[1]);
-                        this.Monitor.Log($"You're currently banned from {fields[1]}", LogLevel.Info);
-                    }
-
-                    // If 28 days have past and player was not caught 3 times, reset both fields
-                    if (shopliftingdata.StartsWith($"{this.ModManifest.UniqueID}") && int.Parse(values[0]) > 0 && values[1] == Game1.dayOfMonth.ToString())
-                    {
-                        values[0] = "0";
-                        values[1] = "0";
-
-                        this.Monitor.Log($"It's been 28 days since you first shoplifted {fields[1]}, they've forgotten about it now...", LogLevel.Info);
-                    }
-
-                    // After manipulation, join fields back together with "/" seperator
-                    moddata[shopliftingdata] = string.Join("/", values);
+                    data.Add($"{this.ModManifest.UniqueID}_{shop}", "0/0");
+                    this.Monitor.Log($"Adding mod data... {this.ModManifest.UniqueID}_{shop}");
                 }
+                
             }
+
+            foreach (string shopliftingdata in new List<string>(data.Keys))
+            {
+
+                string[] values = data[shopliftingdata].Split('/');
+                string[] fields = shopliftingdata.Split('_');
+
+                // Player has finished three day ban, remove shop from list, also reset first day caught
+                if (shopliftingdata.StartsWith($"{this.ModManifest.UniqueID}") && values[0] == "-3")
+                {
+                    values[0] = "0";
+                    values[1] = "0";
+
+                    PerScreenShopsBannedFrom.Value.Remove(fields[1]);
+                    this.Monitor.Log($"You're no longer banned from {fields[1]}, steal away!", LogLevel.Info);
+                }
+
+                // Player is currently banned, add shop to list
+                else if (shopliftingdata.StartsWith($"{this.ModManifest.UniqueID}") && int.Parse(values[0]) < 0)
+                {
+                    values[0] = (int.Parse(values[0]) - 1).ToString();
+                    PerScreenShopsBannedFrom.Value.Add(fields[1]);
+                    this.Monitor.Log($"You're currently banned from {fields[1]}", LogLevel.Info);
+                }
+
+                // If 28 days have past and player was not caught 3 times, reset both fields
+                if (shopliftingdata.StartsWith($"{this.ModManifest.UniqueID}") && int.Parse(values[0]) > 0 && values[1] == Game1.dayOfMonth.ToString())
+                {
+                    values[0] = "0";
+                    values[1] = "0";
+
+                    this.Monitor.Log($"It's been 28 days since you first shoplifted {fields[1]}, they've forgotten about it now...", LogLevel.Info);
+                }
+
+                // After manipulation, join fields back together with "/" seperator
+                data[shopliftingdata] = string.Join("/", values);
+            }
+
         }
 
         private void Launched(object sender, GameLaunchedEventArgs e)
@@ -212,6 +206,29 @@ namespace Shoplifter
                             break;
                     }
                 }               
+            }
+        }
+
+        private void ResetSave (string command, string[] arg)
+        {
+            try
+            {
+                var data = Game1.player.modData;
+
+                foreach (string moddata in new List<string>(data.Keys))
+                {
+                    if (moddata.StartsWith($"{this.ModManifest.UniqueID}"))
+                    {
+                        data.Remove(moddata);
+                        data.Add(moddata,"0/0");
+                    }
+                }
+
+                this.Monitor.Log("Reset shoplifting data... If this didn't fix anything please report it to the mod page");
+            }
+            catch
+            {
+                this.Monitor.Log("Unable to execute command, check formatting is correct", LogLevel.Error);
             }
         }
     }
