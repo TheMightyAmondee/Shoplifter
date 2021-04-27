@@ -32,7 +32,7 @@ Sandy's Oasis | Sandy | Furniture, clothing | 3 | 3
 
 Fully compatible with multiplayer, shoplifting data is seperate for each player. Should work fine with a controller, just make sure you're under the counter.
 
-Compatibile with shop tile framework in that altered stock will be considered when stock is generated for each shop (except for Sandy's Oasis). However, new shops added by the mod can't be shoplifted since even added vanilla shops are regarded as custom shops.
+Compatibile with shop tile framework in that altered stock will be considered when stock is generated for each shop (except for Sandy's Oasis, this causes an exception due to reflection and Harmony Patches). However, new shops added by the mod can't be shoplifted since even added vanilla shops are regarded as custom shops.
 
 ## Versions ##
 1.0.0 - Initial release
