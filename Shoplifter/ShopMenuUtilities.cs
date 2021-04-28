@@ -63,7 +63,7 @@ namespace Shoplifter
         /// <param name="who">The player to catch</param>
         /// <param name="location">The current location instance</param>
         /// <returns>Whether the player was caught</returns>      
-        public static bool ShouldBeCaught(string which, Farmer who, GameLocation location)
+        public static bool ShouldBeCaught(string which, Farmer who, GameLocation location, string caughtdialogue = null)
         {
             NPC npc = Game1.getCharacterFromName(which);
             
@@ -72,6 +72,8 @@ namespace Shoplifter
             {
                 string dialogue;
                 fineamount = Math.Min(Game1.player.Money, 1000); 
+
+                
                 
                 try
                 {
@@ -107,6 +109,14 @@ namespace Shoplifter
                     npc.setNewDialogue(ModEntry.shopliftingstrings["Placeholder"], add: true);
                 }
 
+                if (caughtdialogue != null)
+                {
+                    dialogue = (fineamount > 0)
+                            ? caughtdialogue.Replace("{0}", fineamount.ToString())
+                            : caughtdialogue;
+                    npc.setNewDialogue(dialogue, add: true);
+                }
+
                 // Draw dialogue for NPC, dialogue box opens
                 Game1.drawDialogue(npc);                
                 monitor.Log($"{which} caught you shoplifting... You were fined {fineamount}g");
@@ -121,7 +131,7 @@ namespace Shoplifter
         /// Applies shoplifting penalties, tracks whether to ban player
         /// </summary>
         /// <param name="location">The current location instance</param>
-        public static void ShopliftingPenalties(GameLocation location)
+        public static void ShopliftingPenalties(GameLocation location, string customshopname = null)
         {
             // Subtract monetary penalty if it applies
             if (fineamount > 0)
@@ -135,7 +145,16 @@ namespace Shoplifter
 
             var data = Game1.player.modData;
 
-            string[] fields = data[$"{manifest.UniqueID}_{locationname}"].Split('/');
+            string[] fields;
+
+            if (customshopname != null)
+            {
+                fields = data[$"{manifest.UniqueID}_{customshopname}"].Split('/');
+            }
+            else
+            {
+                fields = data[$"{manifest.UniqueID}_{locationname}"].Split('/');
+            }           
 
             // Add one to first part of data (shoplifting count)
             fields[0] = (int.Parse(fields[0]) + 1).ToString();
@@ -865,7 +884,7 @@ namespace Shoplifter
         {
            NPC primaryowner =  location.getCharacterFromName(customshop.Value.PrimaryShopKeeper);
 
-            if (primaryowner == null || primaryowner.currentLocation != location || (Game1.timeOfDay < customshop.Value.OpenTime && Game1.timeOfDay > customshop.Value.CloseTime))
+            if ((Game1.timeOfDay < customshop.Value.OpenTime || Game1.timeOfDay > customshop.Value.CloseTime))
             {
                 if (ModEntry.PerScreenStolenToday.Value == false)
                 {
@@ -878,12 +897,12 @@ namespace Shoplifter
                             SeenShoplifting(location, Game1.player);
 
                             // Player is caught
-                            if (ShouldBeCaught(customshop.Value.PrimaryShopKeeper, Game1.player, location) == true)
+                            if (ShouldBeCaught(customshop.Value.PrimaryShopKeeper, Game1.player, location, customshop.Value.CaughtDialogue) == true)
                             {
                                 // After dialogue, apply penalties
                                 Game1.afterDialogues = delegate
                                 {
-                                    ShopliftingPenalties(location);
+                                    ShopliftingPenalties(location, customshop.Value.ShopName);
                                 };
 
                                 return;
