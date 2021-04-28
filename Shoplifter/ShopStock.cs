@@ -221,6 +221,8 @@ namespace Shoplifter
 							break;
 					}
 					break;
+				default:
+					break;
 			}
 
 			// Add generated stock to store from array

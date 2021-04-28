@@ -16,9 +16,11 @@ namespace Shoplifter
 
         public static Dictionary<string, string> shopliftingstrings = new Dictionary<string, string>();
 
+        public static Dictionary<string, CustomShopModel> customshops = new Dictionary<string, CustomShopModel>();
+
         public static readonly PerScreen<ArrayList> PerScreenShopsBannedFrom = new PerScreen<ArrayList>(createNewState: () => new ArrayList());
 
-        public static string[] shops = { "SeedShop", "FishShop", "AnimalShop", "ScienceHouse", "Hospital", "Blacksmith", "Saloon", "SandyHouse" };
+        public static ArrayList shops = new ArrayList() { "SeedShop", "FishShop", "AnimalShop", "ScienceHouse", "Hospital", "Blacksmith", "Saloon", "SandyHouse" };
 
         public override void Entry(IModHelper helper)
         {
@@ -120,6 +122,31 @@ namespace Shoplifter
             {             
                 this.Monitor.Log("Could not load strings... This will result in missing string problems, (Are you missing the Strings.json file?)", LogLevel.Error);
             }
+
+            foreach(IContentPack contentPack in this.Helper.ContentPacks.GetOwned())
+            {
+                if (!contentPack.HasFile("content.json"))
+                {
+                    this.Monitor.Log($"Skipping content pack \"{contentPack.Manifest.Name}\", it does not have a content.json", LogLevel.Warn);
+                }
+                else
+                {
+                    this.Monitor.Log($"Loading content pack {contentPack.Manifest.Name} {contentPack.Manifest.Version} by {contentPack.Manifest.Author} | {contentPack.Manifest.Description}", LogLevel.Info);
+                    ContentPack data;
+
+                    try
+                    {
+                        data = contentPack.ReadJsonFile<ContentPack>("content.json");
+                    }
+                    catch
+                    {
+                        this.Monitor.Log("Error reading content pack", LogLevel.Error);
+                        continue;
+                    }
+
+                    ModEntry.RegisterShopliftableShop(data);
+                }
+            }
            
         }
 
@@ -205,7 +232,17 @@ namespace Shoplifter
                             }
                             break;
                     }
-                }               
+                }
+
+                split = location.doesTileHavePropertyNoNull((int)TileX, (int)TileY, "Shop", "Buildings").Split(' ');
+
+                foreach (var customshop in customshops)
+                {
+                    if (split[0] == customshop.Value.ShopName || split[0] == $"Vanilla!{customshop.Value.ShopName}")
+                    {
+                        ShopMenuUtilities.CustomShop(customshop, Game1.currentLocation);
+                    }
+                }
             }
         }
 
@@ -229,6 +266,23 @@ namespace Shoplifter
             catch
             {
                 this.Monitor.Log("Unable to execute command, check formatting is correct", LogLevel.Error);
+            }
+        }
+
+        public static void RegisterShopliftableShop(ContentPack data)
+        {
+            if (data.CustomShopliftableShop != null)
+            {
+                foreach (CustomShopModel shop in data.CustomShopliftableShop)
+                {
+                    if (customshops.ContainsKey(shop.ShopName))
+                    {
+                        continue;
+                    }
+
+                    shops.Add(shop.ShopName);
+                    customshops.Add(shop.ShopName, shop);
+                }
             }
         }
     }

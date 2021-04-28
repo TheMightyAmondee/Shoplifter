@@ -6,6 +6,8 @@ using StardewValley.Menus;
 using StardewValley;
 using Microsoft.Xna.Framework;
 using xTile.Dimensions;
+using System.Collections.Generic;
+using System.Collections;
 
 namespace Shoplifter
 {
@@ -844,6 +846,59 @@ namespace Shoplifter
                 }
 
                 // Gus can't sell, player can't steal
+                else
+                {
+                    if (ModEntry.shopliftingstrings.ContainsKey("TheMightyAmondee.Shoplifter/AlreadyShoplifted") == true)
+                    {
+                        Game1.drawObjectDialogue(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"]);
+                    }
+
+                    else
+                    {
+                        Game1.drawObjectDialogue(ModEntry.shopliftingstrings["Placeholder"]);
+                    }
+                }
+            }
+        }
+
+        public static void CustomShop(KeyValuePair<string, CustomShopModel> customshop, GameLocation location)
+        {
+           NPC primaryowner =  location.getCharacterFromName(customshop.Value.PrimaryShopKeeper);
+
+            if (primaryowner == null || primaryowner.currentLocation != location || (Game1.timeOfDay < customshop.Value.OpenTime && Game1.timeOfDay > customshop.Value.CloseTime))
+            {
+                if (ModEntry.PerScreenStolenToday.Value == false)
+                {
+                    // Create option to steal
+                    location.createQuestionDialogue("Shoplift?", location.createYesNoResponses(), delegate (Farmer _, string answer)
+                    {
+                        // Player answered yes
+                        if (answer == "Yes")
+                        {
+                            SeenShoplifting(location, Game1.player);
+
+                            // Player is caught
+                            if (ShouldBeCaught(customshop.Value.PrimaryShopKeeper, Game1.player, location) == true)
+                            {
+                                // After dialogue, apply penalties
+                                Game1.afterDialogues = delegate
+                                {
+                                    ShopliftingPenalties(location);
+                                };
+
+                                return;
+                            }
+
+                            // Not caught, generate stock for shoplifting, on purchase make sure player can't steal again
+                            Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(3, 3, "SandyShop"), 3, null, delegate
+                            {
+                                ModEntry.PerScreenStolenToday.Value = true;
+                                return false;
+                            }, null, "");
+                        }
+                    });
+                }
+
                 else
                 {
                     if (ModEntry.shopliftingstrings.ContainsKey("TheMightyAmondee.Shoplifter/AlreadyShoplifted") == true)
