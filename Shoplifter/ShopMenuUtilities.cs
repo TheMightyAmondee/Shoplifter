@@ -63,7 +63,7 @@ namespace Shoplifter
         /// <param name="who">The player to catch</param>
         /// <param name="location">The current location instance</param>
         /// <returns>Whether the player was caught</returns>      
-        public static bool ShouldBeCaught(string which, Farmer who, GameLocation location, string caughtdialogue = null)
+        public static bool ShouldBeCaught(string which, Farmer who, GameLocation location, string[] caughtdialogue = null)
         {
             NPC npc = Game1.getCharacterFromName(which);
             
@@ -112,8 +112,8 @@ namespace Shoplifter
                 if (caughtdialogue != null)
                 {
                     dialogue = (fineamount > 0)
-                            ? caughtdialogue.Replace("{0}", fineamount.ToString())
-                            : caughtdialogue;
+                            ? caughtdialogue[0].Replace("{0}", fineamount.ToString())
+                            : caughtdialogue[1];
                     npc.setNewDialogue(dialogue, add: true);
                 }
 
@@ -896,8 +896,26 @@ namespace Shoplifter
                         {
                             SeenShoplifting(location, Game1.player);
 
-                            // Player is caught
-                            if (ShouldBeCaught(customshop.Value.PrimaryShopKeeper, Game1.player, location, customshop.Value.CaughtDialogue) == true)
+                            bool CaughtByShopkeeper()
+                            {
+                                if (ShouldBeCaught(customshop.Value.PrimaryShopKeeper, Game1.player, location, customshop.Value.CaughtDialogue) == true)
+                                {
+                                    return true;
+                                }
+
+                                foreach (string additionalowner in customshop.Value.AdditionalShopKeepers)
+                                {
+                                    if (ShouldBeCaught(additionalowner, Game1.player, location) == true)
+                                    {
+                                        return true;
+                                    }
+                                }
+
+                                return false;
+                            }
+
+                            // Player is caught                           
+                            if (CaughtByShopkeeper() == true)
                             {
                                 // After dialogue, apply penalties
                                 Game1.afterDialogues = delegate

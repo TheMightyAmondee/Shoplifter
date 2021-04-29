@@ -271,9 +271,9 @@ namespace Shoplifter
 
         public static void RegisterShopliftableShop(ContentPack data)
         {
-            if (data.CustomShopliftableShop != null)
+            if (data.MakeShopliftable != null)
             {
-                foreach (CustomShopModel shop in data.CustomShopliftableShop)
+                foreach (CustomShopModel shop in data.MakeShopliftable)
                 {
                     if (customshops.ContainsKey(shop.ShopName))
                     {

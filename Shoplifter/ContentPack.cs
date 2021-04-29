@@ -8,6 +8,6 @@ namespace Shoplifter
 {
     public class ContentPack
     {
-        public CustomShopModel[] CustomShopliftableShop { get; set; }
+        public CustomShopModel[] MakeShopliftable { get; set; }
     }
 }
