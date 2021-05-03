@@ -13,13 +13,15 @@ namespace Shoplifter
     {
         private static IMonitor monitor;
         private static IManifest manifest;
+        private static ModConfig config;
 
         private static int fineamount;
       
-        public static void gethelpers(IMonitor monitor, IManifest manifest)
+        public static void gethelpers(IMonitor monitor, IManifest manifest, ModConfig config)
         {
             ShopMenuUtilities.monitor = monitor;
             ShopMenuUtilities.manifest = manifest;
+            ShopMenuUtilities.config = config;
         }
 
         /// <summary>
@@ -29,26 +31,26 @@ namespace Shoplifter
         /// <param name="who">The player</param>
         public static void SeenShoplifting(GameLocation location, Farmer who)
         {
-            foreach(NPC i in location.characters)
+            foreach (NPC npc in location.characters)
             {
                 // Is NPC in range?
-                if (i.currentLocation == who.currentLocation && Utility.tileWithinRadiusOfPlayer(i.getTileX(), i.getTileY(), 7, who))
+                if (npc.currentLocation == who.currentLocation && Utility.tileWithinRadiusOfPlayer(npc.getTileX(), npc.getTileY(), 7, who))
                 {
                     // Emote NPC
-                    i.doEmote(12, false, false);
+                    npc.doEmote(12, false, false);
 
                     // Has player met NPC?
-                    if (Game1.player.friendshipData.ContainsKey(i.Name) == true)
+                    if (Game1.player.friendshipData.ContainsKey(npc.Name) == true)
                     {
                         // Lower friendship by 500 or frienship level, whichever is lower
-                        int frienshiploss = -Math.Min(500, Game1.player.getFriendshipLevelForNPC(i.Name));
-                        Game1.player.changeFriendship(frienshiploss, Game1.getCharacterFromName(i.Name, true));
-                        monitor.Log($"{i.Name} saw you shoplifting... {-frienshiploss} friendship points lost");
+                        int frienshiploss = -Math.Min((int)config.FriendshipPenalty, Game1.player.getFriendshipLevelForNPC(npc.Name));
+                        Game1.player.changeFriendship(frienshiploss, Game1.getCharacterFromName(npc.Name, true));
+                        monitor.Log($"{npc.Name} saw you shoplifting... {-frienshiploss} friendship points lost");
                     }
 
                     else
                     {
-                        monitor.Log($"{i.Name} saw you shoplifting... You've never talked to {i.Name}, no friendship to lose");
+                        monitor.Log($"{npc.Name} saw you shoplifting... You've never talked to {npc.Name}, no friendship to lose");
                     }
                 }               
             }
@@ -69,7 +71,7 @@ namespace Shoplifter
             if (npc != null && npc.currentLocation == who.currentLocation && Utility.tileWithinRadiusOfPlayer(npc.getTileX(), npc.getTileY(), 7, who))
             {
                 string dialogue;
-                fineamount = Math.Min(Game1.player.Money, 1000); 
+                fineamount = Math.Min(Game1.player.Money, (int)config.MaxFine); 
                 
                 try
                 {
@@ -93,7 +95,7 @@ namespace Shoplifter
                     }
 
                     // Is the player now banned? (uses 2 as dialogue is loaded before count is adjusted) Append additional dialogue
-                    dialogue = (Game1.player.modData[$"{manifest.UniqueID}_{location.NameOrUniqueName}"].StartsWith("2") == true)
+                    dialogue = (Game1.player.modData[$"{manifest.UniqueID}_{location.NameOrUniqueName}"].StartsWith($"{config.CatchesBeforeBan - 1}") == true)
                         ? dialogue + ModEntry.shopliftingstrings[$"TheMightyAmondee.Shoplifter/BanFromShop"]
                         : dialogue;
 
@@ -133,6 +135,11 @@ namespace Shoplifter
 
             var data = Game1.player.modData;
 
+            if (config.CatchesBeforeBan == 0 || config.DaysBannedFor == 0)
+            {
+                return;
+            }
+
             string[] fields = data[$"{manifest.UniqueID}_{locationname}"].Split('/');
 
             // Add one to first part of data (shoplifting count)
@@ -145,7 +152,7 @@ namespace Shoplifter
             }
 
             // After being caught three times (within 28 days) ban player from shop for three days
-            if (fields[0] == "3")
+            if (fields[0] == $"{config.CatchesBeforeBan}")
             {
                 fields[0] = "-1";
                 ModEntry.PerScreenShopsBannedFrom.Value.Add($"{locationname}");
@@ -169,7 +176,7 @@ namespace Shoplifter
             }
 
             // Player can steal
-            else if (ModEntry.PerScreenStolenToday.Value == false)
+            else if (ModEntry.PerScreenShopliftingCap.Value < config.MaxShopliftsPerDay)
             {
                 // Create option to steal
                 location.createQuestionDialogue("Shoplift?", location.createYesNoResponses(), delegate (Farmer _, string answer)
@@ -194,7 +201,11 @@ namespace Shoplifter
                         // Not caught, generate stock for shoplifting, on purchase make sure player can't steal again
                         Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(3, 3, "FishShop"), 3, null, delegate
                         {
-                            ModEntry.PerScreenStolenToday.Value = true;
+                            if (ModEntry.PerScreenShopliftingCap.Value < config.MaxShopliftsPerDay)
+                            {
+                                ModEntry.PerScreenShopliftingCap.Value++;
+                            }
+                            ModEntry.PerScreenStolen.Value = true;
                             return false;
                         }, null, "");
                     }
@@ -225,7 +236,7 @@ namespace Shoplifter
             NPC sandy = location.getCharacterFromName("Sandy");
             if (sandy == null || sandy.currentLocation != location)
             {
-                if (ModEntry.PerScreenStolenToday.Value == false)
+                if (ModEntry.PerScreenShopliftingCap.Value < config.MaxShopliftsPerDay)
                 {
                     // Create option to steal
                     location.createQuestionDialogue("Shoplift?", location.createYesNoResponses(), delegate (Farmer _, string answer)
@@ -250,7 +261,11 @@ namespace Shoplifter
                             // Not caught, generate stock for shoplifting, on purchase make sure player can't steal again
                             Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(3, 3, "SandyShop"), 3, null, delegate
                             {
-                                ModEntry.PerScreenStolenToday.Value = true;
+                                if (ModEntry.PerScreenShopliftingCap.Value < config.MaxShopliftsPerDay)
+                                {
+                                    ModEntry.PerScreenShopliftingCap.Value++;
+                                }
+                                ModEntry.PerScreenStolen.Value = true;
                                 return false;
                             }, null, "");
                         }
@@ -309,7 +324,11 @@ namespace Shoplifter
 
                             Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(5, 5, "SeedShop"), 3, null, delegate
                             {
-                                ModEntry.PerScreenStolenToday.Value = true;
+                                if (ModEntry.PerScreenShopliftingCap.Value < config.MaxShopliftsPerDay)
+                                {
+                                    ModEntry.PerScreenShopliftingCap.Value++;
+                                }
+                                ModEntry.PerScreenStolen.Value = true;
                                 return false;
                             }, null, "");
                         }
@@ -344,7 +363,11 @@ namespace Shoplifter
 
                         Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(5, 5, "SeedShop"), 3, null, delegate
                         {
-                            ModEntry.PerScreenStolenToday.Value = true;
+                            if (ModEntry.PerScreenShopliftingCap.Value < config.MaxShopliftsPerDay)
+                            {
+                                ModEntry.PerScreenShopliftingCap.Value++;
+                            }
+                            ModEntry.PerScreenStolen.Value = true;
                             return false;
                         }, null, "");
                     }
@@ -364,7 +387,7 @@ namespace Shoplifter
             if (who.getTileY() > tileLocation.Y)
             {
                 // Player can steal
-                if (ModEntry.PerScreenStolenToday.Value == false)
+                if (ModEntry.PerScreenShopliftingCap.Value < config.MaxShopliftsPerDay)
                 {
                     // Robin is on island and not at sciencehouse, she can't sell but player can purchase properly if they want
                     if (location.getCharacterFromName("Robin") == null && Game1.IsVisitingIslandToday("Robin"))
@@ -401,8 +424,12 @@ namespace Shoplifter
                                     // Not caught, show shoplifting menu
                                     Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(2, 20, "Carpenters"), 3, null, delegate
                                     {
+                                        if (ModEntry.PerScreenShopliftingCap.Value < config.MaxShopliftsPerDay)
+                                        {
+                                            ModEntry.PerScreenShopliftingCap.Value++;
+                                        }
                                         // On purchase, make sure player can not steal again
-                                        ModEntry.PerScreenStolenToday.Value = true;
+                                        ModEntry.PerScreenStolen.Value = true;
                                         return false;
                                     }, null, "");
                                 }
@@ -441,7 +468,11 @@ namespace Shoplifter
 
                                     Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(2, 20, "Carpenters"), 3, null, delegate
                                     {
-                                        ModEntry.PerScreenStolenToday.Value = true;
+                                        if (ModEntry.PerScreenShopliftingCap.Value < config.MaxShopliftsPerDay)
+                                        {
+                                            ModEntry.PerScreenShopliftingCap.Value++;
+                                        }
+                                        ModEntry.PerScreenStolen.Value = true;
                                         return false;
                                     }, null, "");
                                 }
@@ -471,7 +502,11 @@ namespace Shoplifter
 
                                 Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(2, 20, "Carpenters"), 3, null, delegate
                                 {
-                                    ModEntry.PerScreenStolenToday.Value = true;
+                                    if (ModEntry.PerScreenShopliftingCap.Value < config.MaxShopliftsPerDay)
+                                    {
+                                        ModEntry.PerScreenShopliftingCap.Value++;
+                                    }
+                                    ModEntry.PerScreenStolen.Value = true;
                                     return false;
                                 }, null, "");
                             }
@@ -480,7 +515,7 @@ namespace Shoplifter
                 }
 
                 // Robin can sell and player can't steal
-                else if (location.carpenters(tileLocation) == true && ModEntry.PerScreenStolenToday.Value == true)
+                else if (location.carpenters(tileLocation) == true && ModEntry.PerScreenStolen.Value == true)
                 {
                     return;
                 }
@@ -513,7 +548,7 @@ namespace Shoplifter
             if (who.getTileY() > tileLocation.Y)
             {
                 // Player can steal
-                if (ModEntry.PerScreenStolenToday.Value == false)
+                if (ModEntry.PerScreenShopliftingCap.Value < config.MaxShopliftsPerDay)
                 {
                     // Marnie is not in the location, she is on the island
                     if (location.getCharacterFromName("Marnie") == null && Game1.IsVisitingIslandToday("Marnie"))
@@ -540,7 +575,11 @@ namespace Shoplifter
 
                                     Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(1, 15, "AnimalShop"), 3, null, delegate
                                     {
-                                        ModEntry.PerScreenStolenToday.Value = true;
+                                        if (ModEntry.PerScreenShopliftingCap.Value < config.MaxShopliftsPerDay)
+                                        {
+                                            ModEntry.PerScreenShopliftingCap.Value++;
+                                        }
+                                        ModEntry.PerScreenStolen.Value = true;
                                         return false;
                                     }, null, "");
                                 }
@@ -579,7 +618,11 @@ namespace Shoplifter
 
                                     Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(1, 15, "AnimalShop"), 3, null, delegate
                                     {
-                                        ModEntry.PerScreenStolenToday.Value = true;
+                                        if (ModEntry.PerScreenShopliftingCap.Value < config.MaxShopliftsPerDay)
+                                        {
+                                            ModEntry.PerScreenShopliftingCap.Value++;
+                                        }
+                                        ModEntry.PerScreenStolen.Value = true;
                                         return false;
                                     }, null, "");
                                 }
@@ -608,7 +651,11 @@ namespace Shoplifter
 
                                 Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(1, 15, "AnimalShop"), 3, null, delegate
                                 {
-                                    ModEntry.PerScreenStolenToday.Value = true;
+                                    if (ModEntry.PerScreenShopliftingCap.Value < config.MaxShopliftsPerDay)
+                                    {
+                                        ModEntry.PerScreenShopliftingCap.Value++;
+                                    }
+                                    ModEntry.PerScreenStolen.Value = true;
                                     return false;
                                 }, null, "");
                             }
@@ -617,7 +664,7 @@ namespace Shoplifter
                 }
 
                 // Marnie can sell and player can't steal
-                else if (location.animalShop(tileLocation) == true && ModEntry.PerScreenStolenToday.Value == true)
+                else if (location.animalShop(tileLocation) == true && ModEntry.PerScreenStolen.Value == true)
                 {
                     return;
                 }
@@ -646,7 +693,7 @@ namespace Shoplifter
             // Character is not at the required tile, noone can sell
             if (location.isCharacterAtTile(who.getTileLocation() + new Vector2(0f, -2f)) == null && location.isCharacterAtTile(who.getTileLocation() + new Vector2(-1f, -2f)) == null)
             {
-                if (ModEntry.PerScreenStolenToday.Value == false)
+                if (ModEntry.PerScreenShopliftingCap.Value < config.MaxShopliftsPerDay)
                 {
                     location.createQuestionDialogue("Shoplift?", location.createYesNoResponses(), delegate (Farmer _, string answer)
                     {                       
@@ -666,7 +713,11 @@ namespace Shoplifter
 
                             Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(1, 3, "HospitalShop"), 3, null, delegate
                             {
-                                ModEntry.PerScreenStolenToday.Value = true;
+                                if (ModEntry.PerScreenShopliftingCap.Value < config.MaxShopliftsPerDay)
+                                {
+                                    ModEntry.PerScreenShopliftingCap.Value++;
+                                }
+                                ModEntry.PerScreenStolen.Value = true;
                                 return false;
                             }, null, "");
                         }
@@ -698,7 +749,7 @@ namespace Shoplifter
             // Clint can't sell. Period.
             if (location.blacksmith(tileLocation) == false)
             {
-                if (ModEntry.PerScreenStolenToday.Value == false)
+                if (ModEntry.PerScreenShopliftingCap.Value < config.MaxShopliftsPerDay)
                 {
                     location.createQuestionDialogue("Shoplift?", location.createYesNoResponses(), delegate (Farmer _, string answer)
                     {
@@ -718,7 +769,11 @@ namespace Shoplifter
 
                             Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(3, 10, "Blacksmith"), 3, null, delegate
                             {
-                                ModEntry.PerScreenStolenToday.Value = true;
+                                if (ModEntry.PerScreenShopliftingCap.Value < config.MaxShopliftsPerDay)
+                                {
+                                    ModEntry.PerScreenShopliftingCap.Value++;
+                                }
+                                ModEntry.PerScreenStolen.Value = true;
                                 return false;
                             }, null, "");
                         }
@@ -750,7 +805,7 @@ namespace Shoplifter
             // Gus is not in the location, he is on the island
             if (location.getCharacterFromName("Gus") == null && Game1.IsVisitingIslandToday("Gus"))
             {
-                if (ModEntry.PerScreenStolenToday.Value == false)
+                if (ModEntry.PerScreenShopliftingCap.Value < config.MaxShopliftsPerDay)
                 {
                     Game1.dialogueUp = false;
                     Game1.drawObjectDialogue(Game1.content.LoadString("Strings\\Locations:Saloon_MoneyBox"));
@@ -774,7 +829,11 @@ namespace Shoplifter
 
                                 Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(2, 1, "Saloon"), 3, null, delegate
                                 {
-                                    ModEntry.PerScreenStolenToday.Value = true;
+                                    if (ModEntry.PerScreenShopliftingCap.Value < config.MaxShopliftsPerDay)
+                                    {
+                                        ModEntry.PerScreenShopliftingCap.Value++;
+                                    }
+                                    ModEntry.PerScreenStolen.Value = true;
                                     return false;
                                 }, null, "");
                             }
@@ -792,7 +851,7 @@ namespace Shoplifter
                 }
 
                 // Gus can sell, player can't steal
-                else if (location.saloon(tilelocation) == true && ModEntry.PerScreenStolenToday.Value == true)
+                else if (location.saloon(tilelocation) == true && ModEntry.PerScreenStolen.Value == true)
                 {
                     return;
                 }
@@ -816,7 +875,7 @@ namespace Shoplifter
             // Gus can't sell. Period.
             else if (location.saloon(tilelocation) == false)
             {
-                if (ModEntry.PerScreenStolenToday.Value == false)
+                if (ModEntry.PerScreenShopliftingCap.Value < config.MaxShopliftsPerDay)
                 {
                     location.createQuestionDialogue("Shoplift?", location.createYesNoResponses(), delegate (Farmer _, string answer)
                     {                       
@@ -836,7 +895,11 @@ namespace Shoplifter
 
                             Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(2, 1, "Saloon"), 3, null, delegate
                             {
-                                ModEntry.PerScreenStolenToday.Value = true;
+                                if (ModEntry.PerScreenShopliftingCap.Value < config.MaxShopliftsPerDay)
+                                {
+                                    ModEntry.PerScreenShopliftingCap.Value++;
+                                }
+                                ModEntry.PerScreenStolen.Value = true;
                                 return false;
                             }, null, "");
                         }
