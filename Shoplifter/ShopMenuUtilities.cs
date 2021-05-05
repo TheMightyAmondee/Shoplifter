@@ -198,10 +198,12 @@ namespace Shoplifter
                             return;
                         }
 
+                        ModEntry.PerScreenStolen.Value = false;
+
                         // Not caught, generate stock for shoplifting, on purchase make sure player can't steal again
                         Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(3, 3, "FishShop"), 3, null, delegate
                         {
-                            if (ModEntry.PerScreenShopliftingCap.Value < config.MaxShopliftsPerDay)
+                            if (ModEntry.PerScreenStolen.Value == false)
                             {
                                 ModEntry.PerScreenShopliftingCap.Value++;
                             }
@@ -258,10 +260,12 @@ namespace Shoplifter
                                 return;
                             }
 
+                            ModEntry.PerScreenStolen.Value = false;
+
                             // Not caught, generate stock for shoplifting, on purchase make sure player can't steal again
                             Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(3, 3, "SandyShop"), 3, null, delegate
                             {
-                                if (ModEntry.PerScreenShopliftingCap.Value < config.MaxShopliftsPerDay)
+                                if (ModEntry.PerScreenStolen.Value == false)
                                 {
                                     ModEntry.PerScreenShopliftingCap.Value++;
                                 }
@@ -322,9 +326,11 @@ namespace Shoplifter
                                 return;
                             }
 
+                            ModEntry.PerScreenStolen.Value = false;
+
                             Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(5, 5, "SeedShop"), 3, null, delegate
                             {
-                                if (ModEntry.PerScreenShopliftingCap.Value < config.MaxShopliftsPerDay)
+                                if (ModEntry.PerScreenStolen.Value == false)
                                 {
                                     ModEntry.PerScreenShopliftingCap.Value++;
                                 }
@@ -361,9 +367,11 @@ namespace Shoplifter
                             return;
                         }
 
+                        ModEntry.PerScreenStolen.Value = false;
+
                         Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(5, 5, "SeedShop"), 3, null, delegate
                         {
-                            if (ModEntry.PerScreenShopliftingCap.Value < config.MaxShopliftsPerDay)
+                            if (ModEntry.PerScreenStolen.Value == false)
                             {
                                 ModEntry.PerScreenShopliftingCap.Value++;
                             }
@@ -421,10 +429,12 @@ namespace Shoplifter
                                         return;
                                     }
 
+                                    ModEntry.PerScreenStolen.Value = false;
+
                                     // Not caught, show shoplifting menu
                                     Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(2, 20, "Carpenters"), 3, null, delegate
                                     {
-                                        if (ModEntry.PerScreenShopliftingCap.Value < config.MaxShopliftsPerDay)
+                                        if (ModEntry.PerScreenStolen.Value == false)
                                         {
                                             ModEntry.PerScreenShopliftingCap.Value++;
                                         }
@@ -466,9 +476,11 @@ namespace Shoplifter
                                         return;
                                     }
 
+                                    ModEntry.PerScreenStolen.Value = false;
+
                                     Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(2, 20, "Carpenters"), 3, null, delegate
                                     {
-                                        if (ModEntry.PerScreenShopliftingCap.Value < config.MaxShopliftsPerDay)
+                                        if (ModEntry.PerScreenStolen.Value == false)
                                         {
                                             ModEntry.PerScreenShopliftingCap.Value++;
                                         }
@@ -500,9 +512,11 @@ namespace Shoplifter
                                     return;
                                 }
 
+                                ModEntry.PerScreenStolen.Value = false;
+
                                 Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(2, 20, "Carpenters"), 3, null, delegate
                                 {
-                                    if (ModEntry.PerScreenShopliftingCap.Value < config.MaxShopliftsPerDay)
+                                    if (ModEntry.PerScreenStolen.Value == false)
                                     {
                                         ModEntry.PerScreenShopliftingCap.Value++;
                                     }
@@ -573,9 +587,11 @@ namespace Shoplifter
                                         return;
                                     }
 
+                                    ModEntry.PerScreenStolen.Value = false;
+
                                     Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(1, 15, "AnimalShop"), 3, null, delegate
                                     {
-                                        if (ModEntry.PerScreenShopliftingCap.Value < config.MaxShopliftsPerDay)
+                                        if (ModEntry.PerScreenStolen.Value == false)
                                         {
                                             ModEntry.PerScreenShopliftingCap.Value++;
                                         }
@@ -616,9 +632,11 @@ namespace Shoplifter
                                         return;
                                     }
 
+                                    ModEntry.PerScreenStolen.Value = false;
+
                                     Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(1, 15, "AnimalShop"), 3, null, delegate
                                     {
-                                        if (ModEntry.PerScreenShopliftingCap.Value < config.MaxShopliftsPerDay)
+                                        if (ModEntry.PerScreenStolen.Value == false)
                                         {
                                             ModEntry.PerScreenShopliftingCap.Value++;
                                         }
@@ -649,9 +667,11 @@ namespace Shoplifter
                                     return;
                                 }
 
+                                ModEntry.PerScreenStolen.Value = false;
+
                                 Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(1, 15, "AnimalShop"), 3, null, delegate
                                 {
-                                    if (ModEntry.PerScreenShopliftingCap.Value < config.MaxShopliftsPerDay)
+                                    if (ModEntry.PerScreenStolen.Value == false)
                                     {
                                         ModEntry.PerScreenShopliftingCap.Value++;
                                     }
@@ -711,9 +731,11 @@ namespace Shoplifter
                                 return;
                             }
 
+                            ModEntry.PerScreenStolen.Value = false;
+
                             Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(1, 3, "HospitalShop"), 3, null, delegate
                             {
-                                if (ModEntry.PerScreenShopliftingCap.Value < config.MaxShopliftsPerDay)
+                                if (ModEntry.PerScreenStolen.Value == false)
                                 {
                                     ModEntry.PerScreenShopliftingCap.Value++;
                                 }
@@ -767,9 +789,11 @@ namespace Shoplifter
                                 return;
                             }
 
+                            ModEntry.PerScreenStolen.Value = false;
+
                             Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(3, 10, "Blacksmith"), 3, null, delegate
                             {
-                                if (ModEntry.PerScreenShopliftingCap.Value < config.MaxShopliftsPerDay)
+                                if (ModEntry.PerScreenStolen.Value == false)
                                 {
                                     ModEntry.PerScreenShopliftingCap.Value++;
                                 }
@@ -827,9 +851,11 @@ namespace Shoplifter
                                     return;
                                 }
 
+                                ModEntry.PerScreenStolen.Value = false;
+
                                 Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(2, 1, "Saloon"), 3, null, delegate
                                 {
-                                    if (ModEntry.PerScreenShopliftingCap.Value < config.MaxShopliftsPerDay)
+                                    if (ModEntry.PerScreenStolen.Value == false)
                                     {
                                         ModEntry.PerScreenShopliftingCap.Value++;
                                     }
@@ -893,9 +919,11 @@ namespace Shoplifter
                                 return;
                             }
 
+                            ModEntry.PerScreenStolen.Value = false;
+
                             Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(2, 1, "Saloon"), 3, null, delegate
                             {
-                                if (ModEntry.PerScreenShopliftingCap.Value < config.MaxShopliftsPerDay)
+                                if (ModEntry.PerScreenStolen.Value == false)
                                 {
                                     ModEntry.PerScreenShopliftingCap.Value++;
                                 }
