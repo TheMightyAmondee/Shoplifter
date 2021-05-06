@@ -195,7 +195,7 @@ namespace Shoplifter
                             {
                                 ShopMenuUtilities.FishShopShopliftingMenu(location);
                             }
-                            else if (location is SeedShop)
+                            else if (location is SeedShop && PerScreenStolenToday.Value == false)
                             {
                                 ShopMenuUtilities.SeedShopShopliftingMenu(location);
                             }
