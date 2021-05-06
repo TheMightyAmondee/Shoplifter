@@ -156,7 +156,7 @@ namespace Shoplifter
             }
 
             // After being caught some times (within 28 days) ban player from shop for three days
-            if (int.Parse(fields[0]) == config.CatchesBeforeBan)
+            if (int.Parse(fields[0]) == config.CatchesBeforeBan || config.CatchesBeforeBan == 0)
             {
                 fields[0] = "-1";
                 ModEntry.PerScreenShopsBannedFrom.Value.Add($"{locationname}");
