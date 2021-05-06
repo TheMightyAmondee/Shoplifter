@@ -26,13 +26,13 @@ namespace Shoplifter
      
 
         public override void Entry(IModHelper helper)
-        {
-            ShopMenuUtilities.gethelpers(this.Monitor, this.ModManifest, this.config);
+        {          
             helper.Events.GameLoop.DayStarted += this.DayStarted;
             helper.Events.GameLoop.GameLaunched += this.Launched;
             helper.Events.Input.ButtonPressed += this.Action;
             helper.ConsoleCommands.Add("shoplifter_resetsave", "Removes and readds save data added by the mod to fix broken save data, only use if you're getting errors", this.ResetSave);
             this.config = helper.ReadConfig<ModConfig>();
+            ShopMenuUtilities.gethelpers(this.Monitor, this.ModManifest, this.config);
         }
         private void DayStarted(object sender, DayStartedEventArgs e)
         {
@@ -64,8 +64,8 @@ namespace Shoplifter
                 string[] values = data[shopliftingdata].Split('/');
                 string[] fields = shopliftingdata.Split('_');
 
-                // Player has finished three day ban, remove shop from list, also reset first day caught
-                if (shopliftingdata.StartsWith($"{this.ModManifest.UniqueID}") && values[0] == $"-{this.config.DaysBannedFor}")
+                // Player has finished certain number of days ban, remove shop from list, also reset first day caught
+                if (shopliftingdata.StartsWith($"{this.ModManifest.UniqueID}") && int.Parse(values[0]) <= -this.config.DaysBannedFor)
                 {
                     values[0] = "0";
                     values[1] = "0";
@@ -82,7 +82,7 @@ namespace Shoplifter
                     this.Monitor.Log($"You're currently banned from {fields[1]}", LogLevel.Info);
                 }
 
-                // If 28 days have past and player was not caught 3 times, reset both fields
+                // If 28 days have past and player was not caught a certain number of times, reset both fields
                 if (shopliftingdata.StartsWith($"{this.ModManifest.UniqueID}") && int.Parse(values[0]) > 0 && values[1] == Game1.dayOfMonth.ToString())
                 {
                     values[0] = "0";
@@ -201,7 +201,7 @@ namespace Shoplifter
                             {
                                 ShopMenuUtilities.FishShopShopliftingMenu(location);
                             }
-                            else if (location is SeedShop)
+                            else if (location is SeedShop && PerScreenShopliftingCap.Value < config.MaxShopliftsPerDay)
                             {
                                 ShopMenuUtilities.SeedShopShopliftingMenu(location);
                             }

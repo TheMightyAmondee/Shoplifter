@@ -71,6 +71,10 @@ namespace Shoplifter
             if (npc != null && npc.currentLocation == who.currentLocation && Utility.tileWithinRadiusOfPlayer(npc.getTileX(), npc.getTileY(), 7, who))
             {
                 string dialogue;
+                string banneddialogue = (config.DaysBannedFor == 1)
+                    ? ModEntry.shopliftingstrings[$"TheMightyAmondee.Shoplifter/BanFromShop"].Replace("{0} days", "a day")
+                    : ModEntry.shopliftingstrings[$"TheMightyAmondee.Shoplifter/BanFromShop"].Replace("{0}", config.DaysBannedFor.ToString());
+
                 fineamount = Math.Min(Game1.player.Money, (int)config.MaxFine); 
                 
                 try
@@ -94,9 +98,9 @@ namespace Shoplifter
                             : ModEntry.shopliftingstrings[$"TheMightyAmondee.Shoplifter/CaughtGeneric_NoMoney"];
                     }
 
-                    // Is the player now banned? (uses 2 as dialogue is loaded before count is adjusted) Append additional dialogue
+                    // Is the player now banned? (uses catch before as dialogue is loaded before count is adjusted) Append additional dialogue
                     dialogue = (Game1.player.modData[$"{manifest.UniqueID}_{location.NameOrUniqueName}"].StartsWith($"{config.CatchesBeforeBan - 1}") == true)
-                        ? dialogue + ModEntry.shopliftingstrings[$"TheMightyAmondee.Shoplifter/BanFromShop"]
+                        ? dialogue + banneddialogue
                         : dialogue;
 
                     npc.setNewDialogue(dialogue, add: true);
@@ -135,12 +139,12 @@ namespace Shoplifter
 
             var data = Game1.player.modData;
 
-            if (config.CatchesBeforeBan == 0 || config.DaysBannedFor == 0)
+            string[] fields = data[$"{manifest.UniqueID}_{locationname}"].Split('/');
+
+            if (config.DaysBannedFor == 0)
             {
                 return;
             }
-
-            string[] fields = data[$"{manifest.UniqueID}_{locationname}"].Split('/');
 
             // Add one to first part of data (shoplifting count)
             fields[0] = (int.Parse(fields[0]) + 1).ToString();
@@ -151,8 +155,8 @@ namespace Shoplifter
                 fields[1] = Game1.dayOfMonth.ToString();
             }
 
-            // After being caught three times (within 28 days) ban player from shop for three days
-            if (fields[0] == $"{config.CatchesBeforeBan}")
+            // After being caught some times (within 28 days) ban player from shop for three days
+            if (int.Parse(fields[0]) == config.CatchesBeforeBan)
             {
                 fields[0] = "-1";
                 ModEntry.PerScreenShopsBannedFrom.Value.Add($"{locationname}");
