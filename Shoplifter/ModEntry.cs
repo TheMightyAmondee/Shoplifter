@@ -32,12 +32,14 @@ namespace Shoplifter
             helper.Events.Input.ButtonPressed += this.Action;
             helper.ConsoleCommands.Add("shoplifter_resetsave", "Removes and readds save data added by the mod to fix broken save data, only use if you're getting errors", this.ResetSave);
             this.config = helper.ReadConfig<ModConfig>();
+            
             ShopMenuUtilities.gethelpers(this.Monitor, this.ModManifest, this.config);
         }
         private void DayStarted(object sender, DayStartedEventArgs e)
         {
             // Reset perscreenstolentoday boolean so player can shoplift again when the new day starts
             PerScreenStolen.Value = false;
+            PerScreenShopliftingCap.Value = 0;
 
             // Clear banned shops
             if (PerScreenShopsBannedFrom.Value.Count > 0)

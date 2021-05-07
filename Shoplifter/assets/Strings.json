@@ -1,6 +1,6 @@
 ﻿{
   "TheMightyAmondee.Shoplifter/Banned": "You've been banned for shoplifting. Don't push your luck...",
-  "TheMightyAmondee.Shoplifter/AlreadyShoplifted": "You've already shoplifted enough today. Best wait until tomorrow...",
+  "TheMightyAmondee.Shoplifter/AlreadyShoplifted": "You've already shoplifted {0} times today. That's enough...",
   "TheMightyAmondee.Shoplifter/BanFromShop":"#$b#You've shoplifted from me too much this month @, I'm going to have to ban you for {0} days.$2",
 
   "TheMightyAmondee.Shoplifter/CaughtGeneric": "You're seriously shoplifting @?$2#$b#*sigh* I'm going to have to fine you {0}g for this.$2",
