@@ -197,6 +197,9 @@ namespace Shoplifter
                         case "Saloon":
                             ShopMenuUtilities.SaloonShopliftingMenu(location, tilelocation);
                             break;
+                        case "IceCreamStand":
+                            ShopMenuUtilities.IceCreamShopliftingMenu(location, tilelocation);
+                            break;
 
                         case "Buy":
                             if (split[1] == "Fish")

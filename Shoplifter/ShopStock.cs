@@ -187,6 +187,10 @@ namespace Shoplifter
 						}
 					}
 					break;
+				// Icecream Stand
+				case "IceCreamStand":
+					CurrentStock.Add(233);
+					break;
 
 				// Sandy's shop
 				case "SandyShop":

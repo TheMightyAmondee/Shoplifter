@@ -31,10 +31,10 @@ namespace Shoplifter
         /// <param name="who">The player</param>
         public static void SeenShoplifting(GameLocation location, Farmer who)
         {
-            foreach (NPC npc in location.characters)
+            foreach (var npc in location.characters)
             {
                 // Is NPC in range?
-                if (npc.currentLocation == who.currentLocation && Utility.tileWithinRadiusOfPlayer(npc.getTileX(), npc.getTileY(), 7, who))
+                if (npc.currentLocation == who.currentLocation && Utility.tileWithinRadiusOfPlayer(npc.getTileX(), npc.getTileY(), 5, who))
                 {
                     // Emote NPC
                     npc.doEmote(12, false, false);
@@ -63,61 +63,63 @@ namespace Shoplifter
         /// <param name="who">The player to catch</param>
         /// <param name="location">The current location instance</param>
         /// <returns>Whether the player was caught</returns>      
-        public static bool ShouldBeCaught(string which, Farmer who, GameLocation location)
+        public static bool ShouldBeCaught(string[] which, Farmer who, GameLocation location)
         {
-            NPC npc = Game1.getCharacterFromName(which);
-            
-            // Is NPC in range?
-            if (npc != null && npc.currentLocation == who.currentLocation && Utility.tileWithinRadiusOfPlayer(npc.getTileX(), npc.getTileY(), 7, who))
+            foreach(string character in which)
             {
-                string dialogue;
-                string banneddialogue = (config.DaysBannedFor == 1)
-                    ? ModEntry.shopliftingstrings[$"TheMightyAmondee.Shoplifter/BanFromShop"].Replace("{0} days", "a day")
-                    : string.Format(ModEntry.shopliftingstrings[$"TheMightyAmondee.Shoplifter/BanFromShop"], config.DaysBannedFor.ToString());
+                NPC npc = Game1.getCharacterFromName(character);
 
-                fineamount = Math.Min(Game1.player.Money, (int)config.MaxFine); 
-                
-                try
+                // Is NPC in range?
+                if (npc != null && npc.currentLocation == who.currentLocation && Utility.tileWithinRadiusOfPlayer(npc.getTileX(), npc.getTileY(), 5, who))
                 {
-                    // Is NPC primary shopowner
-                    if (which == "Pierre" || which == "Willy" || which == "Robin" || which == "Marnie" || which == "Gus" || which == "Harvey" || which == "Clint")
-                    {
-                        // Yes, they have special dialogue
-                        dialogue = (fineamount > 0)
-                            ? string.Format(ModEntry.shopliftingstrings[$"TheMightyAmondee.Shoplifter/Caught{which}"], fineamount.ToString())
-                            : ModEntry.shopliftingstrings[$"TheMightyAmondee.Shoplifter/Caught{which}_NoMoney"];
+                    string dialogue;
+                    string banneddialogue = (config.DaysBannedFor == 1)
+                        ? ModEntry.shopliftingstrings[$"TheMightyAmondee.Shoplifter/BanFromShop"].Replace("{0} days", "a day")
+                        : string.Format(ModEntry.shopliftingstrings[$"TheMightyAmondee.Shoplifter/BanFromShop"], config.DaysBannedFor.ToString());
 
-                        
+                    fineamount = Math.Min(Game1.player.Money, (int)config.MaxFine);
+
+                    try
+                    {
+                        // Is NPC primary shopowner
+                        if (character == "Pierre" || character == "Willy" || character == "Robin" || character == "Marnie" || character == "Gus" || character == "Harvey" || character == "Clint")
+                        {
+                            // Yes, they have special dialogue
+                            dialogue = (fineamount > 0)
+                                ? string.Format(ModEntry.shopliftingstrings[$"TheMightyAmondee.Shoplifter/Caught{character}"], fineamount.ToString())
+                                : ModEntry.shopliftingstrings[$"TheMightyAmondee.Shoplifter/Caught{character}_NoMoney"];
+
+
+                        }
+
+                        else
+                        {
+                            // No, use generic dialogue
+                            dialogue = (fineamount > 0)
+                                ? string.Format(ModEntry.shopliftingstrings[$"TheMightyAmondee.Shoplifter/CaughtGeneric"], fineamount.ToString())
+                                : ModEntry.shopliftingstrings[$"TheMightyAmondee.Shoplifter/CaughtGeneric_NoMoney"];
+                        }
+
+                        // Is the player now banned? (uses catch before as dialogue is loaded before count is adjusted) Append additional dialogue
+                        dialogue = (Game1.player.modData[$"{manifest.UniqueID}_{location.NameOrUniqueName}"].StartsWith($"{config.CatchesBeforeBan - 1}") == true)
+                            ? dialogue + banneddialogue
+                            : dialogue;
+
+                        npc.setNewDialogue(dialogue, add: true);
+                    }
+                    catch
+                    {
+                        // If any string could not be found, use placeholder
+                        npc.setNewDialogue(ModEntry.shopliftingstrings["Placeholder"], add: true);
                     }
 
-                    else
-                    {
-                        // No, use generic dialogue
-                        dialogue = (fineamount > 0)
-                            ? string.Format(ModEntry.shopliftingstrings[$"TheMightyAmondee.Shoplifter/CaughtGeneric"], fineamount.ToString())
-                            : ModEntry.shopliftingstrings[$"TheMightyAmondee.Shoplifter/CaughtGeneric_NoMoney"];
-                    }
+                    // Draw dialogue for NPC, dialogue box opens
+                    Game1.drawDialogue(npc);
+                    monitor.Log($"{character} caught you shoplifting... You were fined {fineamount}g");
 
-                    // Is the player now banned? (uses catch before as dialogue is loaded before count is adjusted) Append additional dialogue
-                    dialogue = (Game1.player.modData[$"{manifest.UniqueID}_{location.NameOrUniqueName}"].StartsWith($"{config.CatchesBeforeBan - 1}") == true)
-                        ? dialogue + banneddialogue
-                        : dialogue;
-
-                    npc.setNewDialogue(dialogue, add: true);
+                    return true;
                 }
-                catch
-                {
-                    // If any string could not be found, use placeholder
-                    npc.setNewDialogue(ModEntry.shopliftingstrings["Placeholder"], add: true);
-                }
-
-                // Draw dialogue for NPC, dialogue box opens
-                Game1.drawDialogue(npc);                
-                monitor.Log($"{which} caught you shoplifting... You were fined {fineamount}g");
-
-                return true;
-            }
-
+            }           
             return false;
         }
 
@@ -125,7 +127,7 @@ namespace Shoplifter
         /// Applies shoplifting penalties, tracks whether to ban player
         /// </summary>
         /// <param name="location">The current location instance</param>
-        public static void ShopliftingPenalties(GameLocation location)
+        public static void ShopliftingPenalties(GameLocation location, bool bannable = true)
         {
             // Subtract monetary penalty if it applies
             if (fineamount > 0)
@@ -141,7 +143,7 @@ namespace Shoplifter
 
             string[] fields = data[$"{manifest.UniqueID}_{locationname}"].Split('/');
 
-            if (config.DaysBannedFor == 0)
+            if (config.DaysBannedFor == 0 || bannable == false)
             {
                 return;
             }
@@ -167,6 +169,68 @@ namespace Shoplifter
             data[$"{manifest.UniqueID}_{locationname}"] = string.Join("/", fields);
         }
 
+        public static void ShopliftingMenu(GameLocation location, string[] shopkeepers, string shop, int maxstock, int maxquantity, bool islandvisit = false, bool bannable = true)
+        {
+            // Create option to steal
+            location.createQuestionDialogue("Shoplift?", location.createYesNoResponses(), delegate (Farmer _, string answer)
+            {
+                // Player answered yes
+                if (answer == "Yes")
+                {
+                    SeenShoplifting(location, Game1.player);
+
+                    // Player is caught
+                    if (ShouldBeCaught(shopkeepers, Game1.player, location) == true)
+                    {
+                        // After dialogue, apply penalties
+                        Game1.afterDialogues = delegate
+                        {
+                            ShopliftingPenalties(location, bannable);
+                        };
+
+                        return;
+                    }
+
+                    ModEntry.PerScreenStolen.Value = false;
+
+                    // Not caught, generate stock for shoplifting, on purchase make sure player can't steal again
+                    Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(maxstock, maxquantity, shop), 3, null, delegate
+                    {
+                        if (ModEntry.PerScreenStolen.Value == false)
+                        {
+                            ModEntry.PerScreenShopliftingCap.Value++;
+                        }
+                        ModEntry.PerScreenStolen.Value = true;
+                        return false;
+                    }, null, "");
+                }
+                else if (answer != "Yes" && islandvisit == true)
+                {
+                    switch (shop)
+                    {
+                        case "SeedShop":
+                            Game1.activeClickableMenu = new ShopMenu((location as SeedShop).shopStock());
+                            break;
+                        case "Carpenters":
+                            Game1.activeClickableMenu = new ShopMenu(Utility.getCarpenterStock());
+                            break;
+                        case "AnimalShop":
+                            Game1.activeClickableMenu = new ShopMenu(Utility.getAnimalShopStock());
+                            break;
+                        case "Saloon":
+                            Game1.activeClickableMenu = new ShopMenu(Utility.getSaloonStock(), 0, null, delegate (ISalable item, Farmer farmer, int amount)
+                            {
+                                Game1.player.team.synchronizedShopStock.OnItemPurchased(SynchronizedShopStock.SynchedShop.Saloon, item, amount);
+                                return false;
+                            });
+                            break;
+                        default:
+                            break;
+                    }                   
+                }
+            });
+        }
+
         /// <summary>
         /// Create the shoplifting menu with Fishshop stock if necessary
         /// </summary>
@@ -182,40 +246,7 @@ namespace Shoplifter
             // Player can steal
             else if (ModEntry.PerScreenShopliftingCap.Value < config.MaxShopliftsPerDay)
             {
-                // Create option to steal
-                location.createQuestionDialogue("Shoplift?", location.createYesNoResponses(), delegate (Farmer _, string answer)
-                {
-                    // Player answered yes
-                    if (answer == "Yes")
-                    {
-                        SeenShoplifting(location, Game1.player);
-
-                        // Player is caught
-                        if (ShouldBeCaught("Willy", Game1.player, location) == true)
-                        {
-                            // After dialogue, apply penalties
-                            Game1.afterDialogues = delegate
-                            {
-                                ShopliftingPenalties(location);
-                            };
-
-                            return;
-                        }
-
-                        ModEntry.PerScreenStolen.Value = false;
-
-                        // Not caught, generate stock for shoplifting, on purchase make sure player can't steal again
-                        Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(3, 3, "FishShop"), 3, null, delegate
-                        {
-                            if (ModEntry.PerScreenStolen.Value == false)
-                            {
-                                ModEntry.PerScreenShopliftingCap.Value++;
-                            }
-                            ModEntry.PerScreenStolen.Value = true;
-                            return false;
-                        }, null, "");
-                    }
-                });                               
+                ShopliftingMenu(location, new string[1] { "Willy" }, "FishShop", 3, 3);                              
             }
             
             // Player can't steal and Willy can't sell
@@ -246,40 +277,7 @@ namespace Shoplifter
             {
                 if (ModEntry.PerScreenShopliftingCap.Value < config.MaxShopliftsPerDay)
                 {
-                    // Create option to steal
-                    location.createQuestionDialogue("Shoplift?", location.createYesNoResponses(), delegate (Farmer _, string answer)
-                    {
-                        // Player answered yes
-                        if (answer == "Yes")
-                        {
-                            SeenShoplifting(location, Game1.player);
-
-                            // Player is caught
-                            if (ShouldBeCaught("Sandy", Game1.player, location) == true)
-                            {
-                                // After dialogue, apply penalties
-                                Game1.afterDialogues = delegate
-                                {
-                                    ShopliftingPenalties(location);
-                                };
-
-                                return;
-                            }
-
-                            ModEntry.PerScreenStolen.Value = false;
-
-                            // Not caught, generate stock for shoplifting, on purchase make sure player can't steal again
-                            Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(3, 3, "SandyShop"), 3, null, delegate
-                            {
-                                if (ModEntry.PerScreenStolen.Value == false)
-                                {
-                                    ModEntry.PerScreenShopliftingCap.Value++;
-                                }
-                                ModEntry.PerScreenStolen.Value = true;
-                                return false;
-                            }, null, "");
-                        }
-                    });
+                    ShopliftingMenu(location, new string[1] { "Sandy" }, "SandyShop", 3, 3);                   
                 }
 
                 else
@@ -318,40 +316,7 @@ namespace Shoplifter
                 Game1.drawObjectDialogue(Game1.content.LoadString("Strings\\Locations:SeedShop_MoneyBox"));
                 Game1.afterDialogues = delegate
                 {
-                    location.createQuestionDialogue("Shoplift?", location.createYesNoResponses(), delegate (Farmer _, string answer)
-                    {                       
-                        if (answer == "Yes")
-                        {
-                            SeenShoplifting(location, Game1.player);
-
-                            if (ShouldBeCaught("Pierre", Game1.player, location) == true || ShouldBeCaught("Caroline", Game1.player, location) == true || ShouldBeCaught("Abigail", Game1.player, location) == true)
-                            {
-                                Game1.afterDialogues = delegate
-                                {
-                                    ShopliftingPenalties(location);
-                                };
-
-                                return;
-                            }
-
-                            ModEntry.PerScreenStolen.Value = false;
-
-                            Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(5, 5, "SeedShop"), 3, null, delegate
-                            {
-                                if (ModEntry.PerScreenStolen.Value == false)
-                                {
-                                    ModEntry.PerScreenShopliftingCap.Value++;
-                                }
-                                ModEntry.PerScreenStolen.Value = true;
-                                return false;
-                            }, null, "");
-                        }
-
-                        else
-                        {
-                            Game1.activeClickableMenu = new ShopMenu((location as SeedShop).shopStock());
-                        }
-                    });
+                    ShopliftingMenu(location, new string[3] { "Pierre", "Caroline", "Abigail" }, "SeedShop", 5, 5, true);
                 };
             }
 
@@ -359,35 +324,7 @@ namespace Shoplifter
             else
             {
                 Game1.dialogueUp = false;
-                location.createQuestionDialogue("Shoplift?", location.createYesNoResponses(), delegate (Farmer _, string answer)
-                {                   
-                    if (answer == "Yes")
-                    {
-                        SeenShoplifting(location, Game1.player);
-
-                        if (ShouldBeCaught("Pierre", Game1.player, location) == true || ShouldBeCaught("Caroline", Game1.player, location) == true || ShouldBeCaught("Abigail", Game1.player, location) == true)
-                        {
-                            Game1.afterDialogues = delegate
-                            {
-                                ShopliftingPenalties(location);
-                            };
-
-                            return;
-                        }
-
-                        ModEntry.PerScreenStolen.Value = false;
-
-                        Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(5, 5, "SeedShop"), 3, null, delegate
-                        {
-                            if (ModEntry.PerScreenStolen.Value == false)
-                            {
-                                ModEntry.PerScreenShopliftingCap.Value++;
-                            }
-                            ModEntry.PerScreenStolen.Value = true;
-                            return false;
-                        }, null, "");
-                    }
-                });
+                ShopliftingMenu(location, new string[3] { "Pierre", "Caroline", "Abigail" }, "SeedShop", 5, 5);
             }
         }
 
@@ -415,49 +352,7 @@ namespace Shoplifter
                         // Create question to shoplift after dialogue box is exited
                         Game1.afterDialogues = delegate
                         {
-                            // Create question dialogue
-                            location.createQuestionDialogue("Shoplift?", location.createYesNoResponses(), delegate (Farmer _, string answer)
-                            {
-                                // Player answered yes
-                                if (answer == "Yes")
-                                {
-                                    // All NPCs in area lose friendship
-                                    SeenShoplifting(location, Game1.player);
-
-                                    // Should player be caught by any shopowner?
-                                    if (ShouldBeCaught("Robin", Game1.player, location) == true || ShouldBeCaught("Demetrius", Game1.player, location) == true || ShouldBeCaught("Maru", Game1.player, location) == true || ShouldBeCaught("Sebastian", Game1.player, location) == true)
-                                    {
-                                        // Yes, apply penalties after dialogue
-                                        Game1.afterDialogues = delegate
-                                        {
-                                            ShopliftingPenalties(location);
-                                        };
-
-                                        // Leave method early
-                                        return;
-                                    }
-
-                                    ModEntry.PerScreenStolen.Value = false;
-
-                                    // Not caught, show shoplifting menu
-                                    Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(2, 20, "Carpenters"), 3, null, delegate
-                                    {
-                                        if (ModEntry.PerScreenStolen.Value == false)
-                                        {
-                                            ModEntry.PerScreenShopliftingCap.Value++;
-                                        }
-                                        // On purchase, make sure player can not steal again
-                                        ModEntry.PerScreenStolen.Value = true;
-                                        return false;
-                                    }, null, "");
-                                }
-
-                                // Player answered no, bring up normal shop menu
-                                else
-                                {
-                                    Game1.activeClickableMenu = new ShopMenu(Utility.getCarpenterStock());
-                                }
-                            });
+                            ShopliftingMenu(location, new string[4] { "Robin", "Demetrius", "Maru", "Sebastian" }, "Carpenters", 2, 20, true);                            
                         };
                     }
 
@@ -468,35 +363,7 @@ namespace Shoplifter
                         Game1.drawObjectDialogue(Game1.content.LoadString("Strings\\Locations:ScienceHouse_RobinAbsent").Replace('\n', '^'));
                         Game1.afterDialogues = delegate
                         {
-                            location.createQuestionDialogue("Shoplift?", location.createYesNoResponses(), delegate (Farmer _, string answer)
-                            {
-                                if (answer == "Yes")
-                                {
-                                    SeenShoplifting(location, Game1.player);
-
-                                    if (ShouldBeCaught("Robin", Game1.player, location) == true || ShouldBeCaught("Demetrius", Game1.player, location) == true || ShouldBeCaught("Maru", Game1.player, location) == true || ShouldBeCaught("Sebastian", Game1.player, location) == true)
-                                    {
-                                        Game1.afterDialogues = delegate
-                                        {
-                                            ShopliftingPenalties(location);
-                                        };
-
-                                        return;
-                                    }
-
-                                    ModEntry.PerScreenStolen.Value = false;
-
-                                    Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(2, 20, "Carpenters"), 3, null, delegate
-                                    {
-                                        if (ModEntry.PerScreenStolen.Value == false)
-                                        {
-                                            ModEntry.PerScreenShopliftingCap.Value++;
-                                        }
-                                        ModEntry.PerScreenStolen.Value = true;
-                                        return false;
-                                    }, null, "");
-                                }
-                            });
+                            ShopliftingMenu(location, new string[4] { "Robin", "Demetrius", "Maru", "Sebastian" }, "Carpenters", 2, 20);
                         };
 
                     }
@@ -504,35 +371,7 @@ namespace Shoplifter
                     // Robin can't sell. Period
                     else if (location.carpenters(tileLocation) == false)
                     {
-                        location.createQuestionDialogue("Shoplift?", location.createYesNoResponses(), delegate (Farmer _, string answer)
-                        {
-                            if (answer == "Yes")
-                            {
-                                SeenShoplifting(location, Game1.player);
-
-                                if (ShouldBeCaught("Robin", Game1.player, location) == true || ShouldBeCaught("Demetrius", Game1.player, location) == true || ShouldBeCaught("Maru", Game1.player, location) == true || ShouldBeCaught("Sebastian", Game1.player, location) == true)
-                                {
-                                    Game1.afterDialogues = delegate
-                                    {
-                                        ShopliftingPenalties(location);
-                                    };
-
-                                    return;
-                                }
-
-                                ModEntry.PerScreenStolen.Value = false;
-
-                                Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(2, 20, "Carpenters"), 3, null, delegate
-                                {
-                                    if (ModEntry.PerScreenStolen.Value == false)
-                                    {
-                                        ModEntry.PerScreenShopliftingCap.Value++;
-                                    }
-                                    ModEntry.PerScreenStolen.Value = true;
-                                    return false;
-                                }, null, "");
-                            }
-                        });
+                        ShopliftingMenu(location, new string[4] { "Robin", "Demetrius", "Maru", "Sebastian" }, "Carpenters", 2, 20);
                     }
                 }
 
@@ -581,41 +420,7 @@ namespace Shoplifter
                         Game1.drawObjectDialogue(Game1.content.LoadString("Strings\\Locations:AnimalShop_MoneyBox"));
                         Game1.afterDialogues = delegate
                         {
-                            location.createQuestionDialogue("Shoplift?", location.createYesNoResponses(), delegate (Farmer _, string answer)
-                            {
-                                if (answer == "Yes")
-                                {
-                                    SeenShoplifting(location, Game1.player);
-
-                                    if (ShouldBeCaught("Marnie", Game1.player, location) == true || ShouldBeCaught("Shane", Game1.player, location) == true)
-                                    {
-                                        Game1.afterDialogues = delegate
-                                        {
-                                            ShopliftingPenalties(location);
-                                        };
-
-                                        return;
-                                    }
-
-                                    ModEntry.PerScreenStolen.Value = false;
-
-                                    Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(1, 15, "AnimalShop"), 3, null, delegate
-                                    {
-                                        if (ModEntry.PerScreenStolen.Value == false)
-                                        {
-                                            ModEntry.PerScreenShopliftingCap.Value++;
-                                        }
-                                        ModEntry.PerScreenStolen.Value = true;
-                                        return false;
-                                    }, null, "");
-                                }
-
-                                else
-                                {
-                                    Game1.activeClickableMenu = new ShopMenu(Utility.getAnimalShopStock());
-                                }
-                            });
-
+                            ShopliftingMenu(location, new string[2] { "Marnie", "Shane" }, "AnimalShop", 1, 15, true);                           
                         };
                     }
 
@@ -626,70 +431,14 @@ namespace Shoplifter
                         Game1.drawObjectDialogue(Game1.content.LoadString("Strings\\Locations:AnimalShop_Marnie_Absent").Replace('\n', '^'));
                         Game1.afterDialogues = delegate
                         {
-                            location.createQuestionDialogue("Shoplift?", location.createYesNoResponses(), delegate (Farmer _, string answer)
-                            {
-                                if (answer == "Yes")
-                                {
-                                    SeenShoplifting(location, Game1.player);
-
-                                    if (ShouldBeCaught("Marnie", Game1.player, location) == true || ShouldBeCaught("Shane", Game1.player, location) == true)
-                                    {
-                                        Game1.afterDialogues = delegate
-                                        {
-                                            ShopliftingPenalties(location);
-                                        };
-
-                                        return;
-                                    }
-
-                                    ModEntry.PerScreenStolen.Value = false;
-
-                                    Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(1, 15, "AnimalShop"), 3, null, delegate
-                                    {
-                                        if (ModEntry.PerScreenStolen.Value == false)
-                                        {
-                                            ModEntry.PerScreenShopliftingCap.Value++;
-                                        }
-                                        ModEntry.PerScreenStolen.Value = true;
-                                        return false;
-                                    }, null, "");
-                                }
-                            });
+                            ShopliftingMenu(location, new string[2] { "Marnie", "Shane" }, "AnimalShop", 1, 15);
                         };
                     }
 
                     // Marnie can't sell. Period.
                     else if (location.animalShop(tileLocation) == false)
                     {
-                        location.createQuestionDialogue("Shoplift?", location.createYesNoResponses(), delegate (Farmer _, string answer)
-                        {
-                            if (answer == "Yes")
-                            {
-                                SeenShoplifting(location, Game1.player);
-
-                                if (ShouldBeCaught("Marnie", Game1.player, location) == true || ShouldBeCaught("Shane", Game1.player, location) == true)
-                                {
-                                    Game1.afterDialogues = delegate
-                                    {
-                                        ShopliftingPenalties(location);
-                                    };
-
-                                    return;
-                                }
-
-                                ModEntry.PerScreenStolen.Value = false;
-
-                                Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(1, 15, "AnimalShop"), 3, null, delegate
-                                {
-                                    if (ModEntry.PerScreenStolen.Value == false)
-                                    {
-                                        ModEntry.PerScreenShopliftingCap.Value++;
-                                    }
-                                    ModEntry.PerScreenStolen.Value = true;
-                                    return false;
-                                }, null, "");
-                            }
-                        });
+                        ShopliftingMenu(location, new string[2] { "Marnie", "Shane" }, "AnimalShop", 1, 15);
                     }
                 }
 
@@ -728,35 +477,7 @@ namespace Shoplifter
             {
                 if (ModEntry.PerScreenShopliftingCap.Value < config.MaxShopliftsPerDay)
                 {
-                    location.createQuestionDialogue("Shoplift?", location.createYesNoResponses(), delegate (Farmer _, string answer)
-                    {                       
-                        if (answer == "Yes")
-                        {
-                            SeenShoplifting(location, Game1.player);
-
-                            if (ShouldBeCaught("Harvey", Game1.player, location) == true || ShouldBeCaught("Maru", Game1.player, location) == true)
-                            {
-                                Game1.afterDialogues = delegate
-                                {
-                                    ShopliftingPenalties(location);
-                                };
-
-                                return;
-                            }
-
-                            ModEntry.PerScreenStolen.Value = false;
-
-                            Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(1, 3, "HospitalShop"), 3, null, delegate
-                            {
-                                if (ModEntry.PerScreenStolen.Value == false)
-                                {
-                                    ModEntry.PerScreenShopliftingCap.Value++;
-                                }
-                                ModEntry.PerScreenStolen.Value = true;
-                                return false;
-                            }, null, "");
-                        }
-                    });
+                    ShopliftingMenu(location, new string[2] { "Harvey", "Maru" }, "HospitalShop", 1, 3);                   
                 }
 
                 else
@@ -788,35 +509,7 @@ namespace Shoplifter
             {
                 if (ModEntry.PerScreenShopliftingCap.Value < config.MaxShopliftsPerDay)
                 {
-                    location.createQuestionDialogue("Shoplift?", location.createYesNoResponses(), delegate (Farmer _, string answer)
-                    {
-                        if (answer == "Yes")
-                        {
-                            SeenShoplifting(location, Game1.player);
-
-                            if (ShouldBeCaught("Clint", Game1.player, location) == true)
-                            {
-                                Game1.afterDialogues = delegate
-                                {
-                                    ShopliftingPenalties(location);
-                                };
-
-                                return;
-                            }
-
-                            ModEntry.PerScreenStolen.Value = false;
-
-                            Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(3, 10, "Blacksmith"), 3, null, delegate
-                            {
-                                if (ModEntry.PerScreenStolen.Value == false)
-                                {
-                                    ModEntry.PerScreenShopliftingCap.Value++;
-                                }
-                                ModEntry.PerScreenStolen.Value = true;
-                                return false;
-                            }, null, "");
-                        }
-                    });
+                    ShopliftingMenu(location, new string[1] { "Clint" }, "Blacksmith", 3, 10);                   
                 }
 
                 else
@@ -842,7 +535,7 @@ namespace Shoplifter
         /// </summary>
         /// <param name="location">The current location instance</param>
         public static void SaloonShopliftingMenu(GameLocation location, Location tilelocation)
-        {
+        {           
             // Gus is not in the location, he is on the island
             if (location.getCharacterFromName("Gus") == null && Game1.IsVisitingIslandToday("Gus"))
             {
@@ -852,44 +545,7 @@ namespace Shoplifter
                     Game1.drawObjectDialogue(Game1.content.LoadString("Strings\\Locations:Saloon_MoneyBox"));
                     Game1.afterDialogues = delegate
                     {
-                        location.createQuestionDialogue("Shoplift?", location.createYesNoResponses(), delegate (Farmer _, string answer)
-                        {                            
-                            if (answer == "Yes")
-                            {
-                                SeenShoplifting(location, Game1.player);
-
-                                if (ShouldBeCaught("Gus", Game1.player, location) == true || ShouldBeCaught("Emily", Game1.player, location) == true)
-                                {
-                                    Game1.afterDialogues = delegate
-                                    {
-                                        ShopliftingPenalties(location);
-                                    };
-
-                                    return;
-                                }
-
-                                ModEntry.PerScreenStolen.Value = false;
-
-                                Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(2, 1, "Saloon"), 3, null, delegate
-                                {
-                                    if (ModEntry.PerScreenStolen.Value == false)
-                                    {
-                                        ModEntry.PerScreenShopliftingCap.Value++;
-                                    }
-                                    ModEntry.PerScreenStolen.Value = true;
-                                    return false;
-                                }, null, "");
-                            }
-
-                            else
-                            {
-                                Game1.activeClickableMenu = new ShopMenu(Utility.getSaloonStock(), 0, null, delegate (ISalable item, Farmer farmer, int amount)
-                                {
-                                    Game1.player.team.synchronizedShopStock.OnItemPurchased(SynchronizedShopStock.SynchedShop.Saloon, item, amount);
-                                    return false;
-                                });
-                            }
-                        });
+                        ShopliftingMenu(location, new string[2] { "Gus", "Emily" }, "Saloon", 2, 1, true);
                     };
                 }
 
@@ -922,35 +578,7 @@ namespace Shoplifter
             {
                 if (ModEntry.PerScreenShopliftingCap.Value < config.MaxShopliftsPerDay)
                 {
-                    location.createQuestionDialogue("Shoplift?", location.createYesNoResponses(), delegate (Farmer _, string answer)
-                    {                       
-                        if (answer == "Yes")
-                        {
-                            SeenShoplifting(location, Game1.player);
-
-                            if (ShouldBeCaught("Gus", Game1.player, location) == true || ShouldBeCaught("Emily", Game1.player, location) == true)
-                            {
-                                Game1.afterDialogues = delegate
-                                {
-                                    ShopliftingPenalties(location);
-                                };
-
-                                return;
-                            }
-
-                            ModEntry.PerScreenStolen.Value = false;
-
-                            Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(2, 1, "Saloon"), 3, null, delegate
-                            {
-                                if (ModEntry.PerScreenStolen.Value == false)
-                                {
-                                    ModEntry.PerScreenShopliftingCap.Value++;
-                                }
-                                ModEntry.PerScreenStolen.Value = true;
-                                return false;
-                            }, null, "");
-                        }
-                    });
+                    ShopliftingMenu(location, new string[2] { "Gus", "Emily" }, "Saloon", 2, 1);
                 }
 
                 // Gus can't sell, player can't steal
@@ -967,6 +595,29 @@ namespace Shoplifter
                     {
                         Game1.drawObjectDialogue(ModEntry.shopliftingstrings["Placeholder"]);
                     }
+                }
+            }
+        }
+
+        public static void IceCreamShopliftingMenu(GameLocation location, Location tilelocation)
+        {
+            if (ModEntry.PerScreenShopliftingCap.Value < config.MaxShopliftsPerDay && location.isCharacterAtTile(new Vector2(tilelocation.X, tilelocation.Y - 2)) == null && location.isCharacterAtTile(new Vector2(tilelocation.X, tilelocation.Y - 1)) == null)
+            {
+                ShopliftingMenu(location, new string[1] { "Alex" }, "IceCreamStand", 1, 5, false, true);               
+            }
+
+            else
+            {
+                if (ModEntry.shopliftingstrings.ContainsKey("TheMightyAmondee.Shoplifter/AlreadyShoplifted") == true)
+                {
+                    Game1.drawObjectDialogue(config.MaxShopliftsPerDay != 1
+                        ? string.Format(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"], config.MaxShopliftsPerDay)
+                        : ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"].Replace("{0} times ", ""));
+                }
+
+                else
+                {
+                    Game1.drawObjectDialogue(ModEntry.shopliftingstrings["Placeholder"]);
                 }
             }
         }
