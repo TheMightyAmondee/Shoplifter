@@ -127,6 +127,7 @@ namespace Shoplifter
         /// Applies shoplifting penalties, tracks whether to ban player
         /// </summary>
         /// <param name="location">The current location instance</param>
+        /// <param name="bannable">Whether the player can be banned from the shop</param>
         public static void ShopliftingPenalties(GameLocation location, bool bannable = true)
         {
             // Subtract monetary penalty if it applies
@@ -169,6 +170,16 @@ namespace Shoplifter
             data[$"{manifest.UniqueID}_{locationname}"] = string.Join("/", fields);
         }
 
+        /// <summary>
+        /// Create the shoplifting menu and determine what do do depending on the option pressed
+        /// </summary>
+        /// <param name="location">The current location instance</param>
+        /// <param name="shopkeepers">A list of npcs that can ban the player if caught</param>
+        /// <param name="shop">The shop the menu is for</param>
+        /// <param name="maxstock">The max number of stock items to generate</param>
+        /// <param name="maxquantity">The max quantity of each stock item to generate</param>
+        /// <param name="islandvisit">Whether the owner is on the island, special menu case if true</param>
+        /// <param name="bannable">Whether the player can be banned from the shop</param>
         public static void ShopliftingMenu(GameLocation location, string[] shopkeepers, string shop, int maxstock, int maxquantity, bool islandvisit = false, bool bannable = true)
         {
             // Create option to steal
@@ -198,7 +209,7 @@ namespace Shoplifter
                     {
                         if (ModEntry.PerScreenStolen.Value == false)
                         {
-                            ModEntry.PerScreenShopliftingCap.Value++;
+                            ModEntry.PerScreenShopliftCounter.Value++;
                         }
                         ModEntry.PerScreenStolen.Value = true;
                         return false;
@@ -244,7 +255,7 @@ namespace Shoplifter
             }
 
             // Player can steal
-            else if (ModEntry.PerScreenShopliftingCap.Value < config.MaxShopliftsPerDay)
+            else if (ModEntry.PerScreenShopliftCounter.Value < config.MaxShopliftsPerDay)
             {
                 ShopliftingMenu(location, new string[1] { "Willy" }, "FishShop", 3, 3);                              
             }
@@ -275,7 +286,7 @@ namespace Shoplifter
             NPC sandy = location.getCharacterFromName("Sandy");
             if (sandy == null || sandy.currentLocation != location)
             {
-                if (ModEntry.PerScreenShopliftingCap.Value < config.MaxShopliftsPerDay)
+                if (ModEntry.PerScreenShopliftCounter.Value < config.MaxShopliftsPerDay)
                 {
                     ShopliftingMenu(location, new string[1] { "Sandy" }, "SandyShop", 3, 3);                   
                 }
@@ -340,7 +351,7 @@ namespace Shoplifter
             if (who.getTileY() > tileLocation.Y)
             {
                 // Player can steal
-                if (ModEntry.PerScreenShopliftingCap.Value < config.MaxShopliftsPerDay)
+                if (ModEntry.PerScreenShopliftCounter.Value < config.MaxShopliftsPerDay)
                 {
                     // Robin is on island and not at sciencehouse, she can't sell but player can purchase properly if they want
                     if (location.getCharacterFromName("Robin") == null && Game1.IsVisitingIslandToday("Robin"))
@@ -411,7 +422,7 @@ namespace Shoplifter
             if (who.getTileY() > tileLocation.Y)
             {
                 // Player can steal
-                if (ModEntry.PerScreenShopliftingCap.Value < config.MaxShopliftsPerDay)
+                if (ModEntry.PerScreenShopliftCounter.Value < config.MaxShopliftsPerDay)
                 {
                     // Marnie is not in the location, she is on the island
                     if (location.getCharacterFromName("Marnie") == null && Game1.IsVisitingIslandToday("Marnie"))
@@ -475,7 +486,7 @@ namespace Shoplifter
             // Character is not at the required tile, noone can sell
             if (location.isCharacterAtTile(who.getTileLocation() + new Vector2(0f, -2f)) == null && location.isCharacterAtTile(who.getTileLocation() + new Vector2(-1f, -2f)) == null)
             {
-                if (ModEntry.PerScreenShopliftingCap.Value < config.MaxShopliftsPerDay)
+                if (ModEntry.PerScreenShopliftCounter.Value < config.MaxShopliftsPerDay)
                 {
                     ShopliftingMenu(location, new string[2] { "Harvey", "Maru" }, "HospitalShop", 1, 3);                   
                 }
@@ -507,7 +518,7 @@ namespace Shoplifter
             // Clint can't sell. Period.
             if (location.blacksmith(tileLocation) == false)
             {
-                if (ModEntry.PerScreenShopliftingCap.Value < config.MaxShopliftsPerDay)
+                if (ModEntry.PerScreenShopliftCounter.Value < config.MaxShopliftsPerDay)
                 {
                     ShopliftingMenu(location, new string[1] { "Clint" }, "Blacksmith", 3, 10);                   
                 }
@@ -539,7 +550,7 @@ namespace Shoplifter
             // Gus is not in the location, he is on the island
             if (location.getCharacterFromName("Gus") == null && Game1.IsVisitingIslandToday("Gus"))
             {
-                if (ModEntry.PerScreenShopliftingCap.Value < config.MaxShopliftsPerDay)
+                if (ModEntry.PerScreenShopliftCounter.Value < config.MaxShopliftsPerDay)
                 {
                     Game1.dialogueUp = false;
                     Game1.drawObjectDialogue(Game1.content.LoadString("Strings\\Locations:Saloon_MoneyBox"));
@@ -576,7 +587,7 @@ namespace Shoplifter
             // Gus can't sell. Period.
             else if (location.saloon(tilelocation) == false)
             {
-                if (ModEntry.PerScreenShopliftingCap.Value < config.MaxShopliftsPerDay)
+                if (ModEntry.PerScreenShopliftCounter.Value < config.MaxShopliftsPerDay)
                 {
                     ShopliftingMenu(location, new string[2] { "Gus", "Emily" }, "Saloon", 2, 1);
                 }
@@ -601,7 +612,7 @@ namespace Shoplifter
 
         public static void IceCreamShopliftingMenu(GameLocation location, Location tilelocation)
         {
-            if (ModEntry.PerScreenShopliftingCap.Value < config.MaxShopliftsPerDay && location.isCharacterAtTile(new Vector2(tilelocation.X, tilelocation.Y - 2)) == null && location.isCharacterAtTile(new Vector2(tilelocation.X, tilelocation.Y - 1)) == null)
+            if (ModEntry.PerScreenShopliftCounter.Value < config.MaxShopliftsPerDay && location.isCharacterAtTile(new Vector2(tilelocation.X, tilelocation.Y - 2)) == null && location.isCharacterAtTile(new Vector2(tilelocation.X, tilelocation.Y - 1)) == null)
             {
                 ShopliftingMenu(location, new string[1] { "Alex" }, "IceCreamStand", 1, 5, false, true);               
             }

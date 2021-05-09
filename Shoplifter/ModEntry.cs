@@ -16,7 +16,7 @@ namespace Shoplifter
 
         public static readonly PerScreen<bool> PerScreenStolen = new PerScreen<bool>(createNewState: () => false);
 
-        public static readonly PerScreen<int> PerScreenShopliftingCap = new PerScreen<int>(createNewState: () => 0);
+        public static readonly PerScreen<int> PerScreenShopliftCounter = new PerScreen<int>(createNewState: () => 0);
 
         public static Dictionary<string, string> shopliftingstrings = new Dictionary<string, string>();
 
@@ -39,7 +39,7 @@ namespace Shoplifter
         {
             // Reset perscreenstolentoday boolean so player can shoplift again when the new day starts
             PerScreenStolen.Value = false;
-            PerScreenShopliftingCap.Value = 0;
+            PerScreenShopliftCounter.Value = 0;
 
             // Clear banned shops
             if (PerScreenShopsBannedFrom.Value.Count > 0)
@@ -206,7 +206,7 @@ namespace Shoplifter
                             {
                                 ShopMenuUtilities.FishShopShopliftingMenu(location);
                             }
-                            else if (location is SeedShop && PerScreenShopliftingCap.Value < config.MaxShopliftsPerDay)
+                            else if (location is SeedShop && PerScreenShopliftCounter.Value < config.MaxShopliftsPerDay)
                             {
                                 ShopMenuUtilities.SeedShopShopliftingMenu(location);
                             }
