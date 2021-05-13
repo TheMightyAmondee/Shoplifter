@@ -171,7 +171,7 @@ namespace Shoplifter
         }
 
         /// <summary>
-        /// Create the shoplifting menu and determine what do do depending on the option pressed
+        /// Create the shoplifting menu and determine what to do depending on the option pressed
         /// </summary>
         /// <param name="location">The current location instance</param>
         /// <param name="shopkeepers">A list of npcs that can ban the player if caught</param>
@@ -614,7 +614,7 @@ namespace Shoplifter
         {
             if (ModEntry.PerScreenShopliftCounter.Value < config.MaxShopliftsPerDay && location.isCharacterAtTile(new Vector2(tilelocation.X, tilelocation.Y - 2)) == null && location.isCharacterAtTile(new Vector2(tilelocation.X, tilelocation.Y - 1)) == null)
             {
-                ShopliftingMenu(location, new string[1] { "Alex" }, "IceCreamStand", 1, 5, false, true);               
+                ShopliftingMenu(location, new string[1] { "Alex" }, "IceCreamStand", 1, 5, false, false);               
             }
 
             else
