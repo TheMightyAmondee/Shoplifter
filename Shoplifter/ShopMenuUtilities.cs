@@ -95,7 +95,7 @@ namespace Shoplifter
                         else
                         {
                             // No, use generic dialogue
-                            dialogue = (fineamount > 0)
+                            dialogue = (fineamount > 0 || config.MaxFine == 0)
                                 ? string.Format(ModEntry.shopliftingstrings[$"TheMightyAmondee.Shoplifter/CaughtGeneric"], fineamount.ToString())
                                 : ModEntry.shopliftingstrings[$"TheMightyAmondee.Shoplifter/CaughtGeneric_NoMoney"];
                         }
