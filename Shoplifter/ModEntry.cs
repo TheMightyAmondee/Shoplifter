@@ -119,7 +119,7 @@ namespace Shoplifter
 
                 this.Monitor.Log("Strings loaded from assets, ready to go!");
 
-                if (shopliftingstrings.Count < 20)
+                if (shopliftingstrings.Count < 24)
                 {
                     this.Monitor.Log("The number of strings loaded seem a bit low, you may get some missing string problems...\nCheck that all strings are present in the Strings.json", LogLevel.Warn);
                 }

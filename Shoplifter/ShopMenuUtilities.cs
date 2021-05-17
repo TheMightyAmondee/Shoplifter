@@ -101,7 +101,7 @@ namespace Shoplifter
                         }
 
                         // Is the player now banned? (uses catch before as dialogue is loaded before count is adjusted) Append additional dialogue
-                        dialogue = (Game1.player.modData[$"{manifest.UniqueID}_{location.NameOrUniqueName}"].StartsWith($"{config.CatchesBeforeBan - 1}") == true)
+                        dialogue = (Game1.player.modData.ContainsKey($"{manifest.UniqueID}_{location.NameOrUniqueName}") == true && Game1.player.modData[$"{manifest.UniqueID}_{location.NameOrUniqueName}"].StartsWith($"{config.CatchesBeforeBan - 1}") == true)
                             ? dialogue + banneddialogue
                             : dialogue;
 
@@ -136,18 +136,21 @@ namespace Shoplifter
                 Game1.player.Money -= fineamount;
             }
 
-            Game1.warpFarmer(location.warps[0].TargetName, location.warps[0].TargetX, location.warps[0].TargetY, false);
-
+            if (bannable == true)
+            {
+                Game1.warpFarmer(location.warps[0].TargetName, location.warps[0].TargetX, location.warps[0].TargetY, false);
+            }
+            
             string locationname = location.NameOrUniqueName;
 
-            var data = Game1.player.modData;
-
-            string[] fields = data[$"{manifest.UniqueID}_{locationname}"].Split('/');
+            var data = Game1.player.modData;        
 
             if (config.DaysBannedFor == 0 || bannable == false)
             {
                 return;
             }
+
+            string[] fields = data[$"{manifest.UniqueID}_{locationname}"].Split('/');
 
             // Add one to first part of data (shoplifting count)
             fields[0] = (int.Parse(fields[0]) + 1).ToString();
