@@ -42,7 +42,7 @@ namespace Shoplifter
                     // Has player met NPC?
                     if (Game1.player.friendshipData.ContainsKey(npc.Name) == true)
                     {
-                        // Lower friendship by 500 or frienship level, whichever is lower
+                        // Lower friendship by some amount or frienship level, whichever is lower
                         int frienshiploss = -Math.Min((int)config.FriendshipPenalty, Game1.player.getFriendshipLevelForNPC(npc.Name));
                         Game1.player.changeFriendship(frienshiploss, Game1.getCharacterFromName(npc.Name, true));
                         monitor.Log($"{npc.Name} saw you shoplifting... {-frienshiploss} friendship points lost");
@@ -82,7 +82,7 @@ namespace Shoplifter
                     try
                     {
                         // Is NPC primary shopowner
-                        if (character == "Pierre" || character == "Willy" || character == "Robin" || character == "Marnie" || character == "Gus" || character == "Harvey" || character == "Clint")
+                        if (character == "Pierre" || character == "Willy" || character == "Robin" || character == "Marnie" || character == "Gus" || character == "Harvey" || character == "Clint" || character == "Sandy" || character == "Alex")
                         {
                             // Yes, they have special dialogue
                             dialogue = (fineamount > 0)
@@ -95,7 +95,7 @@ namespace Shoplifter
                         else
                         {
                             // No, use generic dialogue
-                            dialogue = (fineamount > 0 || config.MaxFine == 0)
+                            dialogue = (fineamount > 0)
                                 ? string.Format(ModEntry.shopliftingstrings[$"TheMightyAmondee.Shoplifter/CaughtGeneric"], fineamount.ToString())
                                 : ModEntry.shopliftingstrings[$"TheMightyAmondee.Shoplifter/CaughtGeneric_NoMoney"];
                         }
