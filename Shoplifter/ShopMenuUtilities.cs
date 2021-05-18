@@ -185,6 +185,19 @@ namespace Shoplifter
         /// <param name="bannable">Whether the player can be banned from the shop</param>
         public static void ShopliftingMenu(GameLocation location, string[] shopkeepers, string shop, int maxstock, int maxquantity, bool islandvisit = false, bool bannable = true)
         {
+            if (config.MultipleShopliftsPerStore == false && ModEntry.PerScreenShopliftedShops.Value.Contains(shop) == true)
+            {
+                try
+                {
+                    Game1.drawObjectDialogue(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShopliftedSameShop"]);
+                }
+                catch
+                {
+                    Game1.drawObjectDialogue(ModEntry.shopliftingstrings["Placeholder"]);
+                }
+                return;
+            }
+
             // Create option to steal
             location.createQuestionDialogue("Shoplift?", location.createYesNoResponses(), delegate (Farmer _, string answer)
             {
@@ -214,7 +227,14 @@ namespace Shoplifter
                         {
                             ModEntry.PerScreenShopliftCounter.Value++;
                         }
+
                         ModEntry.PerScreenStolen.Value = true;
+
+                        if (config.MultipleShopliftsPerStore == false)
+                        {
+                            ModEntry.PerScreenShopliftedShops.Value.Add(shop);
+                        }
+
                         return false;
                     }, null, "");
                 }

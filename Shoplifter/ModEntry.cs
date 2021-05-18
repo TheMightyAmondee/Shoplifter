@@ -18,11 +18,13 @@ namespace Shoplifter
 
         public static readonly PerScreen<int> PerScreenShopliftCounter = new PerScreen<int>(createNewState: () => 0);
 
+        public static readonly PerScreen<ArrayList> PerScreenShopliftedShops = new PerScreen<ArrayList>(createNewState: () => new ArrayList());
+
         public static Dictionary<string, string> shopliftingstrings = new Dictionary<string, string>();
 
         public static readonly PerScreen<ArrayList> PerScreenShopsBannedFrom = new PerScreen<ArrayList>(createNewState: () => new ArrayList());
 
-        public static string[] shops = { "SeedShop", "FishShop", "AnimalShop", "ScienceHouse", "Hospital", "Blacksmith", "Saloon", "SandyHouse" };
+        public static readonly string[] shops = { "SeedShop", "FishShop", "AnimalShop", "ScienceHouse", "Hospital", "Blacksmith", "Saloon", "SandyHouse" };
      
 
         public override void Entry(IModHelper helper)
@@ -119,7 +121,7 @@ namespace Shoplifter
 
                 this.Monitor.Log("Strings loaded from assets, ready to go!");
 
-                if (shopliftingstrings.Count < 24)
+                if (shopliftingstrings.Count < 25)
                 {
                     this.Monitor.Log("The number of strings loaded seem a bit low, you may get some missing string problems...\nCheck that all strings are present in the Strings.json", LogLevel.Warn);
                 }
