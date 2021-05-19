@@ -42,6 +42,7 @@ namespace Shoplifter
             // Reset perscreenstolentoday boolean so player can shoplift again when the new day starts
             PerScreenStolen.Value = false;
             PerScreenShopliftCounter.Value = 0;
+            PerScreenShopliftedShops.Value.Clear();
 
             // Clear banned shops
             if (PerScreenShopsBannedFrom.Value.Count > 0)
