@@ -230,7 +230,7 @@ namespace Shoplifter
 
                         ModEntry.PerScreenStolen.Value = true;
 
-                        if (config.MultipleShopliftsPerStore == false)
+                        if (config.MultipleShopliftsPerStore == false && ModEntry.PerScreenShopliftedShops.Value.Contains(shop) == false)
                         {
                             ModEntry.PerScreenShopliftedShops.Value.Add(shop);
                         }

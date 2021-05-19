@@ -225,6 +225,9 @@ namespace Shoplifter
 							break;
 					}
 					break;
+				default:
+					CurrentStock.Add(340);
+					break;
 			}
 
 			// Add generated stock to store from array
