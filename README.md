@@ -9,20 +9,21 @@ Ready for a spree of petty crime? Just don't get caught...
 By default:
 Any villager within 7 tiles of you when you shoplift will lose 2 hearts of friendship. If the villager also happens to be the shopkeeper or their family/employee they will also fine you the value of your current funds up to 1000g.
 
-If you get caught by the shopkeeper or their family/employee three times within a 28 day period, you'll receive a three day ban from entering the shop. You're given a clean slate 28 days after the first time shoplifting, a second shoplift won't carry over. Lucky you!
+If you get caught by the shopkeeper or their family/employee three times within a 28 day period, you'll receive a three day ban from entering the shop, this excludes the Icecream Stand. You're given a clean slate 28 days after the first time shoplifting, a second shoplift won't carry over. Lucky you!
 
 You can only successfully shoplift once per day, you're not that bad are you?
 
 Version 1.1.0 added a config so shoplifting preferences can be changed, including: 
-- The maximum shoplifts per day, this also allows multiple shoplifts from any store
+- The maximum shoplifts per day, setting this to 0 is equivalent to setting it to 1
+- How many times the same shop can be shoplifted each day, setting this to 0 is equivalent to setting it to 1
 - How many times you must be caught before being banned, setting this to 0 is equivalent to setting it to 1
 - How many days you are banned for, set to 0 if you don't want to be banned
 - Maximum fine amount
 - Maximum friendship penalty
 
-When changing the config, ensure only positive whole numbers or zero are entered. Anything else will cause errors.
+When changing the config, ensure only positive whole numbers or zero are entered so the config can be parsed. The mod will use the default values if it can't parse the config.
 
-The shops you can shoplift from are: Willy's Shop, Pierre's General Store, Carpenter, Marnie's Ranch, Harvey's Clinic, Saloon, Blacksmith, Sandy's Oasis. 
+The shops you can shoplift from are: Willy's Shop, Pierre's General Store, Carpenter, Marnie's Ranch, Harvey's Clinic, Saloon, Blacksmith, Sandy's Oasis, Icecream Stand.
 If you're wondering why all shops aren't included it's because the shopkeeper never leaves said store, you'll never get away with it. Custom shops cannot be shoplifted from.
 
 Boring specifics are listed below:
