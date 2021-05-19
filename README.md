@@ -48,6 +48,7 @@ Compatibile with shop tile framework in that altered stock will be considered wh
 
 ## Versions ##
 1.0.0 - Initial release
+
 1.1.0 - Made shoplifting preferences configurable, added Icecream Stand as shopliftable
 
 
