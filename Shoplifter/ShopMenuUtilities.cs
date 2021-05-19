@@ -185,7 +185,7 @@ namespace Shoplifter
         /// <param name="bannable">Whether the player can be banned from the shop</param>
         public static void ShopliftingMenu(GameLocation location, string[] shopkeepers, string shop, int maxstock, int maxquantity, bool islandvisit = false, bool bannable = true)
         {
-            if (config.MultipleShopliftsPerStore == false && ModEntry.PerScreenShopliftedShops.Value.Contains(shop) == true)
+            if (config.MaxShopliftsPerStore > 1 && ModEntry.PerScreenShopliftedShops.Value.ContainsKey(shop) == true && ModEntry.PerScreenShopliftedShops.Value[shop] >= config.MaxShopliftsPerStore )
             {
                 try
                 {
@@ -226,14 +226,19 @@ namespace Shoplifter
                         if (ModEntry.PerScreenStolen.Value == false)
                         {
                             ModEntry.PerScreenShopliftCounter.Value++;
+                        }                        
+
+                        if (config.MaxShopliftsPerStore > 1 && ModEntry.PerScreenShopliftedShops.Value.ContainsKey(shop) == false)
+                        {
+                            ModEntry.PerScreenShopliftedShops.Value.Add(shop, 1);
+                        }
+
+                        else if (ModEntry.PerScreenStolen.Value == false && config.MaxShopliftsPerStore > 1 && ModEntry.PerScreenShopliftedShops.Value.ContainsKey(shop) == true)
+                        {
+                            ModEntry.PerScreenShopliftedShops.Value[shop]++;
                         }
 
                         ModEntry.PerScreenStolen.Value = true;
-
-                        if (config.MultipleShopliftsPerStore == false && ModEntry.PerScreenShopliftedShops.Value.Contains(shop) == false)
-                        {
-                            ModEntry.PerScreenShopliftedShops.Value.Add(shop);
-                        }
 
                         return false;
                     }, null, "");

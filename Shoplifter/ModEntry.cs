@@ -18,7 +18,7 @@ namespace Shoplifter
 
         public static readonly PerScreen<int> PerScreenShopliftCounter = new PerScreen<int>(createNewState: () => 0);
 
-        public static readonly PerScreen<ArrayList> PerScreenShopliftedShops = new PerScreen<ArrayList>(createNewState: () => new ArrayList());
+        public static readonly PerScreen<Dictionary<string,int>> PerScreenShopliftedShops = new PerScreen<Dictionary<string, int>>(createNewState: () => new Dictionary<string, int>());
 
         public static Dictionary<string, string> shopliftingstrings = new Dictionary<string, string>();
 
@@ -106,6 +106,11 @@ namespace Shoplifter
         {
             // Add placeholder for missing strings
             shopliftingstrings.Add("Placeholder", "There's a string missing here...");
+
+            if(this.config.MaxShopliftsPerStore == 0)
+            {
+                this.config.MaxShopliftsPerStore = 1;
+            }
 
             try
             {
