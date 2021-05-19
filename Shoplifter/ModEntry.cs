@@ -33,7 +33,15 @@ namespace Shoplifter
             helper.Events.GameLoop.GameLaunched += this.Launched;
             helper.Events.Input.ButtonPressed += this.Action;
             helper.ConsoleCommands.Add("shoplifter_resetsave", "Removes and readds save data added by the mod to fix broken save data, only use if you're getting errors", this.ResetSave);
-            this.config = helper.ReadConfig<ModConfig>();
+            try
+            {
+                this.config = helper.ReadConfig<ModConfig>();
+            }
+            catch
+            {
+                this.config = new ModConfig();
+                this.Monitor.Log("Failed to parse config file, default options will be used. Ensure only positive whole numbers are entered in config", LogLevel.Warn);
+            }
             
             ShopMenuUtilities.gethelpers(this.Monitor, this.ModManifest, this.config);
         }
@@ -107,9 +115,19 @@ namespace Shoplifter
             // Add placeholder for missing strings
             shopliftingstrings.Add("Placeholder", "There's a string missing here...");
 
-            if(this.config.MaxShopliftsPerStore == 0)
+            if (this.config.MaxShopliftsPerStore == 0)
             {
                 this.config.MaxShopliftsPerStore = 1;
+            }
+
+            if (this.config.MaxShopliftsPerDay == 0)
+            {
+                this.config.MaxShopliftsPerDay = 1;
+            }
+
+            if (this.config.CatchesBeforeBan == 0)
+            {
+                this.config.CatchesBeforeBan = 1;
             }
 
             try
