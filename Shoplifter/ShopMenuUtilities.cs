@@ -34,7 +34,7 @@ namespace Shoplifter
             foreach (var npc in location.characters)
             {
                 // Is NPC in range?
-                if (npc.currentLocation == who.currentLocation && Utility.tileWithinRadiusOfPlayer(npc.getTileX(), npc.getTileY(), 5, who))
+                if (npc.currentLocation == who.currentLocation && Utility.tileWithinRadiusOfPlayer(npc.getTileX(), npc.getTileY(), (int)config.CaughtRadius, who))
                 {
                     // Emote NPC
                     npc.doEmote(12, false, false);
@@ -70,7 +70,7 @@ namespace Shoplifter
                 foreach (var npc in location.characters)
                 {
                     // Is NPC in range?
-                    if (npc.Name == character && npc.currentLocation == who.currentLocation && Utility.tileWithinRadiusOfPlayer(npc.getTileX(), npc.getTileY(), 5, who))
+                    if (npc.Name == character && npc.currentLocation == who.currentLocation && Utility.tileWithinRadiusOfPlayer(npc.getTileX(), npc.getTileY(), (int)config.CaughtRadius, who))
                     {
                         string dialogue;
                         string banneddialogue = (config.DaysBannedFor == 1)
