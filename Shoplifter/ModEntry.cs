@@ -74,11 +74,16 @@ namespace Shoplifter
             foreach (string shopliftingdata in new List<string>(data.Keys))
             {
 
-                string[] values = data[shopliftingdata].Split('/');
-                string[] fields = shopliftingdata.Split('_');
+                string[] values = data[shopliftingdata]?.Split('/') ?? new string[] { };            
+                string[] fields = shopliftingdata?.Split('_') ?? new string[] { };
+
+                if (values.Length < 2 || fields.Length < 2)
+                {
+                    continue;
+                }
 
                 // Player has finished certain number of days ban, remove shop from list, also reset first day caught
-                if (shopliftingdata.StartsWith($"{this.ModManifest.UniqueID}") && int.Parse(values[0]) <= -this.config.DaysBannedFor)
+                if (shopliftingdata.StartsWith($"{this.ModManifest.UniqueID}") && int.Parse(values[0]) <= -this.config.DaysBannedFor && values.Length == 2)
                 {
                     values[0] = "0";
                     values[1] = "0";
@@ -88,7 +93,7 @@ namespace Shoplifter
                 }
 
                 // Player is currently banned, add shop to list
-                else if (shopliftingdata.StartsWith($"{this.ModManifest.UniqueID}") && int.Parse(values[0]) < 0)
+                else if (shopliftingdata.StartsWith($"{this.ModManifest.UniqueID}") && int.Parse(values[0]) < 0 && values.Length == 2)
                 {
                     values[0] = (int.Parse(values[0]) - 1).ToString();
                     PerScreenShopsBannedFrom.Value.Add(fields[1]);
@@ -96,7 +101,7 @@ namespace Shoplifter
                 }
 
                 // If 28 days have past and player was not caught a certain number of times, reset both fields
-                if (shopliftingdata.StartsWith($"{this.ModManifest.UniqueID}") && int.Parse(values[0]) > 0 && values[1] == Game1.dayOfMonth.ToString())
+                if (shopliftingdata.StartsWith($"{this.ModManifest.UniqueID}") && int.Parse(values[0]) > 0 && values[1] == Game1.dayOfMonth.ToString() && values.Length == 2)
                 {
                     values[0] = "0";
                     values[1] = "0";
