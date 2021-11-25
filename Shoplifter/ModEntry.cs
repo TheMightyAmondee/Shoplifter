@@ -67,8 +67,7 @@ namespace Shoplifter
                 {
                     data.Add($"{this.ModManifest.UniqueID}_{shop}", "0/0");
                     this.Monitor.Log($"Adding mod data... {this.ModManifest.UniqueID}_{shop}");
-                }
-                
+                }               
             }
 
             foreach (string shopliftingdata in new List<string>(data.Keys))
@@ -79,6 +78,7 @@ namespace Shoplifter
 
                 if (values.Length < 2 || fields.Length < 2)
                 {
+                    this.Monitor.Log("Mod save data couldn't be accessed. Ban logic may not work. Try resetting the mod save data if issue persists.");
                     continue;
                 }
 

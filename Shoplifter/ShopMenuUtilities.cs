@@ -151,7 +151,13 @@ namespace Shoplifter
                 return;
             }
 
-            string[] fields = data[$"{manifest.UniqueID}_{locationname}"].Split('/');
+            string[] fields = data[$"{manifest.UniqueID}_{locationname}"].Split('/') ?? new string[] { };
+            
+            if (fields.Length < 2 || fields.Length < 2)
+            {
+                monitor.Log($"Required save field for {locationname} couldn't be accessed. Ban logic may not work. Try resetting the mod save data if issue persists.");
+                return;
+            }
 
             // Add one to first part of data (shoplifting count)
             fields[0] = (int.Parse(fields[0]) + 1).ToString();
