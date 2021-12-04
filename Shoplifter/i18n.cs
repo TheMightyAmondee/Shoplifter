@@ -12,12 +12,16 @@ namespace Shoplifter
     internal static class i18n
     {
         private static ITranslationHelper translation;
-        private static IManifest manifest;
         private static ModConfig config;
         public static void gethelpers(ITranslationHelper translation, ModConfig config)
         {
             i18n.translation = translation;
             i18n.config = config;
+        }
+
+        public static string string_Shoplift()
+        {
+            return i18n.GetTranslation("TheMightyAmondee.Shoplifter/Shoplift");
         }
 
         public static string string_Banned()

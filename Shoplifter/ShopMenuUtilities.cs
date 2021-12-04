@@ -192,7 +192,15 @@ namespace Shoplifter
         /// <param name="bannable">Whether the player can be banned from the shop</param>
         public static void ShopliftingMenu(GameLocation location, string[] shopkeepers, string shop, int maxstock, int maxquantity, bool islandvisit = false, bool bannable = true)
         {
-            if (config.MaxShopliftsPerStore > 1 && ModEntry.PerScreenShopliftedShops.Value.ContainsKey(shop) == true && ModEntry.PerScreenShopliftedShops.Value[shop] >= config.MaxShopliftsPerStore )
+            if (ModEntry.PerScreenShopliftCounter.Value >= config.MaxShopliftsPerDay)
+            {
+                Game1.drawObjectDialogue(config.MaxShopliftsPerDay != 1
+                        ? i18n.string_AlreadyShoplifted() //string.Format(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"], config.MaxShopliftsPerDay)
+                        : i18n.string_AlreadyShoplifted_Single()); //ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"].Replace("{0} times ", ""));
+                return;
+            }
+
+            else if (config.MaxShopliftsPerStore > 1 && ModEntry.PerScreenShopliftedShops.Value.ContainsKey(shop) == true && ModEntry.PerScreenShopliftedShops.Value[shop] >= config.MaxShopliftsPerStore )
             {
                 Game1.drawObjectDialogue(i18n.string_AlreadyShopliftedSameShop());
                 //try
@@ -207,7 +215,7 @@ namespace Shoplifter
             }
 
             // Create option to steal
-            location.createQuestionDialogue("Shoplift?", location.createYesNoResponses(), delegate (Farmer _, string answer)
+            location.createQuestionDialogue(i18n.string_Shoplift(), location.createYesNoResponses(), delegate (Farmer _, string answer)
             {
                 // Player answered yes
                 if (answer == "Yes")
@@ -299,17 +307,21 @@ namespace Shoplifter
             // Player can't steal and Willy can't sell
             else
             {
-                if (ModEntry.shopliftingstrings.ContainsKey("TheMightyAmondee.Shoplifter/AlreadyShoplifted") == true)
-                {
-                    Game1.drawObjectDialogue(config.MaxShopliftsPerDay != 1 
-                        ? string.Format(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"], config.MaxShopliftsPerDay) 
-                        : ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"].Replace("{0} times ",""));
-                }
+                //Game1.drawObjectDialogue(config.MaxShopliftsPerDay != 1
+                //        ? i18n.string_AlreadyShoplifted() //string.Format(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"], config.MaxShopliftsPerDay)
+                //        : i18n.string_AlreadyShoplifted_Single()); //ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"].Replace("{0} times ", ""));
 
-                else
-                {
-                    Game1.drawObjectDialogue(ModEntry.shopliftingstrings["Placeholder"]);
-                }
+                //if (ModEntry.shopliftingstrings.ContainsKey("TheMightyAmondee.Shoplifter/AlreadyShoplifted") == true)
+                //{
+                //    Game1.drawObjectDialogue(config.MaxShopliftsPerDay != 1 
+                //        ? string.Format(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"], config.MaxShopliftsPerDay) 
+                //        : ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"].Replace("{0} times ",""));
+                //}
+
+                //else
+                //{
+                //    Game1.drawObjectDialogue(ModEntry.shopliftingstrings["Placeholder"]);
+                //}
             }
         }
 
@@ -329,17 +341,20 @@ namespace Shoplifter
 
                 else
                 {
-                    if (ModEntry.shopliftingstrings.ContainsKey("TheMightyAmondee.Shoplifter/AlreadyShoplifted") == true)
-                    {
-                        Game1.drawObjectDialogue(config.MaxShopliftsPerDay != 1
-                            ? string.Format(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"], config.MaxShopliftsPerDay)
-                            : ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"].Replace("{0} times ", ""));
-                    }
+                    //Game1.drawObjectDialogue(config.MaxShopliftsPerDay != 1
+                    //    ? i18n.string_AlreadyShoplifted() //string.Format(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"], config.MaxShopliftsPerDay)
+                    //    : i18n.string_AlreadyShoplifted_Single()); //ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"].Replace("{0} times ", ""));
+                    //if (ModEntry.shopliftingstrings.ContainsKey("TheMightyAmondee.Shoplifter/AlreadyShoplifted") == true)
+                    //{
+                    //    Game1.drawObjectDialogue(config.MaxShopliftsPerDay != 1
+                    //        ? string.Format(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"], config.MaxShopliftsPerDay)
+                    //        : ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"].Replace("{0} times ", ""));
+                    //}
 
-                    else
-                    {
-                        Game1.drawObjectDialogue(ModEntry.shopliftingstrings["Placeholder"]);
-                    }
+                    //else
+                    //{
+                    //    Game1.drawObjectDialogue(ModEntry.shopliftingstrings["Placeholder"]);
+                    //}
                 }
             }
         }
@@ -431,17 +446,20 @@ namespace Shoplifter
                 // Robin can't sell and player can't steal
                 else
                 {
-                    if (ModEntry.shopliftingstrings.ContainsKey("TheMightyAmondee.Shoplifter/AlreadyShoplifted") == true)
-                    {
-                        Game1.drawObjectDialogue(config.MaxShopliftsPerDay != 1
-                            ? string.Format(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"], config.MaxShopliftsPerDay)
-                            : ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"].Replace("{0} times ", ""));
-                    }
+                    //Game1.drawObjectDialogue(config.MaxShopliftsPerDay != 1
+                    //    ? i18n.string_AlreadyShoplifted() //string.Format(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"], config.MaxShopliftsPerDay)
+                    //    : i18n.string_AlreadyShoplifted_Single()); //ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"].Replace("{0} times ", ""));
+                    //if (ModEntry.shopliftingstrings.ContainsKey("TheMightyAmondee.Shoplifter/AlreadyShoplifted") == true)
+                    //{
+                    //    Game1.drawObjectDialogue(config.MaxShopliftsPerDay != 1
+                    //        ? string.Format(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"], config.MaxShopliftsPerDay)
+                    //        : ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"].Replace("{0} times ", ""));
+                    //}
 
-                    else
-                    {
-                        Game1.drawObjectDialogue(ModEntry.shopliftingstrings["Placeholder"]);
-                    }
+                    //else
+                    //{
+                    //    Game1.drawObjectDialogue(ModEntry.shopliftingstrings["Placeholder"]);
+                    //}
                 }
             }
         }
@@ -497,17 +515,20 @@ namespace Shoplifter
 
                 else
                 {
-                    if (ModEntry.shopliftingstrings.ContainsKey("TheMightyAmondee.Shoplifter/AlreadyShoplifted") == true)
-                    {
-                        Game1.drawObjectDialogue(config.MaxShopliftsPerDay != 1
-                            ? string.Format(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"], config.MaxShopliftsPerDay)
-                            : ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"].Replace("{0} times ", ""));
-                    }
+                    //Game1.drawObjectDialogue(config.MaxShopliftsPerDay != 1
+                    //    ? i18n.string_AlreadyShoplifted() //string.Format(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"], config.MaxShopliftsPerDay)
+                    //    : i18n.string_AlreadyShoplifted_Single()); //ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"].Replace("{0} times ", ""));
+                    //if (ModEntry.shopliftingstrings.ContainsKey("TheMightyAmondee.Shoplifter/AlreadyShoplifted") == true)
+                    //{
+                    //    Game1.drawObjectDialogue(config.MaxShopliftsPerDay != 1
+                    //        ? string.Format(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"], config.MaxShopliftsPerDay)
+                    //        : ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"].Replace("{0} times ", ""));
+                    //}
 
-                    else
-                    {
-                        Game1.drawObjectDialogue(ModEntry.shopliftingstrings["Placeholder"]);
-                    }
+                    //else
+                    //{
+                    //    Game1.drawObjectDialogue(ModEntry.shopliftingstrings["Placeholder"]);
+                    //}
                 }
             }
         }
@@ -529,17 +550,20 @@ namespace Shoplifter
 
                 else
                 {
-                    if (ModEntry.shopliftingstrings.ContainsKey("TheMightyAmondee.Shoplifter/AlreadyShoplifted") == true)
-                    {
-                        Game1.drawObjectDialogue(config.MaxShopliftsPerDay != 1
-                            ? string.Format(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"], config.MaxShopliftsPerDay)
-                            : ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"].Replace("{0} times ", ""));
-                    }
+                    //Game1.drawObjectDialogue(config.MaxShopliftsPerDay != 1
+                    //    ? i18n.string_AlreadyShoplifted() //string.Format(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"], config.MaxShopliftsPerDay)
+                    //    : i18n.string_AlreadyShoplifted_Single()); //ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"].Replace("{0} times ", ""));
+                    //if (ModEntry.shopliftingstrings.ContainsKey("TheMightyAmondee.Shoplifter/AlreadyShoplifted") == true)
+                    //{
+                    //    Game1.drawObjectDialogue(config.MaxShopliftsPerDay != 1
+                    //        ? string.Format(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"], config.MaxShopliftsPerDay)
+                    //        : ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"].Replace("{0} times ", ""));
+                    //}
 
-                    else
-                    {
-                        Game1.drawObjectDialogue(ModEntry.shopliftingstrings["Placeholder"]);
-                    }
+                    //else
+                    //{
+                    //    Game1.drawObjectDialogue(ModEntry.shopliftingstrings["Placeholder"]);
+                    //}
                 }
             }
         }
@@ -561,17 +585,20 @@ namespace Shoplifter
 
                 else
                 {
-                    if (ModEntry.shopliftingstrings.ContainsKey("TheMightyAmondee.Shoplifter/AlreadyShoplifted") == true)
-                    {
-                        Game1.drawObjectDialogue(config.MaxShopliftsPerDay != 1
-                            ? string.Format(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"], config.MaxShopliftsPerDay)
-                            : ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"].Replace("{0} times ", ""));
-                    }
+                    //Game1.drawObjectDialogue(config.MaxShopliftsPerDay != 1
+                    //    ? i18n.string_AlreadyShoplifted() //string.Format(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"], config.MaxShopliftsPerDay)
+                    //    : i18n.string_AlreadyShoplifted_Single()); //ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"].Replace("{0} times ", ""));
+                    //if (ModEntry.shopliftingstrings.ContainsKey("TheMightyAmondee.Shoplifter/AlreadyShoplifted") == true)
+                    //{
+                    //    Game1.drawObjectDialogue(config.MaxShopliftsPerDay != 1
+                    //        ? string.Format(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"], config.MaxShopliftsPerDay)
+                    //        : ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"].Replace("{0} times ", ""));
+                    //}
 
-                    else
-                    {
-                        Game1.drawObjectDialogue(ModEntry.shopliftingstrings["Placeholder"]);
-                    }
+                    //else
+                    //{
+                    //    Game1.drawObjectDialogue(ModEntry.shopliftingstrings["Placeholder"]);
+                    //}
                 }
 
             }
@@ -604,17 +631,20 @@ namespace Shoplifter
 
                 else
                 {
-                    if (ModEntry.shopliftingstrings.ContainsKey("TheMightyAmondee.Shoplifter/AlreadyShoplifted") == true)
-                    {
-                        Game1.drawObjectDialogue(config.MaxShopliftsPerDay != 1
-                            ? string.Format(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"], config.MaxShopliftsPerDay)
-                            : ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"].Replace("{0} times ", ""));
-                    }
+                    //Game1.drawObjectDialogue(config.MaxShopliftsPerDay != 1
+                    //    ? i18n.string_AlreadyShoplifted() //string.Format(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"], config.MaxShopliftsPerDay)
+                    //    : i18n.string_AlreadyShoplifted_Single()); //ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"].Replace("{0} times ", ""));
+                    //if (ModEntry.shopliftingstrings.ContainsKey("TheMightyAmondee.Shoplifter/AlreadyShoplifted") == true)
+                    //{
+                    //    Game1.drawObjectDialogue(config.MaxShopliftsPerDay != 1
+                    //        ? string.Format(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"], config.MaxShopliftsPerDay)
+                    //        : ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"].Replace("{0} times ", ""));
+                    //}
 
-                    else
-                    {
-                        Game1.drawObjectDialogue(ModEntry.shopliftingstrings["Placeholder"]);
-                    }
+                    //else
+                    //{
+                    //    Game1.drawObjectDialogue(ModEntry.shopliftingstrings["Placeholder"]);
+                    //}
                 }
                 
                 return;
@@ -631,17 +661,20 @@ namespace Shoplifter
                 // Gus can't sell, player can't steal
                 else
                 {
-                    if (ModEntry.shopliftingstrings.ContainsKey("TheMightyAmondee.Shoplifter/AlreadyShoplifted") == true)
-                    {
-                        Game1.drawObjectDialogue(config.MaxShopliftsPerDay != 1
-                            ? string.Format(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"], config.MaxShopliftsPerDay)
-                            : ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"].Replace("{0} times ", ""));
-                    }
+                    //Game1.drawObjectDialogue(config.MaxShopliftsPerDay != 1
+                    //    ? i18n.string_AlreadyShoplifted() //string.Format(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"], config.MaxShopliftsPerDay)
+                    //    : i18n.string_AlreadyShoplifted_Single()); //ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"].Replace("{0} times ", ""));
+                    //if (ModEntry.shopliftingstrings.ContainsKey("TheMightyAmondee.Shoplifter/AlreadyShoplifted") == true)
+                    //{
+                    //    Game1.drawObjectDialogue(config.MaxShopliftsPerDay != 1
+                    //        ? string.Format(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"], config.MaxShopliftsPerDay)
+                    //        : ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"].Replace("{0} times ", ""));
+                    //}
 
-                    else
-                    {
-                        Game1.drawObjectDialogue(ModEntry.shopliftingstrings["Placeholder"]);
-                    }
+                    //else
+                    //{
+                    //    Game1.drawObjectDialogue(ModEntry.shopliftingstrings["Placeholder"]);
+                    //}
                 }
             }
         }
@@ -655,17 +688,20 @@ namespace Shoplifter
 
             else
             {
-                if (ModEntry.shopliftingstrings.ContainsKey("TheMightyAmondee.Shoplifter/AlreadyShoplifted") == true)
-                {
-                    Game1.drawObjectDialogue(config.MaxShopliftsPerDay != 1
-                        ? string.Format(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"], config.MaxShopliftsPerDay)
-                        : ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"].Replace("{0} times ", ""));
-                }
+                //Game1.drawObjectDialogue(config.MaxShopliftsPerDay != 1
+                //        ? i18n.string_AlreadyShoplifted() //string.Format(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"], config.MaxShopliftsPerDay)
+                //        : i18n.string_AlreadyShoplifted_Single()); //ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"].Replace("{0} times ", ""));
+                //if (ModEntry.shopliftingstrings.ContainsKey("TheMightyAmondee.Shoplifter/AlreadyShoplifted") == true)
+                //{
+                //    Game1.drawObjectDialogue(config.MaxShopliftsPerDay != 1
+                //        ? string.Format(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"], config.MaxShopliftsPerDay)
+                //        : ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"].Replace("{0} times ", ""));
+                //}
 
-                else
-                {
-                    Game1.drawObjectDialogue(ModEntry.shopliftingstrings["Placeholder"]);
-                }
+                //else
+                //{
+                //    Game1.drawObjectDialogue(ModEntry.shopliftingstrings["Placeholder"]);
+                //}
             }
         }
     }
