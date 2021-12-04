@@ -1,4 +1,5 @@
 ﻿using System;
+using StardewValley;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,9 +14,10 @@ namespace Shoplifter
         private static ITranslationHelper translation;
         private static IManifest manifest;
         private static ModConfig config;
-        public static void gethelpers(ITranslationHelper translation)
+        public static void gethelpers(ITranslationHelper translation, ModConfig config)
         {
             i18n.translation = translation;
+            i18n.config = config;
         }
 
         public static string string_Banned()
@@ -25,7 +27,8 @@ namespace Shoplifter
 
         public static string string_Caught(string shopkeeper)
         {
-            return i18n.GetTranslation($"TheMightyAmondee.Shoplifter/Caught{shopkeeper}");
+            var fineamount = Math.Min(Game1.player.Money, (int)config.MaxFine);
+            return i18n.GetTranslation($"TheMightyAmondee.Shoplifter/Caught{shopkeeper}", new { fineamount = fineamount });
         }
 
         public static string string_Caught_NoMoney(string shopkeeper)
@@ -35,12 +38,12 @@ namespace Shoplifter
 
         public static string string_BanFromShop()
         {
-            return i18n.GetTranslation("TheMightyAmondee.Shoplifter/BanFromShop");
+            return i18n.GetTranslation("TheMightyAmondee.Shoplifter/BanFromShop", new { daysbanned = config.DaysBannedFor });
         }
 
         public static string string_AlreadyShoplifted()
         {
-            return i18n.GetTranslation("TheMightyAmondee.Shoplifter/AlreadyShoplifted");
+            return i18n.GetTranslation("TheMightyAmondee.Shoplifter/AlreadyShoplifted", new { shopliftingamount = config.MaxShopliftsPerDay });
         }
 
         public static string string_AlreadyShopliftedSameShop()
