@@ -1,4 +1,5 @@
 {
+    "TheMightyAmondee.Shoplifter/Shoplift":"Shoplift?",  
     "TheMightyAmondee.Shoplifter/Banned": "You've been banned for shoplifting. Don't push your luck...",
     "TheMightyAmondee.Shoplifter/AlreadyShoplifted_Single": "You've already shoplifted today. That's enough...",
     "TheMightyAmondee.Shoplifter/AlreadyShoplifted": "You've already shoplifted {{shopliftingamount}} times today. That's enough...",

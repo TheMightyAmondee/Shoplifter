@@ -41,9 +41,19 @@ namespace Shoplifter
             return i18n.GetTranslation("TheMightyAmondee.Shoplifter/BanFromShop", new { daysbanned = config.DaysBannedFor });
         }
 
+        public static string string_BanFromShop_Single()
+        {
+            return i18n.GetTranslation("TheMightyAmondee.Shoplifter/BanFromShop_Single");
+        }
+
         public static string string_AlreadyShoplifted()
         {
             return i18n.GetTranslation("TheMightyAmondee.Shoplifter/AlreadyShoplifted", new { shopliftingamount = config.MaxShopliftsPerDay });
+        }
+
+        public static string string_AlreadyShoplifted_Single()
+        {
+            return i18n.GetTranslation("TheMightyAmondee.Shoplifter/AlreadyShoplifted_Single");
         }
 
         public static string string_AlreadyShopliftedSameShop()

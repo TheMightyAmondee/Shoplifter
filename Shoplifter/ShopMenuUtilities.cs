@@ -74,8 +74,8 @@ namespace Shoplifter
                     {
                         string dialogue;
                         string banneddialogue = (config.DaysBannedFor == 1)
-                            ? ModEntry.shopliftingstrings[$"TheMightyAmondee.Shoplifter/BanFromShop"].Replace("{0} days", "a day")
-                            : string.Format(ModEntry.shopliftingstrings[$"TheMightyAmondee.Shoplifter/BanFromShop"], config.DaysBannedFor.ToString());
+                            ? i18n.string_BanFromShop_Single()//ModEntry.shopliftingstrings[$"TheMightyAmondee.Shoplifter/BanFromShop"].Replace("{0} days", "a day")
+                            : i18n.string_BanFromShop();//string.Format(ModEntry.shopliftingstrings[$"TheMightyAmondee.Shoplifter/BanFromShop"], config.DaysBannedFor.ToString());
 
                         fineamount = Math.Min(Game1.player.Money, (int)config.MaxFine);
 
@@ -86,8 +86,8 @@ namespace Shoplifter
                             {
                                 // Yes, they have special dialogue
                                 dialogue = (fineamount > 0)
-                                    ? string.Format(ModEntry.shopliftingstrings[$"TheMightyAmondee.Shoplifter/Caught{character}"], fineamount.ToString())
-                                    : ModEntry.shopliftingstrings[$"TheMightyAmondee.Shoplifter/Caught{character}_NoMoney"];
+                                    ? i18n.string_Caught(character)//string.Format(ModEntry.shopliftingstrings[$"TheMightyAmondee.Shoplifter/Caught{character}"], fineamount.ToString())
+                                    : i18n.string_Caught_NoMoney(character);//ModEntry.shopliftingstrings[$"TheMightyAmondee.Shoplifter/Caught{character}_NoMoney"];
 
 
                             }
@@ -96,8 +96,8 @@ namespace Shoplifter
                             {
                                 // No, use generic dialogue
                                 dialogue = (fineamount > 0)
-                                    ? string.Format(ModEntry.shopliftingstrings[$"TheMightyAmondee.Shoplifter/CaughtGeneric"], fineamount.ToString())
-                                    : ModEntry.shopliftingstrings[$"TheMightyAmondee.Shoplifter/CaughtGeneric_NoMoney"];
+                                    ? i18n.string_Caught("Generic")//string.Format(ModEntry.shopliftingstrings[$"TheMightyAmondee.Shoplifter/CaughtGeneric"], fineamount.ToString())
+                                    : i18n.string_Caught_NoMoney("Generic"); //ModEntry.shopliftingstrings[$"TheMightyAmondee.Shoplifter/CaughtGeneric_NoMoney"];
                             }
 
                             // Is the player now banned? (uses catch before as dialogue is loaded before count is adjusted) Append additional dialogue
@@ -194,14 +194,15 @@ namespace Shoplifter
         {
             if (config.MaxShopliftsPerStore > 1 && ModEntry.PerScreenShopliftedShops.Value.ContainsKey(shop) == true && ModEntry.PerScreenShopliftedShops.Value[shop] >= config.MaxShopliftsPerStore )
             {
-                try
-                {
-                    Game1.drawObjectDialogue(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShopliftedSameShop"]);
-                }
-                catch
-                {
-                    Game1.drawObjectDialogue(ModEntry.shopliftingstrings["Placeholder"]);
-                }
+                Game1.drawObjectDialogue(i18n.string_AlreadyShopliftedSameShop());
+                //try
+                //{
+                //    Game1.drawObjectDialogue(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShopliftedSameShop"]);
+                //}
+                //catch
+                //{
+                //    Game1.drawObjectDialogue(ModEntry.shopliftingstrings["Placeholder"]);
+                //}
                 return;
             }
 

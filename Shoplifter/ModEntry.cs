@@ -44,6 +44,7 @@ namespace Shoplifter
             }
             
             ShopMenuUtilities.gethelpers(this.Monitor, this.ModManifest, this.config);
+            i18n.gethelpers(this.Helper.Translation, this.config);
         }
         private void DayStarted(object sender, DayStartedEventArgs e)
         {
@@ -135,30 +136,30 @@ namespace Shoplifter
                 this.config.CatchesBeforeBan = 1;
             }
 
-            try
-            {
-                // Get strings from assets folder and add them to a new dictionary
-                Dictionary<string, string> strings = this.Helper.Content.Load<Dictionary<string, string>>("assets\\Strings.json", ContentSource.ModFolder);
+            //try
+            //{
+            //    // Get strings from assets folder and add them to a new dictionary
+            //    Dictionary<string, string> strings = this.Helper.Content.Load<Dictionary<string, string>>("assets\\Strings.json", ContentSource.ModFolder);
 
-                if (strings != null)
-                {
-                    foreach (string key in new List<string>(strings.Keys))
-                    {
-                        shopliftingstrings.Add(key, strings[key]);
-                    }
-                }
+            //    if (strings != null)
+            //    {
+            //        foreach (string key in new List<string>(strings.Keys))
+            //        {
+            //            shopliftingstrings.Add(key, strings[key]);
+            //        }
+            //    }
 
-                this.Monitor.Log("Strings loaded from assets, ready to go!");
+            //    this.Monitor.Log("Strings loaded from assets, ready to go!");
 
-                if (shopliftingstrings.Count < 25)
-                {
-                    this.Monitor.Log("The number of strings loaded seem a bit low, you may get some missing string problems...\nCheck that all strings are present in the Strings.json", LogLevel.Warn);
-                }
-            }
-            catch
-            {             
-                this.Monitor.Log("Could not load strings... This will result in missing string problems, (Are you missing the Strings.json file?)", LogLevel.Error);
-            }
+            //    if (shopliftingstrings.Count < 25)
+            //    {
+            //        this.Monitor.Log("The number of strings loaded seem a bit low, you may get some missing string problems...\nCheck that all strings are present in the Strings.json", LogLevel.Warn);
+            //    }
+            //}
+            //catch
+            //{             
+            //    this.Monitor.Log("Could not load strings... This will result in missing string problems, (Are you missing the Strings.json file?)", LogLevel.Error);
+            //}
            
         }
 
@@ -196,16 +197,18 @@ namespace Shoplifter
                                 // Supress button so game doesn't warp player (they're banned)
                                 Helper.Input.Suppress(e.Button);
 
-                                // Show string to say player is banned if it is available, else a placeholder
-                                if (shopliftingstrings.ContainsKey("TheMightyAmondee.Shoplifter/Banned") == true)
-                                {
-                                    Game1.drawObjectDialogue(shopliftingstrings["TheMightyAmondee.Shoplifter/Banned"]);
-                                }
+                                Game1.drawObjectDialogue(i18n.string_Banned());
 
-                                else
-                                {
-                                    Game1.drawObjectDialogue(shopliftingstrings["Placeholder"]);
-                                }
+                                //// Show string to say player is banned if it is available, else a placeholder
+                                //if (shopliftingstrings.ContainsKey("TheMightyAmondee.Shoplifter/Banned") == true)
+                                //{
+                                //    Game1.drawObjectDialogue(shopliftingstrings["TheMightyAmondee.Shoplifter/Banned"]);
+                                //}
+
+                                //else
+                                //{
+                                //    Game1.drawObjectDialogue(shopliftingstrings["Placeholder"]);
+                                //}
                             }
                             break;
                         // For each action that would open a shop that can be shoplifted, check if it can be shoplifted and take appropriate action
