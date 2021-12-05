@@ -94,39 +94,31 @@ namespace Shoplifter
 
                         fineamount = Math.Min(Game1.player.Money, (int)config.MaxFine);
 
-                        try
+                        // Is NPC primary shopowner
+                        if (character == "Pierre" || character == "Willy" || character == "Robin" || character == "Marnie" || character == "Gus" || character == "Harvey" || character == "Clint" || character == "Sandy" || character == "Alex")
                         {
-                            // Is NPC primary shopowner
-                            if (character == "Pierre" || character == "Willy" || character == "Robin" || character == "Marnie" || character == "Gus" || character == "Harvey" || character == "Clint" || character == "Sandy" || character == "Alex")
-                            {
-                                // Yes, they have special dialogue
-                                dialogue = (fineamount > 0)
-                                    ? i18n.string_Caught(character)
-                                    : i18n.string_Caught_NoMoney(character);
+                            // Yes, they have special dialogue
+                            dialogue = (fineamount > 0)
+                                ? i18n.string_Caught(character)
+                                : i18n.string_Caught_NoMoney(character);
 
 
-                            }
-
-                            else
-                            {
-                                // No, use generic dialogue
-                                dialogue = (fineamount > 0)
-                                    ? i18n.string_Caught("Generic")
-                                    : i18n.string_Caught_NoMoney("Generic");
-                            }
-
-                            // Is the player now banned? (uses catch before as dialogue is loaded before count is adjusted) Append additional dialogue
-                            dialogue = (Game1.player.modData.ContainsKey($"{manifest.UniqueID}_{location.NameOrUniqueName}") == true && Game1.player.modData[$"{manifest.UniqueID}_{location.NameOrUniqueName}"].StartsWith($"{config.CatchesBeforeBan - 1}") == true)
-                                ? dialogue + banneddialogue
-                                : dialogue;
-
-                            npc.setNewDialogue(dialogue, add: true);
                         }
-                        catch
+
+                        else
                         {
-                            // If any string could not be found, use placeholder
-                            npc.setNewDialogue(ModEntry.shopliftingstrings["Placeholder"], add: true);
+                            // No, use generic dialogue
+                            dialogue = (fineamount > 0)
+                                ? i18n.string_Caught("Generic")
+                                : i18n.string_Caught_NoMoney("Generic");
                         }
+
+                        // Is the player now banned? (uses catch before as dialogue is loaded before count is adjusted) Append additional dialogue
+                        dialogue = (Game1.player.modData.ContainsKey($"{manifest.UniqueID}_{location.NameOrUniqueName}") == true && Game1.player.modData[$"{manifest.UniqueID}_{location.NameOrUniqueName}"].StartsWith($"{config.CatchesBeforeBan - 1}") == true)
+                            ? dialogue + banneddialogue
+                            : dialogue;
+
+                        npc.setNewDialogue(dialogue, add: true);
 
                         // Draw dialogue for NPC, dialogue box opens
                         Game1.drawDialogue(npc);
