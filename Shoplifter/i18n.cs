@@ -1,14 +1,13 @@
 ﻿using System;
 using StardewValley;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using StardewModdingAPI;
 
 
 namespace Shoplifter
 {
+    /// <summary>
+    /// Class for determining translations
+    /// </summary>
     internal static class i18n
     {
         private static ITranslationHelper translation;
@@ -65,11 +64,19 @@ namespace Shoplifter
             return i18n.GetTranslation("TheMightyAmondee.Shoplifter/AlreadyShopliftedSameShop");
         }
 
+        /// <summary>
+        /// Gets the correct translation
+        /// </summary>
+        /// <param name="key">The translation key</param>
+        /// <param name="tokens">Tokens, if any</param>
+        /// <returns></returns>
         public static Translation GetTranslation(string key, object tokens = null)
         {
             if (i18n.translation == null)
+            {
                 throw new InvalidOperationException($"You must call {nameof(i18n)}.{nameof(i18n.gethelpers)} from the mod's entry method before reading translations.");
-
+            }
+                
             return i18n.translation.Get(key, tokens);
         }
     }

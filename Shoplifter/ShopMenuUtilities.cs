@@ -25,6 +25,21 @@ namespace Shoplifter
         }
 
         /// <summary>
+        /// Determines whether player can shoplift based on config settings
+        /// </summary>
+        /// <param name="shop">The shop to check</param>
+        /// <returns>true if player can shoplift, false otherwise</returns>
+        public static bool CanShoplift(string shop)
+        {
+            if (ModEntry.PerScreenShopliftCounter.Value >= config.MaxShopliftsPerDay || (ModEntry.PerScreenShopliftedShops.Value.ContainsKey(shop) == true && ModEntry.PerScreenShopliftedShops.Value[shop] >= config.MaxShopliftsPerStore))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        /// <summary>
         /// Subtracts friendship from any npc that sees the player shoplifting
         /// </summary>
         /// <param name="location">The current location instance</param>
@@ -74,8 +89,8 @@ namespace Shoplifter
                     {
                         string dialogue;
                         string banneddialogue = (config.DaysBannedFor == 1)
-                            ? i18n.string_BanFromShop_Single()//ModEntry.shopliftingstrings[$"TheMightyAmondee.Shoplifter/BanFromShop"].Replace("{0} days", "a day")
-                            : i18n.string_BanFromShop();//string.Format(ModEntry.shopliftingstrings[$"TheMightyAmondee.Shoplifter/BanFromShop"], config.DaysBannedFor.ToString());
+                            ? i18n.string_BanFromShop_Single()
+                            : i18n.string_BanFromShop();
 
                         fineamount = Math.Min(Game1.player.Money, (int)config.MaxFine);
 
@@ -86,8 +101,8 @@ namespace Shoplifter
                             {
                                 // Yes, they have special dialogue
                                 dialogue = (fineamount > 0)
-                                    ? i18n.string_Caught(character)//string.Format(ModEntry.shopliftingstrings[$"TheMightyAmondee.Shoplifter/Caught{character}"], fineamount.ToString())
-                                    : i18n.string_Caught_NoMoney(character);//ModEntry.shopliftingstrings[$"TheMightyAmondee.Shoplifter/Caught{character}_NoMoney"];
+                                    ? i18n.string_Caught(character)
+                                    : i18n.string_Caught_NoMoney(character);
 
 
                             }
@@ -96,8 +111,8 @@ namespace Shoplifter
                             {
                                 // No, use generic dialogue
                                 dialogue = (fineamount > 0)
-                                    ? i18n.string_Caught("Generic")//string.Format(ModEntry.shopliftingstrings[$"TheMightyAmondee.Shoplifter/CaughtGeneric"], fineamount.ToString())
-                                    : i18n.string_Caught_NoMoney("Generic"); //ModEntry.shopliftingstrings[$"TheMightyAmondee.Shoplifter/CaughtGeneric_NoMoney"];
+                                    ? i18n.string_Caught("Generic")
+                                    : i18n.string_Caught_NoMoney("Generic");
                             }
 
                             // Is the player now banned? (uses catch before as dialogue is loaded before count is adjusted) Append additional dialogue
@@ -192,25 +207,21 @@ namespace Shoplifter
         /// <param name="bannable">Whether the player can be banned from the shop</param>
         public static void ShopliftingMenu(GameLocation location, string[] shopkeepers, string shop, int maxstock, int maxquantity, bool islandvisit = false, bool bannable = true)
         {
+            // Check player hasn't reached daily shoplifting limit
             if (ModEntry.PerScreenShopliftCounter.Value >= config.MaxShopliftsPerDay)
             {
+                // Player has reached limit, exit method after displaying dialogue box
                 Game1.drawObjectDialogue(config.MaxShopliftsPerDay != 1
-                        ? i18n.string_AlreadyShoplifted() //string.Format(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"], config.MaxShopliftsPerDay)
-                        : i18n.string_AlreadyShoplifted_Single()); //ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"].Replace("{0} times ", ""));
+                        ? i18n.string_AlreadyShoplifted()
+                        : i18n.string_AlreadyShoplifted_Single());
                 return;
             }
 
-            else if (config.MaxShopliftsPerStore > 1 && ModEntry.PerScreenShopliftedShops.Value.ContainsKey(shop) == true && ModEntry.PerScreenShopliftedShops.Value[shop] >= config.MaxShopliftsPerStore )
+            // Check player hasn't reached daily shoplifting limit for the shop
+            else if (config.MaxShopliftsPerStore > 1 && ModEntry.PerScreenShopliftedShops.Value.ContainsKey(shop) == true && ModEntry.PerScreenShopliftedShops.Value[shop] >= config.MaxShopliftsPerStore)
             {
+                // Player has reached limit, exit method after displaying dialogue box
                 Game1.drawObjectDialogue(i18n.string_AlreadyShopliftedSameShop());
-                //try
-                //{
-                //    Game1.drawObjectDialogue(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShopliftedSameShop"]);
-                //}
-                //catch
-                //{
-                //    Game1.drawObjectDialogue(ModEntry.shopliftingstrings["Placeholder"]);
-                //}
                 return;
             }
 
@@ -234,31 +245,37 @@ namespace Shoplifter
                         return;
                     }
 
+                    // Set stolen to true so counters will increment
                     ModEntry.PerScreenStolen.Value = false;
 
-                    // Not caught, generate stock for shoplifting, on purchase make sure player can't steal again
+                    // Not caught, generate stock for shoplifting, on purchase adjust counters
                     Game1.activeClickableMenu = new ShopMenu(ShopStock.generateRandomStock(maxstock, maxquantity, shop), 3, null, delegate
                     {
                         if (ModEntry.PerScreenStolen.Value == false)
                         {
+                            // Increment times shoplifted by one
                             ModEntry.PerScreenShopliftCounter.Value++;
                         }                        
 
                         if (config.MaxShopliftsPerStore > 1 && ModEntry.PerScreenShopliftedShops.Value.ContainsKey(shop) == false)
                         {
+                            // Add shop to list of shoplifted shops if needed
                             ModEntry.PerScreenShopliftedShops.Value.Add(shop, 1);
                         }
 
                         else if (ModEntry.PerScreenStolen.Value == false && config.MaxShopliftsPerStore > 1 && ModEntry.PerScreenShopliftedShops.Value.ContainsKey(shop) == true)
                         {
+                            // Shop on shoplifted list, increment value by one
                             ModEntry.PerScreenShopliftedShops.Value[shop]++;
                         }
 
+                        // Set stolen to false so counters won't increment on next purchase while in shoplifting window, will become true next time window opens so it can increment again
                         ModEntry.PerScreenStolen.Value = true;
 
                         return false;
                     }, null, "");
                 }
+
                 else if (answer != "Yes" && islandvisit == true)
                 {
                     switch (shop)
@@ -331,8 +348,8 @@ namespace Shoplifter
                 return;
             }
 
-            // Pierre is not at shop and on island, player can purchase stock properly or steal
-            else if (location.getCharacterFromName("Pierre") == null && Game1.IsVisitingIslandToday("Pierre"))
+            // Pierre is not at shop and on island, player can purchase stock properly or steal, ignore if can't shoplift
+            else if (location.getCharacterFromName("Pierre") == null && Game1.IsVisitingIslandToday("Pierre") == true && CanShoplift("SeedShop") == true)
             {
                 Game1.dialogueUp = false;
                 Game1.drawObjectDialogue(Game1.content.LoadString("Strings\\Locations:SeedShop_MoneyBox"));
@@ -361,8 +378,8 @@ namespace Shoplifter
             // Player is in correct position for buying
             if (who.getTileY() > tileLocation.Y)
             {
-                // Robin is on island and not at sciencehouse, she can't sell but player can purchase properly if they want
-                if (location.getCharacterFromName("Robin") == null && Game1.IsVisitingIslandToday("Robin"))
+                // Robin is on island and not at sciencehouse, she can't sell but player can purchase properly if they want, ignore if can't shoplift
+                if (location.getCharacterFromName("Robin") == null && Game1.IsVisitingIslandToday("Robin") == true && CanShoplift("Carpenters") == true)
                 {
                     // Close any current dialogue boxes
                     Game1.dialogueUp = false;
@@ -412,8 +429,8 @@ namespace Shoplifter
             // Player is in correct position for buying
             if (who.getTileY() > tileLocation.Y)
             {
-                // Marnie is not in the location, she is on the island
-                if (location.getCharacterFromName("Marnie") == null && Game1.IsVisitingIslandToday("Marnie"))
+                // Marnie is not in the location, she is on the island, ignore if can't shoplift
+                if (location.getCharacterFromName("Marnie") == null && Game1.IsVisitingIslandToday("Marnie") == true && CanShoplift("AnimalShop") == true)
                 {
                     Game1.dialogueUp = false;
                     Game1.drawObjectDialogue(Game1.content.LoadString("Strings\\Locations:AnimalShop_MoneyBox"));
@@ -482,8 +499,8 @@ namespace Shoplifter
         /// <param name="location">The current location instance</param>
         public static void SaloonShopliftingMenu(GameLocation location, Location tilelocation)
         {           
-            // Gus is not in the location, he is on the island
-            if (location.getCharacterFromName("Gus") == null && Game1.IsVisitingIslandToday("Gus"))
+            // Gus is not in the location, he is on the island, ignore if can't shoplift
+            if (location.getCharacterFromName("Gus") == null && Game1.IsVisitingIslandToday("Gus") == true && CanShoplift("Saloon") == true)
             {
                 Game1.dialogueUp = false;
                 Game1.drawObjectDialogue(Game1.content.LoadString("Strings\\Locations:Saloon_MoneyBox"));

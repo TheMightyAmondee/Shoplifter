@@ -198,17 +198,6 @@ namespace Shoplifter
                                 Helper.Input.Suppress(e.Button);
 
                                 Game1.drawObjectDialogue(i18n.string_Banned());
-
-                                //// Show string to say player is banned if it is available, else a placeholder
-                                //if (shopliftingstrings.ContainsKey("TheMightyAmondee.Shoplifter/Banned") == true)
-                                //{
-                                //    Game1.drawObjectDialogue(shopliftingstrings["TheMightyAmondee.Shoplifter/Banned"]);
-                                //}
-
-                                //else
-                                //{
-                                //    Game1.drawObjectDialogue(shopliftingstrings["Placeholder"]);
-                                //}
                             }
                             break;
                         // For each action that would open a shop that can be shoplifted, check if it can be shoplifted and take appropriate action
