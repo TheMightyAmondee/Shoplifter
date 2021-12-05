@@ -299,30 +299,11 @@ namespace Shoplifter
             }
 
             // Player can steal
-            else if (ModEntry.PerScreenShopliftCounter.Value < config.MaxShopliftsPerDay)
+            else 
             {
                 ShopliftingMenu(location, new string[1] { "Willy" }, "FishShop", 3, 3);                              
             }
             
-            // Player can't steal and Willy can't sell
-            else
-            {
-                //Game1.drawObjectDialogue(config.MaxShopliftsPerDay != 1
-                //        ? i18n.string_AlreadyShoplifted() //string.Format(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"], config.MaxShopliftsPerDay)
-                //        : i18n.string_AlreadyShoplifted_Single()); //ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"].Replace("{0} times ", ""));
-
-                //if (ModEntry.shopliftingstrings.ContainsKey("TheMightyAmondee.Shoplifter/AlreadyShoplifted") == true)
-                //{
-                //    Game1.drawObjectDialogue(config.MaxShopliftsPerDay != 1 
-                //        ? string.Format(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"], config.MaxShopliftsPerDay) 
-                //        : ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"].Replace("{0} times ",""));
-                //}
-
-                //else
-                //{
-                //    Game1.drawObjectDialogue(ModEntry.shopliftingstrings["Placeholder"]);
-                //}
-            }
         }
 
         /// <summary>
@@ -334,28 +315,7 @@ namespace Shoplifter
             NPC sandy = location.getCharacterFromName("Sandy");
             if (sandy == null || sandy.currentLocation != location)
             {
-                if (ModEntry.PerScreenShopliftCounter.Value < config.MaxShopliftsPerDay)
-                {
-                    ShopliftingMenu(location, new string[1] { "Sandy" }, "SandyShop", 3, 3);                   
-                }
-
-                else
-                {
-                    //Game1.drawObjectDialogue(config.MaxShopliftsPerDay != 1
-                    //    ? i18n.string_AlreadyShoplifted() //string.Format(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"], config.MaxShopliftsPerDay)
-                    //    : i18n.string_AlreadyShoplifted_Single()); //ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"].Replace("{0} times ", ""));
-                    //if (ModEntry.shopliftingstrings.ContainsKey("TheMightyAmondee.Shoplifter/AlreadyShoplifted") == true)
-                    //{
-                    //    Game1.drawObjectDialogue(config.MaxShopliftsPerDay != 1
-                    //        ? string.Format(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"], config.MaxShopliftsPerDay)
-                    //        : ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"].Replace("{0} times ", ""));
-                    //}
-
-                    //else
-                    //{
-                    //    Game1.drawObjectDialogue(ModEntry.shopliftingstrings["Placeholder"]);
-                    //}
-                }
+                ShopliftingMenu(location, new string[1] { "Sandy" }, "SandyShop", 3, 3);
             }
         }
 
@@ -401,65 +361,42 @@ namespace Shoplifter
             // Player is in correct position for buying
             if (who.getTileY() > tileLocation.Y)
             {
-                // Player can steal
-                if (ModEntry.PerScreenShopliftCounter.Value < config.MaxShopliftsPerDay)
+                // Robin is on island and not at sciencehouse, she can't sell but player can purchase properly if they want
+                if (location.getCharacterFromName("Robin") == null && Game1.IsVisitingIslandToday("Robin"))
                 {
-                    // Robin is on island and not at sciencehouse, she can't sell but player can purchase properly if they want
-                    if (location.getCharacterFromName("Robin") == null && Game1.IsVisitingIslandToday("Robin"))
+                    // Close any current dialogue boxes
+                    Game1.dialogueUp = false;
+                    // Show normal dialogue
+                    Game1.drawObjectDialogue(Game1.content.LoadString("Strings\\Locations:ScienceHouse_MoneyBox"));
+                    // Create question to shoplift after dialogue box is exited
+                    Game1.afterDialogues = delegate
                     {
-                        // Close any current dialogue boxes
-                        Game1.dialogueUp = false;
-                        // Show normal dialogue
-                        Game1.drawObjectDialogue(Game1.content.LoadString("Strings\\Locations:ScienceHouse_MoneyBox"));
-                        // Create question to shoplift after dialogue box is exited
-                        Game1.afterDialogues = delegate
-                        {
-                            ShopliftingMenu(location, new string[4] { "Robin", "Demetrius", "Maru", "Sebastian" }, "Carpenters", 2, 20, true);                            
-                        };
-                    }
+                        ShopliftingMenu(location, new string[4] { "Robin", "Demetrius", "Maru", "Sebastian" }, "Carpenters", 2, 20, true);
+                    };
+                }
 
-                    // Robin is absent and can't sell, player can steal
-                    else if (Game1.shortDayNameFromDayOfSeason(Game1.dayOfMonth).Equals("Tue") && location.carpenters(tileLocation) == true && location.getCharacterFromName("Robin") == null)
-                    {
-                        Game1.dialogueUp = false;
-                        Game1.drawObjectDialogue(Game1.content.LoadString("Strings\\Locations:ScienceHouse_RobinAbsent").Replace('\n', '^'));
-                        Game1.afterDialogues = delegate
-                        {
-                            ShopliftingMenu(location, new string[4] { "Robin", "Demetrius", "Maru", "Sebastian" }, "Carpenters", 2, 20);
-                        };
-
-                    }
-
-                    // Robin can't sell. Period
-                    else if (location.carpenters(tileLocation) == false)
+                // Robin is absent and can't sell, player can steal
+                else if (Game1.shortDayNameFromDayOfSeason(Game1.dayOfMonth).Equals("Tue") && location.carpenters(tileLocation) == true && location.getCharacterFromName("Robin") == null)
+                {
+                    Game1.dialogueUp = false;
+                    Game1.drawObjectDialogue(Game1.content.LoadString("Strings\\Locations:ScienceHouse_RobinAbsent").Replace('\n', '^'));
+                    Game1.afterDialogues = delegate
                     {
                         ShopliftingMenu(location, new string[4] { "Robin", "Demetrius", "Maru", "Sebastian" }, "Carpenters", 2, 20);
-                    }
+                    };
+
+                }
+
+                // Robin can't sell. Period
+                else if (location.carpenters(tileLocation) == false)
+                {
+                    ShopliftingMenu(location, new string[4] { "Robin", "Demetrius", "Maru", "Sebastian" }, "Carpenters", 2, 20);
                 }
 
                 // Robin can sell and player can't steal
                 else if (location.carpenters(tileLocation) == true && ModEntry.PerScreenStolen.Value == true)
                 {
                     return;
-                }
-
-                // Robin can't sell and player can't steal
-                else
-                {
-                    //Game1.drawObjectDialogue(config.MaxShopliftsPerDay != 1
-                    //    ? i18n.string_AlreadyShoplifted() //string.Format(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"], config.MaxShopliftsPerDay)
-                    //    : i18n.string_AlreadyShoplifted_Single()); //ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"].Replace("{0} times ", ""));
-                    //if (ModEntry.shopliftingstrings.ContainsKey("TheMightyAmondee.Shoplifter/AlreadyShoplifted") == true)
-                    //{
-                    //    Game1.drawObjectDialogue(config.MaxShopliftsPerDay != 1
-                    //        ? string.Format(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"], config.MaxShopliftsPerDay)
-                    //        : ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"].Replace("{0} times ", ""));
-                    //}
-
-                    //else
-                    //{
-                    //    Game1.drawObjectDialogue(ModEntry.shopliftingstrings["Placeholder"]);
-                    //}
                 }
             }
         }
@@ -475,60 +412,38 @@ namespace Shoplifter
             // Player is in correct position for buying
             if (who.getTileY() > tileLocation.Y)
             {
-                // Player can steal
-                if (ModEntry.PerScreenShopliftCounter.Value < config.MaxShopliftsPerDay)
+                // Marnie is not in the location, she is on the island
+                if (location.getCharacterFromName("Marnie") == null && Game1.IsVisitingIslandToday("Marnie"))
                 {
-                    // Marnie is not in the location, she is on the island
-                    if (location.getCharacterFromName("Marnie") == null && Game1.IsVisitingIslandToday("Marnie"))
+                    Game1.dialogueUp = false;
+                    Game1.drawObjectDialogue(Game1.content.LoadString("Strings\\Locations:AnimalShop_MoneyBox"));
+                    Game1.afterDialogues = delegate
                     {
-                        Game1.dialogueUp = false;
-                        Game1.drawObjectDialogue(Game1.content.LoadString("Strings\\Locations:AnimalShop_MoneyBox"));
-                        Game1.afterDialogues = delegate
-                        {
-                            ShopliftingMenu(location, new string[2] { "Marnie", "Shane" }, "AnimalShop", 1, 15, true);                           
-                        };
-                    }
+                        ShopliftingMenu(location, new string[2] { "Marnie", "Shane" }, "AnimalShop", 1, 15, true);
+                    };
+                }
 
-                    // Marnie is not at the location and is absent for the day
-                    else if (Game1.shortDayNameFromDayOfSeason(Game1.dayOfMonth).Equals("Tue") && location.animalShop(tileLocation) == true && location.getCharacterFromName("Marnie") == null)
-                    {
-                        Game1.dialogueUp = false;
-                        Game1.drawObjectDialogue(Game1.content.LoadString("Strings\\Locations:AnimalShop_Marnie_Absent").Replace('\n', '^'));
-                        Game1.afterDialogues = delegate
-                        {
-                            ShopliftingMenu(location, new string[2] { "Marnie", "Shane" }, "AnimalShop", 1, 15);
-                        };
-                    }
-
-                    // Marnie can't sell. Period.
-                    else if (location.animalShop(tileLocation) == false)
+                // Marnie is not at the location and is absent for the day
+                else if (Game1.shortDayNameFromDayOfSeason(Game1.dayOfMonth).Equals("Tue") && location.animalShop(tileLocation) == true && location.getCharacterFromName("Marnie") == null)
+                {
+                    Game1.dialogueUp = false;
+                    Game1.drawObjectDialogue(Game1.content.LoadString("Strings\\Locations:AnimalShop_Marnie_Absent").Replace('\n', '^'));
+                    Game1.afterDialogues = delegate
                     {
                         ShopliftingMenu(location, new string[2] { "Marnie", "Shane" }, "AnimalShop", 1, 15);
-                    }
+                    };
+                }
+
+                // Marnie can't sell. Period.
+                else if (location.animalShop(tileLocation) == false)
+                {
+                    ShopliftingMenu(location, new string[2] { "Marnie", "Shane" }, "AnimalShop", 1, 15);
                 }
 
                 // Marnie can sell and player can't steal
                 else if (location.animalShop(tileLocation) == true && ModEntry.PerScreenStolen.Value == true)
                 {
                     return;
-                }
-
-                else
-                {
-                    //Game1.drawObjectDialogue(config.MaxShopliftsPerDay != 1
-                    //    ? i18n.string_AlreadyShoplifted() //string.Format(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"], config.MaxShopliftsPerDay)
-                    //    : i18n.string_AlreadyShoplifted_Single()); //ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"].Replace("{0} times ", ""));
-                    //if (ModEntry.shopliftingstrings.ContainsKey("TheMightyAmondee.Shoplifter/AlreadyShoplifted") == true)
-                    //{
-                    //    Game1.drawObjectDialogue(config.MaxShopliftsPerDay != 1
-                    //        ? string.Format(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"], config.MaxShopliftsPerDay)
-                    //        : ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"].Replace("{0} times ", ""));
-                    //}
-
-                    //else
-                    //{
-                    //    Game1.drawObjectDialogue(ModEntry.shopliftingstrings["Placeholder"]);
-                    //}
                 }
             }
         }
@@ -543,28 +458,7 @@ namespace Shoplifter
             // Character is not at the required tile, noone can sell
             if (location.isCharacterAtTile(who.getTileLocation() + new Vector2(0f, -2f)) == null && location.isCharacterAtTile(who.getTileLocation() + new Vector2(-1f, -2f)) == null)
             {
-                if (ModEntry.PerScreenShopliftCounter.Value < config.MaxShopliftsPerDay)
-                {
-                    ShopliftingMenu(location, new string[2] { "Harvey", "Maru" }, "HospitalShop", 1, 3);                   
-                }
-
-                else
-                {
-                    //Game1.drawObjectDialogue(config.MaxShopliftsPerDay != 1
-                    //    ? i18n.string_AlreadyShoplifted() //string.Format(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"], config.MaxShopliftsPerDay)
-                    //    : i18n.string_AlreadyShoplifted_Single()); //ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"].Replace("{0} times ", ""));
-                    //if (ModEntry.shopliftingstrings.ContainsKey("TheMightyAmondee.Shoplifter/AlreadyShoplifted") == true)
-                    //{
-                    //    Game1.drawObjectDialogue(config.MaxShopliftsPerDay != 1
-                    //        ? string.Format(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"], config.MaxShopliftsPerDay)
-                    //        : ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"].Replace("{0} times ", ""));
-                    //}
-
-                    //else
-                    //{
-                    //    Game1.drawObjectDialogue(ModEntry.shopliftingstrings["Placeholder"]);
-                    //}
-                }
+                ShopliftingMenu(location, new string[2] { "Harvey", "Maru" }, "HospitalShop", 1, 3);
             }
         }
 
@@ -578,29 +472,7 @@ namespace Shoplifter
             // Clint can't sell. Period.
             if (location.blacksmith(tileLocation) == false)
             {
-                if (ModEntry.PerScreenShopliftCounter.Value < config.MaxShopliftsPerDay)
-                {
-                    ShopliftingMenu(location, new string[1] { "Clint" }, "Blacksmith", 3, 10);                   
-                }
-
-                else
-                {
-                    //Game1.drawObjectDialogue(config.MaxShopliftsPerDay != 1
-                    //    ? i18n.string_AlreadyShoplifted() //string.Format(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"], config.MaxShopliftsPerDay)
-                    //    : i18n.string_AlreadyShoplifted_Single()); //ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"].Replace("{0} times ", ""));
-                    //if (ModEntry.shopliftingstrings.ContainsKey("TheMightyAmondee.Shoplifter/AlreadyShoplifted") == true)
-                    //{
-                    //    Game1.drawObjectDialogue(config.MaxShopliftsPerDay != 1
-                    //        ? string.Format(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"], config.MaxShopliftsPerDay)
-                    //        : ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"].Replace("{0} times ", ""));
-                    //}
-
-                    //else
-                    //{
-                    //    Game1.drawObjectDialogue(ModEntry.shopliftingstrings["Placeholder"]);
-                    //}
-                }
-
+                ShopliftingMenu(location, new string[1] { "Clint" }, "Blacksmith", 3, 10);
             }
         }
 
@@ -613,95 +485,32 @@ namespace Shoplifter
             // Gus is not in the location, he is on the island
             if (location.getCharacterFromName("Gus") == null && Game1.IsVisitingIslandToday("Gus"))
             {
-                if (ModEntry.PerScreenShopliftCounter.Value < config.MaxShopliftsPerDay)
+                Game1.dialogueUp = false;
+                Game1.drawObjectDialogue(Game1.content.LoadString("Strings\\Locations:Saloon_MoneyBox"));
+                Game1.afterDialogues = delegate
                 {
-                    Game1.dialogueUp = false;
-                    Game1.drawObjectDialogue(Game1.content.LoadString("Strings\\Locations:Saloon_MoneyBox"));
-                    Game1.afterDialogues = delegate
-                    {
-                        ShopliftingMenu(location, new string[2] { "Gus", "Emily" }, "Saloon", 2, 1, true);
-                    };
-                }
+                    ShopliftingMenu(location, new string[2] { "Gus", "Emily" }, "Saloon", 2, 1, true);
+                };                               
+            }
 
-                // Gus can sell, player can't steal
-                else if (location.saloon(tilelocation) == true && ModEntry.PerScreenStolen.Value == true)
-                {
-                    return;
-                }
-
-                else
-                {
-                    //Game1.drawObjectDialogue(config.MaxShopliftsPerDay != 1
-                    //    ? i18n.string_AlreadyShoplifted() //string.Format(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"], config.MaxShopliftsPerDay)
-                    //    : i18n.string_AlreadyShoplifted_Single()); //ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"].Replace("{0} times ", ""));
-                    //if (ModEntry.shopliftingstrings.ContainsKey("TheMightyAmondee.Shoplifter/AlreadyShoplifted") == true)
-                    //{
-                    //    Game1.drawObjectDialogue(config.MaxShopliftsPerDay != 1
-                    //        ? string.Format(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"], config.MaxShopliftsPerDay)
-                    //        : ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"].Replace("{0} times ", ""));
-                    //}
-
-                    //else
-                    //{
-                    //    Game1.drawObjectDialogue(ModEntry.shopliftingstrings["Placeholder"]);
-                    //}
-                }
-                
+            // Gus can sell, player can't steal
+            else if (location.saloon(tilelocation) == true && ModEntry.PerScreenStolen.Value == true)
+            {
                 return;
             }
 
             // Gus can't sell. Period.
             else if (location.saloon(tilelocation) == false)
             {
-                if (ModEntry.PerScreenShopliftCounter.Value < config.MaxShopliftsPerDay)
-                {
-                    ShopliftingMenu(location, new string[2] { "Gus", "Emily" }, "Saloon", 2, 1);
-                }
-
-                // Gus can't sell, player can't steal
-                else
-                {
-                    //Game1.drawObjectDialogue(config.MaxShopliftsPerDay != 1
-                    //    ? i18n.string_AlreadyShoplifted() //string.Format(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"], config.MaxShopliftsPerDay)
-                    //    : i18n.string_AlreadyShoplifted_Single()); //ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"].Replace("{0} times ", ""));
-                    //if (ModEntry.shopliftingstrings.ContainsKey("TheMightyAmondee.Shoplifter/AlreadyShoplifted") == true)
-                    //{
-                    //    Game1.drawObjectDialogue(config.MaxShopliftsPerDay != 1
-                    //        ? string.Format(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"], config.MaxShopliftsPerDay)
-                    //        : ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"].Replace("{0} times ", ""));
-                    //}
-
-                    //else
-                    //{
-                    //    Game1.drawObjectDialogue(ModEntry.shopliftingstrings["Placeholder"]);
-                    //}
-                }
+                ShopliftingMenu(location, new string[2] { "Gus", "Emily" }, "Saloon", 2, 1);
             }
         }
 
         public static void IceCreamShopliftingMenu(GameLocation location, Location tilelocation)
         {
-            if (ModEntry.PerScreenShopliftCounter.Value < config.MaxShopliftsPerDay && location.isCharacterAtTile(new Vector2(tilelocation.X, tilelocation.Y - 2)) == null && location.isCharacterAtTile(new Vector2(tilelocation.X, tilelocation.Y - 1)) == null)
+            if (location.isCharacterAtTile(new Vector2(tilelocation.X, tilelocation.Y - 2)) == null && location.isCharacterAtTile(new Vector2(tilelocation.X, tilelocation.Y - 1)) == null)
             {
                 ShopliftingMenu(location, new string[1] { "Alex" }, "IceCreamStand", 1, 5, false, false);               
-            }
-
-            else
-            {
-                //Game1.drawObjectDialogue(config.MaxShopliftsPerDay != 1
-                //        ? i18n.string_AlreadyShoplifted() //string.Format(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"], config.MaxShopliftsPerDay)
-                //        : i18n.string_AlreadyShoplifted_Single()); //ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"].Replace("{0} times ", ""));
-                //if (ModEntry.shopliftingstrings.ContainsKey("TheMightyAmondee.Shoplifter/AlreadyShoplifted") == true)
-                //{
-                //    Game1.drawObjectDialogue(config.MaxShopliftsPerDay != 1
-                //        ? string.Format(ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"], config.MaxShopliftsPerDay)
-                //        : ModEntry.shopliftingstrings["TheMightyAmondee.Shoplifter/AlreadyShoplifted"].Replace("{0} times ", ""));
-                //}
-
-                //else
-                //{
-                //    Game1.drawObjectDialogue(ModEntry.shopliftingstrings["Placeholder"]);
-                //}
             }
         }
     }
