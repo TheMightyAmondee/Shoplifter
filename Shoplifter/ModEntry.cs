@@ -130,6 +130,11 @@ namespace Shoplifter
             {
                 this.config.CatchesBeforeBan = 1;
             }
+
+            if (this.config.CaughtRadius == 0)
+            {
+                this.config.CaughtRadius = 1;
+            }
         }
 
         private void Action(object sender, ButtonPressedEventArgs e)
