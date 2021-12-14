@@ -7,7 +7,7 @@
     "TheMightyAmondee.Shoplifter/BanFromShop_Single":"#$b#这个月你从我这里偷的东西够多了 @， 我要禁止你一天。$2",
     "TheMightyAmondee.Shoplifter/BanFromShop":"#$b#这个月你从我这里偷的东西够多了 @，我要禁你几天{{daysbanned}}。$2",
   
-    "TheMightyAmondee.Shoplifter/CaughtGeneric": "你这是严重的入店行窃 @？$2#$b#*叹气* 我要为此罚款你{{fineamount}}金。.$2",
+    "TheMightyAmondee.Shoplifter/CaughtGeneric": "你这是严重的入店行窃 @？$2#$b#*叹气* 我要为此罚款你{{fineamount}}金。$2",
     "TheMightyAmondee.Shoplifter/CaughtPierre": "你在商店行窃？？！！你在想什么？！$4#$b#付{{fineamount}}金罚款，我就放你走 @。$3",
     "TheMightyAmondee.Shoplifter/CaughtWilly": "可以判断你什么时候在商店行窃 @...气味跟着你...$2#$b#我要为此罚款你{{fineamount}}金。$2",
     "TheMightyAmondee.Shoplifter/CaughtRobin": "“真的 @？你认为你可以得到一台免费的电视吗？...我不会把大件物品放在那里的...$3#$b#我要为此罚款你{{fineamount}}金...也许这会让你停手。$2",
