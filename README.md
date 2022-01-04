@@ -60,7 +60,7 @@ Translations are released seperately to the main files until a sufficient number
 
 1.1.0 - Made shoplifting preferences configurable, added Icecream Stand as shopliftable
 
-1.2.0 - Added translation support
+1.1.2 - Added translation support
 
 
 
