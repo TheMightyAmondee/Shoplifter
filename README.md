@@ -51,6 +51,7 @@ Compatibile with shop tile framework in that altered stock will be considered wh
 Shoplifter fully supports translation! Currently available in:
 - Chinese, thanks to 20080618!
 - Korean, thanks to Aromay7!
+- Italian, thanks to @peanutbatteries!
 
 New translations always welcome! The best place to reach me is on the Shoplifter [mod page](https://www.nexusmods.com/stardewvalley/mods/8569).
 Translations are released seperately to the main files until a sufficient number of translations are received for a full release.
