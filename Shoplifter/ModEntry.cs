@@ -9,6 +9,17 @@ using xTile.Dimensions;
 
 namespace Shoplifter
 {
+    public interface IEventLimiterApi
+    {
+        public int GetDayLimit();
+
+        public int GetRowLimit();
+
+        public List<int> GetExceptions(bool includeinternal = true);
+
+        public bool AddInternalException(int eventid);
+
+    }
     public class ModEntry
         : Mod
     {
@@ -23,7 +34,7 @@ namespace Shoplifter
         public static readonly PerScreen<ArrayList> PerScreenShopsBannedFrom = new PerScreen<ArrayList>(createNewState: () => new ArrayList());
 
         public static readonly string[] shops = { "SeedShop", "FishShop", "AnimalShop", "ScienceHouse", "Hospital", "Blacksmith", "Saloon", "SandyHouse" };
-     
+
 
         public override void Entry(IModHelper helper)
         {          
@@ -129,6 +140,17 @@ namespace Shoplifter
             {
                 this.config.CaughtRadius = 1;
             }
+
+            var eventlimiterapi = this.Helper.ModRegistry.GetApi<IEventLimiterApi>("TheMightyAmondee.EventLimiter");
+            eventlimiterapi.AddInternalException(58660004);
+            eventlimiterapi.AddInternalException(58660005);
+
+            foreach(var exception in eventlimiterapi.GetExceptions())
+            {
+                this.Monitor.Log($"{exception}");
+            }
+            this.Monitor.Log($"{eventlimiterapi.GetDayLimit()}");
+            this.Monitor.Log($"{eventlimiterapi.GetRowLimit()}");
         }
 
         private void Action(object sender, ButtonPressedEventArgs e)
