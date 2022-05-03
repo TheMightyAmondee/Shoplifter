@@ -201,7 +201,7 @@ namespace Shoplifter
                             {
                                 ShopMenuUtilities.SeedShopShopliftingMenu(location);
                             }
-                            else if (location.name.Equals("SandyHouse"))
+                            else if (location.Name.Equals("SandyHouse"))
                             {
                                 ShopMenuUtilities.SandyShopShopliftingMenu(location);
                             }
