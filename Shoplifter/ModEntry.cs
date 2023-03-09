@@ -6,7 +6,6 @@ using StardewModdingAPI.Events;
 using StardewModdingAPI.Utilities;
 using StardewValley.Locations;
 using xTile.Dimensions;
-using GenericModConfigMenu;
 
 namespace Shoplifter
 {
