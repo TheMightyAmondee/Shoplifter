@@ -6,6 +6,7 @@ using StardewModdingAPI.Events;
 using StardewModdingAPI.Utilities;
 using StardewValley.Locations;
 using xTile.Dimensions;
+using GenericModConfigMenu;
 
 namespace Shoplifter
 {
@@ -129,6 +130,81 @@ namespace Shoplifter
             {
                 this.config.CaughtRadius = 1;
             }
+
+            this.BuildConfigMenu();
+        }
+
+        private void BuildConfigMenu()
+        {
+            // get Generic Mod Config Menu's API (if it's installed)
+            var configMenu = this.Helper.ModRegistry.GetApi<IGenericModConfigMenuApi>("spacechase0.GenericModConfigMenu");
+            if (configMenu is null) return;
+
+            // register mod
+            configMenu.Register(
+                mod: this.ModManifest,
+                reset: () => this.config = new ModConfig(),
+                save: () => this.Helper.WriteConfig(this.config)
+            );
+
+            configMenu.AddSectionTitle(this.ModManifest, () => "How often can you shoplift?");
+            configMenu.AddNumberOption(
+                mod: this.ModManifest,
+                name: () => "Max. Shoplifts/day",
+                tooltip: () => "The maximum shoplifts per day.",
+                getValue: () => (int)this.config.MaxShopliftsPerDay,
+                setValue: value => this.config.MaxShopliftsPerDay = (uint)value,
+                min: 1
+            );
+            configMenu.AddNumberOption(
+                mod: this.ModManifest,
+                name: () => "Max. Shoplifts/store",
+                tooltip: () => "How many times the same shop can be shoplifted each day.",
+                getValue: () => (int)this.config.MaxShopliftsPerStore,
+                setValue: value => this.config.MaxShopliftsPerStore = (uint)value,
+                min: 1
+            );
+            configMenu.AddSectionTitle(this.ModManifest, () => "Which penalties when you are caught?");
+            configMenu.AddNumberOption(
+                mod: this.ModManifest,
+                name: () => "Max. Fine",
+                tooltip: () => "Maximum fine amount.",
+                getValue: () => (int)this.config.MaxFine,
+                setValue: value => this.config.MaxFine = (uint)value,
+                min: 0
+            );
+            configMenu.AddNumberOption(
+                mod: this.ModManifest,
+                name: () => "Friendship Penalty",
+                tooltip: () => "Maximum friendship penalty.",
+                getValue: () => (int)this.config.FriendshipPenalty,
+                setValue: value => this.config.FriendshipPenalty = (uint)value,
+                min: 0
+            );
+            configMenu.AddNumberOption(
+                mod: this.ModManifest,
+                name: () => "Catches Before Ban",
+                tooltip: () => "How many times you must be caught before being banned.",
+                getValue: () => (int)this.config.CatchesBeforeBan,
+                setValue: value => this.config.CatchesBeforeBan = (uint)value,
+                min: 1, max: 100
+            );
+            configMenu.AddNumberOption(
+                mod: this.ModManifest,
+                name: () => "Days Banned For",
+                tooltip: () => "How many days you are banned for.",
+                getValue: () => (int)this.config.DaysBannedFor,
+                setValue: value => this.config.DaysBannedFor = (uint)value,
+                min: 0, max: 28
+            );
+            configMenu.AddNumberOption(
+                mod: this.ModManifest,
+                name: () => "Caught Radius",
+                tooltip: () => "Maximum distance a villager must be to catch the player.",
+                getValue: () => (int)this.config.CaughtRadius,
+                setValue: value => this.config.CaughtRadius = (uint)value,
+                min: 0, max: 20
+            );
         }
 
         private void Action(object sender, ButtonPressedEventArgs e)
