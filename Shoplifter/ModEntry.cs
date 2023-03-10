@@ -146,60 +146,60 @@ namespace Shoplifter
                 save: () => this.Helper.WriteConfig(this.config)
             );
 
-            configMenu.AddSectionTitle(this.ModManifest, () => "How often can you shoplift?");
+            configMenu.AddSectionTitle(this.ModManifest, () => i18n.string_GMCM_PeriodSection());
             configMenu.AddNumberOption(
                 mod: this.ModManifest,
-                name: () => "Max. Shoplifts/day",
-                tooltip: () => "The maximum shoplifts per day.",
+                name: () => i18n.string_GMCM_MaxDay(),
+                tooltip: () => i18n.string_GMCM_MaxDayTooltip(),
                 getValue: () => (int)this.config.MaxShopliftsPerDay,
                 setValue: value => this.config.MaxShopliftsPerDay = (uint)value,
                 min: 1
             );
             configMenu.AddNumberOption(
                 mod: this.ModManifest,
-                name: () => "Max. Shoplifts/store",
-                tooltip: () => "How many times the same shop can be shoplifted each day.",
+                name: () => i18n.string_GMCM_MaxShop(),
+                tooltip: () => i18n.string_GMCM_MaxShopTooltip(),
                 getValue: () => (int)this.config.MaxShopliftsPerStore,
                 setValue: value => this.config.MaxShopliftsPerStore = (uint)value,
                 min: 1
             );
-            configMenu.AddSectionTitle(this.ModManifest, () => "Which penalties when you are caught?");
+            configMenu.AddSectionTitle(this.ModManifest, () => i18n.string_GMCM_PenaltySection());
             configMenu.AddNumberOption(
                 mod: this.ModManifest,
-                name: () => "Max. Fine",
-                tooltip: () => "Maximum fine amount.",
+                name: () => i18n.string_GMCM_MaxFine(),
+                tooltip: () => i18n.string_GMCM_MaxFineTooltip(),
                 getValue: () => (int)this.config.MaxFine,
                 setValue: value => this.config.MaxFine = (uint)value,
                 min: 0
             );
             configMenu.AddNumberOption(
                 mod: this.ModManifest,
-                name: () => "Friendship Penalty",
-                tooltip: () => "Maximum friendship penalty.",
+                name: () => i18n.string_GMCM_MaxFriendship(),
+                tooltip: () => i18n.string_GMCM_MaxFriendshipTooltip(),
                 getValue: () => (int)this.config.FriendshipPenalty,
                 setValue: value => this.config.FriendshipPenalty = (uint)value,
                 min: 0
             );
             configMenu.AddNumberOption(
                 mod: this.ModManifest,
-                name: () => "Catches Before Ban",
-                tooltip: () => "How many times you must be caught before being banned.",
+                name: () => i18n.string_GMCM_MaxCatches(),
+                tooltip: () => i18n.string_GMCM_MaxCatchesTooltip(),
                 getValue: () => (int)this.config.CatchesBeforeBan,
                 setValue: value => this.config.CatchesBeforeBan = (uint)value,
                 min: 1, max: 100
             );
             configMenu.AddNumberOption(
                 mod: this.ModManifest,
-                name: () => "Days Banned For",
-                tooltip: () => "How many days you are banned for.",
+                name: () => i18n.string_GMCM_MaxBanned(),
+                tooltip: () => i18n.string_GMCM_MaxBannedTooltip(),
                 getValue: () => (int)this.config.DaysBannedFor,
                 setValue: value => this.config.DaysBannedFor = (uint)value,
                 min: 0, max: 28
             );
             configMenu.AddNumberOption(
                 mod: this.ModManifest,
-                name: () => "Caught Radius",
-                tooltip: () => "Maximum distance a villager must be to catch the player.",
+                name: () => i18n.string_GMCM_MaxRadius(),
+                tooltip: () => i18n.string_GMCM_MaxRadiusTooltip(),
                 getValue: () => (int)this.config.CaughtRadius,
                 setValue: value => this.config.CaughtRadius = (uint)value,
                 min: 0, max: 20

@@ -23,7 +23,7 @@ namespace Shoplifter
         {
             return i18n.GetTranslation("TheMightyAmondee.Shoplifter/GMCM_PeriodSection");
         }
-        public static string stringGMCM_MaxDay()
+        public static string string_GMCM_MaxDay()
         {
             return i18n.GetTranslation("TheMightyAmondee.Shoplifter/GMCM_MaxDay");
         }
@@ -39,7 +39,7 @@ namespace Shoplifter
         {
             return i18n.GetTranslation("TheMightyAmondee.Shoplifter/GMCM_MaxShopTooltip");
         }
-        public static string stringGMCM_PenaltySection()
+        public static string string_GMCM_PenaltySection()
         {
             return i18n.GetTranslation("TheMightyAmondee.Shoplifter/GMCM_PenaltySection");
         }
@@ -59,7 +59,7 @@ namespace Shoplifter
         {
             return i18n.GetTranslation("TheMightyAmondee.Shoplifter/GMCM_MaxFriendshipTooltip");
         }
-        public static string stringGMCM_MaxCatches()
+        public static string string_GMCM_MaxCatches()
         {
             return i18n.GetTranslation("TheMightyAmondee.Shoplifter/GMCM_MaxCatches");
         }
