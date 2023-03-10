@@ -1,4 +1,5 @@
 {
+    //Translations thanks to Breeis!
     "TheMightyAmondee.Shoplifter/Shoplift":"Voler ?",  
     "TheMightyAmondee.Shoplifter/Banned": "Vous avez été banni pour vol à l'étalage. Ne poussez pas votre chance trop loin...",
     "TheMightyAmondee.Shoplifter/AlreadyShoplifted_Single": "Vous avez déjà volé aujourd’hui. Ça suffit...",
@@ -28,7 +29,8 @@
     "TheMightyAmondee.Shoplifter/CaughtClint_NoMoney": "Tu me voles @! Je pensais que tu étais une meilleure personne que ça.$3#$b#Je vais rien te prendre @, vu que tu n'as pas de quoi payer.$2",
     "TheMightyAmondee.Shoplifter/CaughtSandy_NoMoney": "Être loin des autres ne rend pas mon magasin plus facile à voler, @.$2#$b#T'inquiète pas à propos de cette amende @, juste pars.$2",
     "TheMightyAmondee.Shoplifter/CaughtAlex_NoMoney": "Tu est à ce point désésperer pour voler de la glace, @?$7#$b#Je vais juste te laisser partir avec un avertissment cette fois ci.$5",
-    
+    //
+
     // TODO Improve translations
     "TheMightyAmondee.Shoplifter/GMCM_PeriodSection":"Combien de fois pouvez-vous voler à l'étalage ?",  
     "TheMightyAmondee.Shoplifter/GMCM_MaxDay": "Nombre maximum de vols à l'étalage par jour",

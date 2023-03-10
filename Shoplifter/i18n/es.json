@@ -1,4 +1,5 @@
 {
+    //Translations thanks to viridian-fog!
     "TheMightyAmondee.Shoplifter/Shoplift":"¿Hurto?",  
     "TheMightyAmondee.Shoplifter/Banned": "Te han expulsado por hurto. No tientes la suerte...",
     "TheMightyAmondee.Shoplifter/AlreadyShoplifted_Single": "Ya has robado hoy. Es suficiente...",
@@ -28,6 +29,7 @@
     "TheMightyAmondee.Shoplifter/CaughtClint_NoMoney": "¡Me estás robando @! Pensaba que eras una mejor persona que esto.$3#$b#No te sancionaré esta vez @, ya que no la puedes pagar de todas formas.$2",
     "TheMightyAmondee.Shoplifter/CaughtSandy_NoMoney": "Estar alejada del resto no hace que mi tienda sea más fácil de robar que el resto, @.$2#$b#No te preocupes de la sanción esta vez @, tan solo vete.$2",
     "TheMightyAmondee.Shoplifter/CaughtAlex_NoMoney": "¿Enserio quieres helado tan desesperadamente, @?$7#$b#Voy a dejarte ir con un aviso esta vez.$5",
+    //
 
     // TODO Improve translations
     "TheMightyAmondee.Shoplifter/GMCM_PeriodSection":"¿Con qué frecuencia puedes robar en una tienda?",  

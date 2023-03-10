@@ -35,7 +35,7 @@
     "TheMightyAmondee.Shoplifter/GMCM_MaxDayTooltip": "The maximum shoplifts per day.",
     "TheMightyAmondee.Shoplifter/GMCM_MaxShop": "Maximum shoplifts/store",
     "TheMightyAmondee.Shoplifter/GMCM_MaxShopTooltip":"How many times the same shop can be shoplifted each day.",
-    "TheMightyAmondee.Shoplifter/GMCM_PenaltySection":"Which penalties when you are caught?",
+    "TheMightyAmondee.Shoplifter/GMCM_PenaltySection":"What penalties apply when you are caught?",
     "TheMightyAmondee.Shoplifter/GMCM_MaxFine":"Maximum fine",
     "TheMightyAmondee.Shoplifter/GMCM_MaxFineTooltip":"Maximum fine amount.",  
     "TheMightyAmondee.Shoplifter/GMCM_MaxFriendship": "Friendship Penalty",
@@ -43,7 +43,7 @@
     "TheMightyAmondee.Shoplifter/GMCM_MaxCatches": "Catches before ban",
     "TheMightyAmondee.Shoplifter/GMCM_MaxCatchesTooltip":"How many times you must be caught before being banned.",
     "TheMightyAmondee.Shoplifter/GMCM_MaxBanned":"Days banned for",
-    "TheMightyAmondee.Shoplifter/GMCM_MaxBannedTooltip":"How many days you are banned for.",
+    "TheMightyAmondee.Shoplifter/GMCM_MaxBannedTooltip":"How many days you get banned for.",
     "TheMightyAmondee.Shoplifter/GMCM_MaxRadius":"Caught radius",
     "TheMightyAmondee.Shoplifter/GMCM_MaxRadiusTooltip":"Maximum distance a villager must be to catch the player."
-  }
+}

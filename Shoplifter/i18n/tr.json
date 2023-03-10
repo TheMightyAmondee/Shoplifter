@@ -1,4 +1,5 @@
 {
+    // Translations thanks to zenura!
     "TheMightyAmondee.Shoplifter/Shoplift":"Hırsızlık yap?",  
     "TheMightyAmondee.Shoplifter/Banned": "Hırsızlıktan yasaklandın. Şansını zorlama...",
     "TheMightyAmondee.Shoplifter/AlreadyShoplifted_Single": "Bugün zaten hırsızlık yaptın. Bu kadarı yeterli...",
@@ -28,7 +29,8 @@
     "TheMightyAmondee.Shoplifter/CaughtClint_NoMoney": "Beni soyuyorsun @! Daha iyi bir insan olduğunu düşünmüştüm.$3#$b#Ödeyemeyeceğin için bu seferlik sana ceza kesmiyorum.$2",
     "TheMightyAmondee.Shoplifter/CaughtSandy_NoMoney": "Dükkanımın diğerlerinden uzak olması hırsızlık yapmanın daha kolay olduğu anlamına gelmiyor, @.$2#$b#Bu seferlik cezayı boşver @, sadece dükkandan çık.$2",
     "TheMightyAmondee.Shoplifter/CaughtAlex_NoMoney": "Dondurma için bu kadar çaresiz misin, @?$7#$b#Bu seferlik sadece uyarıyorum.$5",
-    
+    //
+
     // TODO Improve translations
     "TheMightyAmondee.Shoplifter/GMCM_PeriodSection":"Ne sıklıkla hırsızlık yapabilirsink?",  
     "TheMightyAmondee.Shoplifter/GMCM_MaxDay": "Maksimum Hırsızlık/gün",

@@ -1,4 +1,5 @@
 {
+    // Translations thanks to Kadomine!
     "TheMightyAmondee.Shoplifter/Shoplift":"Roubar?",  
     "TheMightyAmondee.Shoplifter/Banned": "Você foi banido por ser pego roubando. Não abuse da sorte...",
     "TheMightyAmondee.Shoplifter/AlreadyShoplifted_Single": "Você já roubou hoje. Chega...",
@@ -28,7 +29,8 @@
     "TheMightyAmondee.Shoplifter/CaughtClint_NoMoney": "Você está me roubando, @! Pensei que você fosse melhor que isso.$3#$b#Não posso te cobrar por isso desta vez, @. Já que você não tem como me pagar de qualquer forma.$2",
     "TheMightyAmondee.Shoplifter/CaughtSandy_NoMoney": "Estar mais longe da cidade não significa que minha loja é mais fácil de roubar, @.$2#$b#Não se preocupe com a multa desta vez, @. Apenas vá embora.$2",
     "TheMightyAmondee.Shoplifter/CaughtAlex_NoMoney": "Você está tão desesperado assim por um doce, @?$7#$b#Vou te deixar avisado desta vez.$5",
-    
+    //
+
     // TODO Improve translations
     "TheMightyAmondee.Shoplifter/GMCM_PeriodSection":"Com que frequência se pode roubar?",  
     "TheMightyAmondee.Shoplifter/GMCM_MaxDay": "Máximo de roubos/dia",

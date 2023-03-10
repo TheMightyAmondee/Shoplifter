@@ -1,4 +1,5 @@
 {
+    // Translations thanks to Bellden!
     "TheMightyAmondee.Shoplifter/Shoplift":"Вор?",  
     "TheMightyAmondee.Shoplifter/Banned": "Тебя выгнали за кражу. Не испытывай удачу...",
     "TheMightyAmondee.Shoplifter/AlreadyShoplifted_Single": "Меня сегодня уже обокрали. Достаточно...",
@@ -28,7 +29,8 @@
     "TheMightyAmondee.Shoplifter/CaughtClint_NoMoney": "Ты воруешь, @! Ты хуже, чем мне казалось.$3#$b#Я не оштрафую тебя на этот раз, @, так как ты все равно не сможешь заплатить.$2",
     "TheMightyAmondee.Shoplifter/CaughtSandy_NoMoney": "То, что я живу вдали от других, не делает меня лёгкой мишенью, @.$2#$b#Не волнуйся насчёт штрафа в этот раз, @, просто уйди.$2",
     "TheMightyAmondee.Shoplifter/CaughtAlex_NoMoney": "Ты правда так отчаянно нуждаешься в мороженом, @?$7#$b#Ладно, в этот раз отделаешься предупреждением.$5",
-    
+    //
+
     // TODO Improve translations
     "TheMightyAmondee.Shoplifter/GMCM_PeriodSection":"Как часто вы можете совершать кражи в магазинах?",  
     "TheMightyAmondee.Shoplifter/GMCM_MaxDay": "Максимальное количество магазинных краж/день",

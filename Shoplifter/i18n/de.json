@@ -1,4 +1,5 @@
 {
+    // Translations thanks to NotErikWasTaken!
     "TheMightyAmondee.Shoplifter/Shoplift": "Diebstahl?",
     "TheMightyAmondee.Shoplifter/Banned": "Du hast wegen Diebstahl Hausverbot bekommen. Treibe es nicht zu weit...",
     "TheMightyAmondee.Shoplifter/AlreadyShoplifted_Single": "Du hast heute schon gestohlen. Das reicht...",
@@ -28,12 +29,13 @@
     "TheMightyAmondee.Shoplifter/CaughtClint_NoMoney": "Du klaust von mir, @! Ich hätte mehr von dir gehalten.$3#$b#Du weißt, dass Diebstahl hier bestraft wird, oder? Ich lass es dir noch ein letztes Mal durchgehen.$2",
     "TheMightyAmondee.Shoplifter/CaughtSandy_NoMoney": "Dass ich weiter von den anderen weg bin heißt nicht, dass du von mir klauen kannst, @.$2#$b#Vergessen wir das Ganze. Geh einfach, @.$2",
     "TheMightyAmondee.Shoplifter/CaughtAlex_NoMoney": "Brauchst du ein Eis wirklich so sehr, @?$7#$b#Heute kommst du noch einmal mit einer Warnung davon.$2",
+    //
 
     // TODO Improve translations
-    "TheMightyAmondee.Shoplifter/GMCM_PeriodSection":"Wie oft kann man Ladendiebstahl machen?",  
-    "TheMightyAmondee.Shoplifter/GMCM_MaxDay": "Maximale Ladendiebstähle/Tag",
-    "TheMightyAmondee.Shoplifter/GMCM_MaxDayTooltip": "Die maximalen Ladendiebstähle pro Tag.",
-    "TheMightyAmondee.Shoplifter/GMCM_MaxShop": "Maximale Ladendiebstähle/Laden",
+    "TheMightyAmondee.Shoplifter/GMCM_PeriodSection":"Wie oft darf man stehlen?",  
+    "TheMightyAmondee.Shoplifter/GMCM_MaxDay": "Maximale Diebstähle/Tag",
+    "TheMightyAmondee.Shoplifter/GMCM_MaxDayTooltip": "Die maximalen Diebstähle pro Tag.",
+    "TheMightyAmondee.Shoplifter/GMCM_MaxShop": "Maximale Diebstähle/Laden",
     "TheMightyAmondee.Shoplifter/GMCM_MaxShopTooltip":"Wie oft derselbe Laden pro Tag bestohlen werden kann.",
     "TheMightyAmondee.Shoplifter/GMCM_PenaltySection":"Welche Strafen drohen, wenn man erwischt wird?",
     "TheMightyAmondee.Shoplifter/GMCM_MaxFine":"Maximale Geldstrafe",

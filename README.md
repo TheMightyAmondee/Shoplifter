@@ -22,7 +22,8 @@ Version 1.1.0 added a config so shoplifting preferences can be changed, includin
 - Maximum friendship penalty
 - Maximum distance a villager must be to catch the player, default is 5.
 
-When changing the config, ensure only positive whole numbers or zero are entered so the config can be parsed. The mod will use the default values if it can't parse the config. Version 1.1.4 added Generic Mod Config Menu support.
+When changing the config, ensure only positive whole numbers or zero are entered so the config can be parsed. The mod will use the default values if it can't parse the config. 
+Version 1.1.4 added Generic Mod Config Menu support so the config values can be changed whilst in game (thanks to luelista!).
 
 The shops you can shoplift from are: Willy's Shop, Pierre's General Store, Carpenter, Marnie's Ranch, Harvey's Clinic, Saloon, Blacksmith, Sandy's Oasis, Icecream Stand.
 If you're wondering why all shops aren't included it's because the shopkeeper never leaves said store, you'll never get away with it. Custom shops cannot be shoplifted from.

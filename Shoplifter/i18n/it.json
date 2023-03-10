@@ -1,4 +1,5 @@
 {
+    // Translations thanks to peanutbatteries!
     "TheMightyAmondee.Shoplifter/Shoplift":"Taccheggiare?",  
     "TheMightyAmondee.Shoplifter/Banned": "Sei stato sospeso per taccheggio. Non sfidare la sorte...",
     "TheMightyAmondee.Shoplifter/AlreadyShoplifted_Single": "Hai già taccheggiato oggi. Può bastare...",
@@ -28,7 +29,8 @@
     "TheMightyAmondee.Shoplifter/CaughtClint_NoMoney": "@, mi stai derubando! Credevo fossi una persona migliore.$3#$b#Stavolta non ti farò la sanzione @, visto che comunque non te la potresti permettere.$2",
     "TheMightyAmondee.Shoplifter/CaughtSandy_NoMoney": "Essere lontani dagli altri non significa che il mio negozio sia più facile da derubare, @.$2#$b#Non ti preoccupare della sanzione per questa volta @, vai via e basta.$2",
     "TheMightyAmondee.Shoplifter/CaughtAlex_NoMoney": "Vuoi davvero così disperatamente un gelato, @?$7#$b#Per stavolta ti lascio solo con un ammonimento.$5",
-    
+    //
+
     // TODO Improve translations
     "TheMightyAmondee.Shoplifter/GMCM_PeriodSection":"Quanto spesso puoi taccheggiare?",  
     "TheMightyAmondee.Shoplifter/GMCM_MaxDay": "Taccheggio massimo/giorno",

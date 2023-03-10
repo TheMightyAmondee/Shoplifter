@@ -1,4 +1,5 @@
 {
+  //Translations thanks to 20080618!
     "TheMightyAmondee.Shoplifter/Shoplift":"商店行窃？",  
     "TheMightyAmondee.Shoplifter/Banned": "你因为入店行窃被禁止了。不要得寸进尺...",
     "TheMightyAmondee.Shoplifter/AlreadyShoplifted_Single": "你今天已经偷过东西了。够了...",
@@ -28,7 +29,8 @@
     "TheMightyAmondee.Shoplifter/CaughtClint_NoMoney": "你在抢劫我 @！我以为你是一个很好的人。$3#$b#这次我不会罚你款了 @，反正你也买不起。$2",
     "TheMightyAmondee.Shoplifter/CaughtSandy_NoMoney": "远离别人并不会让我的地方更容易被你偷走@，$2#$b#这次不要担心罚款 @，离开就好。$2",
     "TheMightyAmondee.Shoplifter/CaughtAlex_NoMoney": "你真的那么想吃冰淇淋吗 @？$7#$b#这次我会给你一个警告。$5",
-    
+    //
+
     // TODO Improve translations
     "TheMightyAmondee.Shoplifter/GMCM_PeriodSection":"你多久可以入店行窃一次?",  
     "TheMightyAmondee.Shoplifter/GMCM_MaxDay": "最大入店行窃次数/天",
@@ -43,7 +45,7 @@
     "TheMightyAmondee.Shoplifter/GMCM_MaxCatches": "禁令前捕获",
     "TheMightyAmondee.Shoplifter/GMCM_MaxCatchesTooltip":"你必须在被禁赛前被抓多少次。",
     "TheMightyAmondee.Shoplifter/GMCM_MaxBanned":"被禁止的天数",
-    "TheMightyAmondee.Shoplifter/GMCM_MaxBannedTooltip":"你被禁止了多少天。",
+    "TheMightyAmondee.Shoplifter/GMCM_MaxBannedTooltip":"你被禁赛多少天。",
     "TheMightyAmondee.Shoplifter/GMCM_MaxRadius":"捕获半径",
     "TheMightyAmondee.Shoplifter/GMCM_MaxRadiusTooltip":"村民抓到玩家必须的最大距离。"
     //
