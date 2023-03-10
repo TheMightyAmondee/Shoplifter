@@ -72,5 +72,7 @@ Translations are released seperately to the main files until a sufficient number
 
 1.1.3 - Added Korean, Chinese, French, Portuguese, German and Italian translations
 
+1.1.4 - Added GMCM support thanks to luelista! Added Turkish, Spanish and Russian translations.
+
 
 
