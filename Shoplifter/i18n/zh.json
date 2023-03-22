@@ -32,21 +32,21 @@
     //
 
     // TODO Improve translations
-    "TheMightyAmondee.Shoplifter/GMCM_PeriodSection":"你多久可以入店行窃一次?",  
-    "TheMightyAmondee.Shoplifter/GMCM_MaxDay": "最大入店行窃次数/天",
-    "TheMightyAmondee.Shoplifter/GMCM_MaxDayTooltip": "每天最大的入店行窃次数。",
-    "TheMightyAmondee.Shoplifter/GMCM_MaxShop": "最大入店行窃次数/商店",
-    "TheMightyAmondee.Shoplifter/GMCM_MaxShopTooltip":"同一家商店每天可以被入店行窃多少次。",
-    "TheMightyAmondee.Shoplifter/GMCM_PenaltySection":"被抓到会受到哪些处罚?",
-    "TheMightyAmondee.Shoplifter/GMCM_MaxFine":"最高罚款",
-    "TheMightyAmondee.Shoplifter/GMCM_MaxFineTooltip":"最高罚款。",  
-    "TheMightyAmondee.Shoplifter/GMCM_MaxFriendship": "友谊惩罚",
-    "TheMightyAmondee.Shoplifter/GMCM_MaxFriendshipTooltip": "最大友谊惩罚",
-    "TheMightyAmondee.Shoplifter/GMCM_MaxCatches": "禁令前捕获",
-    "TheMightyAmondee.Shoplifter/GMCM_MaxCatchesTooltip":"你必须在被禁赛前被抓多少次。",
-    "TheMightyAmondee.Shoplifter/GMCM_MaxBanned":"被禁止的天数",
-    "TheMightyAmondee.Shoplifter/GMCM_MaxBannedTooltip":"你被禁赛多少天。",
-    "TheMightyAmondee.Shoplifter/GMCM_MaxRadius":"捕获半径",
-    "TheMightyAmondee.Shoplifter/GMCM_MaxRadiusTooltip":"村民抓到玩家必须的最大距离。"
+    "TheMightyAmondee.Shoplifter/GMCM_PeriodSection":"玩家行窃设置",  
+    "TheMightyAmondee.Shoplifter/GMCM_MaxDay": "每日行窃次数/天",
+    "TheMightyAmondee.Shoplifter/GMCM_MaxDayTooltip": "每天最多可以行窃多少次",
+    "TheMightyAmondee.Shoplifter/GMCM_MaxShop": "同店行窃次数/天",
+    "TheMightyAmondee.Shoplifter/GMCM_MaxShopTooltip":"每天每家店最多可以行窃多少次",
+    "TheMightyAmondee.Shoplifter/GMCM_PenaltySection":"村民抓捕设置",
+    "TheMightyAmondee.Shoplifter/GMCM_MaxFine":"最大罚款金额",
+    "TheMightyAmondee.Shoplifter/GMCM_MaxFineTooltip":"被抓到后最多扣除多少金币",  
+    "TheMightyAmondee.Shoplifter/GMCM_MaxFriendship": "最大友谊降低",
+    "TheMightyAmondee.Shoplifter/GMCM_MaxFriendshipTooltip": "被抓到后最多降低多少好感",
+    "TheMightyAmondee.Shoplifter/GMCM_MaxCatches": "被抓几次禁入",
+    "TheMightyAmondee.Shoplifter/GMCM_MaxCatchesTooltip":"被抓到几次后不被允许进入商店",
+    "TheMightyAmondee.Shoplifter/GMCM_MaxBanned":"禁入商店天数",
+    "TheMightyAmondee.Shoplifter/GMCM_MaxBannedTooltip":"不被允许进入商店的天数",
+    "TheMightyAmondee.Shoplifter/GMCM_MaxRadius":"最大抓捕距离",
+    "TheMightyAmondee.Shoplifter/GMCM_MaxRadiusTooltip":"村民发现并抓捕玩家的最大距离"
     //
   }
