@@ -33,7 +33,7 @@
 
     // TODO Improve translations
     "TheMightyAmondee.Shoplifter/GMCM_PeriodSection":"玩家行窃设置",  
-    "TheMightyAmondee.Shoplifter/GMCM_MaxDay": "每日行窃次数/天",
+    "TheMightyAmondee.Shoplifter/GMCM_MaxDay": "最大行窃次数/天",
     "TheMightyAmondee.Shoplifter/GMCM_MaxDayTooltip": "每天最多可以行窃多少次",
     "TheMightyAmondee.Shoplifter/GMCM_MaxShop": "同店行窃次数/天",
     "TheMightyAmondee.Shoplifter/GMCM_MaxShopTooltip":"每天每家店最多可以行窃多少次",
