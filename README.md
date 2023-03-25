@@ -51,7 +51,7 @@ Compatibile with shop tile framework in that altered stock will be considered wh
 ## Translation ##
 
 Shoplifter fully supports translation! In game translations currently available in:
-- Chinese, thanks to 20080618!
+- Chinese, thanks to 20080618 and XinJiDA!
 - Korean, thanks to Aromay7!
 - Italian, thanks to peanutbatteries!
 - French, thanks to Breeis!
@@ -61,7 +61,10 @@ Shoplifter fully supports translation! In game translations currently available 
 - Turkish, thanks to zenura!
 - Russian, thanks to Bellden!
 
-Generic Mod Config Menu translations done using DeepL and Google Translate. Improved translations are welcome.
+Generic Mod Config Menu config menu translations currently avaliable in:
+- Chinese, thanks to XinJiDA!
+
+Other Generic Mod Config Menu translations done using DeepL and Google Translate. Improved translations are welcome.
 
 New translations always welcome! The best place to reach me is on the Shoplifter [mod page](https://www.nexusmods.com/stardewvalley/mods/8569).
 Translations are released separately to the main files until a sufficient number of translations are received for a full release. 1.1.4 was the last translation release including all currently available languages and some basic translation for the new GMCM menu. 
