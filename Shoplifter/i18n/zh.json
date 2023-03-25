@@ -1,5 +1,5 @@
 {
-  //Translations thanks to 20080618!
+  //Translations thanks to 20080618 and XinJiDA!
     "TheMightyAmondee.Shoplifter/Shoplift":"商店行窃？",  
     "TheMightyAmondee.Shoplifter/Banned": "你因为入店行窃被禁止了，不要得寸进尺...",
     "TheMightyAmondee.Shoplifter/AlreadyShoplifted_Single": "你今天已经偷过东西了，够了...",
@@ -31,7 +31,7 @@
     "TheMightyAmondee.Shoplifter/CaughtAlex_NoMoney": "你真的那么想吃冰淇淋吗 @？$7#$b#这次我会给你一个警告。$5",
     //
 
-    // TODO Improve translations
+    // Transltions thanks to XinJiDA!
     "TheMightyAmondee.Shoplifter/GMCM_PeriodSection":"玩家行窃设置",  
     "TheMightyAmondee.Shoplifter/GMCM_MaxDay": "最大行窃次数/天",
     "TheMightyAmondee.Shoplifter/GMCM_MaxDayTooltip": "每天最多可以行窃多少次",
