@@ -204,7 +204,7 @@ namespace Shoplifter
             }
 
             // Check player hasn't reached daily shoplifting limit for the shop
-            else if (config.MaxShopliftsPerStore > 1 && ModEntry.PerScreenShopliftedShops.Value.ContainsKey(shop) == true && ModEntry.PerScreenShopliftedShops.Value[shop] >= config.MaxShopliftsPerStore)
+            else if (ModEntry.PerScreenShopliftedShops.Value.ContainsKey(shop) == true && ModEntry.PerScreenShopliftedShops.Value[shop] >= config.MaxShopliftsPerStore)
             {
                 // Player has reached limit, exit method after displaying dialogue box
                 Game1.drawObjectDialogue(i18n.string_AlreadyShopliftedSameShop());
@@ -243,7 +243,7 @@ namespace Shoplifter
                             ModEntry.PerScreenShopliftCounter.Value++;
                         }                        
 
-                        if (config.MaxShopliftsPerStore > 1 && ModEntry.PerScreenShopliftedShops.Value.ContainsKey(shop) == false)
+                        if (ModEntry.PerScreenShopliftedShops.Value.ContainsKey(shop) == false)
                         {
                             // Add shop to list of shoplifted shops if needed
                             ModEntry.PerScreenShopliftedShops.Value.Add(shop, 1);
