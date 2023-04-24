@@ -335,7 +335,7 @@ namespace Shoplifter
             }
 
             // Pierre is not at shop and on island, player can purchase stock properly or steal
-            else if (location.getCharacterFromName("Pierre") == null && Game1.IsVisitingIslandToday("Pierre") == true && CanShoplift("SeedShop") == true)
+            else if (location.getCharacterFromName("Pierre") == null && Game1.IsVisitingIslandToday("Pierre") == true)
             {
                 if (CanShoplift("SeedShop") == true)
                 {
