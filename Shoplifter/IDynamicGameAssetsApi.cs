@@ -27,11 +27,5 @@ namespace Shoplifter
         /// <param name="fullId">The full ID of the item to spawn.</param>
         /// <returns></returns>
         object SpawnDGAItem(string fullId);
-
-        /// <summary>
-        /// Gets all the items (namespaced names)
-        /// </summary>
-        /// <returns>A list of all items.</returns>
-        string[] GetAllItems();
     }
 }

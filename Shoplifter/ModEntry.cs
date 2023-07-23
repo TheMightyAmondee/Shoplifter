@@ -25,10 +25,7 @@ namespace Shoplifter
         public static readonly string[] shops = { "SeedShop", "FishShop", "AnimalShop", "ScienceHouse", "Hospital", "Blacksmith", "Saloon", "SandyHouse" };
 
         public static IDynamicGameAssetsApi IDGAItem;
-
-        public static string[] DGAItems;
      
-
         public override void Entry(IModHelper helper)
         {          
             helper.Events.GameLoop.DayStarted += this.DayStarted;
@@ -137,9 +134,7 @@ namespace Shoplifter
             this.BuildConfigMenu();
             if (this.Helper.ModRegistry.IsLoaded("spacechase0.DynamicGameAssets") == true)
             {
-                if(!System.Diagnostics.Debugger.IsAttached) { System.Diagnostics.Debugger.Launch(); }
                 IDGAItem = this.Helper.ModRegistry.GetApi<IDynamicGameAssetsApi>("spacechase0.DynamicGameAssets");
-                DGAItems = IDGAItem.GetAllItems();
             }
         }
 
