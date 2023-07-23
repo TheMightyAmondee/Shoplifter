@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using StardewValley.Locations;
 using StardewValley;
+using System.Linq;
 
 namespace Shoplifter
 {	
@@ -11,31 +12,16 @@ namespace Shoplifter
 	{
 		public static ArrayList CurrentStock = new ArrayList();
 
-		// Method from Utilities so stock can be added to a shop (why is it private?)
-		private static bool addToStock(Dictionary<ISalable, int[]> stock, HashSet<int> stockIndices, StardewValley.Object objectToAdd, int[] listing)
-		{
-			int index = objectToAdd.ParentSheetIndex;
-
-			if (!stockIndices.Contains(index))
-			{
-				stock.Add(objectToAdd, listing);
-				stockIndices.Add(index);
-				return true;
-			}
-
-			return false;
-		}
-
-		/// <summary>
-		/// Generates a random list of stock for the given shop
-		/// </summary>
-		/// <param name="maxstock">The maximum number of different stock items to generate</param>
-		/// <param name="maxquantity">The maximum quantity of each stock</param>
-		/// <param name="which">The shop to generate stock for</param>
-		/// <returns>The generated stock list</returns>
-		public static Dictionary<ISalable, int[]> generateRandomStock(int maxstock, int maxquantity, string which)
-		{
-			GameLocation location = Game1.currentLocation;
+        /// <summary>
+        /// Generates a random list of stock for the given shop
+        /// </summary>
+        /// <param name="maxstock">The maximum number of different stock items to generate</param>
+        /// <param name="maxquantity">The maximum quantity of each stock</param>
+        /// <param name="which">The shop to generate stock for</param>
+        /// <returns>The generated stock list</returns>
+        public static Dictionary<ISalable, int[]> generateRandomStock(int maxstock, int maxquantity, string which)
+		{           
+            GameLocation location = Game1.currentLocation;
 			Dictionary<ISalable, int[]> stock = new Dictionary<ISalable, int[]>();
 			HashSet<int> stockIndices = new HashSet<int>();
 			Random random = new Random((int)Game1.uniqueIDForThisGame / 2 + (int)Game1.stats.DaysPlayed + ModEntry.PerScreenShopliftCounter.Value);
@@ -57,10 +43,20 @@ namespace Shoplifter
 						// Add object id to array
 						if ((shopstock.Key as StardewValley.Object) != null && (shopstock.Key as StardewValley.Object).bigCraftable.Value == false)
 						{
-							index = (shopstock.Key as StardewValley.Object).ParentSheetIndex;
+                            if (ModEntry.DGAItems != null && ModEntry.DGAItems?.Contains(ModEntry.IDGAItem?.GetDGAItemId(shopstock.Key as StardewValley.Object)) == true)
+                            {
+                                var id = ModEntry.IDGAItem.GetDGAItemId(shopstock.Key as StardewValley.Object);
 
-							CurrentStock.Add(index);
-						}
+                                CurrentStock.Add(id);
+                            }
+
+                            else
+                            {
+                                index = (shopstock.Key as StardewValley.Object).ParentSheetIndex;
+
+                                CurrentStock.Add(index);
+                            }
+                        }
 					}
 					break;
 
@@ -78,10 +74,20 @@ namespace Shoplifter
 						// Add object id to array
 						if ((shopstock.Key as StardewValley.Object) != null && (shopstock.Key as StardewValley.Object).bigCraftable.Value == false)
 						{
-							index = (shopstock.Key as StardewValley.Object).ParentSheetIndex;
+                            if (ModEntry.DGAItems != null && ModEntry.DGAItems?.Contains(ModEntry.IDGAItem?.GetDGAItemId(shopstock.Key as StardewValley.Object)) == true)
+                            {
+                                var id = ModEntry.IDGAItem.GetDGAItemId(shopstock.Key as StardewValley.Object);
 
-							CurrentStock.Add(index);
-						}
+                                CurrentStock.Add(id);
+                            }
+
+                            else
+                            {
+                                index = (shopstock.Key as StardewValley.Object).ParentSheetIndex;
+
+                                CurrentStock.Add(index);
+                            }
+                        }
 					}
 					break;
 
@@ -98,10 +104,20 @@ namespace Shoplifter
 						// Add object id to array
 						if ((shopstock.Key as StardewValley.Object) != null && (shopstock.Key as StardewValley.Object).bigCraftable.Value == false)
 						{
-							index = (shopstock.Key as StardewValley.Object).ParentSheetIndex;
+                            if (ModEntry.DGAItems != null && ModEntry.DGAItems?.Contains(ModEntry.IDGAItem?.GetDGAItemId(shopstock.Key as StardewValley.Object)) == true)
+                            {
+                                var id = ModEntry.IDGAItem.GetDGAItemId(shopstock.Key as StardewValley.Object);
 
-							CurrentStock.Add(index);
-						}
+                                CurrentStock.Add(id);
+                            }
+
+                            else
+                            {
+                                index = (shopstock.Key as StardewValley.Object).ParentSheetIndex;
+
+                                CurrentStock.Add(index);
+                            }
+                        }
 					}
 					break;
 
@@ -118,10 +134,20 @@ namespace Shoplifter
 						// Add object id to array
 						if ((shopstock.Key as StardewValley.Object) != null && (shopstock.Key as StardewValley.Object).bigCraftable.Value == false)
 						{
-							index = (shopstock.Key as StardewValley.Object).ParentSheetIndex;
+                            if (ModEntry.DGAItems != null && ModEntry.DGAItems?.Contains(ModEntry.IDGAItem?.GetDGAItemId(shopstock.Key as StardewValley.Object)) == true)
+                            {
+                                var id = ModEntry.IDGAItem.GetDGAItemId(shopstock.Key as StardewValley.Object);
 
-							CurrentStock.Add(index);
-						}
+                                CurrentStock.Add(id);
+                            }
+
+                            else
+                            {
+                                index = (shopstock.Key as StardewValley.Object).ParentSheetIndex;
+
+                                CurrentStock.Add(index);
+                            }
+                        }
 					}
 					break;
 
@@ -139,9 +165,19 @@ namespace Shoplifter
 						// Add object id to array
 						if ((shopstock.Key as StardewValley.Object) != null && (shopstock.Key as StardewValley.Object).bigCraftable.Value == false)
 						{
-							index = (shopstock.Key as StardewValley.Object).ParentSheetIndex;
+							if (ModEntry.DGAItems != null && ModEntry.DGAItems?.Contains(ModEntry.IDGAItem?.GetDGAItemId(shopstock.Key as StardewValley.Object)) == true)
+							{
+								var id = ModEntry.IDGAItem.GetDGAItemId(shopstock.Key as StardewValley.Object);
 
-							CurrentStock.Add(index);
+                                CurrentStock.Add(id);
+                            }
+
+							else
+							{
+                                index = (shopstock.Key as StardewValley.Object).ParentSheetIndex;
+
+                                CurrentStock.Add(index);
+                            }
 						}
 					}
 					break;
@@ -160,10 +196,20 @@ namespace Shoplifter
 						// Add object id to array
 						if ((shopstock.Key as StardewValley.Object) != null && (shopstock.Key as StardewValley.Object).bigCraftable.Value == false)
 						{
-							index = (shopstock.Key as StardewValley.Object).ParentSheetIndex;
+                            if (ModEntry.DGAItems != null && ModEntry.DGAItems?.Contains(ModEntry.IDGAItem?.GetDGAItemId(shopstock.Key as StardewValley.Object)) == true)
+                            {
+                                var id = ModEntry.IDGAItem.GetDGAItemId(shopstock.Key as StardewValley.Object);
 
-							CurrentStock.Add(index);
-						}
+                                CurrentStock.Add(id);
+                            }
+
+                            else
+                            {
+                                index = (shopstock.Key as StardewValley.Object).ParentSheetIndex;
+
+                                CurrentStock.Add(index);
+                            }
+                        }
 					}
 					break;
 
@@ -181,10 +227,20 @@ namespace Shoplifter
 						// Add object id to array
 						if ((shopstock.Key as StardewValley.Object) != null && (shopstock.Key as StardewValley.Object).bigCraftable.Value == false)
 						{
-							index = (shopstock.Key as StardewValley.Object).ParentSheetIndex;
+                            if (ModEntry.DGAItems != null && ModEntry.DGAItems?.Contains(ModEntry.IDGAItem?.GetDGAItemId(shopstock.Key as StardewValley.Object)) == true)
+                            {
+                                var id = ModEntry.IDGAItem.GetDGAItemId(shopstock.Key as StardewValley.Object);
 
-							CurrentStock.Add(index);
-						}
+                                CurrentStock.Add(id);
+                            }
+
+                            else
+                            {
+                                index = (shopstock.Key as StardewValley.Object).ParentSheetIndex;
+
+                                CurrentStock.Add(index);
+                            }
+                        }
 					}
 					break;
 				// Icecream Stand
@@ -233,15 +289,22 @@ namespace Shoplifter
 			// Add generated stock to store from array
 			for (int i = 0; i < stocklimit; i++)
 			{
-				int quantity = random.Next(1, maxquantity + 1);
-				int item = random.Next(0, CurrentStock.Count);
+               // if (!System.Diagnostics.Debugger.IsAttached) { System.Diagnostics.Debugger.Launch(); }
+                int quantity = random.Next(1, maxquantity + 1);
+				var item = random.Next(0, CurrentStock.Count);
 
-				ShopStock.addToStock(stock, stockIndices, new StardewValley.Object((int)CurrentStock[item], quantity), new int[2]
+				if (CurrentStock[item] is String && ModEntry.IDGAItem.SpawnDGAItem(CurrentStock[item].ToString()) as StardewValley.ISalable as Item != null)
 				{
-					0,
-					quantity
-				});
-			}
+					var dgaitem = (ModEntry.IDGAItem.SpawnDGAItem(CurrentStock[item].ToString()) as StardewValley.ISalable) as Item;
+					dgaitem.Stack = quantity;
+                    Utility.AddStock(stock, dgaitem, 0, quantity);
+					CurrentStock.RemoveAt(item);
+					continue;
+				}
+
+                Utility.AddStock(stock, new StardewValley.Object((int)CurrentStock[item], quantity), 0, quantity);
+                CurrentStock.RemoveAt(item);
+            }
 
 			// Clear stock array
 			CurrentStock.Clear();
