@@ -247,33 +247,6 @@ namespace Shoplifter
 				// Icecream Stand
 				case "IceCreamStand":
 					CurrentStock.Add(233);
-                    foreach (var shopstock in Utility.getHospitalStock())
-                    {
-
-                        // Stops illegal stock being added, will result in an error item
-                        if ((shopstock.Key as StardewValley.Object) == null || (shopstock.Key as Wallpaper) != null || (shopstock.Key as Furniture) != null || (shopstock.Key as StardewValley.Object).bigCraftable.Value == true || (shopstock.Key as StardewValley.Object).IsRecipe == true || (shopstock.Key as Clothing) != null || (shopstock.Key as Ring) != null || (shopstock.Key as Boots) != null || (shopstock.Key as Hat) != null)
-                        {
-                            continue;
-                        }
-
-                        // Add object id to array
-                        if ((shopstock.Key as StardewValley.Object) != null && (shopstock.Key as StardewValley.Object).bigCraftable.Value == false)
-                        {
-                            if (ModEntry.IDGAItem?.GetDGAItemId(shopstock.Key as StardewValley.Object) != null)
-                            {
-                                var id = ModEntry.IDGAItem.GetDGAItemId(shopstock.Key as StardewValley.Object);
-
-                                CurrentStock.Add(id);
-                            }
-
-                            else
-                            {
-                                index = (shopstock.Key as StardewValley.Object).ParentSheetIndex;
-
-                                CurrentStock.Add(index);
-                            }
-                        }
-                    }
                     break;
 
 				// Sandy's shop
