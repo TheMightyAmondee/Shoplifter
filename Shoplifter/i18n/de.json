@@ -29,9 +29,8 @@
     "TheMightyAmondee.Shoplifter/CaughtClint_NoMoney": "Du klaust von mir, @! Ich hätte mehr von dir gehalten.$3#$b#Du weißt, dass Diebstahl hier bestraft wird, oder? Ich lass es dir noch ein letztes Mal durchgehen.$2",
     "TheMightyAmondee.Shoplifter/CaughtSandy_NoMoney": "Dass ich weiter von den anderen weg bin heißt nicht, dass du von mir klauen kannst, @.$2#$b#Vergessen wir das Ganze. Geh einfach, @.$2",
     "TheMightyAmondee.Shoplifter/CaughtAlex_NoMoney": "Brauchst du ein Eis wirklich so sehr, @?$7#$b#Heute kommst du noch einmal mit einer Warnung davon.$2",
-    //
 
-    // TODO Improve translations
+    //GMCM by Nordmole
     "TheMightyAmondee.Shoplifter/GMCM_PeriodSection":"Klauhäufigkeit?",  
     "TheMightyAmondee.Shoplifter/GMCM_MaxDay": "Max Diebstähle pro Tag",
     "TheMightyAmondee.Shoplifter/GMCM_MaxDayTooltip": "Wie oft darf generell am Tag geklaut werden?",
@@ -48,7 +47,6 @@
     "TheMightyAmondee.Shoplifter/GMCM_MaxBannedTooltip":"Für wie viele Tage das Hausverbot anhält.",
     "TheMightyAmondee.Shoplifter/GMCM_MaxRadius":"Erkennungsradius",
     "TheMightyAmondee.Shoplifter/GMCM_MaxRadiusTooltip":"Maximale Entfernung, in der ein NPC den Spieler erwischen kann."
-    //
 }
 
 
