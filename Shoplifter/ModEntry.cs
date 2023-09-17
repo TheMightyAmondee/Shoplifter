@@ -292,7 +292,7 @@ namespace Shoplifter
                 }
 
                 // Island resort checked a different way, check this as well
-                if (location.NameOrUniqueName == "IslandSouth" && TileX == 14 && TileY == 22)
+                if (location.NameOrUniqueName == "IslandSouth" && TileX == 14 && TileY == 22 && location as IslandSouth != null && (location as IslandSouth).resortRestored.Value == true)
                 {
                     ShopMenuUtilities.ResortBarShopliftingMenu(location);
                 }
