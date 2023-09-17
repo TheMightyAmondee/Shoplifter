@@ -43,6 +43,7 @@ namespace Shoplifter
             }
             
             ShopMenuUtilities.gethelpers(this.Monitor, this.ModManifest, this.config);
+            ShopStock.gethelpers(this.Monitor, this.Helper, this.config);
             i18n.gethelpers(this.Helper.Translation, this.config);
         }
         private void DayStarted(object sender, DayStartedEventArgs e)
@@ -225,9 +226,10 @@ namespace Shoplifter
                 { 
                    TileX = Game1.player.getTileX();
                    TileY = Game1.player.getTileY() - 1;
-                }
+                }               
 
                 Location tilelocation = new Location((int)TileX, (int)TileY);
+
 
                 // Get whether tile has action property and its' parameters
                 string[] split = location.doesTileHavePropertyNoNull((int)TileX, (int)TileY, "Action", "Buildings").Split(' ');
@@ -287,7 +289,13 @@ namespace Shoplifter
                             }
                             break;
                     }
-                }               
+                }
+
+                // Island resort checked a different way, check this as well
+                if (location.NameOrUniqueName == "IslandSouth" && TileX == 14 && TileY == 22)
+                {
+                    ShopMenuUtilities.ResortBarShopliftingMenu(location);
+                }
             }
         }
 

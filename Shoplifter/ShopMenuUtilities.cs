@@ -551,5 +551,13 @@ namespace Shoplifter
                 ShopliftingMenu(location, new string[1] { "Alex" }, "IceCreamStand", 1, 5, false, false);               
             }
         }
+
+        public static void ResortBarShopliftingMenu(GameLocation location)
+        {
+            if (location.getCharacterFromName("Gus") == null || (location.getCharacterFromName("Gus") != null && location.getCharacterFromName("Gus").getTileLocation().Equals(new Vector2(14f, 21f)) == false))
+            {
+                ShopliftingMenu(location, new string[1] { "Gus" }, "ResortBar", 2, 2, false, false);
+            }
+        }
     }
 }

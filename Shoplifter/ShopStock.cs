@@ -5,13 +5,26 @@ using System.Collections.Generic;
 using StardewValley.Locations;
 using StardewValley;
 using System.Linq;
+using Microsoft.Xna.Framework;
 using StardewModdingAPI;
+using System.Runtime.CompilerServices;
 
 namespace Shoplifter
 {	
 	public class ShopStock
 	{
-		public static ArrayList CurrentStock = new ArrayList();
+        private static IMonitor monitor;
+        private static IModHelper helper;
+        private static ModConfig config;
+
+        public static ArrayList CurrentStock = new ArrayList();
+
+        public static void gethelpers(IMonitor monitor, IModHelper helper, ModConfig config)
+        {
+            ShopStock.monitor = monitor;
+            ShopStock.helper = helper;
+            ShopStock.config = config;
+        }
 
         /// <summary>
         /// Generates a random list of stock for the given shop
@@ -290,42 +303,51 @@ namespace Shoplifter
 
 				// Sandy's shop
 				case "SandyShop":
+                    var sandyshopstock = helper.Reflection.GetMethod(new GameLocation(), "sandyShopStock").Invoke<Dictionary<ISalable, int[]>>();
 
-                    // Add object id to array
-                    CurrentStock.Add(802);
-                    CurrentStock.Add(478);
-                    CurrentStock.Add(486);
-                    CurrentStock.Add(494);
-
-                    switch (Game1.dayOfMonth % 7)
+                    foreach (var shopstock in sandyshopstock)
                     {
-                        case 0:
-                            CurrentStock.Add(233);
-                            break;
-                        case 1:
-                            CurrentStock.Add(88);
-                            break;
-                        case 2:
-                            CurrentStock.Add(90);
-                            break;
-                        case 3:
-                            CurrentStock.Add(749);
-                            break;
-                        case 4:
-                            CurrentStock.Add(466);
-                            break;
-                        case 5:
-                            CurrentStock.Add(340);
-                            break;
-                        case 6:
-                            CurrentStock.Add(371);
-                            break;
+                        // Stops illegal stock being added, will result in an error item
+                        if ((shopstock.Key as StardewValley.Object) == null || (shopstock.Key as Wallpaper) != null || (shopstock.Key as Furniture) != null || (shopstock.Key as StardewValley.Object).bigCraftable.Value == true || (shopstock.Key as StardewValley.Object).IsRecipe == true || (shopstock.Key as Clothing) != null || (shopstock.Key as Ring) != null || (shopstock.Key as Boots) != null || (shopstock.Key as Hat) != null)
+                        {
+                            continue;
+                        }
+
+                        // Add object id to array
+                        if ((shopstock.Key as StardewValley.Object) != null && (shopstock.Key as StardewValley.Object).bigCraftable.Value == false)
+                        {
+                            if (ModEntry.IDGAItem?.GetDGAItemId(shopstock.Key as StardewValley.Object) != null)
+                            {
+                                var id = ModEntry.IDGAItem.GetDGAItemId(shopstock.Key as StardewValley.Object);
+
+                                CurrentStock.Add(id);
+                            }
+
+                            else
+                            {
+                                index = (shopstock.Key as StardewValley.Object).ParentSheetIndex;
+
+                                CurrentStock.Add(index);
+                            }
+                        }
+                    }
+
+                    if (CurrentStock.Count == 0)
+                    {
+                        CurrentStock.Add(340);
                     }
                     break;
-				default:
-					CurrentStock.Add(340);
-					break;
-			}
+                case "ResortBar":
+                    CurrentStock.Add(873);
+                    CurrentStock.Add(346);
+                    CurrentStock.Add(303);
+                    CurrentStock.Add(459);
+                    CurrentStock.Add(612);
+                    CurrentStock.Add(348);
+                    break;
+            }
+
+
 			
 			// Add generated stock to store from array
 			for (int i = 0; i < stocklimit; i++)
@@ -346,6 +368,20 @@ namespace Shoplifter
 					CurrentStock.RemoveAt(item);
 					continue;
 				}
+
+                // Make generic wine, gold quality mango wine if selected
+                if (which == "ResortBar" && CurrentStock[item].Equals(348) == true)
+                {
+                    var wine = new StardewValley.Object(348, quantity);
+                    var mango = new StardewValley.Object(834, 1);
+                    wine.Name = mango.Name + " Wine";
+                    wine.preserve.Value = StardewValley.Object.PreserveType.Wine;
+                    wine.preservedParentSheetIndex.Value = mango.ParentSheetIndex;
+                    wine.Quality = 2;
+                    Utility.AddStock(stock, wine, 0, quantity);
+                    CurrentStock.RemoveAt(item);
+                    continue;
+                }
 
                 Utility.AddStock(stock, new StardewValley.Object((int)CurrentStock[item], quantity), 0, quantity);
                 CurrentStock.RemoveAt(item);
