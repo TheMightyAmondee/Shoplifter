@@ -1,6 +1,6 @@
 {
     // Translations thanks to Bellden!
-    "TheMightyAmondee.Shoplifter/Shoplift":"Украсть?",  
+    "TheMightyAmondee.Shoplifter/Shoplift":"Своровать?",  
     "TheMightyAmondee.Shoplifter/Banned": "Тебя выгнали за воровство. Не пытай удачу...",
     "TheMightyAmondee.Shoplifter/AlreadyShoplifted_Single": "Я уже воровал сегодня. Хватит...",
     "TheMightyAmondee.Shoplifter/AlreadyShoplifted": "В {{shopliftingamount}} раз за сегодня ворую. Хватит уже...",
@@ -10,12 +10,12 @@
   
     "TheMightyAmondee.Shoplifter/CaughtGeneric": "Ты серьёзно воруешь, @?$2#$b#*вздох* Мне придётся оштрафовать тебя на {{fineamount}}з.$2",
     "TheMightyAmondee.Shoplifter/CaughtPierre": "Ты воруешь??!! Чем ты думал?!$4#$b#Заплати {{fineamount}}з штрафа и можешь идти, @.$3",
-    "TheMightyAmondee.Shoplifter/CaughtWilly": "Я знаю что ты воруешь, @... От тебя пахнет рыбой...$2#$b#Я оштрафую тебя на {{fineamount}}з.$2",
+    "TheMightyAmondee.Shoplifter/CaughtWilly": "Я знаю, что ты воруешь, @... От тебя пахнет рыбой...$2#$b#Я оштрафую тебя на {{fineamount}}з.$2",
     "TheMightyAmondee.Shoplifter/CaughtRobin": "Серьёзно, @? Думаешь, просто так возьмёшь телевизор... Я не храню здесь мои самые ценные товары...$3#$b#Я оштрафую тебя на {{fineamount}}з... Может, это тебя проучит.$2",
     "TheMightyAmondee.Shoplifter/CaughtMarnie": "Крадём мое сено, да, @? То, что я никогда не бываю в своем магазине, не означает, что ты можешь красть у меня.$4#$b#Если ты заплатишь штраф в {{fineamount}}з, я не буду вовлекать Льюиса...$3",
     "TheMightyAmondee.Shoplifter/CaughtGus": "Я знаю, что блюдо дня выглядит восхитительно, @, но тебе всё равно придётся заплатить за него.$3#$b#*вздох* Если заплатишь штраф в {{fineamount}}з, я забуду о твоём проступке, хорошо?$2",
     "TheMightyAmondee.Shoplifter/CaughtHarvey": "Что ты творишь, @? Это лекарство опасно без консультации врача...$8#$b#Придётся оштрафовать тебя на {{fineamount}}з за воровство, @, настолько это серъезно.$5",
-    "TheMightyAmondee.Shoplifter/CaughtClint": "Ты воруешь, @! Я был о тебе лучшего мнения.$3#$b#Ты ведь знаешь, что штраф за воровство составляет {{fineamount}}з, верно? Столько тебе придётся мне заплатить.$2",
+    "TheMightyAmondee.Shoplifter/CaughtClint": "Ты воруешь, @! Я был о тебе лучшего мнения.$3#$b#Ты ведь знаешь, что штраф за воровство составляет {{fineamount}}з, верно? Придётся тебе платить.$2",
     "TheMightyAmondee.Shoplifter/CaughtSandy": "То, что я живу одна не значит, что у меня можно воровать, @.$2#$b#Плати штраф в {{fineamount}}з и мы в расчёте.$2",
     "TheMightyAmondee.Shoplifter/CaughtAlex": "Тебе так нужно мороженое, @?$7#$bНикогда не думал, что мне придется кого-то штрафовать, но тебе придётся заплатить {{fineamount}}з.$2",
   
