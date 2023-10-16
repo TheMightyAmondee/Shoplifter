@@ -11,12 +11,12 @@
     "TheMightyAmondee.Shoplifter/CaughtGeneric": "Ты серьёзно воруешь, @?$2#$b#*вздох* Мне придётся оштрафовать тебя на {{fineamount}}з.$2",
     "TheMightyAmondee.Shoplifter/CaughtPierre": "Ты воруешь??!! Чем ты думал?!$4#$b#Заплати {{fineamount}}з штрафа и можешь идти, @.$3",
     "TheMightyAmondee.Shoplifter/CaughtWilly": "Я знаю что ты воруешь, @... От тебя пахнет рыбой...$2#$b#Я оштрафую тебя на {{fineamount}}з.$2",
-    "TheMightyAmondee.Shoplifter/CaughtRobin": "Серьёзно, @? Думал просто так возьмёшь телевизор... Я не храню здесь мои самые ценные товары...$3#$b#Я оштрафую тебя на {{fineamount}}з... Может, это тебя проучит.$2",
-    "TheMightyAmondee.Shoplifter/CaughtMarnie": "Крадём мое сено, да, @? То, что я никогда не бываю в своем магазине, не означает, что ты можешь красть у меня.$4#$b#Если ты заплатишь штраф в {{fineamount}}з, я не буду вовлекать Льюиса...$13",
+    "TheMightyAmondee.Shoplifter/CaughtRobin": "Серьёзно, @? Думаешь, просто так возьмёшь телевизор... Я не храню здесь мои самые ценные товары...$3#$b#Я оштрафую тебя на {{fineamount}}з... Может, это тебя проучит.$2",
+    "TheMightyAmondee.Shoplifter/CaughtMarnie": "Крадём мое сено, да, @? То, что я никогда не бываю в своем магазине, не означает, что ты можешь красть у меня.$4#$b#Если ты заплатишь штраф в {{fineamount}}з, я не буду вовлекать Льюиса...$3",
     "TheMightyAmondee.Shoplifter/CaughtGus": "Я знаю, что блюдо дня выглядит восхитительно, @, но тебе всё равно придётся заплатить за него.$3#$b#*вздох* Если заплатишь штраф в {{fineamount}}з, я забуду о твоём проступке, хорошо?$2",
     "TheMightyAmondee.Shoplifter/CaughtHarvey": "Что ты творишь, @? Это лекарство опасно без консультации врача...$8#$b#Придётся оштрафовать тебя на {{fineamount}}з за воровство, @, настолько это серъезно.$5",
     "TheMightyAmondee.Shoplifter/CaughtClint": "Ты воруешь, @! Я был о тебе лучшего мнения.$3#$b#Ты ведь знаешь, что штраф за воровство составляет {{fineamount}}з, верно? Столько тебе придётся мне заплатить.$2",
-    "TheMightyAmondee.Shoplifter/CaughtSandy": "То, что я живу одна не значит, что у меня можно воровать, @.$2#$b#Плати штраф в {{fineamount}}з и мы в асчёте.$2",
+    "TheMightyAmondee.Shoplifter/CaughtSandy": "То, что я живу одна не значит, что у меня можно воровать, @.$2#$b#Плати штраф в {{fineamount}}з и мы в расчёте.$2",
     "TheMightyAmondee.Shoplifter/CaughtAlex": "Тебе так нужно мороженое, @?$7#$bНикогда не думал, что мне придется кого-то штрафовать, но тебе придётся заплатить {{fineamount}}з.$2",
   
     "TheMightyAmondee.Shoplifter/CaughtGeneric_NoMoney": "Ты серьёзно воруешь, @?$2#$b#*вздох* Я бы тебя оштрафовал, но тебе нечем платить!$2",
@@ -24,7 +24,7 @@
     "TheMightyAmondee.Shoplifter/CaughtWilly_NoMoney": "Я знаю что ты воруешь, @... От тебя пахнет рыбой...$2#$b#Пожалуйста, верни что украл. Я не могу тебя оштрафовать, если у тебя нет денег.$2",
     "TheMightyAmondee.Shoplifter/CaughtRobin_NoMoney": "Серьёзно, @? Думаешь, вот так просто возьмёшь телевизор... Я не храню здеь ценности...$3#$b#На этот раз без штрафа, раз у тебя нет денег.$2",
     "TheMightyAmondee.Shoplifter/CaughtMarnie_NoMoney": "Крадём мое сено, да, @? То, что я никогда не бываю в своем магазине, не означает, что ты можешь красть у меня.$4#$b#Я бы тебя оштрафовала, но, раз у тебя нет денег, на этот раз обойдётся.$3",
-    "TheMightyAmondee.Shoplifter/CaughtGus_NoMoney": "Я знаю, что сегодняшнее специальное предложение выглядит заманчиво, @, но тебе всё равно придётся заплатить за украденное.$3#$b#*вздох* Я сделаю тебе поблажку и не буду штрафовать тебя в этот раз.$2",
+    "TheMightyAmondee.Shoplifter/CaughtGus_NoMoney": "Я знаю, что блюдо дня выглядит аппетитно, @, но тебе всё равно придётся заплатить за украденное.$3#$b#*вздох* Я сделаю тебе поблажку и не буду штрафовать тебя в этот раз.$2",
     "TheMightyAmondee.Shoplifter/CaughtHarvey_NoMoney": "Что ты делаешь, @!? Эти препараты опасны без консультации врача...$8#$b#У тебя не хватает денег на оплату штрафа? Я прощу тебя в этот раз, но больше не воруй.$5",
     "TheMightyAmondee.Shoplifter/CaughtClint_NoMoney": "Ты воруешь, @! Ты хуже, чем я думал.$3#$b#Я не оштрафую тебя на этот раз, @, так как ты все равно не сможешь заплатить.$2",
     "TheMightyAmondee.Shoplifter/CaughtSandy_NoMoney": "То, что я живу одна, не значит, что ты можешь у меня воровать, @.$2#$b#На этот раз обойдемся без штрафа, @, просто уйди.$2",
@@ -42,11 +42,12 @@
     "TheMightyAmondee.Shoplifter/GMCM_MaxFineTooltip":"Максимальная сумма штрафа в зол.",  
     "TheMightyAmondee.Shoplifter/GMCM_MaxFriendship": "Штраф дружбой",
     "TheMightyAmondee.Shoplifter/GMCM_MaxFriendshipTooltip": "Максимальный штраф дружбой",
-    "TheMightyAmondee.Shoplifter/GMCM_MaxCatches": "Поимок до запрета входа в магазин",
-    "TheMightyAmondee.Shoplifter/GMCM_MaxCatchesTooltip":"Сколько раз вас могут поймать, до того как вам запретят ходить в магазин",
-    "TheMightyAmondee.Shoplifter/GMCM_MaxBanned":"Количество дней, которые вы не сможете заходить в магазин",
+    "TheMightyAmondee.Shoplifter/GMCM_MaxCatches": "Неудачных краж до запрета входа в магазин",
+    "TheMightyAmondee.Shoplifter/GMCM_MaxCatchesTooltip":"Сколько раз вас могут поймать, до того как вам запретят заходить в магазин",
+    "TheMightyAmondee.Shoplifter/GMCM_MaxBanned":"Количество дней, которое вы не сможете заходить в магазин",
     "TheMightyAmondee.Shoplifter/GMCM_MaxBannedTooltip":"На сколько дней вам нельзя заходить в магазин",
     "TheMightyAmondee.Shoplifter/GMCM_MaxRadius":"Радиус поимки",
     "TheMightyAmondee.Shoplifter/GMCM_MaxRadiusTooltip":"Максимальное расстояние, на котором житель деревни может поймать игрока."
     //
   }
+
