@@ -556,7 +556,7 @@ namespace Shoplifter
         {
             if (location.getCharacterFromName("Gus") == null || (location.getCharacterFromName("Gus") != null && location.getCharacterFromName("Gus").getTileLocation().Equals(new Vector2(14f, 21f)) == false))
             {
-                ShopliftingMenu(location, new string[1] { "Gus" }, "ResortBar", 2, 2, false, false);
+                ShopliftingMenu(location, new string[1] { "Gus" }, "ResortBar", 2, 1, false, false);
             }
         }
     }
