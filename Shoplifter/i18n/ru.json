@@ -1,5 +1,5 @@
 {
-    // Translations thanks to Bellden!
+    // Translations thanks to Bellden and theRealDuda!
     "TheMightyAmondee.Shoplifter/Shoplift":"Своровать?",  
     "TheMightyAmondee.Shoplifter/Banned": "Тебя выгнали за воровство. Не пытай удачу...",
     "TheMightyAmondee.Shoplifter/AlreadyShoplifted_Single": "Я уже воровал сегодня. Хватит...",
@@ -31,7 +31,7 @@
     "TheMightyAmondee.Shoplifter/CaughtAlex_NoMoney": "Тебе настолько нужно мороженое, @?$7#$b#Ладно, в этот раз отделаешься предупреждением.$5",
     //
 
-    // TODO Improve translations
+    // Translations thanks to theRealDuda!
     "TheMightyAmondee.Shoplifter/GMCM_PeriodSection":"Как часто вы можете воровать?",  
     "TheMightyAmondee.Shoplifter/GMCM_MaxDay": "Максимальное количество краж/день",
     "TheMightyAmondee.Shoplifter/GMCM_MaxDayTooltip": "Максимальное количество краж в день.",
