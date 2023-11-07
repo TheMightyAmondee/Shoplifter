@@ -49,7 +49,7 @@ namespace Shoplifter
             foreach (var npc in location.characters)
             {
                 // Is NPC in range?
-                if (npc.currentLocation == who.currentLocation && Utility.tileWithinRadiusOfPlayer(npc.getTileX(), npc.getTileY(), (int)config.CaughtRadius, who))
+                if (npc.currentLocation == who.currentLocation && Utility.tileWithinRadiusOfPlayer(npc.Tile.X(), npc.Tile.Y(), (int)config.CaughtRadius, who))
                 {
                     // Emote NPC
                     npc.doEmote(12, false, false);
@@ -85,7 +85,7 @@ namespace Shoplifter
                 foreach (var npc in location.characters)
                 {
                     // Is NPC in range?
-                    if (npc.Name == character && npc.currentLocation == who.currentLocation && Utility.tileWithinRadiusOfPlayer(npc.getTileX(), npc.getTileY(), (int)config.CaughtRadius, who))
+                    if (npc.Name == character && npc.currentLocation == who.currentLocation && Utility.tileWithinRadiusOfPlayer(npc.Tile.X(), npc.Tile.Y(), (int)config.CaughtRadius, who))
                     {
                         string dialogue;
                         string banneddialogue = (config.DaysBannedFor == 1)
@@ -267,20 +267,16 @@ namespace Shoplifter
                     switch (shop)
                     {
                         case "SeedShop":
-                            Game1.activeClickableMenu = new ShopMenu((location as SeedShop).shopStock());
+                            Utility.OpenShopMenu("SeedShop", (string)null);
                             break;
                         case "Carpenters":
-                            Game1.activeClickableMenu = new ShopMenu(Utility.getCarpenterStock());
+                            Utility.OpenShopMenu("Carpenter", (string)null);
                             break;
                         case "AnimalShop":
-                            Game1.activeClickableMenu = new ShopMenu(Utility.getAnimalShopStock());
+                            Utility.OpenShopMenu("AnimalShop", (string)null);
                             break;
                         case "Saloon":
-                            Game1.activeClickableMenu = new ShopMenu(Utility.getSaloonStock(), 0, null, delegate (ISalable item, Farmer farmer, int amount)
-                            {
-                                Game1.player.team.synchronizedShopStock.OnItemPurchased(SynchronizedShopStock.SynchedShop.Saloon, item, amount);
-                                return false;
-                            });
+                            Utility.OpenShopMenu("Saloon", (string)null);
                             break;
                         default:
                             break;
@@ -370,7 +366,7 @@ namespace Shoplifter
         public static void CarpenterShopliftingMenu(GameLocation location, Farmer who, Location tileLocation)
         {
             // Player is in correct position for buying
-            if (who.getTileY() > tileLocation.Y)
+            if (who.Tile.Y > tileLocation.Y)
             {
                 // Robin is on island and not at sciencehouse, she can't sell but player can purchase properly if they want
                 if (location.getCharacterFromName("Robin") == null && Game1.IsVisitingIslandToday("Robin") == true)
@@ -429,7 +425,7 @@ namespace Shoplifter
         public static void AnimalShopShopliftingMenu(GameLocation location, Farmer who, Location tileLocation)
         {
             // Player is in correct position for buying
-            if (who.getTileY() > tileLocation.Y)
+            if (who.Tile.Y() > tileLocation.Y)
             {
                 // Marnie is not in the location, she is on the island, ignore if can't shoplift
                 if (location.getCharacterFromName("Marnie") == null && Game1.IsVisitingIslandToday("Marnie") == true)
@@ -483,7 +479,7 @@ namespace Shoplifter
         public static void HospitalShopliftingMenu(GameLocation location, Farmer who)
         {
             // Character is not at the required tile, noone can sell
-            if (location.isCharacterAtTile(who.getTileLocation() + new Vector2(0f, -2f)) == null && location.isCharacterAtTile(who.getTileLocation() + new Vector2(-1f, -2f)) == null)
+            if (location.isCharacterAtTile(new Vector2(who.Tile.X(), who.Tile.Y()) + new Vector2(0f, -2f)) == null && location.isCharacterAtTile(new Vector2(who.Tile.X(), who.Tile.Y()) + new Vector2(-1f, -2f)) == null)
             {
                 ShopliftingMenu(location, new string[2] { "Harvey", "Maru" }, "HospitalShop", 1, 3);
             }

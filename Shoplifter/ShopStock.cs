@@ -33,7 +33,7 @@ namespace Shoplifter
             {
 				// Pierre's shop
 				case "SeedShop":
-					foreach (var shopstock in (location as SeedShop).shopStock())
+					foreach (var shopstock in Utility.GetShopStock("SeedShop"))
 					{
                         // Stops illegal stock being added, will result in an error item
                         if ((shopstock.Key as StardewValley.Object) == null || (shopstock.Key as Wallpaper) != null || (shopstock.Key as Furniture) != null || (shopstock.Key as StardewValley.Object).bigCraftable.Value == true || (shopstock.Key as StardewValley.Object).IsRecipe == true || (shopstock.Key as Clothing) != null || (shopstock.Key as Ring) != null || (shopstock.Key as Boots) != null || (shopstock.Key as Hat) != null)
@@ -53,7 +53,7 @@ namespace Shoplifter
 
                             else
                             {
-                                index = (shopstock.Key as StardewValley.Object).ParentSheetIndex;
+                                index = (shopstock.Key as StardewValley.Object).QualifiedItemId;
 
                                 CurrentStock.Add(index);
                             }
@@ -64,13 +64,13 @@ namespace Shoplifter
                     // Grass starter if nothing available
                     if (CurrentStock.Count == 0)
                     {
-                        CurrentStock.Add(297);
+                        CurrentStock.Add("(O)297");
                     }
                     break;
 
 				// Willy's shop
 				case "FishShop":
-					foreach (var shopstock in Utility.getFishShopStock(Game1.player))
+					foreach (var shopstock in Utility.GetShopStock("FishShop"))
 					{
 
 						// Stops illegal stock being added, will result in an error item
@@ -91,7 +91,7 @@ namespace Shoplifter
 
                             else
                             {
-                                index = (shopstock.Key as StardewValley.Object).ParentSheetIndex;
+                                index = (shopstock.Key as StardewValley.Object).QualifiedItemId;
 
                                 CurrentStock.Add(index);
                             }
@@ -101,13 +101,13 @@ namespace Shoplifter
                     // Trout soup if nothing available
                     if (CurrentStock.Count == 0)
                     {
-                        CurrentStock.Add(219);
+                        CurrentStock.Add("(O)219");
                     }
                     break;
 
 				// Robin's shop
 				case "Carpenters":
-					foreach (var shopstock in Utility.getCarpenterStock())
+					foreach (var shopstock in Utility.GetShopStock("Carpenters"))
 					{
                         // Stops illegal stock being added, will result in an error item
                         if ((shopstock.Key as StardewValley.Object) == null || (shopstock.Key as Wallpaper) != null || (shopstock.Key as Furniture) != null || (shopstock.Key as StardewValley.Object).bigCraftable.Value == true || (shopstock.Key as StardewValley.Object).IsRecipe == true || (shopstock.Key as Clothing) != null || (shopstock.Key as Ring) != null || (shopstock.Key as Boots) != null || (shopstock.Key as Hat) != null)
@@ -127,7 +127,7 @@ namespace Shoplifter
 
                             else
                             {
-                                index = (shopstock.Key as StardewValley.Object).ParentSheetIndex;
+                                index = (shopstock.Key as StardewValley.Object).QualifiedItemId;
 
                                 CurrentStock.Add(index);
                             }
@@ -137,13 +137,13 @@ namespace Shoplifter
                     // Wood if nothing available
                     if (CurrentStock.Count == 0)
                     {
-                        CurrentStock.Add(388);
+                        CurrentStock.Add("(O)388");
                     }
                     break;
 
 				// Marnie's shop
 				case "AnimalShop":
-					foreach (var shopstock in Utility.getAnimalShopStock())
+					foreach (var shopstock in Utility.GetShopStock("AnimalShop"))
 					{
 						// Stops illegal stock being added, will result in an error item
 						if ((shopstock.Key as StardewValley.Object) == null || (shopstock.Key as Wallpaper) != null || (shopstock.Key as Furniture) != null || (shopstock.Key as StardewValley.Object).bigCraftable.Value == true || (shopstock.Key as StardewValley.Object).IsRecipe == true || (shopstock.Key as Clothing) != null || (shopstock.Key as Ring) != null || (shopstock.Key as Boots) != null || (shopstock.Key as Hat) != null)
@@ -163,7 +163,7 @@ namespace Shoplifter
 
                             else
                             {
-                                index = (shopstock.Key as StardewValley.Object).ParentSheetIndex;
+                                index = (shopstock.Key as StardewValley.Object).QualifiedItemId;
 
                                 CurrentStock.Add(index);
                             }
@@ -172,13 +172,13 @@ namespace Shoplifter
                     // Hay if nothing available
                     if (CurrentStock.Count == 0)
                     {
-                        CurrentStock.Add(178);
+                        CurrentStock.Add("(O)178");
                     }
                     break;
 
 				// Clint's shop
 				case "Blacksmith":
-					foreach (var shopstock in Utility.getBlacksmithStock())
+					foreach (var shopstock in Utility.GetShopStock("Blacksmith"))
 					{
 
 						// Stops illegal stock being added, will result in an error item
@@ -199,7 +199,7 @@ namespace Shoplifter
 
 							else
 							{
-                                index = (shopstock.Key as StardewValley.Object).ParentSheetIndex;
+                                index = (shopstock.Key as StardewValley.Object).QualifiedItemId;
 
                                 CurrentStock.Add(index);
                             }
@@ -208,13 +208,13 @@ namespace Shoplifter
                     // Coal if nothing available
                     if (CurrentStock.Count == 0)
                     {
-                        CurrentStock.Add(382);
+                        CurrentStock.Add("(O)382");
                     }
                     break;
 
 				// Gus' shop
 				case "Saloon":
-					foreach (var shopstock in Utility.getSaloonStock())
+					foreach (var shopstock in Utility.GetShopStock("Saloon"))
 					{
 
 						// Stops illegal stock being added, will result in an error item
@@ -235,7 +235,7 @@ namespace Shoplifter
 
                             else
                             {
-                                index = (shopstock.Key as StardewValley.Object).ParentSheetIndex;
+                                index = (shopstock.Key as StardewValley.Object).QualifiedItemId;
 
                                 CurrentStock.Add(index);
                             }
@@ -244,13 +244,13 @@ namespace Shoplifter
                     // Beer if nothing available
                     if (CurrentStock.Count == 0)
                     {
-                        CurrentStock.Add(346);
+                        CurrentStock.Add("(O)346");
                     }
                     break;
 
 				// Harvey's shop
 				case "HospitalShop":
-					foreach (var shopstock in Utility.getHospitalStock())
+					foreach (var shopstock in Utility.GetShopStock("Hospital"))
 					{
 
 						// Stops illegal stock being added, will result in an error item
@@ -271,7 +271,7 @@ namespace Shoplifter
 
                             else
                             {
-                                index = (shopstock.Key as StardewValley.Object).ParentSheetIndex;
+                                index = (shopstock.Key as StardewValley.Object).QualifiedItemId;
 
                                 CurrentStock.Add(index);
                             }
@@ -280,45 +280,45 @@ namespace Shoplifter
                     // Muscle Remedy if nothing available
                     if (CurrentStock.Count == 0)
                     {
-                        CurrentStock.Add(351);
+                        CurrentStock.Add("(O)351");
                     }
                     break;
 				// Icecream Stand
 				case "IceCreamStand":
-					CurrentStock.Add(233);
+					CurrentStock.Add("(O)233");
                     break;
 
 				// Sandy's shop
 				case "SandyShop":
 
                     // Add object id to array
-                    CurrentStock.Add(802);
-                    CurrentStock.Add(478);
-                    CurrentStock.Add(486);
-                    CurrentStock.Add(494);
+                    CurrentStock.Add("(O)802");
+                    CurrentStock.Add("(O)478");
+                    CurrentStock.Add("(O)486");
+                    CurrentStock.Add("(O)494");
 
                     switch (Game1.dayOfMonth % 7)
                     {
                         case 0:
-                            CurrentStock.Add(233);
+                            CurrentStock.Add("(O)233");
                             break;
                         case 1:
-                            CurrentStock.Add(88);
+                            CurrentStock.Add("(O)88");
                             break;
                         case 2:
-                            CurrentStock.Add(90);
+                            CurrentStock.Add("(O)90");
                             break;
                         case 3:
-                            CurrentStock.Add(749);
+                            CurrentStock.Add("(O)749");
                             break;
                         case 4:
-                            CurrentStock.Add(466);
+                            CurrentStock.Add("(O)466");
                             break;
                         case 5:
-                            CurrentStock.Add(340);
+                            CurrentStock.Add("(O)340");
                             break;
                         case 6:
-                            CurrentStock.Add(371);
+                            CurrentStock.Add("(O)371");
                             break;
                     }
                     break;
@@ -347,7 +347,7 @@ namespace Shoplifter
 					continue;
 				}
 
-                Utility.AddStock(stock, new StardewValley.Object((int)CurrentStock[item], quantity), 0, quantity);
+                Utility.AddStock(stock, new StardewValley.Object(CurrentStock[item], quantity), 0, quantity);
                 CurrentStock.RemoveAt(item);
             }
 
