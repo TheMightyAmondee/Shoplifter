@@ -223,8 +223,8 @@ namespace Shoplifter
                 // If using a controller, don't use cursor position if not facing wrong direction, check player is one tile under (Y - 1) tile with property
                 if (e.Button == SButton.ControllerA && Game1.player.FacingDirection != 2)
                 { 
-                   TileX = Game1.player.getTileX();
-                   TileY = Game1.player.getTileY() - 1;
+                   TileX = Game1.player.Tile.X;
+                   TileY = Game1.player.Tile.Y - 1;
                 }
 
                 Location tilelocation = new Location((int)TileX, (int)TileY);
