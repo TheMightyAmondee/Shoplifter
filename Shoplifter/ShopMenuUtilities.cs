@@ -236,7 +236,7 @@ namespace Shoplifter
                     ModEntry.PerScreenStolen.Value = false;
 
                     // Not caught, generate stock for shoplifting, on purchase adjust counters
-                    Game1.activeClickableMenu = new ShopMenu(shop, ShopStock.generateRandomStock(maxstock, maxquantity, shop), 0, null, delegate
+                    Game1.activeClickableMenu = new ShopMenu("ShopliftMenu", ShopStock.generateRandomStock(maxstock, maxquantity, shop), 0, null, delegate
                     {
                         if (ModEntry.PerScreenStolen.Value == false)
                         {
