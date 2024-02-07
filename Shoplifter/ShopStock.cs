@@ -14,7 +14,8 @@ namespace Shoplifter
 {	
 	public class ShopStock
 	{
-		public static List<Item> CurrentStock = new List<Item>();
+		public static List<Item> BasicStock = new List<Item>();
+        public static List<Item> RareStock = new List<Item>();
 
         /// <summary>
         /// Generates a random list of stock for the given shop
@@ -36,40 +37,40 @@ namespace Shoplifter
             {
                 // Icecream Stand
                 case "IceCreamStand":
-                    CurrentStock.Add(new StardewValley.Object("233", 1));
+                    BasicStock.Add(new StardewValley.Object("233", 1));
                     break;
 
                 // Sandy's shop
                 case "Sandy":
 
                     // Add object id to array
-                    CurrentStock.Add(new StardewValley.Object("802", 1));
-                    CurrentStock.Add(new StardewValley.Object("478", 1));
-                    CurrentStock.Add(new StardewValley.Object("486", 1));
-                    CurrentStock.Add(new StardewValley.Object("494", 1));
+                    BasicStock.Add(new StardewValley.Object("802", 1));
+                    BasicStock.Add(new StardewValley.Object("478", 1));
+                    BasicStock.Add(new StardewValley.Object("486", 1));
+                    BasicStock.Add(new StardewValley.Object("494", 1));
 
                     switch (Game1.dayOfMonth % 7)
                     {
                         case 0:
-                            CurrentStock.Add(new StardewValley.Object("233", 1));
+                            BasicStock.Add(new StardewValley.Object("233", 1));
                             break;
                         case 1:
-                            CurrentStock.Add(new StardewValley.Object("88", 1));
+                            BasicStock.Add(new StardewValley.Object("88", 1));
                             break;
                         case 2:
-                            CurrentStock.Add(new StardewValley.Object("90", 1));
+                            BasicStock.Add(new StardewValley.Object("90", 1));
                             break;
                         case 3:
-                            CurrentStock.Add(new StardewValley.Object("749", 1));
+                            BasicStock.Add(new StardewValley.Object("749", 1));
                             break;
                         case 4:
-                            CurrentStock.Add(new StardewValley.Object("466", 1));
+                            BasicStock.Add(new StardewValley.Object("466", 1));
                             break;
                         case 5:
-                            CurrentStock.Add(new StardewValley.Object("340", 1));
+                            BasicStock.Add(new StardewValley.Object("340", 1));
                             break;
                         case 6:
-                            CurrentStock.Add(new StardewValley.Object("371", 1));
+                            BasicStock.Add(new StardewValley.Object("371", 1));
                             break;
                     }
                     break;
@@ -78,59 +79,65 @@ namespace Shoplifter
                     {
                         if ((stockinfo.Key as StardewValley.Object) == null || (stockinfo.Key as StardewValley.Object).QualifiedItemId.StartsWith("(O)") == false || (stockinfo.Key as StardewValley.Object).IsRecipe == true)
                         {
+                            RareStock.Add(stockinfo.Key as Item);
                             continue;
                         }
 
                         // Add object id to array
                         if ((stockinfo.Key as StardewValley.Object) != null && (stockinfo.Key as StardewValley.Object).bigCraftable.Value == false)
                         {
+                            if ((stockinfo.Key as StardewValley.Object).Category < -100)
+                            {
+                                RareStock.Add(stockinfo.Key as StardewValley.Object);
+                            }
+
                             if (ModEntry.IDGAItem?.GetDGAItemId(stockinfo.Key as StardewValley.Object) != null)
                             {
                                 var id = (ModEntry.IDGAItem.SpawnDGAItem(ModEntry.IDGAItem.GetDGAItemId(stockinfo.Key as StardewValley.Object)) as StardewValley.ISalable) as Item;
 
-                                CurrentStock.Add(id);
+                                BasicStock.Add(id);
                             }
 
                             else
                             {
-                                CurrentStock.Add(stockinfo.Key as StardewValley.Object);
+                                BasicStock.Add(stockinfo.Key as StardewValley.Object);
                             }
                         }
                     }
                     break;
             }
 
-            if (CurrentStock.Count == 0)
+            if (BasicStock.Count == 0)
             {
                 switch (which)
                 {
                     case "SeedShop":
                         // Grass starter if nothing available
-                        CurrentStock.Add(new StardewValley.Object("297", 1));
+                        BasicStock.Add(new StardewValley.Object("297", 1));
                         break;
                     case "FishShop":
                         // Trout soup if nothing available
-                        CurrentStock.Add(new StardewValley.Object("219", 1));
+                        BasicStock.Add(new StardewValley.Object("219", 1));
                         break;
                     case "Carpenter":
                         // Wood if nothing available
-                        CurrentStock.Add(new StardewValley.Object("388", 1));
+                        BasicStock.Add(new StardewValley.Object("388", 1));
                         break;
                     case "Hospital":
                         // Muscle Remedy if nothing available
-                        CurrentStock.Add(new StardewValley.Object("351", 1));
+                        BasicStock.Add(new StardewValley.Object("351", 1));
                         break;
                     case "AnimalShop":
                         // Hay if nothing available
-                        CurrentStock.Add(new StardewValley.Object("178", 1));
+                        BasicStock.Add(new StardewValley.Object("178", 1));
                         break;
                     case "Saloon":
                         // Beer if nothing available
-                        CurrentStock.Add(new StardewValley.Object("346", 1));
+                        BasicStock.Add(new StardewValley.Object("346", 1));
                         break;
                     case "Blacksmith":
                         // Coal if nothing available
-                        CurrentStock.Add(new StardewValley.Object("382", 1));
+                        BasicStock.Add(new StardewValley.Object("382", 1));
                         break;
                 }
                 
@@ -140,15 +147,14 @@ namespace Shoplifter
 			for (int i = 0; i < stocklimit; i++)
 			{
                 int quantity = random.Next(1, maxquantity + 1);
-				var itemindex = random.Next(0, CurrentStock.Count);
+				var itemindex = random.Next(0, BasicStock.Count);
 
-                if (CurrentStock.Count == 0)
+                if (BasicStock.Count == 0)
                 {
                     break;
                 }
-
-                stock.Add(CurrentStock[itemindex], new ItemStockInformation(0, quantity, null, null, LimitedStockMode.None));
-                CurrentStock.RemoveAt(itemindex);
+                stock.Add(BasicStock[itemindex], new ItemStockInformation(0, quantity, null, null, LimitedStockMode.None));
+                BasicStock.RemoveAt(itemindex);
                 //if (CurrentStock[itemindex] is String && ModEntry.IDGAItem.SpawnDGAItem(CurrentStock[itemindex].ToString()) as StardewValley.ISalable as Item != null)
                 //{
                 //	var dgaitem = (ModEntry.IDGAItem.SpawnDGAItem(CurrentStock[itemindex].ToString()) as StardewValley.ISalable) as Item;
@@ -160,8 +166,16 @@ namespace Shoplifter
                 //}
             }
 
+            if (RareStock.Count > 0)
+            {
+                var itemindex = random.Next(0, RareStock.Count);
+
+                stock.Add(RareStock[itemindex], new ItemStockInformation(0, 1, null, null, LimitedStockMode.None));
+            }
+
 			// Clear stock list
-			CurrentStock.Clear();
+			BasicStock.Clear();
+            RareStock.Clear();
 
 			return stock;
 		}
