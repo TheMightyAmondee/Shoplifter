@@ -398,7 +398,7 @@ namespace Shoplifter
                     Game1.drawObjectDialogue(Game1.content.LoadString("Strings\\Locations:ScienceHouse_RobinAbsent").Replace('\n', '^'));
                     Game1.afterDialogues = delegate
                     {
-                        ShopliftingMenu(location, new string[4] { "Robin", "Demetrius", "Maru", "Sebastian" }, "Carpenters", 2, 20);
+                        ShopliftingMenu(location, new string[4] { "Robin", "Demetrius", "Maru", "Sebastian" }, "Carpenter", 2, 20);
                     };
 
                 }
@@ -406,7 +406,7 @@ namespace Shoplifter
                 // Robin can't sell. Period
                 else if (location.carpenters(tileLocation) == false)
                 {
-                    ShopliftingMenu(location, new string[4] { "Robin", "Demetrius", "Maru", "Sebastian" }, "Carpenters", 2, 20);
+                    ShopliftingMenu(location, new string[4] { "Robin", "Demetrius", "Maru", "Sebastian" }, "Carpenter", 2, 20);
                 }
 
                 // Robin can sell and player can't steal
