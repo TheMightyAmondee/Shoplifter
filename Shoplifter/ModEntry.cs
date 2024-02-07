@@ -39,7 +39,7 @@ namespace Shoplifter
             catch
             {
                 this.config = new ModConfig();
-                this.Monitor.Log("Failed to parse config file, default options will be used. Ensure only positive whole numbers are entered in config", LogLevel.Warn);
+                this.Monitor.Log("Failed to parse config file, default options will be used.", LogLevel.Warn);
             }
             
             ShopMenuUtilities.gethelpers(this.Monitor, this.ModManifest, this.config);
@@ -208,6 +208,14 @@ namespace Shoplifter
                 getValue: () => (int)this.config.CaughtRadius,
                 setValue: value => this.config.CaughtRadius = (uint)value,
                 min: 0, max: 20
+            );
+            configMenu.AddNumberOption(
+                mod: this.ModManifest,
+                name: () => i18n.string_GMCM_RareStockChance(),
+                tooltip: () => i18n.string_GMCM_RareStockChanceTooltip(),
+                getValue: () => this.config.RareStockChance,
+                setValue: value => this.config.RareStockChance = value,
+                min: 0f, max: 1.0f, interval: 0.01f
             );
         }
 

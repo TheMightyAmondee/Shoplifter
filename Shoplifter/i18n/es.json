@@ -47,6 +47,8 @@
     "TheMightyAmondee.Shoplifter/GMCM_MaxBanned":"Días de prohibición",
     "TheMightyAmondee.Shoplifter/GMCM_MaxBannedTooltip":"Número de días de prohibición",
     "TheMightyAmondee.Shoplifter/GMCM_MaxRadius":"Radio detectado",
-    "TheMightyAmondee.Shoplifter/GMCM_MaxRadiusTooltip":"Distancia máxima a la que debe estar un aldeano para atrapar al jugador"
+    "TheMightyAmondee.Shoplifter/GMCM_MaxRadiusTooltip":"Distancia máxima a la que debe estar un aldeano para atrapar al jugador",
+    "TheMightyAmondee.Shoplifter/GMCM_RareStockChance":"Rara oportunidad de acciones",
+    "TheMightyAmondee.Shoplifter/GMCM_RareStockChanceTooltip":"La posibilidad de que aparezcan artículos raros de la tienda."
     //
   }

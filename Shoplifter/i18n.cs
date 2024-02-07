@@ -83,6 +83,14 @@ namespace Shoplifter
         {
             return i18n.GetTranslation("TheMightyAmondee.Shoplifter/GMCM_MaxRadiusTooltip");
         }
+        public static string string_GMCM_RareStockChance()
+        {
+            return i18n.GetTranslation("TheMightyAmondee.Shoplifter/GMCM_RareStockChance");
+        }
+        public static string string_GMCM_RareStockChanceTooltip()
+        {
+            return i18n.GetTranslation("TheMightyAmondee.Shoplifter/GMCM_RareStockChanceTooltip");
+        }
         // End GMCM translations
 
         public static string string_Shoplift()

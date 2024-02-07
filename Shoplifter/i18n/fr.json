@@ -47,6 +47,8 @@
     "TheMightyAmondee.Shoplifter/GMCM_MaxBanned":"Nombre de jours de bannissement",
     "TheMightyAmondee.Shoplifter/GMCM_MaxBannedTooltip":"Nombre de jours de bannissement",
     "TheMightyAmondee.Shoplifter/GMCM_MaxRadius":"Rayon de capture",
-    "TheMightyAmondee.Shoplifter/GMCM_MaxRadiusTooltip":"Distance maximale à laquelle un villageois doit se trouver pour attraper le joueur"
+    "TheMightyAmondee.Shoplifter/GMCM_MaxRadiusTooltip":"Distance maximale à laquelle un villageois doit se trouver pour attraper le joueur",
+    "TheMightyAmondee.Shoplifter/GMCM_RareStockChance":"Chance de stock rare",
+    "TheMightyAmondee.Shoplifter/GMCM_RareStockChanceTooltip":"La chance que des objets rares de la boutique apparaissent."
     //
   }

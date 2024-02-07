@@ -46,7 +46,12 @@
     "TheMightyAmondee.Shoplifter/GMCM_MaxBanned":"Hausverbot Dauer (Tage)",
     "TheMightyAmondee.Shoplifter/GMCM_MaxBannedTooltip":"Für wie viele Tage das Hausverbot anhält.",
     "TheMightyAmondee.Shoplifter/GMCM_MaxRadius":"Erkennungsradius",
-    "TheMightyAmondee.Shoplifter/GMCM_MaxRadiusTooltip":"Maximale Entfernung, in der ein NPC den Spieler erwischen kann."
+    "TheMightyAmondee.Shoplifter/GMCM_MaxRadiusTooltip":"Maximale Entfernung, in der ein NPC den Spieler erwischen kann.",
+    //
+    //TODO Improve 1.6 translations
+    "TheMightyAmondee.Shoplifter/GMCM_RareStockChance":"Seltene Aktienchance",
+    "TheMightyAmondee.Shoplifter/GMCM_RareStockChanceTooltip":"Die Chance, dass seltene Lagerartikel erscheinen."
+    //
 }
 
 

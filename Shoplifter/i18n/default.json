@@ -45,5 +45,7 @@
     "TheMightyAmondee.Shoplifter/GMCM_MaxBanned":"Days banned for",
     "TheMightyAmondee.Shoplifter/GMCM_MaxBannedTooltip":"How many days you get banned for.",
     "TheMightyAmondee.Shoplifter/GMCM_MaxRadius":"Caught radius",
-    "TheMightyAmondee.Shoplifter/GMCM_MaxRadiusTooltip":"Maximum distance a villager must be to catch the player."
+    "TheMightyAmondee.Shoplifter/GMCM_MaxRadiusTooltip":"Maximum distance a villager must be to catch the player.",
+    "TheMightyAmondee.Shoplifter/GMCM_RareStockChance":"Rare stock chance",
+    "TheMightyAmondee.Shoplifter/GMCM_RareStockChanceTooltip":"The chance for rare stock items to appear."
 }

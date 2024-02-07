@@ -47,6 +47,10 @@
     "TheMightyAmondee.Shoplifter/GMCM_MaxBanned":"禁入商店天数",
     "TheMightyAmondee.Shoplifter/GMCM_MaxBannedTooltip":"不被允许进入商店的天数",
     "TheMightyAmondee.Shoplifter/GMCM_MaxRadius":"最大抓捕距离",
-    "TheMightyAmondee.Shoplifter/GMCM_MaxRadiusTooltip":"村民发现并抓捕玩家的最大距离"
+    "TheMightyAmondee.Shoplifter/GMCM_MaxRadiusTooltip":"村民发现并抓捕玩家的最大距离",
+    //
+    //TODO Improve 1.6 translations
+    "TheMightyAmondee.Shoplifter/GMCM_RareStockChance":"难得的股票机会",
+    "TheMightyAmondee.Shoplifter/GMCM_RareStockChanceTooltip":"稀有物品出现的概率。"
     //
   }

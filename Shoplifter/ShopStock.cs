@@ -24,7 +24,7 @@ namespace Shoplifter
         /// <param name="maxquantity">The maximum quantity of each stock</param>
         /// <param name="which">The shop to generate stock for</param>
         /// <returns>The generated stock list</returns>
-        public static Dictionary<ISalable, ItemStockInformation> generateRandomStock(int maxstock, int maxquantity, string which)
+        public static Dictionary<ISalable, ItemStockInformation> generateRandomStock(int maxstock, int maxquantity, string which, float rarestockchance)
 		{
             //if (!System.Diagnostics.Debugger.IsAttached) { System.Diagnostics.Debugger.Launch(); }
             GameLocation location = Game1.currentLocation;
@@ -32,6 +32,7 @@ namespace Shoplifter
 			Random random = new Random((int)Game1.uniqueIDForThisGame / 2 + (int)Game1.stats.DaysPlayed + ModEntry.PerScreenShopliftCounter.Value);
 			int stocklimit = random.Next(1, maxstock + 1);
             var shopstock = ShopBuilder.GetShopStock(which);
+            var addrarestockchance = random.NextDouble();
 
             switch (which)
             {
@@ -167,9 +168,9 @@ namespace Shoplifter
                 //}
             }
 
-            if (RareStock.Count > 0)
+            if (RareStock.Count > 0 && addrarestockchance <= rarestockchance)
             {
-                var itemindex = random.Next(0, RareStock.Count);
+                var itemindex = random.Next(0, RareStock.Count);               
 
                 stock.Add(RareStock[itemindex], new ItemStockInformation(0, 1, null, null, LimitedStockMode.None));
             }

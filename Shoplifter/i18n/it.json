@@ -47,6 +47,10 @@
     "TheMightyAmondee.Shoplifter/GMCM_MaxBanned":"Numero di giorni di divieto",
     "TheMightyAmondee.Shoplifter/GMCM_MaxBannedTooltip":"Il numero di giorni per cui si viene banditi",
     "TheMightyAmondee.Shoplifter/GMCM_MaxRadius":"Raggio di cattura",
-    "TheMightyAmondee.Shoplifter/GMCM_MaxRadiusTooltip":"Distanza massima a cui un abitante del villaggio deve trovarsi per individuare il giocatore"
+    "TheMightyAmondee.Shoplifter/GMCM_MaxRadiusTooltip":"Distanza massima a cui un abitante del villaggio deve trovarsi per individuare il giocatore",
+    //
+    //TODO Improve 1.6 translations
+    "TheMightyAmondee.Shoplifter/GMCM_RareStockChance":"Possibilità di oggetto raro",
+    "TheMightyAmondee.Shoplifter/GMCM_RareStockChanceTooltip":"La possibilità che appaiano articoli rari in stock."
     //
   }

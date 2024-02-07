@@ -47,6 +47,8 @@
     "TheMightyAmondee.Shoplifter/GMCM_MaxBanned":"금지된 일수",
     "TheMightyAmondee.Shoplifter/GMCM_MaxBannedTooltip":"금지된 일수입니다",
     "TheMightyAmondee.Shoplifter/GMCM_MaxRadius":"적발 반경",
-    "TheMightyAmondee.Shoplifter/GMCM_MaxRadiusTooltip":"플레이어를 잡기 위해 마을 주민이 플레이어로부터 최대 반경 내에 있어야 합니다."
+    "TheMightyAmondee.Shoplifter/GMCM_MaxRadiusTooltip":"플레이어를 잡기 위해 마을 주민이 플레이어로부터 최대 반경 내에 있어야 합니다.",
+    "TheMightyAmondee.Shoplifter/GMCM_RareStockChance":"희귀 재고 확률",
+    "TheMightyAmondee.Shoplifter/GMCM_RareStockChanceTooltip":"희귀한 재고 아이템이 등장할 확률."
     //
   }
