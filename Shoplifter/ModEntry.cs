@@ -236,6 +236,16 @@ namespace Shoplifter
                 }
 
                 Location tilelocation = new Location((int)TileX, (int)TileY);
+                var islandlocation = Game1.currentLocation as IslandSouth;
+
+                if (islandlocation != null && islandlocation.resortRestored.Value == true && TileX == 14 && TileY == 22)
+                {
+                    Microsoft.Xna.Framework.Rectangle shopArea = new Microsoft.Xna.Framework.Rectangle(14, 21, 1, 1);
+                    if (Utility.TryOpenShopMenu("ResortBar", islandlocation, shopArea) == false)
+                    {
+                        ShopMenuUtilities.ShopliftingMenu(islandlocation, new string[1] { "Gus" }, "ResortBar", 2, 2, false, false);
+                    }
+                }
 
                 // Get whether tile has action property and its' parameters
                 string[] split = location.doesTileHavePropertyNoNull((int)TileX, (int)TileY, "Action", "Buildings").Split(' ');
