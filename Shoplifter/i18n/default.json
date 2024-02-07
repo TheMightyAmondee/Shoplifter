@@ -29,6 +29,13 @@
     "TheMightyAmondee.Shoplifter/CaughtSandy_NoMoney": "Being away from others doesn't make my place easier to steal from, @.$2#$b#Don't worry about the fine this time @, just leave.$2",
     "TheMightyAmondee.Shoplifter/CaughtAlex_NoMoney": "Are you seriously that desperate for ice-cream, @?$7#$b#I'll let you off with a warning this time.$5",
 
+    //1.6 strings
+    "TheMightyAmondee.Shoplifter/CaughtGusResort": "You're seriously shoplifting @?$3#$b#*sigh* If you pay a fine of {{fineamount}}g I'll forget you were shoplifting, okay?$2",
+    "TheMightyAmondee.Shoplifter/CaughtGusResort_NoMoney": "You're seriously shoplifting @?$3#$b#*sigh* I'll give you a break and not fine you this time.$2",
+    "TheMightyAmondee.Shoplifter/CaughtRobin_RareItemsEnabled": "Really @? Did you think you could get a free TV?$3#$b#I'm fining you {{fineamount}}g for this... Maybe that will deter you.$2",
+    "TheMightyAmondee.Shoplifter/CaughtRobin_RareItemsEnabled_NoMoney": "Really @? Did you think you could get a free TV?$3#$b#Since you can't afford it, I'll let the fine slide this time.$2",
+
+
     //GMCM
     "TheMightyAmondee.Shoplifter/GMCM_PeriodSection":"How often can you shoplift?",  
     "TheMightyAmondee.Shoplifter/GMCM_MaxDay": "Maximum shoplifts/day",

@@ -95,14 +95,28 @@ namespace Shoplifter
 
                         fineamount = Math.Min(Game1.player.Money, (int)config.MaxFine);
 
+                        // A few special dialogue cases
+                        if(config.RareStockChance > 0 && character == "Robin")
+                        {
+                            dialogue = (fineamount > 0)
+                               ? i18n.string_Caught("Robin_RareItemsEnabled")
+                               : i18n.string_Caught_NoMoney("Robin_RareItemsEnabled");
+                        }
+
+                        else if (location.Name == "IslandSouth" && character == "Gus")
+                        {
+                            dialogue = (fineamount > 0)
+                               ? i18n.string_Caught("GusResort")
+                               : i18n.string_Caught_NoMoney("GusResort");
+                        }
+
                         // Is NPC primary shopowner
-                        if (character == "Pierre" || character == "Willy" || character == "Robin" || character == "Marnie" || character == "Gus" || character == "Harvey" || character == "Clint" || character == "Sandy" || character == "Alex")
+                        else if (character == "Pierre" || character == "Willy" || character == "Robin" || character == "Marnie" || character == "Gus" || character == "Harvey" || character == "Clint" || character == "Sandy" || character == "Alex")
                         {
                             // Yes, they have special dialogue
                             dialogue = (fineamount > 0)
                                 ? i18n.string_Caught(character)
                                 : i18n.string_Caught_NoMoney(character);
-
 
                         }
 
@@ -542,6 +556,14 @@ namespace Shoplifter
             if (location.isCharacterAtTile(new Vector2(tilelocation.X, tilelocation.Y - 2)) == null && location.isCharacterAtTile(new Vector2(tilelocation.X, tilelocation.Y - 1)) == null)
             {
                 ShopliftingMenu(location, new string[1] { "Alex" }, "IceCreamStand", 1, 5, false, false);               
+            }
+        }
+
+        public static void ResortBarShopliftingMenu(GameLocation location)
+        {
+            if (location.getCharacterFromName("Gus") == null || (location.getCharacterFromName("Gus") != null && location.getCharacterFromName("Gus").Tile.Equals(new Vector2(14f, 21f)) == false))
+            {
+                ShopliftingMenu(location, new string[1] { "Gus" }, "ResortBar", 2, 1, false, false);
             }
         }
     }
