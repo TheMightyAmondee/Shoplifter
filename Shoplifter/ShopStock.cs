@@ -89,6 +89,7 @@ namespace Shoplifter
                             if ((stockinfo.Key as StardewValley.Object).Category < -100)
                             {
                                 RareStock.Add(stockinfo.Key as StardewValley.Object);
+                                continue;
                             }
 
                             if (ModEntry.IDGAItem?.GetDGAItemId(stockinfo.Key as StardewValley.Object) != null)
