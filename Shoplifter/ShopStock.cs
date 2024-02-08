@@ -105,6 +105,10 @@ namespace Shoplifter
                         // Cactus seeds if nothing available
                         BasicStock.Add(new StardewValley.Object("802", 1));                       
                         break;
+                        // Should all else fail, add banana sapling as stock (nice)
+                    default:
+                        BasicStock.Add(new StardewValley.Object("69", 1));
+                        break;
                 }
                 
             }          

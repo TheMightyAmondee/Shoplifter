@@ -22,7 +22,7 @@ namespace Shoplifter
 
         public static readonly PerScreen<ArrayList> PerScreenShopsBannedFrom = new PerScreen<ArrayList>(createNewState: () => new ArrayList());
 
-        public static readonly string[] shops = { "SeedShop", "FishShop", "AnimalShop", "ScienceHouse", "Hospital", "Blacksmith", "Saloon", "SandyHouse" };
+        public static readonly List<string> shops = new List<string>() { "SeedShop", "FishShop", "AnimalShop", "ScienceHouse", "Hospital", "Blacksmith", "Saloon", "SandyHouse" };
 
         public static IDynamicGameAssetsApi IDGAItem;
      
@@ -31,6 +31,7 @@ namespace Shoplifter
             helper.Events.GameLoop.DayStarted += this.DayStarted;
             helper.Events.GameLoop.GameLaunched += this.Launched;
             helper.Events.Input.ButtonPressed += this.Action;
+            helper.Events.Player.Warped += this.Warped;
             helper.ConsoleCommands.Add("shoplifter_resetsave", "Removes and readds save data added by the mod to fix broken save data, only use if you're getting errors", this.ResetSave);
             try
             {
@@ -43,6 +44,7 @@ namespace Shoplifter
             }
             
             ShopMenuUtilities.gethelpers(this.Monitor, this.ModManifest, this.config);
+            CustomShopUtilities.gethelpers(this.Monitor, this.ModManifest, this.config);
             i18n.gethelpers(this.Helper.Translation, this.config);
         }
         private void DayStarted(object sender, DayStartedEventArgs e)
@@ -129,6 +131,32 @@ namespace Shoplifter
             if (this.config.CaughtRadius == 0)
             {
                 this.config.CaughtRadius = 1;
+            }
+
+            // Read owned content packs and register shops as shopliftable
+            foreach (IContentPack contentPack in this.Helper.ContentPacks.GetOwned())
+            {
+                if (!contentPack.HasFile("shopliftables.json"))
+                {
+                    this.Monitor.Log($"Skipping content pack \"{contentPack.Manifest.Name}\", it does not have a shopliftables.json", LogLevel.Warn);
+                }
+                else
+                {
+                    this.Monitor.Log($"Loading content pack {contentPack.Manifest.Name} {contentPack.Manifest.Version} by {contentPack.Manifest.Author} | {contentPack.Manifest.Description}", LogLevel.Info);
+                    ContentPack data;
+
+                    try
+                    {
+                        data = contentPack.ReadJsonFile<ContentPack>("shopliftables.json");
+                    }
+                    catch
+                    {
+                        this.Monitor.Log($"Error reading content pack {contentPack.Manifest.Name}", LogLevel.Error);
+                        continue;
+                    }
+
+                    CustomShopUtilities.RegisterShopliftableShop(data, contentPack);
+                }
             }
 
             this.BuildConfigMenu();
@@ -243,6 +271,14 @@ namespace Shoplifter
                     ShopMenuUtilities.ResortBarShopliftingMenu(location);
                 }
 
+                foreach(var shopliftableshop in CustomShopUtilities.CustomShops.Values)
+                {
+                    if (shopliftableshop.CounterLocation.LocationName == location.NameOrUniqueName && shopliftableshop.CounterLocation.TileX == TileX && shopliftableshop.CounterLocation.TileY == TileY && CustomShopUtilities.CanShopliftCustomShop(shopliftableshop) == true)
+                    {
+                        CustomShopUtilities.CustomShop_ShopliftingMenu(shopliftableshop, location);
+                    }
+                }
+
                 // Get whether tile has action property and its' parameters
                 string[] split = location.doesTileHavePropertyNoNull((int)TileX, (int)TileY, "Action", "Buildings").Split(' ');
 
@@ -302,6 +338,16 @@ namespace Shoplifter
                             break;
                     }
                 }               
+            }
+        }
+
+        private void Warped(object sender, WarpedEventArgs e)
+        {
+            if (PerScreenShopsBannedFrom.Value.Contains(e.NewLocation.NameOrUniqueName) == true)
+            {
+                Game1.warpFarmer(e.NewLocation.warps[0].TargetName, e.NewLocation.warps[0].TargetX, e.NewLocation.warps[0].TargetY, false);
+
+                Game1.drawObjectDialogue(i18n.string_Banned());
             }
         }
 

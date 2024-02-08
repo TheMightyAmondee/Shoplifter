@@ -2,7 +2,8 @@
 
 Shoplifter is a mod for [Stardew Valley](https://www.stardewvalley.net/) that allows the player to shoplift when the shopkeeper is not at the counter. 
 Stock is randomly generated based on the save file and the number of days played for each shop. This is to ensure stock is the same throughout the day.
-Only basic items that are currently available to your character can be shoplifted, it's unlikely you could get away with stealing a TV from Robin's (as she does point out...)
+By default, only basic items that are currently available to your character can be shoplifted, it's unlikely you could get away with stealing a TV from Robin's (as she does point out...)
+(1.2.0) Rare stock (recipes, non-basic items, books, trinkets) may appear in stores if allowed. Up to one rare item will appear in any given shoplift.
 
 Ready for a spree of petty crime? Just don't get caught...
 
@@ -21,11 +22,12 @@ Version 1.1.0 added a config so shoplifting preferences can be changed, includin
 - Maximum fine amount
 - Maximum friendship penalty
 - Maximum distance a villager must be to catch the player, default is 5.
+- (1.2.0) The chance for a rare (non-basic item) to appear in store, expressed as a decimal between 0 and 1. Default is 0.
 
 When changing the config, ensure only positive whole numbers or zero are entered so the config can be parsed. The mod will use the default values if it can't parse the config. 
 Version 1.1.4 added Generic Mod Config Menu support so the config values can be changed whilst in game (thanks to luelista!).
 
-The shops you can shoplift from are: Willy's Shop, Pierre's General Store, Carpenter, Marnie's Ranch, Harvey's Clinic, Saloon, Blacksmith, Sandy's Oasis, Icecream Stand.
+The shops you can shoplift from are: Willy's Shop, Pierre's General Store, Carpenter, Marnie's Ranch, Harvey's Clinic, Saloon, Blacksmith, Sandy's Oasis, Icecream Stand, Resort Bar.
 If you're wondering why all shops aren't included it's because the shopkeeper never leaves said store, you'll never get away with it. Custom shops cannot be shoplifted from.
 
 Boring specifics are listed below:
@@ -41,6 +43,18 @@ Saloon | Gus, Emily | Recipes | 2 | 1 | Yes
 Blacksmith | Clint | None | 3 | 10 | Yes
 Sandy's Oasis | Sandy | Furniture, clothing | 3 | 3 | Yes
 Icecream Stand | Alex | None | 1 | 5 | No
+Resort Bar | Gus | None | 2 | 2 | No
+
+## Version 1.2.0 ##
+
+This is a big update!
+
+As a quick overview
+- Updated for 1.6 compatibility
+- Added the Resort Bar as a shopliftable shop (non-bannable).
+- Content packs! To allow for new shopliftable shop definitions.
+- A couple of new dialogue lines
+- Rare stock can now appear in stores if allowed.
 
 ## Compatibilty ##
 
@@ -86,4 +100,5 @@ Note: Translated GMCM menus may not have the proper layout.
 1.1.4 - Added GMCM support thanks to luelista! Added Turkish, Spanish and Russian translations.
 
 1.1.5 to 1.1.9 - Minor bug fixes
+
 

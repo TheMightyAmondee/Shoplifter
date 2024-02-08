@@ -79,7 +79,7 @@ namespace Shoplifter
         /// <param name="who">The player to catch</param>
         /// <param name="location">The current location instance</param>
         /// <returns>Whether the player was caught</returns>      
-        public static bool ShouldBeCaught(string[] which, Farmer who, GameLocation location)
+        public static bool ShouldBeCaught(string[] which, Farmer who, GameLocation location, bool bannable)
         {
             foreach(string character in which)
             {
@@ -129,7 +129,7 @@ namespace Shoplifter
                         }
 
                         // Is the player now banned? (uses catch before as dialogue is loaded before count is adjusted) Append additional dialogue
-                        dialogue = (Game1.player.modData.ContainsKey($"{manifest.UniqueID}_{location.NameOrUniqueName}") == true && Game1.player.modData[$"{manifest.UniqueID}_{location.NameOrUniqueName}"].StartsWith($"{config.CatchesBeforeBan - 1}") == true)
+                        dialogue = (Game1.player.modData.ContainsKey($"{manifest.UniqueID}_{location.NameOrUniqueName}") == true && Game1.player.modData[$"{manifest.UniqueID}_{location.NameOrUniqueName}"].StartsWith($"{config.CatchesBeforeBan - 1}") == true && bannable == true)
                             ? dialogue + banneddialogue
                             : dialogue;
 
@@ -151,7 +151,7 @@ namespace Shoplifter
         /// </summary>
         /// <param name="location">The current location instance</param>
         /// <param name="bannable">Whether the player can be banned from the shop</param>
-        public static void ShopliftingPenalties(GameLocation location, bool bannable = true)
+        public static void ShopliftingPenalties(GameLocation location, bool bannable)
         {
             // Subtract monetary penalty if it applies
             if (fineamount > 0)
@@ -235,7 +235,7 @@ namespace Shoplifter
                     SeenShoplifting(location, Game1.player);
 
                     // Player is caught
-                    if (ShouldBeCaught(shopkeepers, Game1.player, location) == true)
+                    if (ShouldBeCaught(shopkeepers, Game1.player, location, bannable) == true)
                     {
                         // After dialogue, apply penalties
                         Game1.afterDialogues = delegate
