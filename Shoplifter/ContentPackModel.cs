@@ -25,6 +25,10 @@ namespace Shoplifter
         public int OpenTime { get; set; } = -1;
         public int CloseTime { get; set; } = -1;
         public List<string> Weather { get;set; } = null;
+        public List<int> DayOfSeason { get; set; } = null;
+        public List<string> Season { get; set; } = null;
+        public List<string> EventsSeen { get; set; } = null;
+        public Dictionary<string,int> FriendshipLevels { get; set; } = null;
         public List<ShopKeeperConditions> ShopKeeperRange { get; set; } = null;
 
     }

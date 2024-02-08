@@ -8,6 +8,8 @@ using Microsoft.Xna.Framework;
 using xTile.Dimensions;
 using xTile.Tiles;
 using System.Collections.Generic;
+using System.Xml.Linq;
+using System.Linq;
 
 namespace Shoplifter
 {
@@ -25,7 +27,7 @@ namespace Shoplifter
         {
             CustomShopUtilities.monitor = monitor;
             CustomShopUtilities.manifest = manifest;
-            CustomShopUtilities.config = config;
+            CustomShopUtilities.config = config; 
         }
         
         /// <summary>
@@ -34,14 +36,42 @@ namespace Shoplifter
         /// <param name="shop">The custom shopliftable model</param>
         /// <returns>If the shop can be shoplifted from</returns>
         public static bool CanShopliftCustomShop(ContentPackModel shop)
-        {          
+        {
+            if (!System.Diagnostics.Debugger.IsAttached) { System.Diagnostics.Debugger.Launch(); }
             int CorrectWeather()
             {
                 if (shop.OpenConditions.Weather == null)
                 {
                     return -1;
                 }
-                else if (shop.OpenConditions.Weather.Contains(Game1.currentLocation.GetWeather().Weather) == true)
+
+                var weather = Game1.currentLocation;
+                var trueweather = weather.GetWeather().Weather;
+                if (weather.GetWeather().Weather == null)
+                {
+                    if (weather.IsLightningHere())
+                    {
+                        trueweather = "Storm";
+                    }
+                    else if (weather.IsRainingHere())
+                    {
+                        trueweather = "Rain";
+                    }
+                    else if (weather.IsSnowingHere())
+                    {
+                        trueweather = "Snow";
+                    }
+                    else if (weather.IsDebrisWeatherHere())
+                    {
+                        trueweather = "Wind";
+                    }
+                    else
+                    {
+                        trueweather = "Sun";
+                    }
+                }
+
+                if (shop.OpenConditions.Weather.Contains(trueweather) == true)
                 {
                     return 1;
                 }
@@ -51,7 +81,7 @@ namespace Shoplifter
             
             int CorrectTime()
             {
-                if (shop.OpenConditions.OpenTime == -1 && shop.OpenConditions.OpenTime == -1)
+                if (shop.OpenConditions.OpenTime == -1 && shop.OpenConditions.CloseTime == -1)
                 {
                     return -1;
                 }
@@ -70,6 +100,72 @@ namespace Shoplifter
                 }
                 
                 return 0;
+            }
+
+            int CorrectSeason()
+            {
+                if (shop.OpenConditions.Season == null)
+                {
+                    return -1;
+                }
+
+                else if (shop.OpenConditions.Season.Contains(Game1.currentSeason) == true)
+                {
+                    return 1;
+                }
+
+                return 0;
+            }
+
+            int CorrectDay()
+            {
+                if (shop.OpenConditions.DayOfSeason == null)
+                {
+                    return -1;
+                }
+
+                else if (shop.OpenConditions.DayOfSeason.Contains(Game1.dayOfMonth) == true)
+                {
+                    return 1;
+                }
+
+                return 0;
+            }
+
+            int SeenCorrectEvents()
+            {
+                if (shop.OpenConditions.EventsSeen == null)
+                {
+                    return -1;
+                }
+
+                foreach(var eventid in shop.OpenConditions.EventsSeen)
+                {
+                    if (Game1.player.eventsSeen.Contains(eventid) == false)
+                    {
+                        return 0;
+                    }
+                }
+
+                return 1;
+            }
+
+            int CorrectFriendship()
+            {
+                if (shop.OpenConditions.FriendshipLevels == null)
+                {
+                    return -1;
+                }
+
+                foreach (var name in shop.OpenConditions.FriendshipLevels.Keys)
+                {
+                    if (Game1.player.friendshipData.ContainsKey(name) == false || (Game1.player.friendshipData.ContainsKey(name) == true && Game1.player.getFriendshipLevelForNPC(name) < shop.OpenConditions.FriendshipLevels[name]))
+                    {
+                        return 0;
+                    }
+                }
+
+                return 1;
             }
 
             int ShopKeeperPresent()
@@ -97,12 +193,12 @@ namespace Shoplifter
                 return 0;
             }
 
-            List<int> rawconditionstate = new List<int>() { CorrectTime(), CorrectWeather(), ShopKeeperPresent() };
+            List<int> rawconditionstate = new List<int>() { CorrectTime(), CorrectWeather(), ShopKeeperPresent(), CorrectDay(), CorrectFriendship(), CorrectSeason(), SeenCorrectEvents() };
             List<int> trueconditionstate = new List<int>();
 
             foreach (var conditionstatedata in rawconditionstate)
             {
-                if(conditionstatedata != -1)
+                if (conditionstatedata != -1)
                 {
                     trueconditionstate.Add(conditionstatedata);
                 }
@@ -143,12 +239,20 @@ namespace Shoplifter
                         fineamount = Math.Min(Game1.player.Money, (int)config.MaxFine);
 
                         // Is NPC primary shopowner
-                        if (dialoguedictionary != null && dialoguedictionary.ContainsKey(npc.Name) == true && dialoguedictionary.ContainsKey($"{npc.Name}_NoMoney") == true)
+                        if (dialoguedictionary != null)
                         {
+                            var uniquedialogueifany = dialoguedictionary.ContainsKey(npc.Name) == true 
+                                ? string.Format(dialoguedictionary[npc.Name], fineamount) 
+                                : i18n.string_Caught("Generic");
+
+                            var nomoney_uniquedialogueifany = dialoguedictionary.ContainsKey($"{npc.Name}_NoMoney") == true 
+                                ? dialoguedictionary[$"{npc.Name}_NoMoney"] 
+                                : i18n.string_Caught_NoMoney("Generic");
+                           
                             // Yes, they have special dialogue
                             dialogue = (fineamount > 0)
-                                ? string.Format(dialoguedictionary[npc.Name], fineamount)
-                                : dialoguedictionary[$"{npc.Name}_NoMoney"];
+                                ? uniquedialogueifany
+                                : nomoney_uniquedialogueifany;
                         }
 
                         else
