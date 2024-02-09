@@ -273,9 +273,9 @@ namespace Shoplifter
 
                 foreach(var shopliftableshop in CustomShopUtilities.CustomShops.Values)
                 {
-                    if (shopliftableshop.CounterLocation.LocationName == location.NameOrUniqueName && shopliftableshop.CounterLocation.TileX == TileX && shopliftableshop.CounterLocation.TileY == TileY && CustomShopUtilities.CanShopliftCustomShop(shopliftableshop) == true)
+                    if (shopliftableshop.CounterLocation.NeedsShopProperty == false)
                     {
-                        CustomShopUtilities.CustomShop_ShopliftingMenu(shopliftableshop, location);
+                        CustomShopUtilities.TryOpenCustomShopliftingMenu(shopliftableshop, location, TileX, TileY);
                     }
                 }
 
@@ -334,6 +334,15 @@ namespace Shoplifter
                             else if (location.Name.Equals("SandyHouse"))
                             {
                                 ShopMenuUtilities.SandyShopShopliftingMenu(location);
+                            }
+                            break;
+                        case "OpenShop":
+                            foreach (var shopliftableshop in CustomShopUtilities.CustomShops.Values)
+                            {
+                                if (split[1] == shopliftableshop.ShopName)
+                                {
+                                    CustomShopUtilities.TryOpenCustomShopliftingMenu(shopliftableshop, location, TileX, TileY);
+                                }                                
                             }
                             break;
                     }

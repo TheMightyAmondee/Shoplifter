@@ -37,7 +37,6 @@ namespace Shoplifter
         /// <returns>If the shop can be shoplifted from</returns>
         public static bool CanShopliftCustomShop(ContentPackModel shop)
         {
-            if (!System.Diagnostics.Debugger.IsAttached) { System.Diagnostics.Debugger.Launch(); }
             int CorrectWeather()
             {
                 if (shop.OpenConditions.Weather == null)
@@ -88,7 +87,9 @@ namespace Shoplifter
 
                 else
                 {
-                    if ((shop.OpenConditions.OpenTime == -1 && Game1.timeOfDay < shop.OpenConditions.CloseTime) || (shop.OpenConditions.CloseTime == -1 && Game1.timeOfDay > shop.OpenConditions.OpenTime))
+                    if ((shop.OpenConditions.OpenTime == -1 && Game1.timeOfDay < shop.OpenConditions.CloseTime) 
+                        || 
+                        (shop.OpenConditions.CloseTime == -1 && Game1.timeOfDay > shop.OpenConditions.OpenTime))
                     {
                         return 1;
                     }
@@ -159,7 +160,9 @@ namespace Shoplifter
 
                 foreach (var name in shop.OpenConditions.FriendshipLevels.Keys)
                 {
-                    if (Game1.player.friendshipData.ContainsKey(name) == false || (Game1.player.friendshipData.ContainsKey(name) == true && Game1.player.getFriendshipLevelForNPC(name) < shop.OpenConditions.FriendshipLevels[name]))
+                    if (Game1.player.friendshipData.ContainsKey(name) == false 
+                        || 
+                       (Game1.player.friendshipData.ContainsKey(name) == true && Game1.player.getFriendshipLevelForNPC(name) < shop.OpenConditions.FriendshipLevels[name]))
                     {
                         return 0;
                     }
@@ -398,6 +401,21 @@ namespace Shoplifter
             }
         }
 
+        public static bool TryOpenCustomShopliftingMenu(ContentPackModel shop, GameLocation location, float TileX, float TileY)
+        {
+            bool success = false;
+
+            if (shop.CounterLocation.LocationName == location.NameOrUniqueName 
+                && shop.CounterLocation.TileX == TileX 
+                && shop.CounterLocation.TileY == TileY 
+                && CanShopliftCustomShop(shop) == true)
+            {
+                CustomShop_ShopliftingMenu(shop, location);
+                success = true;
+            }
+            return success;
+        }
+
         /// <summary>
         /// Validates a shop model to ensure all required fields are present. This does not validate if the field is in the correct type
         /// </summary>
@@ -418,7 +436,13 @@ namespace Shoplifter
                 }                
             }
 
-            if (shop.CounterLocation == null || shop.CounterLocation.LocationName == null || shop.UniqueShopId == null || shop.ShopName == null || shop.ShopKeepers.Count == 0)
+            if (shop.CounterLocation == null 
+                || shop.CounterLocation.LocationName == null
+                || shop.CounterLocation.TileX == -1
+                || shop.CounterLocation.TileY == -1
+                || shop.UniqueShopId == null 
+                || shop.ShopName == null 
+                || shop.ShopKeepers.Count == 0)
             {
                 return validated;
             }

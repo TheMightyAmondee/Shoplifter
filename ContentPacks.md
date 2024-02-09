@@ -28,8 +28,9 @@ This model describes where the store is located (what tile of what map must be c
 Field | Type | Required? | What it does | Notes
 ------|------|-----------|--------------|------
 LocationName | string | Yes | The location name where the shop is located | This is also the location the player won't be able to enter if banned.
-TileX | int | No | The X tile coordinate of the shop counter | Default is 0 if not specified
-TileY | int | No | The Y tile coordinate of the shop counter | Default is 0 if not specified
+NeedsShopProperty | bool | No | Whether the counter tile needs the OpenShop property for the shop to exist | Default value is true
+TileX | int | Yes | The X tile coordinate of the shop counter | -
+TileY | int | Yes | The Y tile coordinate of the shop counter | -
 
 ## ShopliftableConditions model
 This model describes when the store is normally open. 

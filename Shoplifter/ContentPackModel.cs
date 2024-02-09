@@ -45,8 +45,9 @@ namespace Shoplifter
     public class ShopCounterLocation
     {
         public string LocationName { get; set; }
-        public int TileX { get; set; } = 0;
-        public int TileY { get; set; } = 0;
+        public bool NeedsShopProperty { get; set; } = true;
+        public int TileX { get; set; } = -1;
+        public int TileY { get; set; } = -1;
 
     }
 }
