@@ -144,7 +144,7 @@ namespace Shoplifter
         /// </summary>
         /// <param name="key">The translation key</param>
         /// <param name="tokens">Tokens, if any</param>
-        /// <returns></returns>
+        /// <returns>The translated string</returns>
         public static Translation GetTranslation(string key, object tokens = null)
         {
             if (i18n.translation == null)

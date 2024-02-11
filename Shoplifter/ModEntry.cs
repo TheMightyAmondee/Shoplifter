@@ -22,7 +22,7 @@ namespace Shoplifter
 
         public static readonly PerScreen<ArrayList> PerScreenShopsBannedFrom = new PerScreen<ArrayList>(createNewState: () => new ArrayList());
 
-        public static readonly List<string> shops = new List<string>() { "SeedShop", "FishShop", "AnimalShop", "ScienceHouse", "Hospital", "Blacksmith", "Saloon", "SandyHouse" };
+        public static List<string> shops = new List<string>() { "SeedShop", "FishShop", "AnimalShop", "ScienceHouse", "Hospital", "Blacksmith", "Saloon", "SandyHouse" };
 
         public static IDynamicGameAssetsApi IDGAItem;
      
@@ -44,7 +44,7 @@ namespace Shoplifter
             }
             
             ShopMenuUtilities.gethelpers(this.Monitor, this.ModManifest, this.config);
-            CustomShopUtilities.gethelpers(this.Monitor, this.ModManifest, this.config);
+            CustomShopUtilities.gethelpers(this.Monitor, this.ModManifest, this.config, this.Helper);
             i18n.gethelpers(this.Helper.Translation, this.config);
         }
         private void DayStarted(object sender, DayStartedEventArgs e)
@@ -136,7 +136,7 @@ namespace Shoplifter
             // Read owned content packs and register shops as shopliftable
             foreach (IContentPack contentPack in this.Helper.ContentPacks.GetOwned())
             {
-                if (!contentPack.HasFile("shopliftables.json"))
+                if (contentPack.HasFile("shopliftables.json") == false)
                 {
                     this.Monitor.Log($"Skipping content pack \"{contentPack.Manifest.Name}\", it does not have a shopliftables.json", LogLevel.Warn);
                 }
@@ -243,7 +243,7 @@ namespace Shoplifter
                 tooltip: () => i18n.string_GMCM_RareStockChanceTooltip(),
                 getValue: () => this.config.RareStockChance,
                 setValue: value => this.config.RareStockChance = value,
-                min: 0f, max: 1.0f, interval: 0.01f
+                min: 0f, max: 1.0f, interval: 0.05f
             );
         }
 
@@ -251,7 +251,12 @@ namespace Shoplifter
         {
             GameLocation location = Game1.player.currentLocation;
 
-            if ((e.Button.IsActionButton() == true || e.Button == SButton.ControllerA) && Game1.dialogueUp == false && Context.CanPlayerMove == true && Context.IsWorldReady == true)
+            if ((e.Button.IsActionButton() == true 
+                || 
+                e.Button == SButton.ControllerA) 
+                && Game1.dialogueUp == false 
+                && Context.CanPlayerMove == true 
+                && Context.IsWorldReady == true)
             {
                 var TileX = e.Cursor.GrabTile.X;
                 var TileY = e.Cursor.GrabTile.Y;
@@ -266,9 +271,14 @@ namespace Shoplifter
                 Location tilelocation = new Location((int)TileX, (int)TileY);
 
                 // Island resort checked a different way, check this as well
-                if (location.NameOrUniqueName == "IslandSouth" && TileX == 14 && TileY == 22 && location as IslandSouth != null && (location as IslandSouth).resortRestored.Value == true)
+                if (location.NameOrUniqueName == "IslandSouth" 
+                    && TileX == 14 
+                    && TileY == 22 
+                    && location as IslandSouth != null 
+                    && (location as IslandSouth).resortRestored.Value == true)
                 {
                     ShopMenuUtilities.ResortBarShopliftingMenu(location);
+                    return;
                 }
 
                 foreach(var shopliftableshop in CustomShopUtilities.CustomShops.Values)
@@ -276,6 +286,7 @@ namespace Shoplifter
                     if (shopliftableshop.CounterLocation.NeedsShopProperty == false)
                     {
                         CustomShopUtilities.TryOpenCustomShopliftingMenu(shopliftableshop, location, TileX, TileY);
+                        return;
                     }
                 }
 
@@ -368,7 +379,7 @@ namespace Shoplifter
 
                 foreach (string moddata in new List<string>(data.Keys))
                 {
-                    if (moddata.StartsWith($"{this.ModManifest.UniqueID}"))
+                    if (moddata.StartsWith($"{this.ModManifest.UniqueID}") == true)
                     {
                         data.Remove(moddata);
                         data.Add(moddata,"0/0");

@@ -18,16 +18,17 @@ namespace Shoplifter
         private static IMonitor monitor;
         private static IManifest manifest;
         private static ModConfig config;
+        private static IModHelper modHelper;
 
         private static int fineamount;
 
         public static Dictionary<string, ContentPackModel> CustomShops = new Dictionary<string, ContentPackModel>();
-
-        public static void gethelpers(IMonitor monitor, IManifest manifest, ModConfig config)
+        public static void gethelpers(IMonitor monitor, IManifest manifest, ModConfig config, IModHelper modhelper)
         {
             CustomShopUtilities.monitor = monitor;
             CustomShopUtilities.manifest = manifest;
-            CustomShopUtilities.config = config; 
+            CustomShopUtilities.config = config;
+            CustomShopUtilities.modHelper = modhelper;
         }
         
         /// <summary>
@@ -35,7 +36,7 @@ namespace Shoplifter
         /// </summary>
         /// <param name="shop">The custom shopliftable model</param>
         /// <returns>If the shop can be shoplifted from</returns>
-        public static bool CanShopliftCustomShop(ContentPackModel shop)
+        private static bool CanShopliftCustomShop(ContentPackModel shop)
         {
             int CorrectWeather()
             {
@@ -48,19 +49,19 @@ namespace Shoplifter
                 var trueweather = weather.GetWeather().Weather;
                 if (weather.GetWeather().Weather == null)
                 {
-                    if (weather.IsLightningHere())
+                    if (weather.IsLightningHere() == true)
                     {
                         trueweather = "Storm";
                     }
-                    else if (weather.IsRainingHere())
+                    else if (weather.IsRainingHere() == true)
                     {
                         trueweather = "Rain";
                     }
-                    else if (weather.IsSnowingHere())
+                    else if (weather.IsSnowingHere() == true)
                     {
                         trueweather = "Snow";
                     }
-                    else if (weather.IsDebrisWeatherHere())
+                    else if (weather.IsDebrisWeatherHere() == true)
                     {
                         trueweather = "Wind";
                     }
@@ -170,6 +171,22 @@ namespace Shoplifter
 
                 return 1;
             }
+            int QueriesTrue()
+            {
+                if (shop.OpenConditions.GameStateQueries == null)
+                {
+                    return -1;
+                }
+
+                foreach (var query in shop.OpenConditions.GameStateQueries)
+                {
+                    if (GameStateQuery.CheckConditions(query) == false)
+                    {
+                        return 0;
+                    }
+                }
+                return 1;
+            }
 
             int ShopKeeperPresent()
             {
@@ -181,10 +198,10 @@ namespace Shoplifter
                 foreach(var shopkeeperdata in shop.OpenConditions.ShopKeeperRange)
                 {
                     var location = Game1.currentLocation;
+                    var npc = location.getCharacterFromName(shopkeeperdata.Name);
                     var shopkeeperarea = new Microsoft.Xna.Framework.Rectangle(shopkeeperdata.TileX, shopkeeperdata.TileY, shopkeeperdata.Width, shopkeeperdata.Height);
-                    if (location.getCharacterFromName(shopkeeperdata.Name) != null)
+                    if (npc != null)
                     {
-                        var npc = location.getCharacterFromName(shopkeeperdata.Name);
                         Point tile = npc.TilePoint;
                         if (shopkeeperarea.Contains(tile) == true)
                         {
@@ -195,7 +212,6 @@ namespace Shoplifter
 
                 return 0;
             }
-
             List<int> rawconditionstate = new List<int>() { CorrectTime(), CorrectWeather(), ShopKeeperPresent(), CorrectDay(), CorrectFriendship(), CorrectSeason(), SeenCorrectEvents() };
             List<int> trueconditionstate = new List<int>();
 
@@ -206,7 +222,6 @@ namespace Shoplifter
                     trueconditionstate.Add(conditionstatedata);
                 }
             }
-
             return trueconditionstate.Contains(0);
         }
 
@@ -232,7 +247,9 @@ namespace Shoplifter
                 foreach (var npc in location.characters)
                 {
                     // Is NPC in range?
-                    if (npc.Name == character && npc.currentLocation == who.currentLocation && Utility.tileWithinRadiusOfPlayer((int)npc.Tile.X, (int)npc.Tile.Y, (int)config.CaughtRadius, who))
+                    if (npc.Name == character 
+                        && npc.currentLocation == who.currentLocation 
+                        && Utility.tileWithinRadiusOfPlayer((int)npc.Tile.X, (int)npc.Tile.Y, (int)config.CaughtRadius, who))
                     {
                         string dialogue;
                         string banneddialogue = (config.DaysBannedFor == 1)
@@ -244,18 +261,10 @@ namespace Shoplifter
                         // Is NPC primary shopowner
                         if (dialoguedictionary != null)
                         {
-                            var uniquedialogueifany = dialoguedictionary.ContainsKey(npc.Name) == true 
-                                ? string.Format(dialoguedictionary[npc.Name], fineamount) 
-                                : i18n.string_Caught("Generic");
-
-                            var nomoney_uniquedialogueifany = dialoguedictionary.ContainsKey($"{npc.Name}_NoMoney") == true 
-                                ? dialoguedictionary[$"{npc.Name}_NoMoney"] 
-                                : i18n.string_Caught_NoMoney("Generic");
-                           
-                            // Yes, they have special dialogue
-                            dialogue = (fineamount > 0)
-                                ? uniquedialogueifany
-                                : nomoney_uniquedialogueifany;
+                            dialogue = TranslatedDialogue(npc.Name, shop, fineamount) 
+                                ?? (fineamount > 0 
+                                    ? i18n.string_Caught("Generic") 
+                                    : i18n.string_Caught_NoMoney("Generic"));
                         }
 
                         else
@@ -267,7 +276,9 @@ namespace Shoplifter
                         }
 
                         // Is the player now banned? (uses catch before as dialogue is loaded before count is adjusted) Append additional dialogue
-                        dialogue = (Game1.player.modData.ContainsKey($"{manifest.UniqueID}_{location.NameOrUniqueName}") == true && Game1.player.modData[$"{manifest.UniqueID}_{location.NameOrUniqueName}"].StartsWith($"{config.CatchesBeforeBan - 1}") == true && shop.Bannable == true)
+                        dialogue = (Game1.player.modData.ContainsKey($"{manifest.UniqueID}_{location.NameOrUniqueName}") == true 
+                            && Game1.player.modData[$"{manifest.UniqueID}_{location.NameOrUniqueName}"].StartsWith($"{config.CatchesBeforeBan - 1}") == true 
+                            && shop.Bannable == true)
                             ? dialogue + banneddialogue
                             : dialogue;
 
@@ -396,11 +407,18 @@ namespace Shoplifter
 
                     // Add shop data to customshops dictionary
                     CustomShops.Add(shop.UniqueShopId, shop);
+                    shop.ContentModelPath = contentPack.DirectoryPath;
                     monitor.Log($"{contentPack.Manifest.Name} added shop {shop.UniqueShopId} as a shopliftable shop.");
                 }
             }
         }
 
+        /// <summary>
+        /// Attempt to open a shoplifting menu for the specified shop
+        /// </summary>
+        /// <param name="shop">The shop to open the menu for</param>
+        /// <param name="location">The current location instance</param>
+        /// <returns>Whether the menu was successfully opened</returns>
         public static bool TryOpenCustomShopliftingMenu(ContentPackModel shop, GameLocation location, float TileX, float TileY)
         {
             bool success = false;
@@ -421,7 +439,7 @@ namespace Shoplifter
         /// </summary>
         /// <param name="shop">The shop to check</param>
         /// <returns>Whether the contentpack was successfully validated</returns>
-        public static bool ValidateContentPackModel(ContentPackModel shop)
+        private static bool ValidateContentPackModel(ContentPackModel shop)
         {
             bool validated = false;
 
@@ -450,6 +468,72 @@ namespace Shoplifter
             validated = true;
 
             return validated;
+
+        }
+
+        /// <summary>
+        /// Gets the correct translation (content pack)
+        /// </summary>
+        /// <param name="contentPack">The content pack to get the translation from</param>
+        /// <param name="key">The translation key</param>
+        /// <param name="tokens">Tokens, if any</param>
+        /// <returns>The translated string</returns>
+        private static Translation GetTranslation(IContentPack contentPack, string key, object tokens = null)
+        {
+            return contentPack.Translation.Get(key, tokens);
+        }
+
+        /// <summary>
+        /// Gets the translated caughtdialogue for the specified npc
+        /// </summary>
+        /// <param name="name">the name of the npc</param>
+        /// <param name="shop">the shopliftables shop data for the player was caught shoplifting</param>
+        /// <param name="fineamount">the amount the player was fined</param>
+        /// <returns>The translated string, or generic dialogue</returns>
+        private static string TranslatedDialogue(string name, ContentPackModel shop, int fineamount)
+        {
+            var tempcontentpack = modHelper.ContentPacks.CreateFake(shop.ContentModelPath);
+            if (fineamount > 0)
+            {
+                if (shop.CaughtDialogue.ContainsKey(name) == true)
+                {
+                    if (shop.CaughtDialogue[name].StartsWith("{{i18n:") == true && shop.CaughtDialogue[name].EndsWith("}}") == true)
+                    {
+                        var trimmedkey = shop.CaughtDialogue[name].Replace("{{i18n:", "").Replace("}}","");
+                        return GetTranslation(tempcontentpack, trimmedkey, new { fineamount = fineamount });
+                    }
+                    else
+                    {
+                        return string.Format(shop.CaughtDialogue[name], fineamount);
+                    }                   
+                }
+
+                else
+                {
+                    return i18n.string_Caught("Generic");
+                }
+            }
+
+            else
+            {
+                if (shop.CaughtDialogue.ContainsKey($"{name}_NoMoney") == true)
+                {
+                    if (shop.CaughtDialogue[$"{name}_NoMoney"].StartsWith("{{i18n:") == true && shop.CaughtDialogue[name].EndsWith("}}") == true)
+                    {
+                        var trimmedkey = shop.CaughtDialogue[$"{name}_NoMoney"].Replace("{{i18n:", "").Replace("}}", "");
+                        return GetTranslation(tempcontentpack, trimmedkey);
+                    }
+                    else
+                    {
+                        return string.Format(shop.CaughtDialogue[$"{name}_NoMoney"], fineamount);
+                    }
+                }
+                
+                else
+                {
+                    return i18n.string_Caught_NoMoney("Generic");
+                }
+            }
 
         }
     }

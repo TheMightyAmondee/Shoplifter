@@ -307,7 +307,7 @@ namespace Shoplifter
         public static void FishShopShopliftingMenu(GameLocation location)
         {
             // Willy can sell, don't do anything
-            if (location.getCharacterFromName("Willy") != null && location.getCharacterFromName("Willy").Tile.Y < (float)Game1.player.Tile.Y)
+            if (location.getCharacterFromName("Willy") != null && location.getCharacterFromName("Willy").Tile.Y < Game1.player.Tile.Y)
             {
                 return;
             }

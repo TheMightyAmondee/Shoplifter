@@ -17,7 +17,8 @@ namespace Shoplifter
         public ShopliftableConditions OpenConditions { get; set; } = new ShopliftableConditions();
         public int MaxStockQuantity { get; set; } = 1;
         public int MaxStackPerItem { get; set; } = 1;
-        public bool Bannable { get; set; } = false;
+        public bool Bannable { get; set; } = false;      
+        public string ContentModelPath { get; set; } // Content packs should not add this property themselves, this is determined by the mod
     }
 
     public class ShopliftableConditions
@@ -28,6 +29,7 @@ namespace Shoplifter
         public List<int> DayOfSeason { get; set; } = null;
         public List<string> Season { get; set; } = null;
         public List<string> EventsSeen { get; set; } = null;
+        public List<string> GameStateQueries { get; set; } = new List<string>();
         public Dictionary<string,int> FriendshipLevels { get; set; } = null;
         public List<ShopKeeperConditions> ShopKeeperRange { get; set; } = null;
 
