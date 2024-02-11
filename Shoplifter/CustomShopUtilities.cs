@@ -44,7 +44,6 @@ namespace Shoplifter
                 {
                     return -1;
                 }
-                if (!System.Diagnostics.Debugger.IsAttached) { System.Diagnostics.Debugger.Launch(); }
                 var weather = Game1.currentLocation;
                 var trueweather = weather.GetWeather().Weather;
                 if (weather.GetWeather().Weather == null)
@@ -178,10 +177,9 @@ namespace Shoplifter
                 {
                     return -1;
                 }
-                if (!System.Diagnostics.Debugger.IsAttached) { System.Diagnostics.Debugger.Launch(); }
                 foreach (var query in shop.OpenConditions.GameStateQueries)
                 {
-                    if (GameStateQuery.CheckConditions(query, Game1.currentLocation, Game1.player) == false)
+                    if (GameStateQuery.CheckConditions(query) == false)
                     {
                         return 0;
                     }
@@ -196,7 +194,7 @@ namespace Shoplifter
                     return -1;
                 }
 
-                foreach(var shopkeeperdata in shop.OpenConditions.ShopKeeperRange)
+                foreach (var shopkeeperdata in shop.OpenConditions.ShopKeeperRange)
                 {
                     var location = Game1.currentLocation;
                     var npc = location.getCharacterFromName(shopkeeperdata.Name);
@@ -423,15 +421,17 @@ namespace Shoplifter
         public static bool TryOpenCustomShopliftingMenu(ContentPackModel shop, GameLocation location, float TileX, float TileY)
         {
             bool success = false;
+            bool correctlocation = shop.CounterLocation.LocationName == location.NameOrUniqueName && shop.CounterLocation.TileX == TileX && shop.CounterLocation.TileY == TileY;
 
-            if (shop.CounterLocation.LocationName == location.NameOrUniqueName 
-                && shop.CounterLocation.TileX == TileX 
-                && shop.CounterLocation.TileY == TileY 
-                && CanShopliftCustomShop(shop) == true)
+            if (correctlocation == true)
             {
-                CustomShop_ShopliftingMenu(shop, location);
-                success = true;
+               if (CanShopliftCustomShop(shop) == true)
+               {
+                    CustomShop_ShopliftingMenu(shop, location);
+                    success = true;
+               }
             }
+            
             return success;
         }
 

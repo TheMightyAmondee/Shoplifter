@@ -57,17 +57,11 @@ If any named condition is false the shop will be considered shopliftable.
 
 Field | Type | Required? | What it does | Notes
 ------|------|-----------|--------------|------
-OpenTime | int | No | The time the store opens | Defaults to no open time (open first thing in the morning)
-CloseTime | int | No | The time the store closes | Defaults to no close time (shop won't close during the day)
 Weather | List<string> | No | Under what weather conditions the store is open | By default store is considered open in all weather conditions
-Season | List<string> | No | What seasons the store is open | By default store is considered open in all seasons
-DayOfSeason | List<int> | No | What days of the season the store is open | By default store is considered open all days
-EventsSeen | List<string> | No | The ids of the events that must have been seen for the store to open | All listed event ids must be seen for the store to be considered open
-GameStateQueries | List<string> | No | A list of [Game State Queries](https://stardewvalleywiki.com/Modding:Game_state_queries) that state when the store is open | WEATHER queries won't work as intended. Use the Weather field to check weather conditions
-FriendshipLevels | Dictionary<string,int> | No | The minimum friendship level for each named npc needed for the store to open | In the form ``"<npcname>" : <friendshiplevel>``, all friendship levels listed must be above their respective minimum for the store to be considered open
+GameStateQueries | List<string> | No | A list of [Game State Queries](https://stardewvalleywiki.com/Modding:Game_state_queries) that state when the store is open | WEATHER queries won't work as intended for indoor locations. Use the Weather field to check weather conditions
 ShopKeeperRange | List<``ShopKeeperConditions``> | No | The defined range each shopkeeper must be within the store for it to be considered open | See ShopKeeperConditions model below
 
-Any conditions not defined will not count towards determining shop accessibility. In the case of time, both OpenTime and CloseTime must be undefined.
+Any conditions not defined will not count towards determining shop accessibility.
 If no conditions are defined, shop is considered always open and not shopliftable (not very useful).
 
 ## ShopKeeperConditions model
