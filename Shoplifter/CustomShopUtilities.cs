@@ -44,7 +44,7 @@ namespace Shoplifter
                 {
                     return -1;
                 }
-
+                if (!System.Diagnostics.Debugger.IsAttached) { System.Diagnostics.Debugger.Launch(); }
                 var weather = Game1.currentLocation;
                 var trueweather = weather.GetWeather().Weather;
                 if (weather.GetWeather().Weather == null)
@@ -78,109 +78,110 @@ namespace Shoplifter
 
                 return 0;
             }
-            
-            int CorrectTime()
-            {
-                if (shop.OpenConditions.OpenTime == -1 && shop.OpenConditions.CloseTime == -1)
-                {
-                    return -1;
-                }
 
-                else
-                {
-                    if ((shop.OpenConditions.OpenTime == -1 && Game1.timeOfDay < shop.OpenConditions.CloseTime) 
-                        || 
-                        (shop.OpenConditions.CloseTime == -1 && Game1.timeOfDay > shop.OpenConditions.OpenTime))
-                    {
-                        return 1;
-                    }
+            //int CorrectTime()
+            //{
+            //    if (shop.OpenConditions.OpenTime == -1 && shop.OpenConditions.CloseTime == -1)
+            //    {
+            //        return -1;
+            //    }
 
-                    else if (Game1.timeOfDay < shop.OpenConditions.CloseTime && Game1.timeOfDay > shop.OpenConditions.OpenTime)
-                    {
-                        return 1;
-                    }
-                }
-                
-                return 0;
-            }
+            //    else
+            //    {
+            //        if ((shop.OpenConditions.OpenTime == -1 && Game1.timeOfDay < shop.OpenConditions.CloseTime) 
+            //            || 
+            //            (shop.OpenConditions.CloseTime == -1 && Game1.timeOfDay > shop.OpenConditions.OpenTime))
+            //        {
+            //            return 1;
+            //        }
 
-            int CorrectSeason()
-            {
-                if (shop.OpenConditions.Season == null)
-                {
-                    return -1;
-                }
+            //        else if (Game1.timeOfDay < shop.OpenConditions.CloseTime && Game1.timeOfDay > shop.OpenConditions.OpenTime)
+            //        {
+            //            return 1;
+            //        }
+            //    }
 
-                else if (shop.OpenConditions.Season.Contains(Game1.currentSeason) == true)
-                {
-                    return 1;
-                }
+            //    return 0;
+            //}
 
-                return 0;
-            }
+            //int CorrectSeason()
+            //{
+            //    if (shop.OpenConditions.Season == null)
+            //    {
+            //        return -1;
+            //    }
 
-            int CorrectDay()
-            {
-                if (shop.OpenConditions.DayOfSeason == null)
-                {
-                    return -1;
-                }
+            //    else if (shop.OpenConditions.Season.Contains(Game1.currentSeason) == true)
+            //    {
+            //        return 1;
+            //    }
 
-                else if (shop.OpenConditions.DayOfSeason.Contains(Game1.dayOfMonth) == true)
-                {
-                    return 1;
-                }
+            //    return 0;
+            //}
 
-                return 0;
-            }
+            //int CorrectDay()
+            //{
+            //    if (shop.OpenConditions.DayOfSeason == null)
+            //    {
+            //        return -1;
+            //    }
 
-            int SeenCorrectEvents()
-            {
-                if (shop.OpenConditions.EventsSeen == null)
-                {
-                    return -1;
-                }
+            //    else if (shop.OpenConditions.DayOfSeason.Contains(Game1.dayOfMonth) == true)
+            //    {
+            //        return 1;
+            //    }
 
-                foreach(var eventid in shop.OpenConditions.EventsSeen)
-                {
-                    if (Game1.player.eventsSeen.Contains(eventid) == false)
-                    {
-                        return 0;
-                    }
-                }
+            //    return 0;
+            //}
 
-                return 1;
-            }
+            //int SeenCorrectEvents()
+            //{
+            //    if (shop.OpenConditions.EventsSeen == null)
+            //    {
+            //        return -1;
+            //    }
 
-            int CorrectFriendship()
-            {
-                if (shop.OpenConditions.FriendshipLevels == null)
-                {
-                    return -1;
-                }
+            //    foreach(var eventid in shop.OpenConditions.EventsSeen)
+            //    {
+            //        if (Game1.player.eventsSeen.Contains(eventid) == false)
+            //        {
+            //            return 0;
+            //        }
+            //    }
 
-                foreach (var name in shop.OpenConditions.FriendshipLevels.Keys)
-                {
-                    if (Game1.player.friendshipData.ContainsKey(name) == false 
-                        || 
-                       (Game1.player.friendshipData.ContainsKey(name) == true && Game1.player.getFriendshipLevelForNPC(name) < shop.OpenConditions.FriendshipLevels[name]))
-                    {
-                        return 0;
-                    }
-                }
+            //    return 1;
+            //}
 
-                return 1;
-            }
+            //int CorrectFriendship()
+            //{
+            //    if (shop.OpenConditions.FriendshipLevels == null)
+            //    {
+            //        return -1;
+            //    }
+
+            //    foreach (var name in shop.OpenConditions.FriendshipLevels.Keys)
+            //    {
+            //        if (Game1.player.friendshipData.ContainsKey(name) == false 
+            //            || 
+            //           (Game1.player.friendshipData.ContainsKey(name) == true && Game1.player.getFriendshipLevelForNPC(name) < shop.OpenConditions.FriendshipLevels[name]))
+            //        {
+            //            return 0;
+            //        }
+            //    }
+
+            //    return 1;
+            //}
             int QueriesTrue()
             {
+                
                 if (shop.OpenConditions.GameStateQueries == null)
                 {
                     return -1;
                 }
-
+                if (!System.Diagnostics.Debugger.IsAttached) { System.Diagnostics.Debugger.Launch(); }
                 foreach (var query in shop.OpenConditions.GameStateQueries)
                 {
-                    if (GameStateQuery.CheckConditions(query) == false)
+                    if (GameStateQuery.CheckConditions(query, Game1.currentLocation, Game1.player) == false)
                     {
                         return 0;
                     }
@@ -212,7 +213,7 @@ namespace Shoplifter
 
                 return 0;
             }
-            List<int> rawconditionstate = new List<int>() { CorrectTime(), CorrectWeather(), ShopKeeperPresent(), CorrectDay(), CorrectFriendship(), CorrectSeason(), SeenCorrectEvents() };
+            List<int> rawconditionstate = new List<int>() { ShopKeeperPresent(), QueriesTrue(), CorrectWeather() };
             List<int> trueconditionstate = new List<int>();
 
             foreach (var conditionstatedata in rawconditionstate)

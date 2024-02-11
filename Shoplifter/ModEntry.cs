@@ -278,7 +278,6 @@ namespace Shoplifter
                     && (location as IslandSouth).resortRestored.Value == true)
                 {
                     ShopMenuUtilities.ResortBarShopliftingMenu(location);
-                    return;
                 }
 
                 foreach(var shopliftableshop in CustomShopUtilities.CustomShops.Values)
@@ -286,7 +285,6 @@ namespace Shoplifter
                     if (shopliftableshop.CounterLocation.NeedsShopProperty == false)
                     {
                         CustomShopUtilities.TryOpenCustomShopliftingMenu(shopliftableshop, location, TileX, TileY);
-                        return;
                     }
                 }
 

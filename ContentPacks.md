@@ -63,6 +63,7 @@ Weather | List<string> | No | Under what weather conditions the store is open | 
 Season | List<string> | No | What seasons the store is open | By default store is considered open in all seasons
 DayOfSeason | List<int> | No | What days of the season the store is open | By default store is considered open all days
 EventsSeen | List<string> | No | The ids of the events that must have been seen for the store to open | All listed event ids must be seen for the store to be considered open
+GameStateQueries | List<string> | No | A list of [Game State Queries](https://stardewvalleywiki.com/Modding:Game_state_queries) that state when the store is open | WEATHER queries won't work as intended. Use the Weather field to check weather conditions
 FriendshipLevels | Dictionary<string,int> | No | The minimum friendship level for each named npc needed for the store to open | In the form ``"<npcname>" : <friendshiplevel>``, all friendship levels listed must be above their respective minimum for the store to be considered open
 ShopKeeperRange | List<``ShopKeeperConditions``> | No | The defined range each shopkeeper must be within the store for it to be considered open | See ShopKeeperConditions model below
 
