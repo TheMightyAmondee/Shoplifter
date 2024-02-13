@@ -1,21 +1,16 @@
 ﻿using System;
-using StardewValley.Objects;
-using System.Collections;
 using System.Collections.Generic;
-using StardewValley.Locations;
 using StardewValley;
 using System.Linq;
-using StardewModdingAPI;
 using StardewValley.GameData.Shops;
-using StardewValley.GameData.Crops;
 using StardewValley.Internal;
 
 namespace Shoplifter
 {	
 	public class ShopStock
 	{
-		public static List<Item> BasicStock = new List<Item>();
-        public static List<Item> RareStock = new List<Item>();
+		private readonly static List<Item> BasicStock = new List<Item>();
+        private readonly static List<Item> RareStock = new List<Item>();
 
         /// <summary>
         /// Generates a random list of stock for the given shop
@@ -27,43 +22,45 @@ namespace Shoplifter
         public static Dictionary<ISalable, ItemStockInformation> generateRandomStock(int maxstock, int maxquantity, string which, float rarestockchance)
 		{
             //if (!System.Diagnostics.Debugger.IsAttached) { System.Diagnostics.Debugger.Launch(); }
-            GameLocation location = Game1.currentLocation;
             Dictionary<ISalable, ItemStockInformation> stock = new Dictionary<ISalable, ItemStockInformation>();
 			Random random = new Random((int)Game1.uniqueIDForThisGame / 2 + (int)Game1.stats.DaysPlayed + ModEntry.PerScreenShopliftCounter.Value);
 			int stocklimit = random.Next(1, maxstock + 1);
             var shopstock = ShopBuilder.GetShopStock(which);
             var addrarestockchance = random.NextDouble();
 
-            foreach (var stockinfo in shopstock)
+            if (shopstock != null)
             {
-                if ((stockinfo.Key as StardewValley.Object) == null || (stockinfo.Key as StardewValley.Object).QualifiedItemId.StartsWith("(O)") == false || (stockinfo.Key as StardewValley.Object).IsRecipe == true)
+                foreach (var stockinfo in shopstock)
                 {
-                    RareStock.Add(stockinfo.Key as Item);
-                    continue;
-                }
-
-                // Add object id to array
-                if ((stockinfo.Key as StardewValley.Object) != null && (stockinfo.Key as StardewValley.Object).bigCraftable.Value == false)
-                {
-                    if ((stockinfo.Key as StardewValley.Object).Category < -100)
+                    if ((stockinfo.Key as StardewValley.Object) == null || (stockinfo.Key as StardewValley.Object).QualifiedItemId.StartsWith("(O)") == false || (stockinfo.Key as StardewValley.Object).IsRecipe == true)
                     {
-                        RareStock.Add(stockinfo.Key as StardewValley.Object);
+                        RareStock.Add(stockinfo.Key as Item);
                         continue;
                     }
 
-                    if (ModEntry.IDGAItem?.GetDGAItemId(stockinfo.Key as StardewValley.Object) != null)
+                    // Add object to array
+                    if ((stockinfo.Key as StardewValley.Object) != null && (stockinfo.Key as StardewValley.Object).bigCraftable.Value == false)
                     {
-                        var id = (ModEntry.IDGAItem.SpawnDGAItem(ModEntry.IDGAItem.GetDGAItemId(stockinfo.Key as StardewValley.Object)) as StardewValley.ISalable) as Item;
+                        if ((stockinfo.Key as StardewValley.Object).Category < -100)
+                        {
+                            RareStock.Add(stockinfo.Key as StardewValley.Object);
+                            continue;
+                        }
 
-                        BasicStock.Add(id);
-                    }
+                        if (ModEntry.IDGAItem?.GetDGAItemId(stockinfo.Key as StardewValley.Object) != null)
+                        {
+                            var id = ModEntry.IDGAItem.SpawnDGAItem(ModEntry.IDGAItem.GetDGAItemId(stockinfo.Key as StardewValley.Object)) as StardewValley.ISalable as Item;
 
-                    else
-                    {
-                        BasicStock.Add(stockinfo.Key as StardewValley.Object);
+                            BasicStock.Add(id);
+                        }
+
+                        else
+                        {
+                            BasicStock.Add(stockinfo.Key as StardewValley.Object);
+                        }
                     }
                 }
-            }
+            }           
 
             if (BasicStock.Count == 0)
             {
@@ -111,10 +108,10 @@ namespace Shoplifter
                         break;
                 }
                 
-            }          
-			
-			// Add generated stock to store from array
-			for (int i = 0; i < stocklimit; i++)
+            }
+
+            // Add generated stock to store from array
+            for (int i = 0; i < stocklimit; i++)
 			{
                 int quantity = random.Next(1, maxquantity + 1);
 				var itemindex = random.Next(0, BasicStock.Count);

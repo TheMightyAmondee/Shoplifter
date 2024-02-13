@@ -1,12 +1,8 @@
 ﻿using System;
-using StardewValley.Locations;
 using StardewModdingAPI;
-using StardewValley.Util;
 using StardewValley.Menus;
 using StardewValley;
 using Microsoft.Xna.Framework;
-using xTile.Dimensions;
-using xTile.Tiles;
 using System.Collections.Generic;
 using System.Xml.Linq;
 using System.Linq;
@@ -407,7 +403,7 @@ namespace Shoplifter
                     // Add shop data to customshops dictionary
                     CustomShops.Add(shop.UniqueShopId, shop);
                     shop.ContentModelPath = contentPack.DirectoryPath;
-                    monitor.Log($"{contentPack.Manifest.Name} added shop {shop.UniqueShopId} as a shopliftable shop.");
+                    monitor.Log($"{contentPack.Manifest.Name} added shop {shop.UniqueShopId} as a shopliftable shop.", LogLevel.Info);
                 }
             }
         }

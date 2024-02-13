@@ -22,7 +22,7 @@ namespace Shoplifter
 
         public static readonly PerScreen<ArrayList> PerScreenShopsBannedFrom = new PerScreen<ArrayList>(createNewState: () => new ArrayList());
 
-        public static List<string> shops = new List<string>() { "SeedShop", "FishShop", "AnimalShop", "ScienceHouse", "Hospital", "Blacksmith", "Saloon", "SandyHouse" };
+        public static readonly List<string> shops = new List<string>() { "SeedShop", "FishShop", "AnimalShop", "ScienceHouse", "Hospital", "Blacksmith", "Saloon", "SandyHouse" };
 
         public static IDynamicGameAssetsApi IDGAItem;
      
@@ -196,6 +196,14 @@ namespace Shoplifter
                 setValue: value => this.config.MaxShopliftsPerStore = (uint)value,
                 min: 1
             );
+            configMenu.AddNumberOption(
+                mod: this.ModManifest,
+                name: () => i18n.string_GMCM_RareStockChance(),
+                tooltip: () => i18n.string_GMCM_RareStockChanceTooltip(),
+                getValue: () => this.config.RareStockChance,
+                setValue: value => this.config.RareStockChance = value,
+                min: 0f, max: 1.0f, interval: 0.05f
+            );
             configMenu.AddSectionTitle(this.ModManifest, () => i18n.string_GMCM_PenaltySection());
             configMenu.AddNumberOption(
                 mod: this.ModManifest,
@@ -236,15 +244,7 @@ namespace Shoplifter
                 getValue: () => (int)this.config.CaughtRadius,
                 setValue: value => this.config.CaughtRadius = (uint)value,
                 min: 0, max: 20
-            );
-            configMenu.AddNumberOption(
-                mod: this.ModManifest,
-                name: () => i18n.string_GMCM_RareStockChance(),
-                tooltip: () => i18n.string_GMCM_RareStockChanceTooltip(),
-                getValue: () => this.config.RareStockChance,
-                setValue: value => this.config.RareStockChance = value,
-                min: 0f, max: 1.0f, interval: 0.05f
-            );
+            );            
         }
 
         private void Action(object sender, ButtonPressedEventArgs e)
@@ -340,7 +340,7 @@ namespace Shoplifter
                             {
                                 ShopMenuUtilities.SeedShopShopliftingMenu(location);
                             }
-                            else if (location.Name.Equals("SandyHouse"))
+                            else if (location.Name.Equals("SandyHouse") == true)
                             {
                                 ShopMenuUtilities.SandyShopShopliftingMenu(location);
                             }

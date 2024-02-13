@@ -282,16 +282,16 @@ namespace Shoplifter
                     switch (shop)
                     {
                         case "SeedShop":
-                            Utility.TryOpenShopMenu("SeedShop", (string)null);
+                            Utility.TryOpenShopMenu("SeedShop", null, playOpenSound: true);
                             break;
                         case "Carpenters":
-                            Utility.TryOpenShopMenu("Carpenter", (string)null);
+                            Utility.TryOpenShopMenu("Carpenter", null, playOpenSound: true);
                             break;
                         case "AnimalShop":
-                            Utility.TryOpenShopMenu("AnimalShop", (string)null);
+                            Utility.TryOpenShopMenu("AnimalShop", null, playOpenSound: true);
                             break;
                         case "Saloon":
-                            Utility.TryOpenShopMenu("Saloon", (string)null);
+                            Utility.TryOpenShopMenu("Saloon", null, playOpenSound: true);
                             break;
                         default:
                             break;
@@ -555,7 +555,7 @@ namespace Shoplifter
         {
             if (location.isCharacterAtTile(new Vector2(tilelocation.X, tilelocation.Y - 2)) == null && location.isCharacterAtTile(new Vector2(tilelocation.X, tilelocation.Y - 1)) == null)
             {
-                ShopliftingMenu(location, new string[1] { "Alex" }, "IceCreamStand", 1, 5, false, false);               
+                ShopliftingMenu(location, new string[1] { "Alex" }, "IceCreamStand", 1, 5, bannable: false);               
             }
         }
 
@@ -563,7 +563,7 @@ namespace Shoplifter
         {
             if (location.getCharacterFromName("Gus") == null || (location.getCharacterFromName("Gus") != null && location.getCharacterFromName("Gus").Tile.Equals(new Vector2(14f, 21f)) == false))
             {
-                ShopliftingMenu(location, new string[1] { "Gus" }, "ResortBar", 2, 1, false, false);
+                ShopliftingMenu(location, new string[1] { "Gus" }, "ResortBar", 2, 1, bannable: false);
             }
         }
     }
