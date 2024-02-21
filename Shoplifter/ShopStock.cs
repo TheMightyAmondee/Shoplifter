@@ -32,31 +32,45 @@ namespace Shoplifter
             {
                 foreach (var stockinfo in shopstock)
                 {
-                    if ((stockinfo.Key as StardewValley.Object) == null || (stockinfo.Key as StardewValley.Object).QualifiedItemId.StartsWith("(O)") == false || (stockinfo.Key as StardewValley.Object).IsRecipe == true)
+                    var stockobject = stockinfo.Key as StardewValley.Object;
+
+                    if (stockobject == null || stockobject.QualifiedItemId.StartsWith("(O)") == false || stockobject.IsRecipe == true || stockobject.bigCraftable.Value == true)
                     {
-                        RareStock.Add(stockinfo.Key as Item);
+                        var stockitem = stockinfo.Key as Item;
+
+                        if (ModEntry.IDGAItem?.GetDGAItemId(stockitem) != null)
+                        {
+                            var id = ModEntry.IDGAItem?.SpawnDGAItem(ModEntry.IDGAItem.GetDGAItemId(stockitem)) as ISalable as Item ?? stockitem;
+
+                            RareStock.Add(id);
+                        }
+                        else
+                        {
+                            RareStock.Add(stockitem);
+                        }
+                        
                         continue;
                     }
 
                     // Add object to array
-                    if ((stockinfo.Key as StardewValley.Object) != null && (stockinfo.Key as StardewValley.Object).bigCraftable.Value == false)
+                    if (stockobject != null)
                     {
-                        if ((stockinfo.Key as StardewValley.Object).Category < -100)
+                        if (stockobject.Category < -94)
                         {
-                            RareStock.Add(stockinfo.Key as StardewValley.Object);
+                            RareStock.Add(stockobject);
                             continue;
                         }
 
-                        if (ModEntry.IDGAItem?.GetDGAItemId(stockinfo.Key as StardewValley.Object) != null)
+                        if (ModEntry.IDGAItem?.GetDGAItemId(stockobject) != null)
                         {
-                            var id = ModEntry.IDGAItem.SpawnDGAItem(ModEntry.IDGAItem.GetDGAItemId(stockinfo.Key as StardewValley.Object)) as StardewValley.ISalable as Item;
+                            var id = ModEntry.IDGAItem?.SpawnDGAItem(ModEntry.IDGAItem.GetDGAItemId(stockobject)) as ISalable as Item ?? stockobject;
 
                             BasicStock.Add(id);
                         }
 
                         else
                         {
-                            BasicStock.Add(stockinfo.Key as StardewValley.Object);
+                            BasicStock.Add(stockobject);
                         }
                     }
                 }
@@ -122,15 +136,6 @@ namespace Shoplifter
                 }
                 stock.Add(BasicStock[itemindex], new ItemStockInformation(0, quantity, null, null, LimitedStockMode.None));
                 BasicStock.RemoveAt(itemindex);
-                //if (CurrentStock[itemindex] is String && ModEntry.IDGAItem.SpawnDGAItem(CurrentStock[itemindex].ToString()) as StardewValley.ISalable as Item != null)
-                //{
-                //	var dgaitem = (ModEntry.IDGAItem.SpawnDGAItem(CurrentStock[itemindex].ToString()) as StardewValley.ISalable) as Item;
-                //	dgaitem.Stack = quantity;
-                //                stock.Add(dgaitem);
-                //                //Utility.AddStock(stock, dgaitem, 0, quantity);
-                //	CurrentStock.RemoveAt(itemindex);
-                //	continue;
-                //}
             }
 
             if (RareStock.Count > 0 && addrarestockchance <= rarestockchance)

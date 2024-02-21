@@ -28,7 +28,7 @@ When changing the config, ensure only positive numbers or zero are entered so th
 Version 1.1.4 added Generic Mod Config Menu support so the config values can be changed whilst in game (thanks to luelista!).
 
 The shops you can shoplift from are: Willy's Shop, Pierre's General Store, Carpenter, Marnie's Ranch, Harvey's Clinic, Saloon, Blacksmith, Sandy's Oasis, Icecream Stand, Resort Bar.
-If you're wondering why all shops aren't included it's because the shopkeeper never leaves said store, you'll never get away with it. Custom shops cannot be shoplifted from.
+If you're wondering why all shops aren't included it's because the shopkeeper never leaves said store, you'll never get away with it. Custom shops cannot be shoplifted from unless specified in a content pack.
 
 Boring specifics are listed below:
 
@@ -56,11 +56,11 @@ As a quick overview
 - A couple of new dialogue lines
 - Rare stock can now appear in stores if allowed.
 
-## Compatibilty ##
+## Compatibility ##
 
 Fully compatible with multiplayer, shoplifting data is separate for each player. Should work fine with a controller, just make sure you're under the counter.
 
-Compatibile with shop tile framework in that altered stock will be considered when stock is generated for each shop. However, new shops added by the mod can't be shoplifted since even added vanilla shops are regarded as custom shops. Custom shops added using Content Patcher can be made shopliftable using content packs.
+Compatible with shop tile framework in that altered stock will be considered when stock is generated for each shop. However, new shops added by the mod can't be shoplifted since even added vanilla shops are regarded as custom shops. Custom shops added using Content Patcher can be made shopliftable using content packs.
 
 ## Translation ##
 

@@ -282,9 +282,9 @@ namespace Shoplifter
 
                 foreach(var shopliftableshop in CustomShopUtilities.CustomShops.Values)
                 {
-                    if (shopliftableshop.CounterLocation.NeedsShopProperty == false)
+                    if (shopliftableshop.CounterLocation.NeedsShopProperty == false && CustomShopUtilities.TryOpenCustomShopliftingMenu(shopliftableshop, location, TileX, TileY))
                     {
-                        CustomShopUtilities.TryOpenCustomShopliftingMenu(shopliftableshop, location, TileX, TileY);
+                        break;
                     }
                 }
 
@@ -298,6 +298,7 @@ namespace Shoplifter
                     {
                         // If the door is a locked warp, check player can enter
                         case "LockedDoorWarp":
+                        case "Warp":
                             // Player is banned from location they would warp to otherwise
                             if (PerScreenShopsBannedFrom.Value.Contains($"{split[3]}"))
                             {
@@ -348,9 +349,9 @@ namespace Shoplifter
                         case "OpenShop":
                             foreach (var shopliftableshop in CustomShopUtilities.CustomShops.Values)
                             {
-                                if (split[1] == shopliftableshop.ShopName)
+                                if (split[1] == shopliftableshop.ShopName && CustomShopUtilities.TryOpenCustomShopliftingMenu(shopliftableshop, location, TileX, TileY))
                                 {
-                                    CustomShopUtilities.TryOpenCustomShopliftingMenu(shopliftableshop, location, TileX, TileY);
+                                    break;
                                 }                                
                             }
                             break;

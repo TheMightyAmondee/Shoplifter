@@ -32,7 +32,7 @@ Field | Type | Required? | What it does | Notes
 UniqueShopId | string | Yes | A unique identifier for the shop, anything unique will do! | -
 ShopName | string | Yes | The id of the shop, as defined by the game in Data\Shops or by a custom shop, the mod uses this to get available stock | -
 CounterLocation | ``ShopCounterLocation`` | Yes | Where the counter for the shop is located (the tile location to click on to open the store) | See ShopCounterLocation model below
-ShopKeepers | List<string> | Yes | A list of all the shopkeepers' names (anyone who can catch, fine and/or ban the player) | -
+ShopKeepers | List of strings | Yes | A list of all the shopkeepers' names (anyone who can catch, fine and/or ban the player) | -
 CaughtDialogue |  Dictionary<string, string> | No | Unique dialogue for the shopkeeper to say when the player is caught. | See Unique Dialogue below
 OpenConditions | ``ShopliftableConditions`` | No | Under what conditions the store is normally open and items can be purchased | See ShopliftableConditions model below
 MaxStockQuantity | int | No | The maximum number of different stock items that can appear in each shoplift attempt | Default value is 1
@@ -57,8 +57,8 @@ If any named condition is false the shop will be considered shopliftable.
 
 Field | Type | Required? | What it does | Notes
 ------|------|-----------|--------------|------
-Weather | List<string> | No | Under what weather conditions the store is open | By default store is considered open in all weather conditions
-GameStateQueries | List<string> | No | A list of [Game State Queries](https://stardewvalleywiki.com/Modding:Game_state_queries) that state when the store is open | WEATHER queries won't work as intended for indoor locations. Use the Weather field to check weather conditions
+Weather | List of strings | No | Under what weather conditions the store is open | By default store is considered open in all weather conditions
+GameStateQueries | List of strings | No | A list of [Game State Queries](https://stardewvalleywiki.com/Modding:Game_state_queries) that state when the store is open | WEATHER queries won't work as intended for indoor locations. Use the Weather field to check weather conditions
 ShopKeeperRange | List<``ShopKeeperConditions``> | No | The defined range each shopkeeper must be within the store for it to be considered open | See ShopKeeperConditions model below
 
 Any conditions not defined will not count towards determining shop accessibility.
