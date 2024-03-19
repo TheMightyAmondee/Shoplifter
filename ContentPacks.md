@@ -1,6 +1,6 @@
 # Creating Content Packs for Shoplifter
 
-Content Packs can be created to allow for custom shops added using Content Patcher to be made shopliftable. Content Packs for Shoplifter require two files, a ``manifest.json`` and a ``shopliftables.json``. See [placeholder] for a full example ``shopliftables.json``.
+Content Packs can be created to allow for custom shops added using Content Patcher to be made shopliftable. Content Packs for Shoplifter require two files, a ``manifest.json`` and a ``shopliftables.json``. See [here](https://github.com/TheMightyAmondee/Shoplifter/blob/master/shopliftables.json) for a full example ``shopliftables.json``.
 
 ## manifest.json
 ---
