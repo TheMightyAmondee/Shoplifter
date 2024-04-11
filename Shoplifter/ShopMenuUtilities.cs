@@ -475,7 +475,7 @@ namespace Shoplifter
                 }
 
                 // Marnie can't sell, player has animal catalogue. shoplift or not?
-                else if (Game1.player.stats.Get("Book_AnimalCatalogue") != 0 && marnie.Tile != new Vector2(tileLocation.X, tileLocation.Y - 1) && marnie.Tile != new Vector2(tileLocation.X - 1, tileLocation.Y - 1))
+                else if (Game1.player.stats.Get("Book_AnimalCatalogue") != 0 && (marnie == null || (marnie != null && marnie.Tile != new Vector2(tileLocation.X, tileLocation.Y - 1) && marnie.Tile != new Vector2(tileLocation.X - 1, tileLocation.Y - 1))))
                 {
                     Game1.dialogueUp = false;
                     Game1.drawObjectDialogue(Game1.content.LoadString("Strings\\1_6_Strings:Marnie_Counter"));
