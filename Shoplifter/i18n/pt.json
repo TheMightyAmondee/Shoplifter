@@ -4,7 +4,7 @@
     "TheMightyAmondee.Shoplifter/Banned": "Você foi banido por ser pego roubando. Não abuse da sorte...",
     "TheMightyAmondee.Shoplifter/AlreadyShoplifted_Single": "Você já roubou hoje. Chega...",
     "TheMightyAmondee.Shoplifter/AlreadyShoplifted": "Você já roubou {{shopliftingamount}} vezes hoje. Deu por hoje...",
-    "TheMightyAmondee.Shoplifter/AlreadyShopliftedSameShop":"Não tem nada para roubar aqui...",-****
+    "TheMightyAmondee.Shoplifter/AlreadyShopliftedSameShop":"Não tem nada para roubar aqui...",
     "TheMightyAmondee.Shoplifter/BanFromShop_Single":"#$b#Você já me roubou o suficiente este mês, @. Terei que te banir por um dia.$2",
     "TheMightyAmondee.Shoplifter/BanFromShop":"#$b#Você já me roubou o suficiente este mês, @. Terei que te banir por {{daysbanned}} dias.$2",
   
@@ -36,7 +36,7 @@
     "TheMightyAmondee.Shoplifter/CaughtRobin_RareItemsEnabled": "Sério, @? Você acha mesmo que pode pegar uma TV de plasma assim de graça...$3#$b#Cobrarei {{fineamount}} ouros por isso... Talvez assim você aprenda a lição.$2",
     "TheMightyAmondee.Shoplifter/CaughtRobin_RareItemsEnabled_NoMoney": "Sério, @? Você acha mesmo que pode pegar uma TV de plasma assim de graça...$3#$b#Já que você não tem dinheiro, vou fingir que nada aconteceu desta vez.$2",
 
-    // TODO Improve translations
+    // Translations thanks to caputi!
     "TheMightyAmondee.Shoplifter/GMCM_PeriodSection":"Com que frequência se pode roubar?",  
     "TheMightyAmondee.Shoplifter/GMCM_MaxDay": "Máximo de roubos/dia",
     "TheMightyAmondee.Shoplifter/GMCM_MaxDayTooltip": "Os roubos máximos por dia.",
