@@ -17,7 +17,7 @@ namespace Shoplifter
         private static IManifest manifest;
         private static ModConfig config;
 
-        private static int fineamount;
+        public static int fineamount;
       
         public static void gethelpers(IMonitor monitor, IManifest manifest, ModConfig config)
         {

@@ -16,7 +16,6 @@ namespace Shoplifter
         private static ModConfig config;
         private static IModHelper modHelper;
 
-        private static int fineamount;
 
         public static Dictionary<string, ContentPackModel> CustomShops = new Dictionary<string, ContentPackModel>();
         public static void gethelpers(IMonitor monitor, IManifest manifest, ModConfig config, IModHelper modhelper)
@@ -159,13 +158,13 @@ namespace Shoplifter
                             ? i18n.string_BanFromShop_Single()
                             : i18n.string_BanFromShop();
 
-                        fineamount = Math.Min(Game1.player.Money, (int)config.MaxFine);
+                        ShopMenuUtilities.fineamount = Math.Min(Game1.player.Money, (int)config.MaxFine);
 
                         // Is NPC primary shopowner
                         if (dialoguedictionary != null)
                         {
-                            dialogue = TranslatedDialogue(npc.Name, shop, fineamount) 
-                                ?? (fineamount > 0 
+                            dialogue = TranslatedDialogue(npc.Name, shop, ShopMenuUtilities.fineamount) 
+                                ?? (ShopMenuUtilities.fineamount > 0 
                                     ? i18n.string_Caught("Generic") 
                                     : i18n.string_Caught_NoMoney("Generic"));
                         }
@@ -173,7 +172,7 @@ namespace Shoplifter
                         else
                         {
                             // No, use generic dialogue
-                            dialogue = (fineamount > 0)
+                            dialogue = (ShopMenuUtilities.fineamount > 0)
                                 ? i18n.string_Caught("Generic")
                                 : i18n.string_Caught_NoMoney("Generic");
                         }
@@ -189,7 +188,7 @@ namespace Shoplifter
 
                         // Draw dialogue for NPC, dialogue box opens
                         Game1.drawDialogue(npc);
-                        monitor.Log($"{character} caught you shoplifting... You were fined {fineamount}g");
+                        monitor.Log($"{character} caught you shoplifting... You were fined {ShopMenuUtilities.fineamount}g");
 
                         return true;
                     }
