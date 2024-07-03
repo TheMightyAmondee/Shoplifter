@@ -11,7 +11,7 @@ namespace Shoplifter
     {
         public string UniqueShopId { get; set; }
         public string ShopName { get; set; }
-        public ShopCounterLocation CounterLocation { get; set; } = null;
+        public List<ShopCounterLocation> CounterLocation { get; set; } = null;
         public List<string> ShopKeepers { get; set; } = new List<string>();
         public Dictionary<string, string> CaughtDialogue { get; set; } = null;
         public ShopliftableConditions OpenConditions { get; set; } = new ShopliftableConditions();
@@ -23,14 +23,8 @@ namespace Shoplifter
 
     public class ShopliftableConditions
     {
-        //public int OpenTime { get; set; } = -1;
-        //public int CloseTime { get; set; } = -1;
         public List<string> Weather { get;set; } = null;
-        //public List<int> DayOfSeason { get; set; } = null;
-        //public List<string> Season { get; set; } = null;
-        //public List<string> EventsSeen { get; set; } = null;
         public List<string> GameStateQueries { get; set; } = null;
-        //public Dictionary<string,int> FriendshipLevels { get; set; } = null;
         public List<ShopKeeperConditions> ShopKeeperRange { get; set; } = null;
 
     }

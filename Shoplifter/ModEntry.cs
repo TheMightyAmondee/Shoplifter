@@ -292,9 +292,20 @@ namespace Shoplifter
 
                 foreach (var shopliftableshop in CustomShopUtilities.CustomShops.Values)
                 {
-                    if (shopliftableshop.CounterLocation.NeedsShopProperty == false && CustomShopUtilities.TryOpenCustomShopliftingMenu(shopliftableshop, location, TileX, TileY))
+                    bool openedshop = false;
+
+                    foreach (var counterlocation in shopliftableshop.CounterLocation)
                     {
-                        break;
+                        if (openedshop == true)
+                        {
+                            break;
+                        }
+
+                        if (counterlocation.LocationName == location.NameOrUniqueName && counterlocation.TileX == TileX && counterlocation.TileY == TileY && counterlocation.NeedsShopProperty == false)
+                        {
+                            openedshop = CustomShopUtilities.TryOpenCustomShopliftingMenu(shopliftableshop, location, TileX, TileY);
+                            break;
+                        }
                     }
                 }
 

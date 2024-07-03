@@ -73,99 +73,7 @@ namespace Shoplifter
 
                 return 0;
             }
-
-            //int CorrectTime()
-            //{
-            //    if (shop.OpenConditions.OpenTime == -1 && shop.OpenConditions.CloseTime == -1)
-            //    {
-            //        return -1;
-            //    }
-
-            //    else
-            //    {
-            //        if ((shop.OpenConditions.OpenTime == -1 && Game1.timeOfDay < shop.OpenConditions.CloseTime) 
-            //            || 
-            //            (shop.OpenConditions.CloseTime == -1 && Game1.timeOfDay > shop.OpenConditions.OpenTime))
-            //        {
-            //            return 1;
-            //        }
-
-            //        else if (Game1.timeOfDay < shop.OpenConditions.CloseTime && Game1.timeOfDay > shop.OpenConditions.OpenTime)
-            //        {
-            //            return 1;
-            //        }
-            //    }
-
-            //    return 0;
-            //}
-
-            //int CorrectSeason()
-            //{
-            //    if (shop.OpenConditions.Season == null)
-            //    {
-            //        return -1;
-            //    }
-
-            //    else if (shop.OpenConditions.Season.Contains(Game1.currentSeason) == true)
-            //    {
-            //        return 1;
-            //    }
-
-            //    return 0;
-            //}
-
-            //int CorrectDay()
-            //{
-            //    if (shop.OpenConditions.DayOfSeason == null)
-            //    {
-            //        return -1;
-            //    }
-
-            //    else if (shop.OpenConditions.DayOfSeason.Contains(Game1.dayOfMonth) == true)
-            //    {
-            //        return 1;
-            //    }
-
-            //    return 0;
-            //}
-
-            //int SeenCorrectEvents()
-            //{
-            //    if (shop.OpenConditions.EventsSeen == null)
-            //    {
-            //        return -1;
-            //    }
-
-            //    foreach(var eventid in shop.OpenConditions.EventsSeen)
-            //    {
-            //        if (Game1.player.eventsSeen.Contains(eventid) == false)
-            //        {
-            //            return 0;
-            //        }
-            //    }
-
-            //    return 1;
-            //}
-
-            //int CorrectFriendship()
-            //{
-            //    if (shop.OpenConditions.FriendshipLevels == null)
-            //    {
-            //        return -1;
-            //    }
-
-            //    foreach (var name in shop.OpenConditions.FriendshipLevels.Keys)
-            //    {
-            //        if (Game1.player.friendshipData.ContainsKey(name) == false 
-            //            || 
-            //           (Game1.player.friendshipData.ContainsKey(name) == true && Game1.player.getFriendshipLevelForNPC(name) < shop.OpenConditions.FriendshipLevels[name]))
-            //        {
-            //            return 0;
-            //        }
-            //    }
-
-            //    return 1;
-            //}
+        
             int QueriesTrue()
             {
                 
@@ -394,11 +302,16 @@ namespace Shoplifter
                         continue;
                     }
 
-                    // Add location of shop to save data if player can be banned
-                    if (shop.Bannable == true && ModEntry.shops.Contains(shop.CounterLocation.LocationName) == false)
+                    foreach(var counterlocation in shop.CounterLocation)
                     {
-                        ModEntry.shops.Add(shop.CounterLocation.LocationName);
+                        // Add location of shop to save data if player can be banned
+                        if (shop.Bannable == true && ModEntry.shops.Contains(counterlocation.LocationName) == false)
+                        {
+                            ModEntry.shops.Add(counterlocation.LocationName);
+                        }
                     }
+
+                   
 
                     // Add shop data to customshops dictionary
                     CustomShops.Add(shop.UniqueShopId, shop);
@@ -417,7 +330,17 @@ namespace Shoplifter
         public static bool TryOpenCustomShopliftingMenu(ContentPackModel shop, GameLocation location, float TileX, float TileY)
         {
             bool success = false;
-            bool correctlocation = shop.CounterLocation.LocationName == location.NameOrUniqueName && shop.CounterLocation.TileX == TileX && shop.CounterLocation.TileY == TileY;
+            bool correctlocation = false;
+
+            foreach (var counterlocation in shop.CounterLocation)
+            {
+                // Add location of shop to save data if player can be banned
+                if (counterlocation.LocationName == location.NameOrUniqueName && counterlocation.TileX == TileX && counterlocation.TileY == TileY)
+                {
+                    correctlocation = true;
+                    break;
+                }
+            }
 
             if (correctlocation == true)
             {
@@ -451,13 +374,23 @@ namespace Shoplifter
                 }                
             }
 
-            if (shop.CounterLocation == null 
-                || shop.CounterLocation.LocationName == null
-                || shop.CounterLocation.TileX == -1
-                || shop.CounterLocation.TileY == -1
-                || shop.UniqueShopId == null 
-                || shop.ShopName == null 
-                || shop.ShopKeepers.Count == 0)
+            if (shop.CounterLocation == null)
+            {
+                return validated;
+            }
+
+            else
+            {
+                foreach(var counterlocation in shop.CounterLocation)
+                {
+                    if(counterlocation.LocationName == null || counterlocation.TileX == -1 || counterlocation.TileX == -1)
+                    {
+                        return validated;
+                    }
+                }
+            }
+
+            if (shop.UniqueShopId == null || shop.ShopName == null || shop.ShopKeepers.Count == 0)
             {
                 return validated;
             }
