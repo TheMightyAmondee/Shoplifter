@@ -3,12 +3,14 @@
         {
             "UniqueShopId":"TheMightyAmondee.TestShop",
             "ShopName":"SeedShop",
-            "CounterLocation":{
-                "LocationName":"Hospital",
-                "NeedsShopProperty": false,
-                "TileX": 3,
-                "TileY": 16
-            },
+            "CounterLocation":[
+                {
+                    "LocationName":"Hospital",
+                    "NeedsShopProperty": false,
+                    "TileX": 3,
+                    "TileY": 16
+                }
+            ],
             "MaxStockQuantity": 10,
             "MaxStackPerItem": 12,
             "ShopKeepers": [ "Harvey", "Gus", "Maru"],

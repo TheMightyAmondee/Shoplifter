@@ -107,4 +107,6 @@ Note: Translated GMCM menus may not have the proper layout.
 
 1.2.1 - Jojamart can now be shoplifted. Marnie can still be shoplifted if the animal catalogue is read.
 
+1.2.2 - Multiple CounterLocations can be specified for the same shop in content packs.
+
 

@@ -31,7 +31,7 @@ Field | Type | Required? | What it does | Notes
 ------|------|-----------|--------------|------
 UniqueShopId | string | Yes | A unique identifier for the shop, anything unique will do! | -
 ShopName | string | Yes | The id of the shop, as defined by the game in Data\Shops or by a custom shop, the mod uses this to get available stock | -
-CounterLocation | ``ShopCounterLocation`` | Yes | Where the counter for the shop is located (the tile location to click on to open the store) | See ShopCounterLocation model below
+CounterLocation | List of ``ShopCounterLocation`` | Yes | Where the counter for the shop is located (the tile location to click on to open the store), more than one may be specified | See ShopCounterLocation model below
 ShopKeepers | List of strings | Yes | A list of all the shopkeepers' names (anyone who can catch, fine and/or ban the player) | -
 CaughtDialogue |  Dictionary<string, string> | No | Unique dialogue for the shopkeeper to say when the player is caught. | See Unique Dialogue below
 OpenConditions | ``ShopliftableConditions`` | No | Under what conditions the store is normally open and items can be purchased | See ShopliftableConditions model below
