@@ -16,6 +16,7 @@ namespace Shoplifter
         private static IMonitor monitor;
         private static IManifest manifest;
         private static ModConfig config;
+        private static List<string> shopkeepers = new List<string>() { "Pierre", "Willy", "Robin", "Marnie", "Gus", "Harvey", "Clint", "Sandy", "Alex" };
 
         public static int fineamount;
       
@@ -112,7 +113,7 @@ namespace Shoplifter
                         }
 
                         // Is NPC primary shopowner
-                        else if (character == "Pierre" || character == "Willy" || character == "Robin" || character == "Marnie" || character == "Gus" || character == "Harvey" || character == "Clint" || character == "Sandy" || character == "Alex")
+                        else if (shopkeepers.Contains(character) == true)
                         {
                             // Yes, they have special dialogue
                             dialogue = (fineamount > 0)
@@ -162,7 +163,8 @@ namespace Shoplifter
 
             if (bannable == true)
             {
-                Game1.warpFarmer(location.warps[0].TargetName, location.warps[0].TargetX, location.warps[0].TargetY, false);
+                var exit = location.GetFirstPlayerWarp();
+                Game1.warpFarmer(exit.TargetName, exit.TargetX, exit.TargetY, false);
             }
             
             string locationname = location.NameOrUniqueName;
