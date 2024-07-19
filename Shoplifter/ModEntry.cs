@@ -385,7 +385,8 @@ namespace Shoplifter
         {
             if (PerScreenShopsBannedFrom.Value.Contains(e.NewLocation.NameOrUniqueName) == true)
             {
-                Game1.warpFarmer(e.NewLocation.warps[0].TargetName, e.NewLocation.warps[0].TargetX, e.NewLocation.warps[0].TargetY, false);
+                var exit = e.NewLocation.GetFirstPlayerWarp();
+                Game1.warpFarmer(exit.TargetName, exit.TargetX, exit.TargetY, false);
 
                 Game1.drawObjectDialogue(i18n.string_Banned());
             }
