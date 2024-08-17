@@ -91,59 +91,6 @@ namespace Shoplifter
         {
             return i18n.GetTranslation("TheMightyAmondee.Shoplifter/GMCM_RareStockChanceTooltip");
         }
-
-        public static string string_GMCM_Shopliftables()
-        {
-            return i18n.GetTranslation("TheMightyAmondee.Shoplifter/Shopliftables");
-        }
-        public static string string_GMCM_ShopliftablesTitle()
-        {
-            return i18n.GetTranslation("TheMightyAmondee.Shoplifter/ShopliftablesTitle");
-        }
-        public static string string_GMCM_SeedShop()
-        {
-            return i18n.GetTranslation("TheMightyAmondee.Shoplifter/GMCM_SeedShop");
-        }
-        public static string string_GMCM_FishShop()
-        {
-            return i18n.GetTranslation("TheMightyAmondee.Shoplifter/GMCM_FishShop");
-        }
-        public static string string_GMCM_Carpenter()
-        {
-            return i18n.GetTranslation("TheMightyAmondee.Shoplifter/GMCM_Carpenter");
-        }
-        public static string string_GMCM_AnimalShop()
-        {
-            return i18n.GetTranslation("TheMightyAmondee.Shoplifter/GMCM_AnimalShop");
-        }
-        public static string string_GMCM_Blacksmith()
-        {
-            return i18n.GetTranslation("TheMightyAmondee.Shoplifter/GMCM_Blacksmith");
-        }
-        public static string string_GMCM_Saloon()
-        {
-            return i18n.GetTranslation("TheMightyAmondee.Shoplifter/GMCM_Saloon");
-        }
-        public static string string_GMCM_SandyShop()
-        {
-            return i18n.GetTranslation("TheMightyAmondee.Shoplifter/GMCM_SandyShop");
-        }
-        public static string string_GMCM_Hospital()
-        {
-            return i18n.GetTranslation("TheMightyAmondee.Shoplifter/GMCM_Hospital");
-        }
-        public static string string_GMCM_IceCreamStand()
-        {
-            return i18n.GetTranslation("TheMightyAmondee.Shoplifter/GMCM_IceCreamStand");
-        }
-        public static string string_GMCM_IslandResort()
-        {
-            return i18n.GetTranslation("TheMightyAmondee.Shoplifter/GMCM_IslandResort");
-        }
-        public static string string_GMCM_JojaMart()
-        {
-            return i18n.GetTranslation("TheMightyAmondee.Shoplifter/GMCM_JojaMart");
-        }
         // End GMCM translations
 
         public static string string_Shoplift()
