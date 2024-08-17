@@ -75,6 +75,7 @@ Shoplifter fully supports translation! In game translations currently available 
 - Spanish, thanks to viridian-fog!
 - Turkish, thanks to zenura!
 - Russian, thanks to Bellden and theRealDuda!
+- Japanese, thanks to hachihina!
 
 Generic Mod Config Menu config menu translations currently avaliable in:
 - Chinese, thanks to XinJiDA!
@@ -82,6 +83,7 @@ Generic Mod Config Menu config menu translations currently avaliable in:
 - German, thanks to Nordmole!
 - Russian, thanks to theRealDuda!
 - Portuguese, thanks to caputi!
+- Japanese, thanks to hachihina!
 
 Other Generic Mod Config Menu translations done using DeepL and Google Translate. Improved translations are welcome.
 
@@ -111,6 +113,6 @@ Note: Translated GMCM menus may not have the proper layout.
 
 1.2.3 - Improve warp logic
 
-1.2.4 - Add Japanese translation thanks to hachihana on Nexus. Allow custom warping for custom shopliftables.
+1.2.4 - Add Japanese translation thanks to hachihina. Allow custom warping for custom shopliftables.
 
 
