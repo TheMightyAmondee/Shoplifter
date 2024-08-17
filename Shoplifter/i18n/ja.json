@@ -1,5 +1,5 @@
 {
-    // Translations thanks 
+    // All Translations thanks to hachihina!
     "TheMightyAmondee.Shoplifter/Shoplift": "万引き？",
     "TheMightyAmondee.Shoplifter/Banned": "あなたは万引きにより出入り禁止になりました。これ以上悪化させないように...",
     "TheMightyAmondee.Shoplifter/AlreadyShoplifted_Single": "今日はもう万引きしました。これで十分です...",
@@ -36,7 +36,7 @@
     "TheMightyAmondee.Shoplifter/CaughtRobin_RareItemsEnabled": "本気でやっているのか、@？ 無料でテレビを持っていこうとしたのか？$3#$b#{{fineamount}} Gを払ってもらう... これで懲りるといいが。$2",
     "TheMightyAmondee.Shoplifter/CaughtRobin_RareItemsEnabled_NoMoney": "本気でやっているのか、@？ 無料でテレビを持っていこうとしたのか？$3#$b#*ため息* もう一度だけ見逃してやる。$2",
 
-    // GMCM by Nordmole
+    // GMCM
     "TheMightyAmondee.Shoplifter/GMCM_PeriodSection": "万引き頻度？",
     "TheMightyAmondee.Shoplifter/GMCM_MaxDay": "一日の最大万引き回数",
     "TheMightyAmondee.Shoplifter/GMCM_MaxDayTooltip": "一日に何回万引きができるか？",
@@ -53,8 +53,6 @@
     "TheMightyAmondee.Shoplifter/GMCM_MaxBannedTooltip": "出入り禁止がどのくらいの期間続くか。",
     "TheMightyAmondee.Shoplifter/GMCM_MaxRadius": "発覚範囲",
     "TheMightyAmondee.Shoplifter/GMCM_MaxRadiusTooltip": "NPCがプレイヤーを見つけられる最大距離。",
-    
-    //TODO Improve 1.6 GMCM translations
     "TheMightyAmondee.Shoplifter/GMCM_RareStockChance": "レアな在庫出現確率",
     "TheMightyAmondee.Shoplifter/GMCM_RareStockChanceTooltip": "レアな在庫アイテムが出現する確率。"
 
