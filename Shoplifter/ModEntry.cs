@@ -6,6 +6,7 @@ using StardewModdingAPI.Events;
 using StardewModdingAPI.Utilities;
 using StardewValley.Locations;
 using xTile.Dimensions;
+using StardewValley.WorldMaps;
 
 namespace Shoplifter
 {
@@ -18,16 +19,16 @@ namespace Shoplifter
 
         public static readonly PerScreen<int> PerScreenShopliftCounter = new PerScreen<int>(createNewState: () => 0);
 
-        public static readonly PerScreen<Dictionary<string,int>> PerScreenShopliftedShops = new PerScreen<Dictionary<string, int>>(createNewState: () => new Dictionary<string, int>());
+        public static readonly PerScreen<Dictionary<string, int>> PerScreenShopliftedShops = new PerScreen<Dictionary<string, int>>(createNewState: () => new Dictionary<string, int>());
 
         public static readonly PerScreen<ArrayList> PerScreenShopsBannedFrom = new PerScreen<ArrayList>(createNewState: () => new ArrayList());
 
         public static readonly List<string> shops = new List<string>() { "SeedShop", "FishShop", "AnimalShop", "ScienceHouse", "Hospital", "Blacksmith", "Saloon", "SandyHouse", "JojaMart" };
 
         public static IDynamicGameAssetsApi IDGAItem;
-     
+
         public override void Entry(IModHelper helper)
-        {          
+        {
             helper.Events.GameLoop.DayStarted += this.DayStarted;
             helper.Events.GameLoop.GameLaunched += this.Launched;
             helper.Events.Input.ButtonPressed += this.Action;
@@ -42,7 +43,7 @@ namespace Shoplifter
                 this.config = new ModConfig();
                 this.Monitor.Log("Failed to parse config file, default options will be used.", LogLevel.Warn);
             }
-            
+
             ShopMenuUtilities.gethelpers(this.Monitor, this.ModManifest, this.config);
             CustomShopUtilities.gethelpers(this.Monitor, this.ModManifest, this.config, this.Helper);
             i18n.gethelpers(this.Helper.Translation, this.config);
@@ -69,13 +70,13 @@ namespace Shoplifter
                 {
                     data.Add($"{this.ModManifest.UniqueID}_{shop}", "0/0");
                     this.Monitor.Log($"Adding mod data... {this.ModManifest.UniqueID}_{shop}");
-                }               
+                }
             }
 
             foreach (string shopliftingdata in new List<string>(data.Keys))
             {
 
-                string[] values = data[shopliftingdata]?.Split('/') ?? new string[] { };            
+                string[] values = data[shopliftingdata]?.Split('/') ?? new string[] { };
                 string[] fields = shopliftingdata?.Split('_') ?? new string[] { };
 
                 // Player has finished certain number of days ban, remove shop from list, also reset first day caught
@@ -113,22 +114,22 @@ namespace Shoplifter
 
         private void Launched(object sender, GameLaunchedEventArgs e)
         {
-            if (this.config.MaxShopliftsPerStore == 0)
+            if (this.config.MaxShopliftsPerStore < 1)
             {
                 this.config.MaxShopliftsPerStore = 1;
             }
 
-            if (this.config.MaxShopliftsPerDay == 0)
+            if (this.config.MaxShopliftsPerDay < 1)
             {
                 this.config.MaxShopliftsPerDay = 1;
             }
 
-            if (this.config.CatchesBeforeBan == 0)
+            if (this.config.CatchesBeforeBan < 1)
             {
                 this.config.CatchesBeforeBan = 1;
             }
 
-            if (this.config.CaughtRadius == 0)
+            if (this.config.CaughtRadius < 1)
             {
                 this.config.CaughtRadius = 1;
             }
@@ -184,16 +185,16 @@ namespace Shoplifter
                 mod: this.ModManifest,
                 name: () => i18n.string_GMCM_MaxDay(),
                 tooltip: () => i18n.string_GMCM_MaxDayTooltip(),
-                getValue: () => (int)this.config.MaxShopliftsPerDay,
-                setValue: value => this.config.MaxShopliftsPerDay = (uint)value,
+                getValue: () => this.config.MaxShopliftsPerDay,
+                setValue: value => this.config.MaxShopliftsPerDay = value,
                 min: 1
             );
             configMenu.AddNumberOption(
                 mod: this.ModManifest,
                 name: () => i18n.string_GMCM_MaxShop(),
                 tooltip: () => i18n.string_GMCM_MaxShopTooltip(),
-                getValue: () => (int)this.config.MaxShopliftsPerStore,
-                setValue: value => this.config.MaxShopliftsPerStore = (uint)value,
+                getValue: () => this.config.MaxShopliftsPerStore,
+                setValue: value => this.config.MaxShopliftsPerStore = value,
                 min: 1
             );
             configMenu.AddNumberOption(
@@ -209,53 +210,129 @@ namespace Shoplifter
                 mod: this.ModManifest,
                 name: () => i18n.string_GMCM_MaxFine(),
                 tooltip: () => i18n.string_GMCM_MaxFineTooltip(),
-                getValue: () => (int)this.config.MaxFine,
-                setValue: value => this.config.MaxFine = (uint)value,
+                getValue: () => this.config.MaxFine,
+                setValue: value => this.config.MaxFine = value,
                 min: 0
             );
             configMenu.AddNumberOption(
                 mod: this.ModManifest,
                 name: () => i18n.string_GMCM_MaxFriendship(),
                 tooltip: () => i18n.string_GMCM_MaxFriendshipTooltip(),
-                getValue: () => (int)this.config.FriendshipPenalty,
-                setValue: value => this.config.FriendshipPenalty = (uint)value,
+                getValue: () => this.config.FriendshipPenalty,
+                setValue: value => this.config.FriendshipPenalty = value,
                 min: 0
             );
             configMenu.AddNumberOption(
                 mod: this.ModManifest,
                 name: () => i18n.string_GMCM_MaxCatches(),
                 tooltip: () => i18n.string_GMCM_MaxCatchesTooltip(),
-                getValue: () => (int)this.config.CatchesBeforeBan,
-                setValue: value => this.config.CatchesBeforeBan = (uint)value,
+                getValue: () => this.config.CatchesBeforeBan,
+                setValue: value => this.config.CatchesBeforeBan = value,
                 min: 1, max: 100
             );
             configMenu.AddNumberOption(
                 mod: this.ModManifest,
                 name: () => i18n.string_GMCM_MaxBanned(),
                 tooltip: () => i18n.string_GMCM_MaxBannedTooltip(),
-                getValue: () => (int)this.config.DaysBannedFor,
-                setValue: value => this.config.DaysBannedFor = (uint)value,
+                getValue: () => this.config.DaysBannedFor,
+                setValue: value => this.config.DaysBannedFor = value,
                 min: 0, max: 28
             );
             configMenu.AddNumberOption(
                 mod: this.ModManifest,
                 name: () => i18n.string_GMCM_MaxRadius(),
                 tooltip: () => i18n.string_GMCM_MaxRadiusTooltip(),
-                getValue: () => (int)this.config.CaughtRadius,
-                setValue: value => this.config.CaughtRadius = (uint)value,
+                getValue: () => this.config.CaughtRadius,
+                setValue: value => this.config.CaughtRadius = value,
                 min: 0, max: 20
-            );            
+            );
+            configMenu.AddPageLink(
+                mod: this.ModManifest,
+                pageId: "TheMightyAmondee.Shoplifter/EnabledShops",
+                text: () => i18n.string_GMCM_Shopliftables());
+
+            configMenu.AddPage(
+                mod: this.ModManifest,
+                pageId: "TheMightyAmondee.Shoplifter/EnabledShops",
+                pageTitle: () => i18n.string_GMCM_ShopliftablesTitle());
+
+            configMenu.AddBoolOption(
+                mod: this.ModManifest,
+                name: () => i18n.string_GMCM_SeedShop(),
+                getValue: () => this.config.Shopliftables.PierreShop,
+                setValue: value => this.config.Shopliftables.PierreShop = value
+            );
+            configMenu.AddBoolOption(
+                mod: this.ModManifest,
+                name: () => i18n.string_GMCM_FishShop(),
+                getValue: () => this.config.Shopliftables.WillyShop,
+                setValue: value => this.config.Shopliftables.WillyShop = value
+            );
+            configMenu.AddBoolOption(
+                mod: this.ModManifest,
+                name: () => i18n.string_GMCM_Carpenter(),
+                getValue: () => this.config.Shopliftables.RobinShop,
+                setValue: value => this.config.Shopliftables.RobinShop = value
+            );
+            configMenu.AddBoolOption(
+                mod: this.ModManifest,
+                name: () => i18n.string_GMCM_AnimalShop(),
+                getValue: () => this.config.Shopliftables.MarnieShop,
+                setValue: value => this.config.Shopliftables.MarnieShop = value
+            );
+            configMenu.AddBoolOption(
+                mod: this.ModManifest,
+                name: () => i18n.string_GMCM_Blacksmith(),
+                getValue: () => this.config.Shopliftables.Blacksmith,
+                setValue: value => this.config.Shopliftables.Blacksmith = value
+            );
+            configMenu.AddBoolOption(
+                mod: this.ModManifest,
+                name: () => i18n.string_GMCM_Saloon(),
+                getValue: () => this.config.Shopliftables.Saloon,
+                setValue: value => this.config.Shopliftables.Saloon = value
+            );
+            configMenu.AddBoolOption(
+                mod: this.ModManifest,
+                name: () => i18n.string_GMCM_SandyShop(),
+                getValue: () => this.config.Shopliftables.SandyShop,
+                setValue: value => this.config.Shopliftables.SandyShop = value
+            );
+            configMenu.AddBoolOption(
+                mod: this.ModManifest,
+                name: () => i18n.string_GMCM_Hospital(),
+                getValue: () => this.config.Shopliftables.Clinic,
+                setValue: value => this.config.Shopliftables.Clinic = value
+            );
+            configMenu.AddBoolOption(
+                mod: this.ModManifest,
+                name: () => i18n.string_GMCM_IceCreamStand(),
+                getValue: () => this.config.Shopliftables.IceCreamStand,
+                setValue: value => this.config.Shopliftables.IceCreamStand = value
+            );
+            configMenu.AddBoolOption(
+                mod: this.ModManifest,
+                name: () => i18n.string_GMCM_IslandResort(),
+                getValue: () => this.config.Shopliftables.ResortBar,
+                setValue: value => this.config.Shopliftables.ResortBar = value
+            );
+            configMenu.AddBoolOption(
+                mod: this.ModManifest,
+                name: () => i18n.string_GMCM_JojaMart(),
+                getValue: () => this.config.Shopliftables.JojaMart,
+                setValue: value => this.config.Shopliftables.JojaMart = value
+            );
         }
 
         private void Action(object sender, ButtonPressedEventArgs e)
         {
             GameLocation location = Game1.player.currentLocation;
 
-            if ((e.Button.IsActionButton() == true 
-                || 
-                e.Button == SButton.ControllerA) 
-                && Game1.dialogueUp == false 
-                && Context.CanPlayerMove == true 
+            if ((e.Button.IsActionButton() == true
+                ||
+                e.Button == SButton.ControllerA)
+                && Game1.dialogueUp == false
+                && Context.CanPlayerMove == true
                 && Context.IsWorldReady == true)
             {
                 var TileX = e.Cursor.GrabTile.X;
@@ -263,18 +340,18 @@ namespace Shoplifter
 
                 // If using a controller, don't use cursor position if not facing wrong direction, check player is one tile under (Y - 1) tile with property
                 if (e.Button == SButton.ControllerA && Game1.player.FacingDirection != 2)
-                { 
-                   TileX = Game1.player.Tile.X;
-                   TileY = Game1.player.Tile.Y - 1;
+                {
+                    TileX = Game1.player.Tile.X;
+                    TileY = Game1.player.Tile.Y - 1;
                 }
 
                 Location tilelocation = new Location((int)TileX, (int)TileY);
 
                 // Island resort checked a different way, check this as well
-                if (location.NameOrUniqueName == "IslandSouth" 
-                    && TileX == 14 
-                    && TileY == 22 
-                    && location as IslandSouth != null 
+                if (location.NameOrUniqueName == "IslandSouth"
+                    && TileX == 14
+                    && TileY == 22
+                    && location as IslandSouth != null
                     && (location as IslandSouth).resortRestored.Value == true)
                 {
                     ShopMenuUtilities.ResortBarShopliftingMenu(location);
@@ -282,7 +359,7 @@ namespace Shoplifter
 
                 else if (location.NameOrUniqueName == "JojaMart"
                     && TileX == 2
-                    && (TileY == 24 
+                    && (TileY == 24
                     || TileY == 25
                     || TileY == 26
                     ))
@@ -373,11 +450,11 @@ namespace Shoplifter
                                 if (split[1] == shopliftableshop.ShopName && CustomShopUtilities.TryOpenCustomShopliftingMenu(shopliftableshop, location, TileX, TileY))
                                 {
                                     break;
-                                }                                
+                                }
                             }
                             break;
                     }
-                }               
+                }
             }
         }
 
@@ -385,14 +462,13 @@ namespace Shoplifter
         {
             if (PerScreenShopsBannedFrom.Value.Contains(e.NewLocation.NameOrUniqueName) == true)
             {
-                var exit = e.NewLocation.GetFirstPlayerWarp();
-                Game1.warpFarmer(exit.TargetName, exit.TargetX, exit.TargetY, false);
+                Game1.warpFarmer(e.NewLocation.warps[0].TargetName, e.NewLocation.warps[0].TargetX, e.NewLocation.warps[0].TargetY, false);
 
                 Game1.drawObjectDialogue(i18n.string_Banned());
             }
         }
 
-        private void ResetSave (string command, string[] arg)
+        private void ResetSave(string command, string[] arg)
         {
             try
             {
@@ -403,7 +479,7 @@ namespace Shoplifter
                     if (moddata.StartsWith($"{this.ModManifest.UniqueID}") == true)
                     {
                         data.Remove(moddata);
-                        data.Add(moddata,"0/0");
+                        data.Add(moddata, "0/0");
                     }
                 }
 

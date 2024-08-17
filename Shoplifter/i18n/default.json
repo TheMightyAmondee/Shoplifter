@@ -54,5 +54,18 @@
     "TheMightyAmondee.Shoplifter/GMCM_MaxRadius":"Caught radius",
     "TheMightyAmondee.Shoplifter/GMCM_MaxRadiusTooltip":"Maximum distance a villager must be to catch the player.",
     "TheMightyAmondee.Shoplifter/GMCM_RareStockChance":"Rare stock chance",
-    "TheMightyAmondee.Shoplifter/GMCM_RareStockChanceTooltip":"The chance for rare stock items to appear."
+    "TheMightyAmondee.Shoplifter/GMCM_RareStockChanceTooltip":"The chance for rare stock items to appear.",
+    "TheMightyAmondee.Shoplifter/Shopliftables": "Shoplifting Locations",
+    "TheMightyAmondee.Shoplifter/ShopliftablesTitle":"Enabled Shoplifting Locations",
+    "TheMightyAmondee.Shoplifter/GMCM_SeedShop":"Pierre's General Store",
+    "TheMightyAmondee.Shoplifter/GMCM_FishShop":"Willy's Fish Shop",
+    "TheMightyAmondee.Shoplifter/GMCM_Carpenter":"Carpenter's",
+    "TheMightyAmondee.Shoplifter/GMCM_AnimalShop":"Marnie's Ranch",
+    "TheMightyAmondee.Shoplifter/GMCM_Blacksmith":"Blacksmith",
+    "TheMightyAmondee.Shoplifter/GMCM_Saloon":"Stardrop Saloon",
+    "TheMightyAmondee.Shoplifter/GMCM_SandyShop":"Sandy's Oasis",
+    "TheMightyAmondee.Shoplifter/GMCM_Hospital":"Harvey's Clinic",
+    "TheMightyAmondee.Shoplifter/GMCM_IceCreamStand":"Ice-Cream Stand",
+    "TheMightyAmondee.Shoplifter/GMCM_IslandResort":"Resort Bar",
+    "TheMightyAmondee.Shoplifter/GMCM_JojaMart":"JojaMart"
 }

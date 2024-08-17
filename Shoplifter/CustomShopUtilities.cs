@@ -198,6 +198,66 @@ namespace Shoplifter
         }
 
         /// <summary>
+        /// Applies shoplifting penalties, tracks whether to ban player
+        /// </summary>
+        /// <param name="location">The current location instance</param>
+        /// <param name="bannable">Whether the player can be banned from the shop</param>
+        public static void CustomShop_ShopliftingPenalties(GameLocation location, ContentPackModel shop)
+        {
+            // Subtract monetary penalty if it applies
+            if (ShopMenuUtilities.fineamount > 0)
+            {
+                Game1.player.Money -= ShopMenuUtilities.fineamount;
+            }
+
+            if (shop.Bannable == true || shop.Exit != null)
+            {
+                
+                if (shop.Exit == null)
+                {
+                    var exit = location.GetFirstPlayerWarp();
+                    Game1.warpFarmer(exit.TargetName, exit.TargetX, exit.TargetY, false);
+                }
+                else
+                {
+                    Game1.warpFarmer(shop.Exit.LocationName, shop.Exit.TileX, shop.Exit.TileY, false);
+                }
+                
+            }
+
+            string locationname = location.NameOrUniqueName;
+
+            var data = Game1.player.modData;
+
+            if (config.DaysBannedFor == 0 || shop.Bannable == false)
+            {
+                return;
+            }
+
+            string[] fields = data[$"{manifest.UniqueID}_{locationname}"].Split('/') ?? new string[] { };
+
+            // Add one to first part of data (shoplifting count)
+            fields[0] = (int.Parse(fields[0]) + 1).ToString();
+
+            // If this is the first shoplift, record day of month in second part of data (day of first steal)
+            if (fields[0] == "1")
+            {
+                fields[1] = Game1.dayOfMonth.ToString();
+            }
+
+            // After being caught some times (within 28 days) ban player from shop for three days
+            if (int.Parse(fields[0]) == config.CatchesBeforeBan)
+            {
+                fields[0] = "-1";
+                ModEntry.PerScreenShopsBannedFrom.Value.Add($"{locationname}");
+                monitor.Log($"{locationname} added to banned shop list");
+            }
+
+            // Join manipulated data for recording in save file
+            data[$"{manifest.UniqueID}_{locationname}"] = string.Join("/", fields);
+        }
+
+        /// <summary>
         /// Create the shoplifting menu for a custom shop and determine what to do depending on the option pressed
         /// </summary>
         /// <param name="location">The current location instance</param>
@@ -236,7 +296,7 @@ namespace Shoplifter
                         // After dialogue, apply penalties
                         Game1.afterDialogues = delegate
                         {
-                            ShopMenuUtilities.ShopliftingPenalties(location, shop.Bannable);
+                            CustomShop_ShopliftingPenalties(location, shop);
                         };
 
                         return;

@@ -17,7 +17,8 @@ namespace Shoplifter
         public ShopliftableConditions OpenConditions { get; set; } = new ShopliftableConditions();
         public int MaxStockQuantity { get; set; } = 1;
         public int MaxStackPerItem { get; set; } = 1;
-        public bool Bannable { get; set; } = false;      
+        public bool Bannable { get; set; } = false;
+        public ExitLocation Exit { get; set; } = null;
         public string ContentModelPath { get; set; } // Content packs should not add this property themselves, this is determined by the mod
     }
 
@@ -42,6 +43,14 @@ namespace Shoplifter
     {
         public string LocationName { get; set; }
         public bool NeedsShopProperty { get; set; } = true;
+        public int TileX { get; set; } = -1;
+        public int TileY { get; set; } = -1;
+
+    }
+
+    public class ExitLocation
+    {
+        public string LocationName { get; set; } = null;
         public int TileX { get; set; } = -1;
         public int TileY { get; set; } = -1;
 
