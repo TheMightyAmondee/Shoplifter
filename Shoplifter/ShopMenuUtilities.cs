@@ -309,11 +309,6 @@ namespace Shoplifter
         /// <param name="location">The current location instance</param>
         public static void FishShopShopliftingMenu(GameLocation location)
         {
-            if (config.Shopliftables.WillyShop == false)
-            {
-                return;
-            }
-
             // Willy can sell, don't do anything
             if (location.getCharacterFromName("Willy") != null && location.getCharacterFromName("Willy").Tile.Y < Game1.player.Tile.Y)
             {
@@ -334,11 +329,6 @@ namespace Shoplifter
         /// <param name="location">The current location instance</param>
         public static void SandyShopShopliftingMenu(GameLocation location)
         {
-            if (config.Shopliftables.SandyShop == false)
-            {
-                return;
-            }
-
             NPC sandy = location.getCharacterFromName("Sandy");
             if (sandy == null || sandy.currentLocation != location)
             {
@@ -352,11 +342,6 @@ namespace Shoplifter
         /// <param name="location">The current location instance</param>
         public static void SeedShopShopliftingMenu(GameLocation location)
         {
-            if (config.Shopliftables.PierreShop == false)
-            {
-                return;
-            }
-
             // Pierre can sell
             if (location.getCharacterFromName("Pierre") != null && location.getCharacterFromName("Pierre").Tile.Equals(new Vector2(4f, 17f)) && Game1.player.Tile.Y > location.getCharacterFromName("Pierre").Tile.Y)
             {
@@ -398,11 +383,6 @@ namespace Shoplifter
         /// <param name="tileLocation">The clicked tilelocation</param>
         public static void CarpenterShopliftingMenu(GameLocation location, Farmer who, Location tileLocation)
         {
-            if (config.Shopliftables.RobinShop == false)
-            {
-                return;
-            }
-
             // Player is in correct position for buying
             if (who.Tile.Y > tileLocation.Y)
             {
@@ -462,11 +442,6 @@ namespace Shoplifter
         /// <param name="tileLocation">The clicked tilelocation</param>
         public static void AnimalShopShopliftingMenu(GameLocation location, Farmer who, Location tileLocation)
         {
-            if (config.Shopliftables.MarnieShop == false)
-            {
-                return;
-            }
-
             var marnie = location.getCharacterFromName("Marnie");
             // Player is in correct position for buying
             if (who.Tile.Y > tileLocation.Y)
