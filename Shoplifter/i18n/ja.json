@@ -1,0 +1,61 @@
+{
+    // Translations thanks 
+    "TheMightyAmondee.Shoplifter/Shoplift": "万引き？",
+    "TheMightyAmondee.Shoplifter/Banned": "あなたは万引きにより出入り禁止になりました。これ以上悪化させないように...",
+    "TheMightyAmondee.Shoplifter/AlreadyShoplifted_Single": "今日はもう万引きしました。これで十分です...",
+    "TheMightyAmondee.Shoplifter/AlreadyShoplifted": "今日はすでに{{shopliftingamount}}回万引きしています。もう十分です...",
+    "TheMightyAmondee.Shoplifter/AlreadyShopliftedSameShop": "ここではもう盗めるものがありません...",
+    "TheMightyAmondee.Shoplifter/BanFromShop_Single": "#$b#@、今月は十分万引きしたので、今日は一日出入り禁止にします。$2",
+    "TheMightyAmondee.Shoplifter/BanFromShop": "#$b#@、今月は十分万引きしたので、{{daysbanned}}日間出入り禁止にします。$2",
+
+    "TheMightyAmondee.Shoplifter/CaughtGeneric": "私から盗むのか、@？$2#$b#*ため息* 罰金として{{fineamount}} Gを払ってもらいます。$2",
+    "TheMightyAmondee.Shoplifter/CaughtPierre": "私から盗むなんて？！ 何を考えてるんだ？！$4#$b#{{fineamount}} Gを払えば、もう一度だけ見逃してやる、@。$3",
+    "TheMightyAmondee.Shoplifter/CaughtWilly": "万引きしているのはわかってるぞ、@... 臭いでわかるんだ...$2#$b#{{fineamount}} Gを払ってもらうぞ。$2",
+    "TheMightyAmondee.Shoplifter/CaughtRobin": "本気でやっているのか、@？ 無料でテレビを持っていこうとしたのか... 高価なものはここには置いてないんだ...$3#$b#{{fineamount}} Gを払ってもらう... これで懲りるといいが。$2",
+    "TheMightyAmondee.Shoplifter/CaughtMarnie": "私の干し草を盗んでるのか、@？ 店にいないからって盗めると思ったのか。$4#$b#{{fineamount}} Gを払えば、ルイスには言わないでおいてやる...$3",
+    "TheMightyAmondee.Shoplifter/CaughtGus": "今日のメニューが魅力的に見えるのはわかるが、それでもお金を払わないといけない、@。$3#$b#*ため息* {{fineamount}} Gを払えば、この件は忘れてやる。いいか？$2",
+    "TheMightyAmondee.Shoplifter/CaughtHarvey": "何をしてるんだ、@？ この薬は医師の監督がないと危険だぞ！...$8#$b#罰金として{{fineamount}} Gを払ってもらう、@、これは冗談じゃないんだ。$5",
+    "TheMightyAmondee.Shoplifter/CaughtClint": "私から盗むなんて、@！ 君にはもっと期待していたのに。$3#$b#ここで盗むと{{fineamount}} Gかかるって知ってるよな？ 払ってもらうぞ。$2",
+    "TheMightyAmondee.Shoplifter/CaughtSandy": "他の店から離れているからって私から盗めると思うな、@。$2#$b#罰金{{fineamount}} Gを払えば、この件は忘れてやる。$2",
+    "TheMightyAmondee.Shoplifter/CaughtAlex": "本当にアイスがそんなに欲しいのか、@？$7#$b#誰かに罰金を請求するなんて思ってもみなかったが、{{fineamount}} G払ってもらうぞ。$2",
+
+    "TheMightyAmondee.Shoplifter/CaughtGeneric_NoMoney": "私から盗むのか、@？$2#$b#*ため息* 罰金を払ってもらいたいが、払えないのなら仕方がない。$2",
+    "TheMightyAmondee.Shoplifter/CaughtPierre_NoMoney": "私から盗むなんて？！ 何を考えてるんだ？！$4#$b#罰金を払えないとは運がいいな。$3",
+    "TheMightyAmondee.Shoplifter/CaughtWilly_NoMoney": "万引きしているのはわかってるぞ、@... 臭いでわかるんだ...$2#$b#そのものを返せ、罰金は払えないだろうからな。$2",
+    "TheMightyAmondee.Shoplifter/CaughtRobin_NoMoney": "本気でやっているのか、@？ 無料でテレビを持っていこうとしたのか... 高価なものはここには置いてないんだ...$3#$b#*ため息* もう一度だけ見逃してやる。$2",
+    "TheMightyAmondee.Shoplifter/CaughtMarnie_NoMoney": "私の干し草を盗んでるのか、@？ 店にいないからって盗めると思ったのか。$4#$b#本来なら罰金が必要だが、払えないなら仕方ないな。$3",
+    "TheMightyAmondee.Shoplifter/CaughtGus_NoMoney": "今日のメニューが魅力的に見えるのはわかるが、それでもお金を払わないといけない、@。$3#$b#*ため息* この件は忘れてやる、ただしもう二度とするなよ。$2",
+    "TheMightyAmondee.Shoplifter/CaughtHarvey_NoMoney": "何をしてるんだ、@？ この薬は医師の監督がないと危険だぞ！...$8#$b#これは冗談じゃない、誰かが怪我する前にその薬を返せ。$5",
+    "TheMightyAmondee.Shoplifter/CaughtClint_NoMoney": "私から盗むなんて、@！ 君にはもっと期待していたのに。$3#$b#ここで盗むと罰せられるのは知ってるだろ？ 今回だけは見逃してやる。$2",
+    "TheMightyAmondee.Shoplifter/CaughtSandy_NoMoney": "他の店から離れているからって私から盗めると思うな、@。$2#$b#この件は忘れてやる。さっさと行け、@。$2",
+    "TheMightyAmondee.Shoplifter/CaughtAlex_NoMoney": "本当にアイスがそんなに欲しいのか、@？$7#$b#今日は警告だけで見逃してやる。$2",
+
+    //1.6 strings
+    "TheMightyAmondee.Shoplifter/CaughtGusResort": "私から盗むのか、@？$3#$b#*ため息* {{fineamount}} G払えば、この件は忘れてやる。いいか？$2",
+    "TheMightyAmondee.Shoplifter/CaughtGusResort_NoMoney": "私から盗むのか、@？$3#$b#*ため息* この件は忘れてやる、ただしもう二度とするなよ。$2",
+    "TheMightyAmondee.Shoplifter/CaughtRobin_RareItemsEnabled": "本気でやっているのか、@？ 無料でテレビを持っていこうとしたのか？$3#$b#{{fineamount}} Gを払ってもらう... これで懲りるといいが。$2",
+    "TheMightyAmondee.Shoplifter/CaughtRobin_RareItemsEnabled_NoMoney": "本気でやっているのか、@？ 無料でテレビを持っていこうとしたのか？$3#$b#*ため息* もう一度だけ見逃してやる。$2",
+
+    // GMCM by Nordmole
+    "TheMightyAmondee.Shoplifter/GMCM_PeriodSection": "万引き頻度？",
+    "TheMightyAmondee.Shoplifter/GMCM_MaxDay": "一日の最大万引き回数",
+    "TheMightyAmondee.Shoplifter/GMCM_MaxDayTooltip": "一日に何回万引きができるか？",
+    "TheMightyAmondee.Shoplifter/GMCM_MaxShop": "店ごとの最大万引き回数",
+    "TheMightyAmondee.Shoplifter/GMCM_MaxShopTooltip": "一日に同じ店で何回万引きができるか？",
+    "TheMightyAmondee.Shoplifter/GMCM_PenaltySection": "万引きが発覚した場合のペナルティは？",
+    "TheMightyAmondee.Shoplifter/GMCM_MaxFine": "罰金額",
+    "TheMightyAmondee.Shoplifter/GMCM_MaxFineTooltip": "NPCに見つかった際に支払う罰金額。",
+    "TheMightyAmondee.Shoplifter/GMCM_MaxFriendship": "友情喪失",
+    "TheMightyAmondee.Shoplifter/GMCM_MaxFriendshipTooltip": "万引きが発覚した際にNPCとの友情（ハート）が失われる量。",
+    "TheMightyAmondee.Shoplifter/GMCM_MaxCatches": "出入り禁止になるまでの警告回数",
+    "TheMightyAmondee.Shoplifter/GMCM_MaxCatchesTooltip": "出入り禁止になるまでに何回発覚しても大丈夫か。",
+    "TheMightyAmondee.Shoplifter/GMCM_MaxBanned": "出入り禁止期間（日数）",
+    "TheMightyAmondee.Shoplifter/GMCM_MaxBannedTooltip": "出入り禁止がどのくらいの期間続くか。",
+    "TheMightyAmondee.Shoplifter/GMCM_MaxRadius": "発覚範囲",
+    "TheMightyAmondee.Shoplifter/GMCM_MaxRadiusTooltip": "NPCがプレイヤーを見つけられる最大距離。",
+    
+    //TODO Improve 1.6 GMCM translations
+    "TheMightyAmondee.Shoplifter/GMCM_RareStockChance": "レアな在庫出現確率",
+    "TheMightyAmondee.Shoplifter/GMCM_RareStockChanceTooltip": "レアな在庫アイテムが出現する確率。"
+
+}
