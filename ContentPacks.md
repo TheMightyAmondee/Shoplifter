@@ -38,6 +38,7 @@ OpenConditions | ``ShopliftableConditions`` | No | Under what conditions the sto
 MaxStockQuantity | int | No | The maximum number of different stock items that can appear in each shoplift attempt | Default value is 1
 MaxStackPerItem | int | No | The maximum stack size of each stock item | Default value is 1
 Bannable | bool | No | Whether the player can be banned from the shop | Default value is false. I wouldn't recommend outdoor shops be bannable, since players will no longer be able to enter that outdoor area if banned.
+Exit | ``ExitLocation`` | No | Where the character is teleported to when caught shoplifting from a bannable shop. Will default to the first available player warp if omitted. | See ExitLocation model below
 
 ## ShopCounterLocation model
 ---
@@ -49,6 +50,16 @@ LocationName | string | Yes | The location name where the shop is located | This
 NeedsShopProperty | bool | No | Whether the counter tile needs the OpenShop property for the shop to exist | Default value is true
 TileX | int | Yes | The X tile coordinate of the shop counter | -
 TileY | int | Yes | The Y tile coordinate of the shop counter | -
+
+## ExitLocation model
+---
+This model describes where the player is warped to when caught shoplifting a bannable location. This can be omitted if the default warp location is the desired location.
+
+Field | Type | Required? | What it does
+------|------|-----------|-------------
+LocationName | string | Yes | The location to warp to
+TileX | int | Yes | The X tile coordinate of the warp location
+TileY | int | Yes | The Y tile coordinate of the warp location
 
 ## ShopliftableConditions model
 ---

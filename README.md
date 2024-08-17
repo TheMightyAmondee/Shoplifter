@@ -109,4 +109,8 @@ Note: Translated GMCM menus may not have the proper layout.
 
 1.2.2 - Multiple CounterLocations can be specified for the same shop in content packs.
 
+1.2.3 - Improve warp logic
+
+1.2.4 - Add Japanese translation thanks to hachihana on Nexus. Allow custom warping for custom shopliftables.
+
 
