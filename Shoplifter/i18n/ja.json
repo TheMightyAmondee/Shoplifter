@@ -54,6 +54,18 @@
     "TheMightyAmondee.Shoplifter/GMCM_MaxRadius": "発覚範囲",
     "TheMightyAmondee.Shoplifter/GMCM_MaxRadiusTooltip": "NPCがプレイヤーを見つけられる最大距離。",
     "TheMightyAmondee.Shoplifter/GMCM_RareStockChance": "レアな在庫出現確率",
-    "TheMightyAmondee.Shoplifter/GMCM_RareStockChanceTooltip": "レアな在庫アイテムが出現する確率。"
+    "TheMightyAmondee.Shoplifter/GMCM_RareStockChanceTooltip": "レアな在庫アイテムが出現する確率。",
+    "TheMightyAmondee.Shoplifter/Shopliftables": "万引き場所",
+    "TheMightyAmondee.Shoplifter/GMCM_SeedShop":"ピエール商店",
+    "TheMightyAmondee.Shoplifter/GMCM_FishShop":"釣具店",
+    "TheMightyAmondee.Shoplifter/GMCM_Carpenter":"大工作業場",
+    "TheMightyAmondee.Shoplifter/GMCM_AnimalShop":"マーニーの牧場",
+    "TheMightyAmondee.Shoplifter/GMCM_Blacksmith":"鍛冶屋",
+    "TheMightyAmondee.Shoplifter/GMCM_Saloon":"スタードロップサルーン",
+    "TheMightyAmondee.Shoplifter/GMCM_SandyShop":"オアシス",
+    "TheMightyAmondee.Shoplifter/GMCM_Hospital":"ハーヴィーの診療所",
+    "TheMightyAmondee.Shoplifter/GMCM_IceCreamStand":"アイスクリーム店",
+    "TheMightyAmondee.Shoplifter/GMCM_IslandResort":"ビーチリゾートバー",
+    "TheMightyAmondee.Shoplifter/GMCM_JojaMart":"Jojaマート"
 
 }
