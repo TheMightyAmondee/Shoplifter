@@ -8,7 +8,7 @@ namespace Shoplifter
 {
     public class ModConfig
     {
-        public EnabledShops Shopliftables { get; set; } = new EnabledShops();
+        public EnabledShops ShopliftingLocations { get; set; } = new EnabledShops();
 
         public int MaxShopliftsPerDay { get; set; } = 1;
         public int MaxShopliftsPerStore { get; set; } = 1;

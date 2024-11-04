@@ -384,7 +384,7 @@ namespace Shoplifter
         /// <param name="tileLocation">The clicked tilelocation</param>
         public static void CarpenterShopliftingMenu(GameLocation location, Farmer who, Location tileLocation)
         {
-            if (config.Shopliftables.RobinShop == false)
+            if (config.ShopliftingLocations.RobinShop == false)
             {
                 return;
             }
@@ -550,7 +550,7 @@ namespace Shoplifter
         /// <param name="tileLocation">The clicked tilelocation</param>
         public static void BlacksmithShopliftingMenu(GameLocation location, Location tileLocation)
         {
-            if (config.Shopliftables.Blacksmith == false)
+            if (config.ShopliftingLocations.Blacksmith == false)
             {
                 return;
             }

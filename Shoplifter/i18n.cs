@@ -96,10 +96,6 @@ namespace Shoplifter
         {
             return i18n.GetTranslation("TheMightyAmondee.Shoplifter/Shopliftables");
         }
-        public static string string_GMCM_ShopliftablesTitle()
-        {
-            return i18n.GetTranslation("TheMightyAmondee.Shoplifter/ShopliftablesTitle");
-        }
         public static string string_GMCM_SeedShop()
         {
             return i18n.GetTranslation("TheMightyAmondee.Shoplifter/GMCM_SeedShop");
