@@ -1,10 +1,14 @@
 {
   "Name": "Shoplifter",
   "Author": "TheMightyAmondee",
+<<<<<<< HEAD
   "Version": "1.2.4",
+=======
+  "Version": "1.2.5",
+>>>>>>> 1.3develop
   "Description": "Adds the ability to shoplift, just don't get caught!",
   "UniqueID": "TheMightyAmondee.Shoplifter",
   "EntryDll": "Shoplifter.dll",
-  "MinimumApiVersion": "4.0.0",
+  "MinimumApiVersion": "4.1.0",
   "UpdateKeys": [ "Nexus:8569" ]
 }

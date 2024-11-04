@@ -246,6 +246,85 @@ namespace Shoplifter
                 setValue: value => this.config.CaughtRadius = value,
                 min: 0, max: 20
             );
+<<<<<<< HEAD
+=======
+            configMenu.AddPageLink(
+                mod: this.ModManifest,
+                pageId: "TheMightyAmondee.Shoplifter/EnabledShops",
+                text: () => i18n.string_GMCM_Shopliftables());
+
+            configMenu.AddPage(
+                mod: this.ModManifest,
+                pageId: "TheMightyAmondee.Shoplifter/EnabledShops",
+                pageTitle: () => i18n.string_GMCM_Shopliftables());
+
+            configMenu.AddBoolOption(
+                mod: this.ModManifest,
+                name: () => i18n.string_GMCM_SeedShop(),
+                getValue: () => this.config.ShopliftingLocations.PierreShop,
+                setValue: value => this.config.ShopliftingLocations.PierreShop = value
+            );
+            configMenu.AddBoolOption(
+                mod: this.ModManifest,
+                name: () => i18n.string_GMCM_FishShop(),
+                getValue: () => this.config.ShopliftingLocations.WillyShop,
+                setValue: value => this.config.ShopliftingLocations.WillyShop = value
+            );
+            configMenu.AddBoolOption(
+                mod: this.ModManifest,
+                name: () => i18n.string_GMCM_Carpenter(),
+                getValue: () => this.config.ShopliftingLocations.RobinShop,
+                setValue: value => this.config.ShopliftingLocations.RobinShop = value
+            );
+            configMenu.AddBoolOption(
+                mod: this.ModManifest,
+                name: () => i18n.string_GMCM_AnimalShop(),
+                getValue: () => this.config.ShopliftingLocations.MarnieShop,
+                setValue: value => this.config.ShopliftingLocations.MarnieShop = value
+            );
+            configMenu.AddBoolOption(
+                mod: this.ModManifest,
+                name: () => i18n.string_GMCM_Blacksmith(),
+                getValue: () => this.config.ShopliftingLocations.Blacksmith,
+                setValue: value => this.config.ShopliftingLocations.Blacksmith = value
+            );
+            configMenu.AddBoolOption(
+                mod: this.ModManifest,
+                name: () => i18n.string_GMCM_Saloon(),
+                getValue: () => this.config.ShopliftingLocations.Saloon,
+                setValue: value => this.config.ShopliftingLocations.Saloon = value
+            );
+            configMenu.AddBoolOption(
+                mod: this.ModManifest,
+                name: () => i18n.string_GMCM_SandyShop(),
+                getValue: () => this.config.ShopliftingLocations.SandyShop,
+                setValue: value => this.config.ShopliftingLocations.SandyShop = value
+            );
+            configMenu.AddBoolOption(
+                mod: this.ModManifest,
+                name: () => i18n.string_GMCM_Hospital(),
+                getValue: () => this.config.ShopliftingLocations.Clinic,
+                setValue: value => this.config.ShopliftingLocations.Clinic = value
+            );
+            configMenu.AddBoolOption(
+                mod: this.ModManifest,
+                name: () => i18n.string_GMCM_IceCreamStand(),
+                getValue: () => this.config.ShopliftingLocations.IceCreamStand,
+                setValue: value => this.config.ShopliftingLocations.IceCreamStand = value
+            );
+            configMenu.AddBoolOption(
+                mod: this.ModManifest,
+                name: () => i18n.string_GMCM_IslandResort(),
+                getValue: () => this.config.ShopliftingLocations.ResortBar,
+                setValue: value => this.config.ShopliftingLocations.ResortBar = value
+            );
+            configMenu.AddBoolOption(
+                mod: this.ModManifest,
+                name: () => i18n.string_GMCM_JojaMart(),
+                getValue: () => this.config.ShopliftingLocations.JojaMart,
+                setValue: value => this.config.ShopliftingLocations.JojaMart = value
+            );
+>>>>>>> 1.3develop
         }
 
         private void Action(object sender, ButtonPressedEventArgs e)
@@ -276,12 +355,14 @@ namespace Shoplifter
                     && TileX == 14
                     && TileY == 22
                     && location as IslandSouth != null
-                    && (location as IslandSouth).resortRestored.Value == true)
+                    && (location as IslandSouth).resortRestored.Value == true
+                    && this.config.ShopliftingLocations.ResortBar == true)
                 {
                     ShopMenuUtilities.ResortBarShopliftingMenu(location);
                 }
 
                 else if (location.NameOrUniqueName == "JojaMart"
+                    && this.config.ShopliftingLocations.JojaMart == true
                     && TileX == 2
                     && (TileY == 24
                     || TileY == 25
@@ -332,38 +413,56 @@ namespace Shoplifter
                             break;
                         // For each action that would open a shop that can be shoplifted, check if it can be shoplifted and take appropriate action
                         case "HospitalShop":
-                            ShopMenuUtilities.HospitalShopliftingMenu(location, Game1.player);
+                            if (this.config.ShopliftingLocations.Clinic == true)
+                            {
+                                ShopMenuUtilities.HospitalShopliftingMenu(location, Game1.player);
+                            }                           
                             break;
 
                         case "Carpenter":
-                            ShopMenuUtilities.CarpenterShopliftingMenu(location, Game1.player, tilelocation);
+                            if (this.config.ShopliftingLocations.RobinShop == true)
+                            {
+                                ShopMenuUtilities.CarpenterShopliftingMenu(location, Game1.player, tilelocation);
+                            }                           
                             break;
 
                         case "AnimalShop":
-                            ShopMenuUtilities.AnimalShopShopliftingMenu(location, Game1.player, tilelocation);
+                            if (this.config.ShopliftingLocations.MarnieShop == true)
+                            {
+                                ShopMenuUtilities.AnimalShopShopliftingMenu(location, Game1.player, tilelocation);
+                            }                          
                             break;
 
                         case "Blacksmith":
-                            ShopMenuUtilities.BlacksmithShopliftingMenu(location, tilelocation);
+                            if (this.config.ShopliftingLocations.Blacksmith == true)
+                            {
+                                ShopMenuUtilities.BlacksmithShopliftingMenu(location, tilelocation);
+                            }                            
                             break;
 
                         case "Saloon":
-                            ShopMenuUtilities.SaloonShopliftingMenu(location, tilelocation);
+                            if (this.config.ShopliftingLocations.Saloon == true)
+                            {
+                                ShopMenuUtilities.SaloonShopliftingMenu(location, tilelocation);
+                            }
                             break;
                         case "IceCreamStand":
-                            ShopMenuUtilities.IceCreamShopliftingMenu(location, tilelocation);
+                            if (this.config.ShopliftingLocations.IceCreamStand == true)
+                            {
+                                ShopMenuUtilities.IceCreamShopliftingMenu(location, tilelocation);
+                            }
                             break;
 
                         case "Buy":
-                            if (split[1] == "Fish")
+                            if (split[1] == "Fish" && this.config.ShopliftingLocations.WillyShop == true)
                             {
                                 ShopMenuUtilities.FishShopShopliftingMenu(location);
                             }
-                            else if (location is SeedShop && PerScreenShopliftCounter.Value < config.MaxShopliftsPerDay)
+                            else if (location is SeedShop && PerScreenShopliftCounter.Value < config.MaxShopliftsPerDay && this.config.ShopliftingLocations.PierreShop == true)
                             {
                                 ShopMenuUtilities.SeedShopShopliftingMenu(location);
                             }
-                            else if (location.Name.Equals("SandyHouse") == true)
+                            else if (location.Name.Equals("SandyHouse") == true && this.config.ShopliftingLocations.SandyShop == true)
                             {
                                 ShopMenuUtilities.SandyShopShopliftingMenu(location);
                             }

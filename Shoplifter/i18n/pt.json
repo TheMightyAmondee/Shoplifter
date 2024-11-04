@@ -54,6 +54,18 @@
     "TheMightyAmondee.Shoplifter/GMCM_MaxRadius":"Raio de flagra",
     "TheMightyAmondee.Shoplifter/GMCM_MaxRadiusTooltip":"A distância máxima que um aldeão deve estar para flagrar o jogador",
     "TheMightyAmondee.Shoplifter/GMCM_RareStockChance":"Chance de ações raras",
-    "TheMightyAmondee.Shoplifter/GMCM_RareStockChanceTooltip":"A chance de aparecerem itens raros na loja."
+    "TheMightyAmondee.Shoplifter/GMCM_RareStockChanceTooltip":"A chance de aparecerem itens raros na loja.",
+    "TheMightyAmondee.Shoplifter/Shopliftables": "Locais de furto em lojas",
+    "TheMightyAmondee.Shoplifter/GMCM_SeedShop":"Armazém do Pierre",
+    "TheMightyAmondee.Shoplifter/GMCM_FishShop":"Peixaria",
+    "TheMightyAmondee.Shoplifter/GMCM_Carpenter":"Carpintaria",
+    "TheMightyAmondee.Shoplifter/GMCM_AnimalShop":"Rancho da Marnie",
+    "TheMightyAmondee.Shoplifter/GMCM_Blacksmith":"Ferreiro",
+    "TheMightyAmondee.Shoplifter/GMCM_Saloon":"Saloon Fruta Estrelar",
+    "TheMightyAmondee.Shoplifter/GMCM_SandyShop":"Oásis de Sandy",
+    "TheMightyAmondee.Shoplifter/GMCM_Hospital":"Clínica do Harvey",
+    "TheMightyAmondee.Shoplifter/GMCM_IceCreamStand":"Banca de Sorvetes",
+    "TheMightyAmondee.Shoplifter/GMCM_IslandResort":"Bar da Estância de Praia",
+    "TheMightyAmondee.Shoplifter/GMCM_JojaMart":"Mercado Joja"
     //
   }

@@ -54,6 +54,18 @@
     "TheMightyAmondee.Shoplifter/GMCM_MaxRadius":"Rayon de capture",
     "TheMightyAmondee.Shoplifter/GMCM_MaxRadiusTooltip":"Distance maximale à laquelle un villageois doit se trouver pour attraper le joueur",
     "TheMightyAmondee.Shoplifter/GMCM_RareStockChance":"Chance de stock rare",
-    "TheMightyAmondee.Shoplifter/GMCM_RareStockChanceTooltip":"La chance que des objets rares de la boutique apparaissent."
+    "TheMightyAmondee.Shoplifter/GMCM_RareStockChanceTooltip":"La chance que des objets rares de la boutique apparaissent.",
+    "TheMightyAmondee.Shoplifter/Shopliftables": "Lieux de vol à l'étalage",
+    "TheMightyAmondee.Shoplifter/GMCM_SeedShop":"Magasin général de Pierre",
+    "TheMightyAmondee.Shoplifter/GMCM_FishShop":"Poissonnerie",
+    "TheMightyAmondee.Shoplifter/GMCM_Carpenter":"Scierie",
+    "TheMightyAmondee.Shoplifter/GMCM_AnimalShop":"Ranch de Marnie",
+    "TheMightyAmondee.Shoplifter/GMCM_Blacksmith":"Forgeron",
+    "TheMightyAmondee.Shoplifter/GMCM_Saloon":"Saloon du fruit étoilé",
+    "TheMightyAmondee.Shoplifter/GMCM_SandyShop":"L'oasis de Sandy",
+    "TheMightyAmondee.Shoplifter/GMCM_Hospital":"Clinique d’Harvey",
+    "TheMightyAmondee.Shoplifter/GMCM_IceCreamStand":"Stand de crème glacée",
+    "TheMightyAmondee.Shoplifter/GMCM_IslandResort":"Bar de la station balnéaire",
+    "TheMightyAmondee.Shoplifter/GMCM_JojaMart":"Marché Joja"
     //
   }

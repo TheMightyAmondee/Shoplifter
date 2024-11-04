@@ -54,6 +54,18 @@
     "TheMightyAmondee.Shoplifter/GMCM_MaxRadius":"Radio detectado",
     "TheMightyAmondee.Shoplifter/GMCM_MaxRadiusTooltip":"Distancia máxima a la que debe estar un aldeano para atrapar al jugador",
     "TheMightyAmondee.Shoplifter/GMCM_RareStockChance":"Rara oportunidad de acciones",
-    "TheMightyAmondee.Shoplifter/GMCM_RareStockChanceTooltip":"La posibilidad de que aparezcan artículos raros de la tienda."
+    "TheMightyAmondee.Shoplifter/GMCM_RareStockChanceTooltip":"La posibilidad de que aparezcan artículos raros de la tienda.",
+    "TheMightyAmondee.Shoplifter/Shopliftables": "Ubicaciones de hurto en tiendas",
+    "TheMightyAmondee.Shoplifter/GMCM_SeedShop":"Tienda local Pierre's",
+    "TheMightyAmondee.Shoplifter/GMCM_FishShop":"Tienda de pesca",
+    "TheMightyAmondee.Shoplifter/GMCM_Carpenter":"Carpintería",
+    "TheMightyAmondee.Shoplifter/GMCM_AnimalShop":"Rancho de Marnie",
+    "TheMightyAmondee.Shoplifter/GMCM_Blacksmith":"Herrería",
+    "TheMightyAmondee.Shoplifter/GMCM_Saloon":"Salón Fruta Estelar",
+    "TheMightyAmondee.Shoplifter/GMCM_SandyShop":"El oasis de Sandy",
+    "TheMightyAmondee.Shoplifter/GMCM_Hospital":"Clínica de Harvey",
+    "TheMightyAmondee.Shoplifter/GMCM_IceCreamStand":"Puesto de helados",
+    "TheMightyAmondee.Shoplifter/GMCM_IslandResort":"Bar de un complejo de playa",
+    "TheMightyAmondee.Shoplifter/GMCM_JojaMart":"MercaJoja"
     //
   }
