@@ -309,10 +309,6 @@ namespace Shoplifter
         /// <param name="location">The current location instance</param>
         public static void FishShopShopliftingMenu(GameLocation location)
         {
-            if (config.Shopliftables.WillyShop == false)
-            {
-                return;
-            }
 
             // Willy can sell, don't do anything
             if (location.getCharacterFromName("Willy") != null && location.getCharacterFromName("Willy").Tile.Y < Game1.player.Tile.Y)
@@ -334,11 +330,6 @@ namespace Shoplifter
         /// <param name="location">The current location instance</param>
         public static void SandyShopShopliftingMenu(GameLocation location)
         {
-            if (config.Shopliftables.SandyShop == false)
-            {
-                return;
-            }
-
             NPC sandy = location.getCharacterFromName("Sandy");
             if (sandy == null || sandy.currentLocation != location)
             {
@@ -352,11 +343,6 @@ namespace Shoplifter
         /// <param name="location">The current location instance</param>
         public static void SeedShopShopliftingMenu(GameLocation location)
         {
-            if (config.Shopliftables.PierreShop == false)
-            {
-                return;
-            }
-
             // Pierre can sell
             if (location.getCharacterFromName("Pierre") != null && location.getCharacterFromName("Pierre").Tile.Equals(new Vector2(4f, 17f)) && Game1.player.Tile.Y > location.getCharacterFromName("Pierre").Tile.Y)
             {
@@ -462,11 +448,6 @@ namespace Shoplifter
         /// <param name="tileLocation">The clicked tilelocation</param>
         public static void AnimalShopShopliftingMenu(GameLocation location, Farmer who, Location tileLocation)
         {
-            if (config.Shopliftables.MarnieShop == false)
-            {
-                return;
-            }
-
             var marnie = location.getCharacterFromName("Marnie");
             // Player is in correct position for buying
             if (who.Tile.Y > tileLocation.Y)
@@ -555,10 +536,6 @@ namespace Shoplifter
         /// <param name="who">The player</param>
         public static void HospitalShopliftingMenu(GameLocation location, Farmer who)
         {
-            if (config.Shopliftables.Clinic == false)
-            {
-                return;
-            }
             // Character is not at the required tile, noone can sell
             if (location.isCharacterAtTile(new Vector2(who.Tile.X, who.Tile.Y) + new Vector2(0f, -2f)) == null && location.isCharacterAtTile(new Vector2(who.Tile.X, who.Tile.Y) + new Vector2(-1f, -2f)) == null)
             {
@@ -591,11 +568,6 @@ namespace Shoplifter
         /// <param name="location">The current location instance</param>
         public static void SaloonShopliftingMenu(GameLocation location, Location tilelocation)
         {
-            if (config.Shopliftables.Saloon == false)
-            {
-                return;
-            }
-
             // Gus is not in the location, he is on the island, ignore if can't shoplift
             if (location.getCharacterFromName("Gus") == null && Game1.IsVisitingIslandToday("Gus") == true)
             {
@@ -629,11 +601,6 @@ namespace Shoplifter
 
         public static void IceCreamShopliftingMenu(GameLocation location, Location tilelocation)
         {
-            if (config.Shopliftables.IceCreamStand == false)
-            {
-                return;
-            }
-
             if (location.isCharacterAtTile(new Vector2(tilelocation.X, tilelocation.Y - 2)) == null && location.isCharacterAtTile(new Vector2(tilelocation.X, tilelocation.Y - 1)) == null)
             {
                 ShopliftingMenu(location, new string[1] { "Alex" }, "IceCreamStand", 1, 5, bannable: false);
@@ -642,11 +609,6 @@ namespace Shoplifter
 
         public static void ResortBarShopliftingMenu(GameLocation location)
         {
-            if (config.Shopliftables.ResortBar == false)
-            {
-                return;
-            }
-
             if (location.getCharacterFromName("Gus") == null || (location.getCharacterFromName("Gus") != null && location.getCharacterFromName("Gus").Tile.Equals(new Vector2(14f, 21f)) == false))
             {
                 ShopliftingMenu(location, new string[1] { "Gus" }, "ResortBar", 2, 1, bannable: false);
@@ -655,11 +617,6 @@ namespace Shoplifter
 
         public static void JojaShopliftingMenu(GameLocation location)
         {
-            if (config.Shopliftables.JojaMart == false)
-            {
-                return;
-            }
-
             ShopliftingMenu(location, new string[3] { "Morris", "Shane", "Sam" }, "Joja", 5, 5);
         }
     }

@@ -56,6 +56,19 @@
     //
     //TODO Improve 1.6 translations
     "TheMightyAmondee.Shoplifter/GMCM_RareStockChance":"Possibilità di oggetto raro",
-    "TheMightyAmondee.Shoplifter/GMCM_RareStockChanceTooltip":"La possibilità che appaiano articoli rari in stock."
+    "TheMightyAmondee.Shoplifter/GMCM_RareStockChanceTooltip":"La possibilità che appaiano articoli rari in stock.",
+    "TheMightyAmondee.Shoplifter/Shopliftables": "Luoghi di furto nei negozi",
+    "TheMightyAmondee.Shoplifter/ShopliftablesTitle":"Posizioni abilitate per i furti nei negozi",
+    "TheMightyAmondee.Shoplifter/GMCM_SeedShop":"Emporio di Pierre",
+    "TheMightyAmondee.Shoplifter/GMCM_FishShop":"Negozio di pesca",
+    "TheMightyAmondee.Shoplifter/GMCM_Carpenter":"Bottega del falegname",
+    "TheMightyAmondee.Shoplifter/GMCM_AnimalShop":"Ranch di Marnie",
+    "TheMightyAmondee.Shoplifter/GMCM_Blacksmith":"Fabbro",
+    "TheMightyAmondee.Shoplifter/GMCM_Saloon":"Il Saloon Astropomo",
+    "TheMightyAmondee.Shoplifter/GMCM_SandyShop":"L'oasi di Sandy",
+    "TheMightyAmondee.Shoplifter/GMCM_Hospital":"Clinica di Harvey",
+    "TheMightyAmondee.Shoplifter/GMCM_IceCreamStand":"Stand di gelato",
+    "TheMightyAmondee.Shoplifter/GMCM_IslandResort":"Bar del resort sulla spiaggia",
+    "TheMightyAmondee.Shoplifter/GMCM_JojaMart":"JojaMart"
     //
   }

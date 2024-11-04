@@ -56,7 +56,20 @@
     //
     //TODO Improve 1.6 translations
     "TheMightyAmondee.Shoplifter/GMCM_RareStockChance":"Шанс на редкий экземпляр",
-    "TheMightyAmondee.Shoplifter/GMCM_RareStockChanceTooltip":"Шанс появления редких предметов."
+    "TheMightyAmondee.Shoplifter/GMCM_RareStockChanceTooltip":"Шанс появления редких предметов.",
+    "TheMightyAmondee.Shoplifter/Shopliftables": "Места краж в магазинах",
+    "TheMightyAmondee.Shoplifter/ShopliftablesTitle":"Разрешенные места для краж в магазинах",
+    "TheMightyAmondee.Shoplifter/GMCM_SeedShop":"Магазин Пьера",
+    "TheMightyAmondee.Shoplifter/GMCM_FishShop":"Рыбацкий магазин",
+    "TheMightyAmondee.Shoplifter/GMCM_Carpenter":"Столярная мастерская",
+    "TheMightyAmondee.Shoplifter/GMCM_AnimalShop":"Ранчо Марни",
+    "TheMightyAmondee.Shoplifter/GMCM_Blacksmith":"Кузнец",
+    "TheMightyAmondee.Shoplifter/GMCM_Saloon":"Салун «Звездная капля»",
+    "TheMightyAmondee.Shoplifter/GMCM_SandyShop":"Оазис",
+    "TheMightyAmondee.Shoplifter/GMCM_Hospital":"Клиника Харви",
+    "TheMightyAmondee.Shoplifter/GMCM_IceCreamStand":"Магазин мороженого",
+    "TheMightyAmondee.Shoplifter/GMCM_IslandResort":"Бар на пляжном курорте",
+    "TheMightyAmondee.Shoplifter/GMCM_JojaMart":"ДжоджаМарт"
     //
   }
 

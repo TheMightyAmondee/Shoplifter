@@ -54,6 +54,19 @@
     "TheMightyAmondee.Shoplifter/GMCM_MaxRadius":"Yakalanma Yarıçapı",
     "TheMightyAmondee.Shoplifter/GMCM_MaxRadiusTooltip":"Bir köylünün oyuncuyu yakalamak için olması gereken maksimum mesafe.",
     "TheMightyAmondee.Shoplifter/GMCM_RareStockChance":"nadir hisse senedi şansı",
-    "TheMightyAmondee.Shoplifter/GMCM_RareStockChanceTooltip":"Nadir stok öğelerinin ortaya çıkma şansı."
+    "TheMightyAmondee.Shoplifter/GMCM_RareStockChanceTooltip":"Nadir stok öğelerinin ortaya çıkma şansı.",
+    "TheMightyAmondee.Shoplifter/Shopliftables": "Hırsızlık Yerleri",
+    "TheMightyAmondee.Shoplifter/ShopliftablesTitle":"Etkinleştirilmiş Hırsızlık Yerleri",
+    "TheMightyAmondee.Shoplifter/GMCM_SeedShop":"Pierre'in Bakkalı",
+    "TheMightyAmondee.Shoplifter/GMCM_FishShop":"Balıkçı",
+    "TheMightyAmondee.Shoplifter/GMCM_Carpenter":"Marangoz Atölyesi",
+    "TheMightyAmondee.Shoplifter/GMCM_AnimalShop":"Marnie'nin Çiftliği",
+    "TheMightyAmondee.Shoplifter/GMCM_Blacksmith":"Demirci",
+    "TheMightyAmondee.Shoplifter/GMCM_Saloon":"Yıldızkaydı Salonu",
+    "TheMightyAmondee.Shoplifter/GMCM_SandyShop":"Vaha",
+    "TheMightyAmondee.Shoplifter/GMCM_Hospital":"Harvey'nin Sağlık Ocağı",
+    "TheMightyAmondee.Shoplifter/GMCM_IceCreamStand":"Dondurma Standı",
+    "TheMightyAmondee.Shoplifter/GMCM_IslandResort":"Sahil tatil yeri barı",
+    "TheMightyAmondee.Shoplifter/GMCM_JojaMart":"JojaMart"
     //
   }

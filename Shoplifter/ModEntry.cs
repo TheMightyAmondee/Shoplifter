@@ -352,12 +352,14 @@ namespace Shoplifter
                     && TileX == 14
                     && TileY == 22
                     && location as IslandSouth != null
-                    && (location as IslandSouth).resortRestored.Value == true)
+                    && (location as IslandSouth).resortRestored.Value == true
+                    && this.config.Shopliftables.ResortBar == true)
                 {
                     ShopMenuUtilities.ResortBarShopliftingMenu(location);
                 }
 
                 else if (location.NameOrUniqueName == "JojaMart"
+                    && this.config.Shopliftables.JojaMart == true
                     && TileX == 2
                     && (TileY == 24
                     || TileY == 25
@@ -408,38 +410,56 @@ namespace Shoplifter
                             break;
                         // For each action that would open a shop that can be shoplifted, check if it can be shoplifted and take appropriate action
                         case "HospitalShop":
-                            ShopMenuUtilities.HospitalShopliftingMenu(location, Game1.player);
+                            if (this.config.Shopliftables.Clinic == true)
+                            {
+                                ShopMenuUtilities.HospitalShopliftingMenu(location, Game1.player);
+                            }                           
                             break;
 
                         case "Carpenter":
-                            ShopMenuUtilities.CarpenterShopliftingMenu(location, Game1.player, tilelocation);
+                            if (this.config.Shopliftables.RobinShop == true)
+                            {
+                                ShopMenuUtilities.CarpenterShopliftingMenu(location, Game1.player, tilelocation);
+                            }                           
                             break;
 
                         case "AnimalShop":
-                            ShopMenuUtilities.AnimalShopShopliftingMenu(location, Game1.player, tilelocation);
+                            if (this.config.Shopliftables.MarnieShop == true)
+                            {
+                                ShopMenuUtilities.AnimalShopShopliftingMenu(location, Game1.player, tilelocation);
+                            }                          
                             break;
 
                         case "Blacksmith":
-                            ShopMenuUtilities.BlacksmithShopliftingMenu(location, tilelocation);
+                            if (this.config.Shopliftables.Blacksmith == true)
+                            {
+                                ShopMenuUtilities.BlacksmithShopliftingMenu(location, tilelocation);
+                            }                            
                             break;
 
                         case "Saloon":
-                            ShopMenuUtilities.SaloonShopliftingMenu(location, tilelocation);
+                            if (this.config.Shopliftables.Saloon == true)
+                            {
+                                ShopMenuUtilities.SaloonShopliftingMenu(location, tilelocation);
+                            }
                             break;
                         case "IceCreamStand":
-                            ShopMenuUtilities.IceCreamShopliftingMenu(location, tilelocation);
+                            if (this.config.Shopliftables.IceCreamStand == true)
+                            {
+                                ShopMenuUtilities.IceCreamShopliftingMenu(location, tilelocation);
+                            }
                             break;
 
                         case "Buy":
-                            if (split[1] == "Fish")
+                            if (split[1] == "Fish" && this.config.Shopliftables.WillyShop == true)
                             {
                                 ShopMenuUtilities.FishShopShopliftingMenu(location);
                             }
-                            else if (location is SeedShop && PerScreenShopliftCounter.Value < config.MaxShopliftsPerDay)
+                            else if (location is SeedShop && PerScreenShopliftCounter.Value < config.MaxShopliftsPerDay && this.config.Shopliftables.PierreShop == true)
                             {
                                 ShopMenuUtilities.SeedShopShopliftingMenu(location);
                             }
-                            else if (location.Name.Equals("SandyHouse") == true)
+                            else if (location.Name.Equals("SandyHouse") == true && this.config.Shopliftables.SandyShop == true)
                             {
                                 ShopMenuUtilities.SandyShopShopliftingMenu(location);
                             }

@@ -53,10 +53,22 @@
     "TheMightyAmondee.Shoplifter/GMCM_MaxBannedTooltip":"Für wie viele Tage das Hausverbot anhält.",
     "TheMightyAmondee.Shoplifter/GMCM_MaxRadius":"Erkennungsradius",
     "TheMightyAmondee.Shoplifter/GMCM_MaxRadiusTooltip":"Maximale Entfernung, in der ein NPC den Spieler erwischen kann.",
-    //
-    //TODO Improve 1.6 GMCM translations
+    //TODO Improve 1.6.9 GMCM translations
     "TheMightyAmondee.Shoplifter/GMCM_RareStockChance":"Seltene Aktienchance",
-    "TheMightyAmondee.Shoplifter/GMCM_RareStockChanceTooltip":"Die Chance, dass seltene Lagerartikel erscheinen."
+    "TheMightyAmondee.Shoplifter/GMCM_RareStockChanceTooltip":"Die Chance, dass seltene Lagerartikel erscheinen.",
+    "TheMightyAmondee.Shoplifter/Shopliftables": "Orte des Ladendiebstahls",
+    "TheMightyAmondee.Shoplifter/ShopliftablesTitle":"Aktivierte Ladendiebstahl-Standorte",
+    "TheMightyAmondee.Shoplifter/GMCM_SeedShop":"Pierres Gemischtwarenladen",
+    "TheMightyAmondee.Shoplifter/GMCM_FishShop":"Anglerbedarf",
+    "TheMightyAmondee.Shoplifter/GMCM_Carpenter":"Schreinerladen",
+    "TheMightyAmondee.Shoplifter/GMCM_AnimalShop":"Marnies Ranch",
+    "TheMightyAmondee.Shoplifter/GMCM_Blacksmith":"Schmied",
+    "TheMightyAmondee.Shoplifter/GMCM_Saloon":"Kneipe zum Sternenfall",
+    "TheMightyAmondee.Shoplifter/GMCM_SandyShop":"Sandys Oase",
+    "TheMightyAmondee.Shoplifter/GMCM_Hospital":"Harveys Klinik",
+    "TheMightyAmondee.Shoplifter/GMCM_IceCreamStand":"Eisstand",
+    "TheMightyAmondee.Shoplifter/GMCM_IslandResort":"Resort-Bar",
+    "TheMightyAmondee.Shoplifter/GMCM_JojaMart":"Joja-Markt"
     //
 }
 

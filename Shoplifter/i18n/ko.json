@@ -54,6 +54,19 @@
     "TheMightyAmondee.Shoplifter/GMCM_MaxRadius":"적발 반경",
     "TheMightyAmondee.Shoplifter/GMCM_MaxRadiusTooltip":"플레이어를 잡기 위해 마을 주민이 플레이어로부터 최대 반경 내에 있어야 합니다.",
     "TheMightyAmondee.Shoplifter/GMCM_RareStockChance":"희귀 재고 확률",
-    "TheMightyAmondee.Shoplifter/GMCM_RareStockChanceTooltip":"희귀한 재고 아이템이 등장할 확률."
+    "TheMightyAmondee.Shoplifter/GMCM_RareStockChanceTooltip":"희귀한 재고 아이템이 등장할 확률.",
+    "TheMightyAmondee.Shoplifter/Shopliftables": "상점 도난 장소",
+    "TheMightyAmondee.Shoplifter/ShopliftablesTitle":"활성화된 상점 도난 위치",
+    "TheMightyAmondee.Shoplifter/GMCM_SeedShop":"피에르네 잡화점",
+    "TheMightyAmondee.Shoplifter/GMCM_FishShop":"생선 가게",
+    "TheMightyAmondee.Shoplifter/GMCM_Carpenter":"목공 작업실",
+    "TheMightyAmondee.Shoplifter/GMCM_AnimalShop":"마니의 목장",
+    "TheMightyAmondee.Shoplifter/GMCM_Blacksmith":"대장간",
+    "TheMightyAmondee.Shoplifter/GMCM_Saloon":"스타드롭 주점",
+    "TheMightyAmondee.Shoplifter/GMCM_SandyShop":"오아시스",
+    "TheMightyAmondee.Shoplifter/GMCM_Hospital":"하비의 병원",
+    "TheMightyAmondee.Shoplifter/GMCM_IceCreamStand":"아이스크림 가판대",
+    "TheMightyAmondee.Shoplifter/GMCM_IslandResort":"비치 리조트 바",
+    "TheMightyAmondee.Shoplifter/GMCM_JojaMart":"조자마트"
     //
   }
