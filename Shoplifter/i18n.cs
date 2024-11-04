@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using StardewValley;
 using StardewModdingAPI;
 
@@ -91,8 +92,6 @@ namespace Shoplifter
         {
             return i18n.GetTranslation("TheMightyAmondee.Shoplifter/GMCM_RareStockChanceTooltip");
         }
-<<<<<<< HEAD
-=======
 
         public static string string_GMCM_Shopliftables()
         {
@@ -142,7 +141,6 @@ namespace Shoplifter
         {
             return i18n.GetTranslation("TheMightyAmondee.Shoplifter/GMCM_JojaMart");
         }
->>>>>>> 1.3develop
         // End GMCM translations
 
         public static string string_Shoplift()

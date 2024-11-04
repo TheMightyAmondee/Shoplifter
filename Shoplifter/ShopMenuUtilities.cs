@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using StardewValley.Locations;
 using StardewModdingAPI;
 using StardewValley.Util;
@@ -309,10 +310,7 @@ namespace Shoplifter
         /// <param name="location">The current location instance</param>
         public static void FishShopShopliftingMenu(GameLocation location)
         {
-<<<<<<< HEAD
-=======
 
->>>>>>> 1.3develop
             // Willy can sell, don't do anything
             if (location.getCharacterFromName("Willy") != null && location.getCharacterFromName("Willy").Tile.Y < Game1.player.Tile.Y)
             {
@@ -387,14 +385,11 @@ namespace Shoplifter
         /// <param name="tileLocation">The clicked tilelocation</param>
         public static void CarpenterShopliftingMenu(GameLocation location, Farmer who, Location tileLocation)
         {
-<<<<<<< HEAD
-=======
             if (config.ShopliftingLocations.RobinShop == false)
             {
                 return;
             }
 
->>>>>>> 1.3develop
             // Player is in correct position for buying
             if (who.Tile.Y > tileLocation.Y)
             {
@@ -556,14 +551,11 @@ namespace Shoplifter
         /// <param name="tileLocation">The clicked tilelocation</param>
         public static void BlacksmithShopliftingMenu(GameLocation location, Location tileLocation)
         {
-<<<<<<< HEAD
-=======
             if (config.ShopliftingLocations.Blacksmith == false)
             {
                 return;
             }
 
->>>>>>> 1.3develop
             // Clint can't sell. Period.
             if (location.blacksmith(tileLocation) == false)
             {

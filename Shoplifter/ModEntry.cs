@@ -1,3 +1,4 @@
+
 using System.Collections.Generic;
 using System.Collections;
 using StardewModdingAPI;
@@ -246,8 +247,6 @@ namespace Shoplifter
                 setValue: value => this.config.CaughtRadius = value,
                 min: 0, max: 20
             );
-<<<<<<< HEAD
-=======
             configMenu.AddPageLink(
                 mod: this.ModManifest,
                 pageId: "TheMightyAmondee.Shoplifter/EnabledShops",
@@ -324,7 +323,6 @@ namespace Shoplifter
                 getValue: () => this.config.ShopliftingLocations.JojaMart,
                 setValue: value => this.config.ShopliftingLocations.JojaMart = value
             );
->>>>>>> 1.3develop
         }
 
         private void Action(object sender, ButtonPressedEventArgs e)
@@ -416,28 +414,28 @@ namespace Shoplifter
                             if (this.config.ShopliftingLocations.Clinic == true)
                             {
                                 ShopMenuUtilities.HospitalShopliftingMenu(location, Game1.player);
-                            }                           
+                            }
                             break;
 
                         case "Carpenter":
                             if (this.config.ShopliftingLocations.RobinShop == true)
                             {
                                 ShopMenuUtilities.CarpenterShopliftingMenu(location, Game1.player, tilelocation);
-                            }                           
+                            }
                             break;
 
                         case "AnimalShop":
                             if (this.config.ShopliftingLocations.MarnieShop == true)
                             {
                                 ShopMenuUtilities.AnimalShopShopliftingMenu(location, Game1.player, tilelocation);
-                            }                          
+                            }
                             break;
 
                         case "Blacksmith":
                             if (this.config.ShopliftingLocations.Blacksmith == true)
                             {
                                 ShopMenuUtilities.BlacksmithShopliftingMenu(location, tilelocation);
-                            }                            
+                            }
                             break;
 
                         case "Saloon":
