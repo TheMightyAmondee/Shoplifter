@@ -23,6 +23,7 @@ Version 1.1.0 added a config so shoplifting preferences can be changed, includin
 - Maximum friendship penalty
 - Maximum distance a villager must be to catch the player, default is 5.
 - (1.2.0) The chance for a rare (non-basic item) to appear in store, expressed as a decimal between 0 and 1. Default is 0.
+- (1.2.5) Which shops are active shoplifting locations. All are enabled by default.
 
 When changing the config, ensure only positive numbers or zero are entered so the config can be parsed. The mod will use the default values if it can't parse the config. 
 Version 1.1.4 added Generic Mod Config Menu support so the config values can be changed whilst in game (thanks to luelista!).
@@ -95,24 +96,28 @@ Note: Translated GMCM menus may not have the proper layout.
 ## Versions ##
 1.0.0 - Initial release
 
-1.1.0 - Made shoplifting preferences configurable, added Icecream Stand as shopliftable
+1.1.0 - Made shoplifting preferences configurable, added Icecream Stand as shopliftable.
 
-1.1.2 - Added translation support
+1.1.2 - Added translation support.
 
-1.1.3 - Added Korean, Chinese, French, Portuguese, German and Italian translations
+1.1.3 - Added Korean, Chinese, French, Portuguese, German and Italian translations.
 
 1.1.4 - Added GMCM support thanks to luelista! Added Turkish, Spanish and Russian translations.
 
-1.1.5 to 1.1.9 - Minor bug fixes
+1.1.5 to 1.1.9 - Minor bug fixes.
 
-1.2.0 - Quite a lot of new things, see heading above
+1.2.0 - Quite a lot of new things, see heading above.
 
 1.2.1 - Jojamart can now be shoplifted. Marnie can still be shoplifted if the animal catalogue is read.
 
 1.2.2 - Multiple CounterLocations can be specified for the same shop in content packs.
 
-1.2.3 - Improve warp logic
+1.2.3 - Improve warp logic.
 
 1.2.4 - Add Japanese translation thanks to hachihina. Allow custom warping for custom shopliftables.
+
+1.2.5 - Allow shoplifting locations to be disabled and enabled in the config.
+
+1.2.6 - Fix translation download issue for Mac users.
 
 
