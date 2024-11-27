@@ -36,7 +36,7 @@
     "TheMightyAmondee.Shoplifter/CaughtRobin_RareItemsEnabled": "¿Enserio @? ¿Pensabas que ibas a conseguir una TV gratis?$3#$b#Voy a sancionarte {{fineamount}}G por esto... Quizás eso te desaliente.$2",
     "TheMightyAmondee.Shoplifter/CaughtRobin_RareItemsEnabled_NoMoney": "¿Enserio @? ¿Pensabas que ibas a conseguir una TV gratis?$3#$b#Ya que no puedes pagar una sanción, lo dejaré pasar esta vez..$2",
 
-    // TODO Improve translations
+    // Translations thans to andREA!
     "TheMightyAmondee.Shoplifter/GMCM_PeriodSection":"¿Cada cuánto puedes robar?",  
     "TheMightyAmondee.Shoplifter/GMCM_MaxDay": "Límite de robos por día",
     "TheMightyAmondee.Shoplifter/GMCM_MaxDayTooltip": "Cantidad de veces que puedes robar al día.",
