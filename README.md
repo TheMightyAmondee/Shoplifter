@@ -70,7 +70,7 @@ Shoplifter fully supports translation! In game translations currently available 
 - Chinese, thanks to 20080618 and XinJiDA!
 - Korean, thanks to Aromay7!
 - Italian, thanks to peanutbatteries and AlixNauts!
-- French, thanks to Breeis!
+- French, thanks to Breeis and Capitaine Vava!
 - Portuguese, thanks to Kadomine!
 - German, thanks to NotErikWasTaken!
 - Spanish, thanks to viridian-fog!
@@ -81,6 +81,7 @@ Shoplifter fully supports translation! In game translations currently available 
 Generic Mod Config Menu config menu translations currently avaliable in:
 - Chinese, thanks to XinJiDA!
 - Italian, thanks to AlixNauts!
+- French, thanks to Capitaine Vava!
 - German, thanks to Nordmole!
 - Russian, thanks to theRealDuda!
 - Portuguese, thanks to caputi!
