@@ -88,7 +88,7 @@ Generic Mod Config Menu config menu translations currently avaliable in:
 - Japanese, thanks to hachihina!
 - Spanish, thanks to andREA!
 
-Other Generic Mod Config Menu translations done using DeepL and Google Translate. Improved translations are welcome.
+Other Generic Mod Config Menu translations done using Google Translate. Improved translations are welcome.
 
 New translations always welcome! The best place to reach me is on the Shoplifter [mod page](https://www.nexusmods.com/stardewvalley/mods/8569).
 Translations are released separately to the main files until a sufficient number of translations are received for a full release. 1.2.6 was the last translation release including all currently available languages and some basic translations for the GMCM menu unless listed above as complete. 
